@@ -1,0 +1,124 @@
+[
+    {
+        "id": "1",
+        "name": "Teflon Tava",
+        "description": "Paslanmaz çelik tava",
+        "mainPhoto": "https://www.korkmazstore.com.tr/korkmaz-casta-yuvarlak-28-cm-grill-dokum-tava-a2847-dokum-tava-6578-80-B.jpg",
+        "rate": 2.5,
+        "price": 200,
+        "category": "tava",
+        "discountRate": 0.35,
+        "stockQuantity": 50,
+        "photos": [
+            "https://cdn.bernardo.com.tr/rosin-granit-tava-30-cm-bronz-kahve-8882-74-O.jpg",
+            "https://cdn.tekzen.com.tr/images/product/erdemhaslon/2817150/erdemhaslon-erdem-teflon-tava-32-cm-kirmizi_1000x1000_1.jpg",
+            "https://www.korkmazstore.com.tr/korkmaz-casta-yuvarlak-28-cm-grill-dokum-tava-a2847-dokum-tava-6578-80-B.jpg",
+            "https://cdn.krc.com.tr/image/cdndata/182/1313107/image600.15.01.0271-2.jpg"
+        ],
+        "comments": [],
+        "brand": "Tefal"
+    },
+    {
+        "id": "2",
+        "name": "Metal Tava",
+        "description": "Paslanmaz metal tava",
+        "mainPhoto": "https://www.korkmazstore.com.tr/korkmaz-casta-yuvarlak-28-cm-grill-dokum-tava-a2847-dokum-tava-6578-80-B.jpg",
+        "rate": 3.5,
+        "price": 100,
+        "category": "tava",
+        "discountRate": 0.40,
+        "stockQuantity": 80,
+        "photos": [
+            "https://cdn.bernardo.com.tr/rosin-granit-tava-30-cm-bronz-kahve-8882-74-O.jpg",
+            "https://cdn.krc.com.tr/image/cdndata/182/1313107/image600.15.01.0271-2.jpg"
+        ],
+        "comments": [],
+        "brand": "Tefal"
+    },
+    {
+        "id": "3",
+        "name": "6'lı Paslanmaz Tencere",
+        "description": "Paslanmaz çelik tencere",
+        "mainPhoto": "https://www.korkmazstore.com.tr/korkmaz-casta-yuvarlak-28-cm-grill-dokum-tava-a2847-dokum-tava-6578-80-B.jpg",
+        "rate": 4,
+        "price": 300,
+        "category": "tencere",
+        "discountRate": 0.8,
+        "stockQuantity": 70,
+        "photos": [
+            "https://cdn.bernardo.com.tr/rosin-granit-tava-30-cm-bronz-kahve-8882-74-O.jpg",
+            "https://cdn.tekzen.com.tr/images/product/erdemhaslon/2817150/erdemhaslon-erdem-teflon-tava-32-cm-kirmizi_1000x1000_1.jpg",
+            "https://cdn.krc.com.tr/image/cdndata/182/1313107/image600.15.01.0271-2.jpg"
+        ],
+        "comments": [],
+        "brand": "Tefal"
+    },
+    {
+        "id": "4",
+        "name": "Teflon Tava",
+        "description": "Paslanmaz çelik tava",
+        "mainPhoto": "https://www.korkmazstore.com.tr/korkmaz-casta-yuvarlak-28-cm-grill-dokum-tava-a2847-dokum-tava-6578-80-B.jpg",
+        "rate": 4,
+        "price": 300,
+        "category": "tencere",
+        "discountRate": 0.8,
+        "stockQuantity": 70,
+        "photos": [
+            "https://www.korkmazstore.com.tr/korkmaz-casta-yuvarlak-28-cm-grill-dokum-tava-a2847-dokum-tava-6578-80-B.jpg",
+            "https://cdn.krc.com.tr/image/cdndata/182/1313107/image600.15.01.0271-2.jpg"
+        ],
+        "comments": [],
+        "brand": "Tefal"
+    },
+    {
+        "id": "5",
+        "name": "Teflon Tava",
+        "description": "Paslanmaz çelik tava",
+        "mainPhoto": "https://www.korkmazstore.com.tr/korkmaz-casta-yuvarlak-28-cm-grill-dokum-tava-a2847-dokum-tava-6578-80-B.jpg",
+        "rate": 4,
+        "price": 300,
+        "category": "tencere",
+        "discountRate": 0.8,
+        "stockQuantity": 70,
+        "photos": [
+            "https://cdn.bernardo.com.tr/rosin-granit-tava-30-cm-bronz-kahve-8882-74-O.jpg"
+        ],
+        "comments": [],
+        "brand": "Tefal"
+    },
+    {
+        "id": "6",
+        "name": "Teflon Tava",
+        "description": "Paslanmaz çelik tava",
+        "mainPhoto": "https://www.korkmazstore.com.tr/korkmaz-casta-yuvarlak-28-cm-grill-dokum-tava-a2847-dokum-tava-6578-80-B.jpg",
+        "rate": 4,
+        "price": 300,
+        "category": "tava",
+        "discountRate": 0.8,
+        "stockQuantity": 70,
+        "photos": [
+            "https://cdn.bernardo.com.tr/rosin-granit-tava-30-cm-bronz-kahve-8882-74-O.jpg",
+            "https://cdn.tekzen.com.tr/images/product/erdemhaslon/2817150/erdemhaslon-erdem-teflon-tava-32-cm-kirmizi_1000x1000_1.jpg",
+            "https://www.korkmazstore.com.tr/korkmaz-casta-yuvarlak-28-cm-grill-dokum-tava-a2847-dokum-tava-6578-80-B.jpg"
+        ],
+        "comments": [],
+        "brand": "Tefal"
+    },
+    {
+        "id": "7",
+        "name": "Teflon Tava",
+        "description": "Paslanmaz çelik tava",
+        "mainPhoto": "https://www.korkmazstore.com.tr/korkmaz-casta-yuvarlak-28-cm-grill-dokum-tava-a2847-dokum-tava-6578-80-B.jpg",
+        "rate": 4,
+        "price": 300,
+        "category": "tava",
+        "discountRate": 0.8,
+        "stockQuantity": 70,
+        "photos": [
+            "https://cdn.bernardo.com.tr/rosin-granit-tava-30-cm-bronz-kahve-8882-74-O.jpg",
+            "https://cdn.tekzen.com.tr/images/product/erdemhaslon/2817150/erdemhaslon-erdem-teflon-tava-32-cm-kirmizi_1000x1000_1.jpg"
+        ],
+        "comments": [],
+        "brand": "Tefal"
+    }
+]

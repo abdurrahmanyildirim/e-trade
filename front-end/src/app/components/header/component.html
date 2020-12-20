@@ -1,0 +1,15 @@
+<main class="navbar">
+  <div class="navbar-container">
+    <div class="brand">E-TRADER WEB SİTE</div>
+    <div class="tab" routerLink="'main'">Ana Sayfa</div>
+    <div class="spacer"></div>
+    <kendo-badge-container>
+      <kendo-icon class="icon" routerLink="cart" [name]="'shopping-cart'"></kendo-icon>
+      <kendo-badge class="badge" [position]="'edge'" [themeColor]="'error'">
+        {{cartLength}}
+      </kendo-badge>
+    </kendo-badge-container>
+    <div class="divider"></div>
+    <kendo-icon class="icon" [name]="'user'"></kendo-icon>
+  </div>
+</main>

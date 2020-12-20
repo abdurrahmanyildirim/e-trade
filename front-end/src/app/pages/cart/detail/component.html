@@ -1,0 +1,43 @@
+<main class="container">
+  <div class="order-list-container">
+    <div class="titles">
+      <div class="section photo">Resim</div>
+      <div class="section info">Ürün Bilgisi</div>
+      <div class="section quantity">Adet</div>
+      <div class="section price">Birim Fiyat</div>
+      <div class="section discount">İndirim</div>
+      <div class="section total-price">Ürün Toplam Fiyatı</div>
+      <div class="section remove">Çıkar</div>
+      <div class="section quantity-changer">Artır/Azalt</div>
+    </div>
+    <div class="order" *ngFor="let order of orders">
+      <section class="photo">
+        <img [src]="order.mainPhoto" alt="Main-Photo" class="photo" />
+      </section>
+      <section class="section info">
+        {{order.name}} <br />
+        <span class="brand-text">Marka : {{order.brand}}</span>
+      </section>
+      <section class="section quantity">{{order.quantity}}</section>
+      <section class="section price">{{order.price | number:'.2' }} TL</section>
+      <section class="section discount">%{{order.discountRate * 100}}</section>
+      <section class="section total-price">
+        {{(order.price - order.price *order.discountRate) * order.quantity | number :'.2'}} TL
+      </section>
+      <section class="section remove">
+        <kendo-icon class="trash-icon" (click)="onOrderRemove(order)" [name]="'trash'"></kendo-icon>
+      </section>
+      <section class="section quantity-change">
+        <kendo-numerictextbox
+          class="quantity-changer"
+          [format]="'n'"
+          [min]="1"
+          [max]="100"
+          [autoCorrect]="true"
+          [(value)]="order.quantity"
+          (valueChange)="emitChanges()"
+        ></kendo-numerictextbox>
+      </section>
+    </div>
+  </div>
+</main>

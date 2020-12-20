@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+}
+
+.header {
+  z-index: 1001;
+}

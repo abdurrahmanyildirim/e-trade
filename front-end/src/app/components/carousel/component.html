@@ -1,0 +1,29 @@
+<!-- <main class="container" #container>
+  <div class="slider left" *ngIf="showButton" (click)="decreaseCurrentPhoto()">
+    <button mat-fab class="btn" [disabled]="currentPhoto===0">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+
+  <img class="photo" src="{{photos[currentPhoto].pic}}" alt="picture" />
+
+  <div class="slider right" *ngIf="showButton" (click)="increaseCurrentPhoto()">
+    <button mat-fab class="btn" [disabled]="(photos.length-1)===currentPhoto">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+</main> -->
+
+<kendo-scrollview
+  [data]="photos"
+  [width]="'1024px'"
+  [height]="'512px'"
+  [arrows]="arrows"
+  [endless]="true"
+>
+  <ng-template let-item="item">
+    <div class="cover">
+      <img src="{{item.pic}}" alt="Resim" draggable="false" class="photo" />
+    </div>
+  </ng-template>
+</kendo-scrollview>

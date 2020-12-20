@@ -1,0 +1,31 @@
+<main class="main-container">
+  <section class="operations">
+    <main class="container">
+      <section *ngIf="orderStatus === -1">
+        There will be Form
+
+        <div class="finish-order">
+          <button kendoButton class="purchase-button bg-success" (click)="purchaseOrder()">
+            Siparişi Tamamla
+          </button>
+        </div>
+      </section>
+      <section *ngIf="orderStatus === 0" class="section">
+        <kendo-loader [type]="'infinite-spinner'" [themeColor]="'primary'" [size]="'large'">
+        </kendo-loader>
+        <p>Lütfen Bekleyiniz...</p>
+      </section>
+      <section *ngIf="orderStatus === 1" class="section">
+        <kendo-icon class="order-success" [name]="'check-circle'"></kendo-icon>
+        <b>Siparişiniz alındı. En kısa sürede sizinle irtibata geçilecektir.</b>
+      </section>
+      <section *ngIf="orderStatus === 2" class="section"></section>
+    </main>
+  </section>
+  <section class="summary">
+    <span class="summary-title">Sipariş Özeti</span>
+    <span class="summary-info">Toplam {{orders.length}} ürün</span>
+    <span class="summary-info">Toplam Fiyat : {{totalCost | number:'.2'}} TL</span>
+    <button kendoButton class="purchase-button bg-success" (click)="navigateToCart()">Siparişi Düzenle</button>
+  </section>
+</main>

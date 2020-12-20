@@ -1,0 +1,46 @@
+.container {
+  width: 200px;
+  height: 278px;
+  padding: 20px 10px 10px 10px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: medium;
+  box-shadow: 0 0 6px rgba(30, 37, 54, 0.3);
+  background-color: white;
+}
+
+.header {
+  height: 30px;
+  width: 100%;
+  padding: 0 4px;
+  text-align: center;
+}
+
+.body {
+  height: 180px;
+  width: 180px;
+  margin: auto;
+}
+
+.img {
+  height: 180px;
+  width: 180px;
+}
+
+.footer {
+  width: 100%;
+}
+
+.price {
+  padding-top: 5px;
+  text-align: center;
+}
+
+.button-area {
+  padding-top: 5px;
+}
+
+.button {
+  width: 100%;
+}

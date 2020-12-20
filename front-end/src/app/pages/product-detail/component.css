@@ -1,0 +1,91 @@
+.main-container {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  margin-top: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  width: 900px;
+}
+
+.top {
+  display: flex;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+}
+
+.scroll-view {
+  width: 450px;
+  border: 0;
+}
+
+.photo {
+  width: 450px;
+  height: 450px;
+}
+
+.general {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  padding-top: 10px;
+}
+
+.brand {
+  padding-top: 3px;
+}
+
+.rate {
+  padding-top: 15px;
+}
+
+.desc {
+  padding-top: 10px;
+}
+
+.price {
+  padding-top: 10px;
+  color: #ccc;
+  text-decoration: line-through;
+}
+
+.operation {
+  margin-top: 2rem;
+}
+
+.numeric {
+  width: 90px;
+}
+
+.button {
+  background-color: #27c007;
+  border: 1px solid #27c007;
+  color: white;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+.star {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  position: relative;
+}
+
+.bottom {
+  padding-bottom: 5px;
+  text-align: center;
+}

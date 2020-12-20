@@ -1,0 +1,70 @@
+<main class="main-container" *ngIf="product">
+  <div class="container">
+    <section class="top">
+      <kendo-scrollview
+        [data]="product.photos"
+        [width]="'450px'"
+        [height]="'450px'"
+        [arrows]="true"
+        [endless]="true"
+        class="scroll-view"
+      >
+        <ng-template let-item="item">
+          <div class="cover">
+            <img src="{{item}}" alt="Resim" draggable="false" class="photo" />
+          </div>
+        </ng-template>
+      </kendo-scrollview>
+
+      <section class="general">
+        <div class="info">
+          <div class="name">{{product.name}}</div>
+          <div class="brand text-primary font-label2">{{product.brand}}</div>
+          <div class="rate">
+            <span *ngFor="let rate of [1,2,3,4,5]">
+              <span class="star-icon star" *ngIf="product.rate-rate >= 0"></span>
+              <span
+                class="half-plus-quarter-star-icon star"
+                *ngIf="product.rate-rate === -0.25"
+              ></span>
+              <span class="half-star-icon star" *ngIf="product.rate-rate === -0.50"></span>
+              <span class="quarter-star-icon star" *ngIf="product.rate-rate === -0.75"></span>
+              <span class="empty-star-icon star" *ngIf="product.rate-rate <=-1"></span>
+            </span>
+          </div>
+          <div class="desc">{{product.description}}</div>
+          <div class="price">
+            <span class="font-bold2">{{product.price | number : '.2'}} TL</span>
+          </div>
+          <div class="discounted-price">
+            <span class="font-bold2"
+              >{{(product.price - product.price *product.discountRate) | number : '.2'}} TL
+              <span>%{{product.discountRate * 100}} indirimli</span></span
+            >
+          </div>
+        </div>
+        <div class="operation">
+          <kendo-numerictextbox
+            class="numeric"
+            [(value)]="quantity"
+            [format]="'n'"
+            [min]="1"
+            [max]="100"
+            [autoCorrect]="true"
+          >
+          </kendo-numerictextbox>
+          <button
+            class="button"
+            [icon]="'cart'"
+            kendoButton
+            (click)="addTocartClick.next(product)"
+          >
+            Sepete Ekle
+          </button>
+        </div>
+      </section>
+    </section>
+    <hr>
+    <section class="bottom">Burada yorum yapma olacak</section>
+  </div>
+</main>

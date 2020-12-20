@@ -1,0 +1,76 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.order-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.titles {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+}
+
+.order {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+}
+
+.section {
+  text-align: center;
+}
+
+.photo {
+  width: 90px;
+}
+
+.info {
+  width: 200px;
+}
+
+.quantity {
+  width: 50px;
+}
+
+.price {
+  width: 80px;
+}
+
+.discount {
+  width: 55px;
+}
+
+.total-price {
+  width: 150px;
+}
+
+.remove {
+  width: 50px;
+}
+
+.trash-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.trash-icon:hover {
+  color: rgb(194, 53, 53);
+}
+
+.quantity-changer {
+  width: 90px;
+}
+
+.brand-text {
+  font-size: 12px;
+}

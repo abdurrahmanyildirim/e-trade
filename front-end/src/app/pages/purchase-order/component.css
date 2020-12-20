@@ -1,0 +1,60 @@
+.main-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.operations {
+  width: 900px;
+}
+
+.summary {
+  width: 180px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 15px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.summary-title {
+  font-weight: bold;
+  font-size: 18px;
+  padding: 2px 0 10px 0;
+}
+
+.summary-info {
+  font-weight: 500;
+  font-size: 14px;
+  padding: 2px 0 10px 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+}
+
+.finish-order {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.order-success {
+  font-size: 60px;
+  display: block;
+  cursor: pointer;
+  color: rgb(64, 235, 64);
+}
+
+.section {
+  /* min-height: 100px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,19 @@
+<main class="container">
+  <div class="header">{{product.name}}</div>
+  <div class="body">
+    <img class="img" [src]="product.mainPhoto" [alt]="product.name" />
+  </div>
+  <div class="footer">
+    <div class="price">{{product.price}} TL</div>
+    <div class="button-area">
+      <button
+        routerLink="/product-detail/{{product.id}}"
+        class="button"
+        kendoButton
+        [primary]="true"
+      >
+        İncele
+      </button>
+    </div>
+  </div>
+</main>

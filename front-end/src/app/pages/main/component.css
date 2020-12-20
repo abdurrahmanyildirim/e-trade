@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 10px;
+}
+
+.carousel-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  width: 854px;
+  height: 640px;
+}
