@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { isPresent } from 'src/app/shared/util/common';
 
@@ -11,9 +12,12 @@ export class HeaderComponent implements OnInit {
   value = '';
   hasCartItem = false;
   cartLength = 0;
-  constructor(private cartService: CartService) {}
+  isAuth = false;
+
+  constructor(private cartService: CartService, public authService: AuthService) {}
   ngOnInit(): void {
     this.checkCart();
+    this.isAuth = this.authService.loggedIn();
   }
 
   checkCart(): void {

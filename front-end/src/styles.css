@@ -82,6 +82,15 @@ html {
   line-height: 33px;
 }
 
+.myClass {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
 /* .text-primary {
   color: #5d5d5d;
 } */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

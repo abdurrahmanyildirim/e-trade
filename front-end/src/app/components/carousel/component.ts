@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-carousel',
@@ -6,22 +7,34 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./component.css']
 })
 export class CarouselComponent {
-  public arrows = true;
   photos = [
     {
+      id: '0',
       pic: 'https://www.webtrakya.com/images/e-ticaret-sitesi.jpg'
     },
     {
+      id: '1',
       pic:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKTA7uPPKpgKCvtlWssZMQ7fcZ23MnSL6BxQ&usqp=CAU'
-    },
-    {
-      pic:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi1t0dtRA5XrwcpeENfBOPSLswPAe0eW2smA&usqp=CAU'
-    },
-    {
-      pic:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwssQ5-t6evusu6Z82sE23rQmv4lYceYaG6w&usqp=CAU'
     }
   ];
+
+  customOptions: OwlOptions = {
+    loop: true,
+    margin: 10,
+    autoplay: true,
+    navText: ['Previous', 'Next'],
+    responsive: {
+      0: {
+        items: 1
+      },
+      480: {
+        items: 2
+      },
+      940: {
+        items: 3
+      }
+    },
+    nav: true
+  };
 }

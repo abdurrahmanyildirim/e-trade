@@ -1,13 +1,13 @@
 <main class="container">
   <div class="header">{{product.name}}</div>
   <div class="body">
-    <img class="img" [src]="product.mainPhoto" [alt]="product.name" />
+    <img class="img" [src]="product.photos[0]" [alt]="product.name" />
   </div>
   <div class="footer">
     <div class="price">{{product.price}} TL</div>
     <div class="button-area">
       <button
-        routerLink="/product-detail/{{product.id}}"
+        routerLink="/product-detail/{{product._id}}"
         class="button"
         kendoButton
         [primary]="true"

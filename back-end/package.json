@@ -1,0 +1,20 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cloudinary": "^1.23.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.8"
+  }
+}

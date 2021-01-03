@@ -41,7 +41,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   getProductById(): void {
     const subs = this.productService.allProducts().subscribe({
       next: (products) => {
-        this.product = products.find((product) => (product.id === this.productId));
+        this.product = products.find((product) => product._id === this.productId);
       }
     });
     this.subscription.add(subs);
@@ -50,14 +50,14 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   initAddToCartStream(): void {
     const subs = this.addTocartClick.pipe(debounceTime(200)).subscribe({
       next: (product: Product) => {
-        let newOrder = this.orders.find((order) => order.productId === product.id);
+        let newOrder = this.orders.find((order) => order.productId === product._id);
         if (isPresent(newOrder)) {
-          this.orders.find((order) => order.productId === product.id).quantity += this.quantity;
+          this.orders.find((order) => order.productId === product._id).quantity += this.quantity;
         } else {
           newOrder = {
-            productId: product.id,
+            productId: product._id,
             discountRate: product.discountRate,
-            mainPhoto: product.mainPhoto,
+            mainPhoto: product.photos[0],
             name: product.name,
             price: product.price,
             quantity: this.quantity,

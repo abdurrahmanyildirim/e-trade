@@ -1,15 +1,17 @@
-<main class="navbar">
+<main class="custom-navbar">
   <div class="navbar-container">
     <div class="brand">E-TRADER WEB SİTE</div>
-    <div class="tab" routerLink="'main'">Ana Sayfa</div>
+    <div class="tab" routerLink="main">Ana Sayfa</div>
     <div class="spacer"></div>
-    <kendo-badge-container>
+    <kendo-badge-container *ngIf="isAuth">
       <kendo-icon class="icon" routerLink="cart" [name]="'shopping-cart'"></kendo-icon>
       <kendo-badge class="badge" [position]="'edge'" [themeColor]="'error'">
         {{cartLength}}
       </kendo-badge>
     </kendo-badge-container>
+    <div class="tab" routerLink="login" *ngIf="!isAuth">Giriş Yap</div>
     <div class="divider"></div>
-    <kendo-icon class="icon" [name]="'user'"></kendo-icon>
+    <div class="tab" routerLink="register" *ngIf="!isAuth">Üye Ol</div>
+    <kendo-icon class="icon" [name]="'user'" *ngIf="isAuth"></kendo-icon>
   </div>
 </main>

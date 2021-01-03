@@ -1,8 +1,7 @@
 <main class="container">
-  <section class="carousel-section" *ngIf="carousel">
+  <!-- <section class="carousel-section">
     <app-carousel></app-carousel>
-  </section>
-
+  </section> -->
   <section class="products" *ngIf="products">
     <app-card *ngFor="let product of products" [product]="product"></app-card>
   </section>

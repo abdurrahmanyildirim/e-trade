@@ -1,17 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
-import { Category, Product } from '../../models/product';
+import { Product } from '../../models/product';
+import { ConfigService } from '../site/config.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ProductService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService: ConfigService) {}
 
   allProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(environment.domain + 'products.json');
+    return this.http.get<Product[]>(this.configService.config.mockUrl + 'products.json');
   }
 
   // getProductsByCategory(category: Category) {

@@ -1,7 +1,8 @@
 <main class="container">
-  <app-header class="header"></app-header>
-  <div class="main">
-    <router-outlet></router-outlet>
+  <b *ngIf="!configService.configInited">Yükleniyor...</b>
+  <app-header class="header" *ngIf="configService.configInited"></app-header>
+  <div class="custom-main" *ngIf="configService.configInited">
+    <router-outlet *ngIf="configService.configInited"></router-outlet>
   </div>
-  <app-footer class="footer"></app-footer>
+  <app-footer *ngIf="configService.configInited"></app-footer>
 </main>
