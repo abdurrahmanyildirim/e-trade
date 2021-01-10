@@ -7,7 +7,7 @@
           <mat-form-field>
             <input type="text" matInput placeholder="İsim" formControlName="firstName" />
             <mat-error
-              *ngIf="form.get('firstName').hasError('required') && form.get('firstName').touched"
+              *ngIf="(form.get('firstName').hasError('required') || form.get('firstName').hasError('isNull') )&& form.get('firstName').touched"
             >
               *İsim alanı zorunlu.
             </mat-error>
@@ -23,7 +23,7 @@
           <mat-form-field>
             <input type="text" matInput placeholder="soyisim" formControlName="lastName" />
             <mat-error
-              *ngIf="form.get('lastName').hasError('required') && form.get('lastName').touched"
+              *ngIf="(form.get('lastName').hasError('required') || form.get('firstName').hasError('isNull') )&& form.get('lastName').touched"
             >
               *Soyisim alanı zorunlu.
             </mat-error>
@@ -37,7 +37,9 @@
         <p>
           <mat-form-field>
             <input type="text" matInput placeholder="E-Mail" formControlName="email" />
-            <mat-error *ngIf="form.get('email').hasError('required') && form.get('email').touched">
+            <mat-error
+              *ngIf="(form.get('email').hasError('required') || form.get('firstName').hasError('isNull') )&& form.get('email').touched"
+            >
               *Email alanı zorunlu.
             </mat-error>
           </mat-form-field>
@@ -46,7 +48,7 @@
           <mat-form-field>
             <input type="password" matInput placeholder="Şifre" formControlName="password" />
             <mat-error
-              *ngIf="form.get('password').hasError('required') && form.get('password').touched"
+              *ngIf="(form.get('password').hasError('required') || form.get('firstName').hasError('isNull')) && form.get('password').touched"
             >
               *Şifre zorunlu.
             </mat-error>
@@ -66,14 +68,20 @@
               formControlName="confirmPassword"
             />
             <mat-error
-              *ngIf="form.get('confirmPassword').invalid && form.get('confirmPassword').touched"
+              *ngIf="form.get('confirmPassword').hasError('isMatching') && form.get('confirmPassword').touched"
             >
               *Lütfen şifrenizi doğrulayın.
             </mat-error>
           </mat-form-field>
         </p>
         <div class="button">
-          <button type="submit" class="login-button" [disabled]="!form.valid" mat-raised-button>
+          <button
+            type="submit"
+            class="login-button"
+            color="primary"
+            [disabled]="!form.valid"
+            mat-raised-button
+          >
             Üye Ol
           </button>
         </div>

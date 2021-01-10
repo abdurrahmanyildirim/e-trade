@@ -11,7 +11,7 @@
       >
         <ng-template let-item="item">
           <div class="cover">
-            <img src="{{item}}" alt="Resim" draggable="false" class="photo" />
+            <img src="{{item.path}}" alt="Resim" draggable="false" class="photo" />
           </div>
         </ng-template>
       </kendo-scrollview>
@@ -53,18 +53,13 @@
             [autoCorrect]="true"
           >
           </kendo-numerictextbox>
-          <button
-            class="button"
-            [icon]="'cart'"
-            kendoButton
-            (click)="addTocartClick.next(product)"
-          >
+          <button class="button" [icon]="'cart'" kendoButton (click)="addTocartClick.next(product)">
             Sepete Ekle
           </button>
         </div>
       </section>
     </section>
-    <hr>
+    <hr />
     <section class="bottom">Burada yorum yapma olacak</section>
   </div>
 </main>

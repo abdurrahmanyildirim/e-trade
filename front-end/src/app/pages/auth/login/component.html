@@ -2,23 +2,37 @@
   <mat-card>
     <mat-card-title>Giriş Yap</mat-card-title>
     <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <form [formGroup]="form" (ngSubmit)="login()">
         <p>
           <mat-form-field>
             <input type="text" matInput placeholder="E-Mail" formControlName="email" />
+            <mat-error *ngIf="form.get('email').hasError('required')&& form.get('email').touched">
+              *Email alanı zorunlu.
+            </mat-error>
           </mat-form-field>
         </p>
 
         <p>
           <mat-form-field>
             <input type="password" matInput placeholder="Şifre" formControlName="password" />
+            <mat-error
+              *ngIf="form.get('password').hasError('required')&& form.get('email').touched"
+            >
+              *Şifre alanı zorunlu.
+            </mat-error>
           </mat-form-field>
         </p>
 
-        <!-- <p *ngIf="error" class="error">{{ error }}</p> -->
-
         <div class="button">
-          <button type="submit" class="login-button" mat-raised-button>Giriş Yap</button>
+          <button
+            type="submit"
+            class="login-button"
+            color="primary"
+            [disabled]="!form.valid"
+            mat-raised-button
+          >
+            Giriş Yap
+          </button>
         </div>
       </form>
     </mat-card-content>

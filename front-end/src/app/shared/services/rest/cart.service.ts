@@ -1,8 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { Order } from '../../models/order';
 import { StorageKey } from '../../models/storage';
 import { isPresent } from '../../util/common';
+import { ConfigService } from '../site/config.service';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -12,40 +14,48 @@ export class CartService implements OnDestroy {
   subs = new Subscription();
   public cart = new BehaviorSubject<Order[]>([]);
 
-  constructor(private authService: AuthService) {
-    this.initCartListener();
+  constructor(
+    private authService: AuthService,
+    private http: HttpClient,
+    private configService: ConfigService
+  ) {
     this.initCart();
-  }
-
-  purchaseOrder(): void {
-    // this
   }
 
   initCart(): void {
     if (this.authService.loggedIn()) {
-      console.log('Veri tabanından dönen data');
+      this.getCartFromDb().subscribe((cart) => {
+        this.cart.next(cart);
+      });
     } else {
       const orders = JSON.parse(window.localStorage.getItem(StorageKey.Cart)) || [];
       this.cart.next(orders);
     }
   }
 
-  initCartListener(): void {
-    const subs = this.cart.subscribe({
-      next: (orders) => {
-        this.updateCart(orders);
-      },
-      error: (err) => console.log(err)
-    });
-    this.subs.add(subs);
-  }
-
   updateCart(orders: Order[]): void {
     if (this.authService.loggedIn()) {
-      console.log('Veri tabanına');
+      this.updateDbCart(orders).subscribe({
+        next: (data) => {
+          this.cart.next(orders);
+        },
+        error: (err) => console.log(err)
+      });
     } else {
       this.updateLocaleStorage(orders);
+      this.cart.next(orders);
     }
+  }
+
+  updateDbCart(orders: Order[]): Observable<Order[]> {
+    return this.http.post<Order[]>(
+      this.configService.config.domain + 'operation/update-cart',
+      orders
+    );
+  }
+
+  getCartFromDb(): Observable<Order[]> {
+    return this.http.get<Order[]>(this.configService.config.domain + 'operation/cart');
   }
 
   updateLocaleStorage(orders: Order[]): void {

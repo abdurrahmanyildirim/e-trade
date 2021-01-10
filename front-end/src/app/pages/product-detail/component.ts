@@ -48,7 +48,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   }
 
   initAddToCartStream(): void {
-    const subs = this.addTocartClick.pipe(debounceTime(200)).subscribe({
+    const sub = this.addTocartClick.pipe(debounceTime(200)).subscribe({
       next: (product: Product) => {
         let newOrder = this.orders.find((order) => order.productId === product._id);
         if (isPresent(newOrder)) {
@@ -57,7 +57,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
           newOrder = {
             productId: product._id,
             discountRate: product.discountRate,
-            mainPhoto: product.photos[0],
+            photo: product.photos[0].path,
             name: product.name,
             price: product.price,
             quantity: this.quantity,
@@ -66,10 +66,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
           } as Order;
           this.orders.push(newOrder);
         }
-        this.cartService.cart.next(this.orders);
+        this.cartService.updateCart(this.orders);
       }
     });
-    this.subscription.add(subs);
+    this.subscription.add(sub);
   }
 
   ngOnDestroy(): void {

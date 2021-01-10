@@ -6,10 +6,11 @@ import { PagesModule } from './pages/module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/module';
 import { FooterModule } from './components/footer/module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { ConfigService } from './shared/services/site/config.service';
 import { ProductService } from './shared/services/rest/product.service';
+import { RestInterceptor } from './shared/services/rest/rest-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ import { ProductService } from './shared/services/rest/product.service';
       deps: [ConfigService],
       multi: true
     },
+    { provide: HTTP_INTERCEPTORS, useClass: RestInterceptor, multi: true },
     ProductService
   ],
   bootstrap: [AppComponent]

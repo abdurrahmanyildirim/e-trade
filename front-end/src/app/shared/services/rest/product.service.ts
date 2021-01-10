@@ -9,7 +9,7 @@ export class ProductService {
   constructor(private http: HttpClient, private configService: ConfigService) {}
 
   allProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.configService.config.mockUrl + 'products.json');
+    return this.http.get<Product[]>(this.configService.config.domain + 'product/products');
   }
 
   // getProductsByCategory(category: Category) {

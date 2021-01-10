@@ -1,9 +1,9 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
-const accountController = require('../controllers/accountController');
+const controller = require('../controllers/accountController');
 
-router.post('/upload', accountController.imageUpload);
-router.get('/photo', accountController.getPhoto);
-router.post('/change-password', accountController.changePassword);
+router.post('/upload', controller.imageUpload);
+router.get('/photo', controller.getPhoto);
+router.post('/change-password', controller.changePassword);
 
 module.exports = router;

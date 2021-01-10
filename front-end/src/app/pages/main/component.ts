@@ -20,7 +20,7 @@ export class MainComponent implements OnDestroy {
 
   initProducts(): void {
     this.sub = this.productService.allProducts().subscribe({
-      next: (results: Product[]) => {
+      next: (results) => {
         this.products = results;
       },
       error: (err) => console.log(err)

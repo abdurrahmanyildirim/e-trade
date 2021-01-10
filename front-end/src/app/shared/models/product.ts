@@ -6,16 +6,23 @@ export interface Product {
   description: string;
   discountRate: number;
   stockQuantity: number;
-  photos: string[];
+  photos: CloudinaryPhoto[];
   rate: number;
   comments: Comment[];
   brand: string;
 }
 
 export interface Comment {
+  _id: string;
   name: string;
   description: string;
   rate: number;
+}
+
+export interface CloudinaryPhoto {
+  _id: string;
+  path: string;
+  publicId: string;
 }
 
 export enum Category {

@@ -7,7 +7,7 @@ export interface Order {
     category: Category;
     price: number;
     discountRate: number;
-    mainPhoto: string;
+    photo: string;
     quantity?: number;
 }
 
