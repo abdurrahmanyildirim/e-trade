@@ -33,6 +33,10 @@ export class CartService implements OnDestroy {
     }
   }
 
+  purchaseOrder(): Observable<any> {
+    return this.http.get(this.configService.config.domain + 'operation/purchase-order');
+  }
+
   updateCart(orders: Order[]): void {
     if (this.authService.loggedIn()) {
       this.updateDbCart(orders).subscribe({

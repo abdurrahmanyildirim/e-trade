@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const statusSchema = new Schema({
     key: Number,
-    name: String
+    desc: String
 });
 
 const status = mongoose.model('Status', statusSchema);

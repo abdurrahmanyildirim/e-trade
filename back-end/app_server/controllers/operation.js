@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const Product = require('../models/product');
+const Order = require('../models/order');
+const { use } = require('../routes/authRoute');
 
 module.exports.updateCart = (req, res, next) => {
   User.findOne({ _id: req.id }, (err, user) => {
@@ -18,7 +20,6 @@ module.exports.updateCart = (req, res, next) => {
       return res.status(200).send({ message: 'Sepet güncellendi.' });
     });
   });
-  // return res.status(200).send({ message: 'Başarılı' });
 };
 
 module.exports.getCart = (req, res) => {
@@ -32,8 +33,6 @@ module.exports.getCart = (req, res) => {
       }
       const orders = [];
       const cart = user.cart;
-      //   console.log(products);
-      //   console.log(cart);
       cart.forEach((order) => {
         const product = products.find((prod) => order.productId == prod.id);
         if (product) {
@@ -43,7 +42,7 @@ module.exports.getCart = (req, res) => {
             name: product.name,
             category: product.category,
             price: product.price,
-            dicountRate: product.dicountRate,
+            discountRate: product.discountRate,
             photo: product.photos[0].path,
             quantity: order.quantity
           });
@@ -51,17 +50,51 @@ module.exports.getCart = (req, res) => {
       });
       return res.status(200).send(orders);
     });
+  });
+};
 
-    // const orders = req.body;
-    // const newCart = orders.map((order) => {
-    //   return { productId: order.productId, quantity: order.quantity };
-    // });
-    // user.cart = newCart;
-    // user.save((err) => {
-    //   if (err) {
-    //     return res.status(404).send({ message: 'Kayıt bir hata meydana geldi.' });
-    //   }
-    //   return res.status(200).send({ message: 'Sepet güncellendi.' });
-    // });
+module.exports.purchaseOrder = (req, res) => {
+  User.findOne({ _id: req.id }, (err, user) => {
+    if (err) {
+      return res.status(400).send({ message: 'Kullanıcı bulunamadı' });
+    }
+    Product.find((err, products) => {
+      if (err) {
+        return res.status(400).send({ message: 'Bir hata meydana geldi.' });
+      }
+      const orderedProducts = [];
+      const cart = user.cart;
+      cart.forEach((order) => {
+        const product = products.find((prod) => order.productId == prod.id);
+        if (product) {
+          orderedProducts.push({
+            productId: product._id,
+            quantity: cart.quantity,
+            discountRate: product.discountRate,
+            price: product.price
+          });
+        }
+      });
+      const newOrder = new Order({
+        userId: req.id,
+        isActive: true,
+        date: Date.now(),
+        status: [{ key: 0, desc: 'Siparişiniz alındı.', date: Date.now() }],
+        products: orderedProducts
+      });
+      newOrder.save((err) => {
+        if (err) {
+          return res.status(404).send({ message: 'Beklenmeyen bir hata meydana geldi.' });
+        }
+        user.cart = [];
+        const newUser = new User(user);
+        newUser.save((err) => {
+          if (err) {
+            console.log(err);
+          }
+          return res.status(200).send({ message: 'Sipariş verildi.' });
+        });
+      });
+    });
   });
 };

@@ -15,28 +15,35 @@ import { SlideInOutAnimation } from './animations';
 })
 export class CartComponent implements OnInit, OnDestroy {
   orders: Order[];
-  sub: Subscription;
+  subs = new Subscription();
   quantityChange = new Subject<Order[]>();
   totalCost: number;
 
-  constructor(private cartService: CartService, private router: Router) {
-    this.orders = this.cartService.cart.value;
-  }
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
+    this.initOrders();
     this.initQuantityChange();
     this.calculateTotalCost();
   }
 
-  initQuantityChange(): void {
-    this.sub = this.quantityChange.pipe(debounceTime(500)).subscribe({
+  initOrders(): void {
+    this.cartService.cart.subscribe({
       next: (orders) => {
-        this.cartService.cart.next(orders);
-        this.calculateTotalCost();
         this.orders = orders;
+      }
+    });
+  }
+
+  initQuantityChange(): void {
+    const sub = this.quantityChange.pipe(debounceTime(500)).subscribe({
+      next: (orders) => {
+        this.cartService.updateCart(orders);
+        this.calculateTotalCost();
       },
       error: (err) => console.log(err)
     });
+    this.subs.add(sub);
   }
 
   onOrderListChange(orders: Order[]): void {
@@ -56,8 +63,8 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (isPresent(this.sub)) {
-      this.sub.unsubscribe();
+    if (isPresent(this.subs)) {
+      this.subs.unsubscribe();
     }
   }
 }
