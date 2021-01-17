@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { Contact } from 'src/app/pages/purchase-order/model';
 import { Order } from '../../models/order';
 import { StorageKey } from '../../models/storage';
 import { isPresent } from '../../util/common';
@@ -33,8 +34,11 @@ export class CartService implements OnDestroy {
     }
   }
 
-  purchaseOrder(): Observable<any> {
-    return this.http.get(this.configService.config.domain + 'operation/purchase-order');
+  purchaseOrder(contactInfo: Contact): Observable<any> {
+    return this.http.post(
+      this.configService.config.domain + 'operation/purchase-order',
+      contactInfo
+    );
   }
 
   updateCart(orders: Order[]): void {

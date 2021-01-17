@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from '@progress/kendo-angular-buttons';
-import { IconModule } from '@progress/kendo-angular-icons';
-import { IndicatorsModule } from '@progress/kendo-angular-indicators';
-import { InputsModule } from '@progress/kendo-angular-inputs';
 import { PurchaseOrderComponent } from './component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [PurchaseOrderComponent],
@@ -16,12 +16,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CommonModule,
     BrowserModule,
     FormsModule,
-    InputsModule,
-    ButtonModule,
-    IconModule,
-    IndicatorsModule,
     RouterModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule
   ],
   exports: [PurchaseOrderComponent]
 })

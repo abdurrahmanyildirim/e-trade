@@ -2,17 +2,91 @@
   <section class="operations">
     <main class="container">
       <section *ngIf="orderStatus === -1">
-        There will be Form
+        <form [formGroup]="form" (ngSubmit)="purchaseOrder()">
+          <p>
+            <mat-form-field class="example-full-width" style="width: 310px">
+              <mat-label>Tel No</mat-label>
+              <span matPrefix>0 &nbsp;</span>
+              <input
+                type="tel"
+                matInput
+                maxlength="10"
+                minlength="10"
+                formControlName="phone"
+                required
+              />
+              <mat-icon matSuffix>mode_edit</mat-icon>
+              <mat-error
+                *ngIf="(form.get('phone').hasError('required') || form.get('phone').hasError('isNull') )&& form.get('phone').touched"
+              >
+                *Telefon zorunlu.
+              </mat-error>
+              <mat-error
+                *ngIf="form.get('phone').hasError('maxlength') || form.get('phone').hasError('minlength')"
+              >
+                *Telefon numarası 10 haneli olmalıdır.
+              </mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="example-full-width" style="width: 150px; margin-right: 10px">
+              <mat-label>Şehir</mat-label>
+              <input matInput formControlName="city" required />
+              <mat-error
+                *ngIf="(form.get('city').hasError('required') || form.get('city').hasError('isNull') )&& form.get('city').touched"
+              >
+                *Şehir zorunlu.
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" style="width: 150px">
+              <mat-label>İlçe</mat-label>
+              <input matInput formControlName="district" required />
+              <mat-error
+                *ngIf="(form.get('district').hasError('required') || form.get('district').hasError('isNull') )&& form.get('district').touched"
+              >
+                *İlçe zorunlu.
+              </mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="example-full-width" style="width: 310px">
+              <mat-label>Adres</mat-label>
+              <textarea matInput formControlName="address" required></textarea>
+              <mat-error
+                *ngIf="(form.get('address').hasError('required') || form.get('address').hasError('isNull') )&& form.get('address').touched"
+              >
+                *Adres zorunlu.
+              </mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-checkbox class="example-margin" color="primary" formControlName="contractChecked"
+              >Mesafeli satış sözleşmesini okudum ve kabul ediyorum.</mat-checkbox
+            >
+            <mat-error
+              *ngIf="(form.get('contractChecked').hasError('required') || form.get('contractChecked').hasError('isNull') )&& form.get('contractChecked').touched"
+            >
+              *Sözleşmeyi kabul etmek zorunludur.
+            </mat-error>
+          </p>
+          <div class="finish-order">
+            <button
+              mat-button
+              [disabled]="!form.valid"
+              type="submit"
+              class="purchase-button bg-success"
+              (click)="purchaseOrder()"
+            >
+              Siparişi Tamamla
+            </button>
 
-        <div class="finish-order">
-          <button kendoButton class="purchase-button bg-success" (click)="purchaseOrder()">
-            Siparişi Tamamla
-          </button>
-        </div>
+            <!-- <button class="login-button" color="primary"  mat-raised-button>
+              Üye Ol
+            </button> -->
+          </div>
+        </form>
       </section>
       <section *ngIf="orderStatus === 0" class="section">
-        <!-- <kendo-loader [type]="'infinite-spinner'" [themeColor]="'primary'" [size]="'large'">
-        </kendo-loader> -->
         <mat-progress-spinner
           class="example-margin"
           [color]="'primary'"
@@ -23,7 +97,9 @@
         <p>Lütfen Bekleyiniz...</p>
       </section>
       <section *ngIf="orderStatus === 1" class="section">
-        <kendo-icon class="order-success" [name]="'check-circle'"></kendo-icon>
+        <mat-icon aria-hidden="false" class="order-success" aria-label="Example home icon"
+          >check_circle</mat-icon
+        >
         <b>Siparişiniz alındı. En kısa sürede sizinle irtibata geçilecektir.</b>
       </section>
       <section *ngIf="orderStatus === 2" class="section">Hata meydana geldi</section>
@@ -33,7 +109,7 @@
     <span class="summary-title">Sipariş Özeti</span>
     <span class="summary-info">Toplam {{orders.length}} ürün</span>
     <span class="summary-info">Toplam Fiyat : {{totalCost | number:'.2'}} TL</span>
-    <button kendoButton class="purchase-button bg-success" (click)="navigateToCart()">
+    <button mat-button class="purchase-button bg-success" (click)="navigateToCart()">
       Siparişi Düzenle
     </button>
   </section>
