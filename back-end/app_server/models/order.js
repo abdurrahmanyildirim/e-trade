@@ -20,7 +20,13 @@ const orderSchema = new Schema({
       desc: String,
       date: { type: Date, default: Date.now() }
     }
-  ]
+  ],
+  contactInfo: {
+    city: String,
+    district: String,
+    address: String,
+    phone: String
+  }
 });
 
 const order = mongoose.model('Order', orderSchema);
