@@ -81,12 +81,13 @@ module.exports.purchaseOrder = (req, res) => {
         date: Date.now(),
         status: [{ key: 0, desc: 'Siparişiniz alındı.', date: Date.now() }],
         products: orderedProducts,
-        city: req.body.city,
-        district: req.body.district,
-        address: req.body.address,
-        phone: req.body.phone
+        contactInfo: {
+          city: req.body.city,
+          district: req.body.district,
+          address: req.body.address,
+          phone: req.body.phone
+        }
       });
-      console.log(req.body);
       newOrder.save((err) => {
         if (err) {
           return res.status(404).send({ message: 'Beklenmeyen bir hata meydana geldi.' });
