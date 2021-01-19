@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ButtonModule } from '@progress/kendo-angular-buttons';
-import { InputsModule } from '@progress/kendo-angular-inputs';
-import { ScrollViewModule } from '@progress/kendo-angular-scrollview';
 import { ProductDetailComponent } from './component';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { PhotosComponent } from './photos/component';
 
 @NgModule({
-  declarations: [ProductDetailComponent],
-  imports: [ScrollViewModule, InputsModule, CommonModule, ButtonModule],
+  declarations: [ProductDetailComponent, PhotosComponent],
+  imports: [CommonModule, MatInputModule, FormsModule, MatIconModule, MatButtonModule],
   exports: [ProductDetailComponent]
 })
 export class ProductDetailModule {}

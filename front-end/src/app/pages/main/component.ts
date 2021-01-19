@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
+import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
 @Component({
   selector: 'app-main',
@@ -31,5 +32,6 @@ export class MainComponent implements OnDestroy {
     if (isPresent(this.sub)) {
       this.sub.unsubscribe();
     }
+    ObjectHelper.removeReferances(this);
   }
 }

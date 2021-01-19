@@ -7,6 +7,7 @@ import { Product } from 'src/app/shared/models/product';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
+import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
 @Component({
   selector: 'app-detail',
@@ -76,5 +77,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     if (isPresent(this.subscription)) {
       this.subscription.unsubscribe();
     }
+    ObjectHelper.removeReferances(this);
   }
 }

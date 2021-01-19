@@ -44,13 +44,13 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
       phone: new FormControl('', [
         Validators.required,
         this.nullValidator(),
-        Validators.maxLength(10),
-        Validators.minLength(10)
+        Validators.maxLength(13),
+        Validators.minLength(13)
       ]),
       address: new FormControl('', [Validators.required, this.nullValidator()]),
       city: new FormControl('', [Validators.required, this.nullValidator()]),
       district: new FormControl('', [Validators.required, this.nullValidator()]),
-      contractChecked: new FormControl(false, Validators.required)
+      contractChecked: new FormControl(false, Validators.requiredTrue)
     });
   }
 
@@ -61,6 +61,22 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
         ? null
         : { isNull: { value: false } };
     };
+  }
+
+  onKeypress() {
+    setTimeout(() => {
+      const phone = this.form.value.phone.split(' ').join('');
+      let maskedPhone = '';
+      for (let i = 0; i < phone.length; i++) {
+        maskedPhone += phone[i];
+        if (i === 2 || i === 5 || i === 7) {
+          maskedPhone += ' ';
+        }
+      }
+      this.form.patchValue({
+        phone: maskedPhone
+      });
+    });
   }
 
   listenCart(): void {
@@ -76,7 +92,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
   calculateTotalCost(): void {
     let cost = 0;
     this.orders.forEach((order) => {
-      cost += order.price * order.quantity * order.discountRate;
+      cost += (order.price - order.price * order.discountRate) * order.quantity;
     });
     this.totalCost = cost;
   }
@@ -84,8 +100,12 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
   purchaseOrder(): void {
     if (this.form.valid) {
       this.orderStatus = 0;
+      this.form.patchValue({
+        phone: this.form.value.phone.split(' ').join('')
+      });
       const contactInfo = Object.assign({}, this.form.value);
-      this.timerSub = timer(5000).subscribe({
+      console.log(contactInfo);
+      this.timerSub = timer(10000).subscribe({
         next: () => {
           this.orderSub = this.cartService.purchaseOrder(contactInfo).subscribe({
             next: (response) => {

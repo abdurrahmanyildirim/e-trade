@@ -5,6 +5,7 @@ import { debounceTime } from 'rxjs/operators';
 import { Order } from 'src/app/shared/models/order';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { isPresent } from 'src/app/shared/util/common';
+import { ObjectHelper } from 'src/app/shared/util/helper/object';
 import { SlideInOutAnimation } from './animations';
 
 @Component({
@@ -24,13 +25,13 @@ export class CartComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initOrders();
     this.initQuantityChange();
-    this.calculateTotalCost();
   }
 
   initOrders(): void {
     this.cartService.cart.subscribe({
       next: (orders) => {
         this.orders = orders;
+        this.calculateTotalCost();
       }
     });
   }
@@ -53,7 +54,7 @@ export class CartComponent implements OnInit, OnDestroy {
   calculateTotalCost(): void {
     let cost = 0;
     this.orders.forEach((order) => {
-      cost += order.price * order.quantity * order.discountRate;
+      cost += (order.price - order.price * order.discountRate) * order.quantity;
     });
     this.totalCost = cost;
   }
@@ -66,5 +67,6 @@ export class CartComponent implements OnInit, OnDestroy {
     if (isPresent(this.subs)) {
       this.subs.unsubscribe();
     }
+    ObjectHelper.removeReferances(this);
   }
 }

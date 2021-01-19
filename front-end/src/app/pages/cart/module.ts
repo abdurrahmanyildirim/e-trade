@@ -3,12 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from '@progress/kendo-angular-buttons';
-import { IconModule } from '@progress/kendo-angular-icons';
-import { IndicatorsModule } from '@progress/kendo-angular-indicators';
-import { InputsModule } from '@progress/kendo-angular-inputs';
+import { MatInputModule } from '@angular/material/input';
 import { CartComponent } from './component';
 import { CartDetailComponent } from './detail/component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [CartComponent, CartDetailComponent],
@@ -16,10 +15,9 @@ import { CartDetailComponent } from './detail/component';
     CommonModule,
     BrowserModule,
     FormsModule,
-    InputsModule,
-    ButtonModule,
-    IconModule,
-    IndicatorsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
     RouterModule
   ],
   exports: [CartComponent]

@@ -3,15 +3,16 @@
     <div class="brand">E-TRADER WEB SİTE</div>
     <div class="tab" routerLink="main">Ana Sayfa</div>
     <div class="spacer"></div>
-    <kendo-badge-container *ngIf="isAuth">
-      <kendo-icon class="icon" routerLink="cart" [name]="'shopping-cart'"></kendo-icon>
-      <kendo-badge class="badge" [position]="'edge'" [themeColor]="'error'">
-        {{cartLength}}
-      </kendo-badge>
-    </kendo-badge-container>
+    <button mat-icon-button routerLink="cart" *ngIf="isAuth">
+      <mat-icon [matBadge]="cartLength" matBadgeColor="warn" matBadgeSize="medium"
+        >shopping_cart</mat-icon
+      >
+    </button>
     <div class="tab" routerLink="login" *ngIf="!isAuth">Giriş Yap</div>
     <div class="divider"></div>
     <div class="tab" routerLink="register" *ngIf="!isAuth">Üye Ol</div>
-    <kendo-icon class="icon" [name]="'user'" *ngIf="isAuth"></kendo-icon>
+    <button mat-icon-button routerLink="cart" *ngIf="isAuth">
+      <mat-icon>account_circle</mat-icon>
+    </button>
   </div>
 </main>

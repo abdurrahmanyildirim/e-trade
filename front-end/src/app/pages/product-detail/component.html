@@ -1,21 +1,7 @@
 <main class="main-container" *ngIf="product">
   <div class="container">
     <section class="top">
-      <kendo-scrollview
-        [data]="product.photos"
-        [width]="'450px'"
-        [height]="'450px'"
-        [arrows]="true"
-        [endless]="true"
-        class="scroll-view"
-      >
-        <ng-template let-item="item">
-          <div class="cover">
-            <img src="{{item.path}}" alt="Resim" draggable="false" class="photo" />
-          </div>
-        </ng-template>
-      </kendo-scrollview>
-
+      <app-photos style="width: 450px; height: 550px" [photos]="product.photos"></app-photos>
       <section class="general">
         <div class="info">
           <div class="name">{{product.name}}</div>
@@ -44,16 +30,18 @@
           </div>
         </div>
         <div class="operation">
-          <kendo-numerictextbox
-            class="numeric"
-            [(value)]="quantity"
-            [format]="'n'"
-            [min]="1"
-            [max]="100"
-            [autoCorrect]="true"
+          <mat-form-field class="numeric">
+            <mat-label>Adet</mat-label>
+            <input matInput type="number" min="1" max="100" [(ngModel)]="quantity" />
+          </mat-form-field>
+
+          <button
+            mat-raised-button
+            class="button"
+            color="accent"
+            (click)="addTocartClick.next(product)"
           >
-          </kendo-numerictextbox>
-          <button class="button" [icon]="'cart'" kendoButton (click)="addTocartClick.next(product)">
+            <mat-icon>add_shopping_cart</mat-icon>
             Sepete Ekle
           </button>
         </div>

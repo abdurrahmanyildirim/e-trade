@@ -16,7 +16,7 @@
 .top {
   display: flex;
   padding-bottom: 5px;
-  border-bottom: 1px solid #ccc;
+  /* border-bottom: 1px solid #ccc; */
 }
 
 .scroll-view {
@@ -63,7 +63,7 @@
 }
 
 .operation {
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 .numeric {
@@ -72,9 +72,7 @@
 
 .button {
   background-color: #27c007;
-  border: 1px solid #27c007;
   color: white;
-  font-weight: 600;
   margin-left: 10px;
 }
 

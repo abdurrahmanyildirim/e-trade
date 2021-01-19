@@ -58,16 +58,11 @@
   width: 50px;
 }
 
-.trash-icon {
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.trash-icon:hover {
-  color: rgb(194, 53, 53);
-}
-
 .quantity-changer {
+  width: 50px;
+}
+
+.quantity-change-section {
   width: 90px;
 }
 

@@ -8,7 +8,7 @@
       <div class="section discount">İndirim</div>
       <div class="section total-price">Ürün Toplam Fiyatı</div>
       <div class="section remove">Çıkar</div>
-      <div class="section quantity-changer">Artır/Azalt</div>
+      <div class="section quantity-change-section">Artır/Azalt</div>
     </div>
     <div class="order" *ngFor="let order of orders">
       <section class="photo">
@@ -25,18 +25,22 @@
         {{(order.price - order.price *order.discountRate) * order.quantity | number :'.2'}} TL
       </section>
       <section class="section remove">
-        <kendo-icon class="trash-icon" (click)="onOrderRemove(order)" [name]="'trash'"></kendo-icon>
+        <button mat-icon-button (click)="onOrderRemove(order)">
+          <mat-icon color="warn">remove_shopping_cart</mat-icon>
+        </button>
       </section>
-      <section class="section quantity-change">
-        <kendo-numerictextbox
-          class="quantity-changer"
-          [format]="'n'"
-          [min]="1"
-          [max]="100"
-          [autoCorrect]="true"
-          [(value)]="order.quantity"
-          (valueChange)="emitChanges()"
-        ></kendo-numerictextbox>
+      <section class="section quantity-change-section">
+        <mat-form-field class="quantity-changer">
+          <mat-label>Adet</mat-label>
+          <input
+            matInput
+            type="number"
+            min="1"
+            max="100"
+            [(ngModel)]="order.quantity"
+            (change)="emitChanges()"
+          />
+        </mat-form-field>
       </section>
     </div>
   </div>

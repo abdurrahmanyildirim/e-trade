@@ -45,10 +45,19 @@
 }
 
 .order-success {
+  width: 60px;
+  height: 60px;
   font-size: 60px;
   display: block;
-  cursor: pointer;
   color: rgb(64, 235, 64);
+}
+
+.error-icon {
+  width: 60px;
+  height: 60px;
+  font-size: 60px;
+  display: block;
+  color: #721f27;
 }
 
 .section {
