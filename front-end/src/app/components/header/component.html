@@ -1,7 +1,7 @@
-<main class="custom-navbar">
+<main class="custom-navbar mat-elevation-z5">
   <div class="navbar-container">
-    <div class="brand">E-TRADER WEB SİTE</div>
-    <div class="tab" routerLink="main">Ana Sayfa</div>
+    <div class="brand">ER TRADE</div>
+    <button mat-button routerLink="main">Ana Sayfa</button>
     <div class="spacer"></div>
     <button mat-icon-button routerLink="cart" *ngIf="isAuth">
       <mat-icon [matBadge]="cartLength" matBadgeColor="warn" matBadgeSize="medium"
@@ -11,8 +11,31 @@
     <div class="tab" routerLink="login" *ngIf="!isAuth">Giriş Yap</div>
     <div class="divider"></div>
     <div class="tab" routerLink="register" *ngIf="!isAuth">Üye Ol</div>
-    <button mat-icon-button routerLink="cart" *ngIf="isAuth">
+    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isAuth">
       <mat-icon>account_circle</mat-icon>
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Siparişlerim</button>
+      <button mat-menu-item>Çıkış</button>
+    </mat-menu>
   </div>
 </main>
+
+<!-- <mat-toolbar>
+  <button mat-icon-button>
+    <mat-icon>menu</mat-icon>
+    <div class="brand">ER TRADE</div>
+  </button>
+  <span>My App</span>
+  <span class="example-spacer"></span>
+  <button
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <mat-icon>share</mat-icon>
+  </button>
+</mat-toolbar> -->

@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/module';
 import { FooterModule } from './components/footer/module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { InputsModule } from '@progress/kendo-angular-inputs';
 import { ConfigService } from './shared/services/site/config.service';
 import { ProductService } from './shared/services/rest/product.service';
 import { RestInterceptor } from './shared/services/rest/rest-interceptor';
@@ -21,8 +20,7 @@ import { RestInterceptor } from './shared/services/rest/rest-interceptor';
     PagesModule,
     HeaderModule,
     FooterModule,
-    HttpClientModule,
-    InputsModule
+    HttpClientModule
   ],
   providers: [
     ConfigService,

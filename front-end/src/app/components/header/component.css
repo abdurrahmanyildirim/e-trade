@@ -1,7 +1,6 @@
 .custom-navbar {
-  padding: 10px 0;
+  padding: 5px 0;
   background-color: rgba(22, 36, 50, 0.2);
-  box-shadow: 0 0 6px rgba(30, 37, 54, 0.3);
 }
 
 .navbar-container {

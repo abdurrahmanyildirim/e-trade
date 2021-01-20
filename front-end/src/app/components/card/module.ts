@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from '@progress/kendo-angular-buttons';
 import { CardComponent } from './component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [CardComponent],
-  imports: [CommonModule, RouterModule, ButtonModule],
+  imports: [CommonModule, RouterModule, MatButtonModule],
   exports: [CardComponent]
 })
 export class CardModule {}

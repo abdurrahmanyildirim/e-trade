@@ -1,7 +1,9 @@
 <main class="container">
-  <!-- <section class="carousel-section">
-    <app-carousel></app-carousel>
-  </section> -->
+  <div class="photo">
+    <p class="mat-body-2">Kapıda Ödeme garantisi ile güvenli alışveriş seni bekliyor</p>
+    <p class="mat-body-2">Her türlü ev aletini uygun fiyattan alabilirsiniz.</p>
+  </div>
+  <!-- <img src="assets/img/main-photo.jpg" style="width: 1100px; height: 550px" alt="main" /> -->
   <section class="products" *ngIf="products">
     <app-card *ngFor="let product of products" [product]="product"></app-card>
   </section>
