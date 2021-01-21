@@ -6,6 +6,7 @@ import { RegisterUser } from 'src/app/pages/auth/register/model';
 import { StorageKey } from '../../models/storage';
 import { LoginResponse, User } from '../../models/user';
 import { ConfigService } from '../site/config.service';
+import { CartService } from './cart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,23 @@ export class AuthService {
   currentUser = new BehaviorSubject<User>(JSON.parse(window.localStorage.getItem(StorageKey.User)));
   isAuth = new BehaviorSubject<boolean>(this.loggedIn());
 
-  constructor(private configService: ConfigService, private http: HttpClient) {}
+  constructor(
+    private configService: ConfigService,
+    private http: HttpClient
+  ) // private cartService: CartService
+  {}
 
   login(user: LoginUser): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.configService.config.domain + 'auth/login', user, {
       headers: this.headers
     });
+  }
+
+  logout(): void {
+    window.localStorage.removeItem(StorageKey.User);
+    window.localStorage.removeItem(StorageKey.Token);
+    this.currentUser.next(null);
+    this.isAuth.next(false);
   }
 
   register(user: RegisterUser): Observable<RegisterUser> {

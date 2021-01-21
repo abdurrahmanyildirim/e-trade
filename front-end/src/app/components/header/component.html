@@ -1,41 +1,28 @@
-<main class="custom-navbar mat-elevation-z5">
+<main class="custom-navbar mat-elevation-z3">
   <div class="navbar-container">
     <div class="brand">ER TRADE</div>
-    <button mat-button routerLink="main">Ana Sayfa</button>
+    <button mat-button routerLink="main"><mat-icon>home</mat-icon> Ana Sayfa</button>
     <div class="spacer"></div>
-    <button mat-icon-button routerLink="cart" *ngIf="isAuth">
-      <mat-icon [matBadge]="cartLength" matBadgeColor="warn" matBadgeSize="medium"
-        >shopping_cart</mat-icon
-      >
+    <button mat-button routerLink="cart" class="cart" *ngIf="isAuth">
+      <mat-icon> shopping_cart</mat-icon>
+      Sepetim
+      <div class="custom-badge" *ngIf="cartLength>0">{{cartLength}}</div>
     </button>
-    <div class="tab" routerLink="login" *ngIf="!isAuth">Giriş Yap</div>
-    <div class="divider"></div>
-    <div class="tab" routerLink="register" *ngIf="!isAuth">Üye Ol</div>
-    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isAuth">
+    <button mat-button routerLink="login" *ngIf="!isAuth">
+      <mat-icon>login</mat-icon> Giriş Yap
+    </button>
+    <button mat-button routerLink="register" *ngIf="!isAuth">
+      <mat-icon>person_add_alt_1</mat-icon> Üye Ol
+    </button>
+    <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAuth">
       <mat-icon>account_circle</mat-icon>
+      Hesabım
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>Siparişlerim</button>
-      <button mat-menu-item>Çıkış</button>
+      <button mat-menu-item routerLink="orders">
+        <mat-icon>pending_actions</mat-icon> Siparişlerim
+      </button>
+      <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon> Çıkış</button>
     </mat-menu>
   </div>
 </main>
-
-<!-- <mat-toolbar>
-  <button mat-icon-button>
-    <mat-icon>menu</mat-icon>
-    <div class="brand">ER TRADE</div>
-  </button>
-  <span>My App</span>
-  <span class="example-spacer"></span>
-  <button
-    mat-icon-button
-    class="example-icon favorite-icon"
-    aria-label="Example icon-button with heart icon"
-  >
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
-  </button>
-</mat-toolbar> -->

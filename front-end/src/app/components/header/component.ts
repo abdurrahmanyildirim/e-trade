@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
@@ -17,7 +18,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuth = false;
   subs = new Subscription();
 
-  constructor(private cartService: CartService, public authService: AuthService) {}
+  constructor(
+    private cartService: CartService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.checkCart();
@@ -38,6 +43,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.isAuth = isAuth;
     });
     this.subs.add(sub);
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.cartService.cart.next([]);
+    this.router.navigateByUrl('main');
   }
 
   ngOnDestroy(): void {

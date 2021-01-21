@@ -2,13 +2,16 @@
   display: flex;
   height: 100%;
   flex-direction: column;
+  /* align-items: center; */
   justify-content: space-between;
 }
 
 .main {
+  max-width: 1100px;
+  margin: 0 auto;
   flex: 1;
 }
 
-.header{
+.header {
   z-index: 5;
 }

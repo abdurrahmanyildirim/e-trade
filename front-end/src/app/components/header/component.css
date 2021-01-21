@@ -6,6 +6,7 @@
 .navbar-container {
   color: #555;
   max-width: 1150px;
+  min-height: 40px;
   display: flex;
   align-items: center;
   margin: 0 auto;
@@ -23,31 +24,29 @@
   font-weight: 500;
 }
 
-.tab {
-  padding: 5px;
-  border-radius: 5px;
-  outline: none;
-}
-
-.tab:hover {
-  cursor: pointer;
-  background-color: rgba(22, 36, 50, 0.08);
-}
-
-.icon {
-  padding: 5px;
-  font-size: 20px;
-  border-radius: 100%;
-}
-
-.icon:hover {
-  cursor: pointer;
-  background-color: rgba(22, 36, 50, 0.08);
-}
-
 .divider {
   height: 20px;
   width: 1px;
   margin: 0 4px;
   background-color: rgba(22, 36, 50, 0.2);
+}
+
+.cart {
+  position: relative;
+}
+
+.custom-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 15px;
+  color: white;
+  font-size: 12px;
+  z-index: 100;
+  background-color: #f44336;
 }

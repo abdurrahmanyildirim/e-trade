@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { StorageKey } from 'src/app/shared/models/storage';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
+import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 import { LoginUser } from './model';
@@ -18,7 +19,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   user: LoginUser;
   subs = new Subscription();
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -40,6 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.authService.saveToken(loginResponse.token);
           this.authService.currentUser.next(loginResponse.info);
           this.authService.isAuth.next(true);
+          this.cartService.initCart();
           this.router.navigateByUrl('main');
           // this.alertifyService.success('Giriş yapıldı.');
         },
