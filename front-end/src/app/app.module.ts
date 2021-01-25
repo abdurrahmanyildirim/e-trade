@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PagesModule } from './pages/module';
@@ -10,6 +10,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConfigService } from './shared/services/site/config.service';
 import { ProductService } from './shared/services/rest/product.service';
 import { RestInterceptor } from './shared/services/rest/rest-interceptor';
+import localeTr from '@angular/common/locales/tr';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeTr);
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +27,7 @@ import { RestInterceptor } from './shared/services/rest/rest-interceptor';
     HttpClientModule
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'tr' },
     ConfigService,
     {
       provide: APP_INITIALIZER,

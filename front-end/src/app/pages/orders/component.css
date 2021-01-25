@@ -1,5 +1,64 @@
 .container {
   margin-top: 10px;
+}
+
+.header-content {
   display: flex;
-  width: 1068px;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 900px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 1.34375em 1.34375em 0 1.34375em;
+}
+
+.header-text {
+  margin-top: 6px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 800;
+}
+
+.order-type {
+  padding-bottom: 0;
+}
+
+.custom-card {
+  width: 100%;
+  border-radius: 5px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+}
+
+.card-header {
+  width: 100%;
+  box-sizing: border-box;
+  height: 60px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 5px 5px 0 0;
+  background-color: rgb(226, 226, 226);
+}
+
+.card-body {
+  padding: 10px 20px 20px 20px;
+}
+
+.card-body-item {
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 0 5px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.photo {
+  width: 50px;
+  height: 50px;
+  margin: 10px 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }

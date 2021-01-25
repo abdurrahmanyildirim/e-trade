@@ -16,7 +16,6 @@ const productSchema = new Schema({
         {
             path: String,
             publicId: String
-
         }
     ],
     comments: [

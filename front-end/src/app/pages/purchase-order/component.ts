@@ -104,8 +104,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
         phone: this.form.value.phone.split(' ').join('')
       });
       const contactInfo = Object.assign({}, this.form.value);
-      console.log(contactInfo);
-      this.timerSub = timer(10000).subscribe({
+      this.timerSub = timer(3000).subscribe({
         next: () => {
           this.orderSub = this.cartService.purchaseOrder(contactInfo).subscribe({
             next: (response) => {

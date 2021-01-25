@@ -69,9 +69,10 @@ module.exports.purchaseOrder = (req, res) => {
         if (product) {
           orderedProducts.push({
             productId: product._id,
-            quantity: cart.quantity,
+            quantity: order.quantity,
             discountRate: product.discountRate,
-            price: product.price
+            price: product.price,
+            photoPath: product.photos[0].path
           });
         }
       });

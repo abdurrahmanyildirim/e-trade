@@ -1,10 +1,16 @@
-<main class="container">
-  <div class="header">{{product.name}}</div>
+<main class="container mat-elevation-z2">
+  <div class="brand">{{product.brand}}</div>
+  <div class="name mat-body-2">{{product.name}}</div>
   <div class="body">
     <img class="img" [src]="product.photos[0].path" [alt]="product.name" />
   </div>
   <div class="footer">
-    <div class="price">{{product.price}} TL</div>
+    <div class="discount mat-body-2">%{{product.discountRate * 100}} indirim</div>
+    <div class="price mat-body-2">
+      <span *ngIf="product.discountRate>0" class="normal-price"> {{product.price}} TL</span>
+
+      {{product.price - product.price * product.discountRate}} TL
+    </div>
     <div class="button-area">
       <button
         routerLink="/product-detail/{{product._id}}"

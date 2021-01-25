@@ -1,15 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Order } from '../../models/order';
+import { OrderDetail } from 'src/app/pages/order-detail/model';
+import { OrderList } from 'src/app/pages/orders/model';
 import { ConfigService } from '../site/config.service';
 
 @Injectable()
 export class OrderService {
   constructor(private http: HttpClient, private configService: ConfigService) {}
 
-  getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.configService.config.domain + 'order/get-orders');
+  getOrders(): Observable<OrderList[]> {
+    return this.http.get<OrderList[]>(this.configService.config.domain + 'order/get-orders');
+  }
+
+  orderDetail(id: string): Observable<OrderDetail> {
+    return this.http.get<OrderDetail>(this.configService.config.domain + 'order/detail/' + id);
   }
 
   // getProductsByCategory(category: Category) {

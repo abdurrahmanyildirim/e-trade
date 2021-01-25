@@ -10,7 +10,8 @@ const orderSchema = new Schema({
       productId: { type: mongoose.SchemaTypes.ObjectId, required: true, ref: 'Product' },
       quantity: Number,
       discountRate: Number,
-      price: Number
+      price: Number,
+      photoPath: String
     }
   ],
   isActive: Boolean,

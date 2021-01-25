@@ -1,1 +1,54 @@
-<mat-card class="container">Siparişlerim</mat-card>
+<div class="mat-body-2" style="text-align: center; margin-top: 10px" *ngIf="!orderList">
+  Henüz siparişiniz bulunmamaktadır.
+</div>
+
+<div class="container" *ngIf="orderList">
+  <div class="header-content">
+    <span class="header-text mat-body-2">Siparişlerim</span>
+    <mat-form-field appearance="fill" class="order-type">
+      <mat-select [(value)]="currentList.key">
+        <mat-option *ngFor="let type of orderListType" [value]="type.key">{{type.text}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="custom-card" *ngFor="let order of orderList">
+    <div class="card-header">
+      <div class="car-header-item">
+        <span class="mat-body-2">Sipariş Tarihi</span>
+        <div>{{order.date | date:'mediumDate'}}</div>
+      </div>
+      <div class="car-header-item">
+        <span class="mat-body-2">Alıcı</span>
+        <div>{{currentUser.firstName + ' '+ currentUser.lastName}}</div>
+      </div>
+      <div class="car-header-item">
+        <span class="mat-body-2">Durum</span>
+        <div color="warn" *ngIf="order.status[order.status.length - 1].key === -1">
+          İptal Edildi
+        </div>
+        <div *ngIf="order.status[order.status.length - 1].key === 0">Siparişiniz Alındı</div>
+        <div *ngIf="order.status[order.status.length - 1].key === 1">Siparişiniz Hazırlanıyor</div>
+        <div *ngIf="order.status[order.status.length - 1].key === 2">Kargoya verildi</div>
+        <div *ngIf="order.status[order.status.length - 1].key === 3">Kargoya verildi</div>
+      </div>
+      <div class="car-header-item">
+        <span class="mat-body-2">Tutar</span>
+        <div>{{calculateTotalPrice(order) | number:'0.2'}} TL</div>
+      </div>
+      <button mat-flat-button color="primary" (click)="navigateToDetail(order._id)">
+        Sipariş Detayı
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="card-body-item">
+        <img
+          *ngFor="let product of order.products"
+          class="photo"
+          [src]="product.photoPath"
+          alt="Photo"
+        />
+      </div>
+    </div>
+  </div>
+</div>
