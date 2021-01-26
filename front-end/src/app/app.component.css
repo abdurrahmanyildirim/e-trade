@@ -7,7 +7,7 @@
 }
 
 .main {
-  max-width: 1100px;
+  /* min-width: 1100px; */
   margin: 0 auto;
   flex: 1;
 }

@@ -1,7 +1,7 @@
 <main class="main-container" *ngIf="product">
   <div class="container">
     <section class="top">
-      <app-photos style="width: 450px; height: 550px" [photos]="product.photos"></app-photos>
+      <app-photos class="photos" [photos]="product.photos"></app-photos>
       <section class="general">
         <div class="info">
           <div class="name">{{product.name}}</div>

@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/auth/login/component';
 import { RegisterComponent } from './pages/auth/register/component';
 import { OrdersComponent } from './pages/orders/component';
 import { OrderDetailComponent } from './pages/order-detail/component';
+import { FilteredPageComponent } from './pages/filtered-page/component';
 
 const routes: Routes = [
   { path: 'main', component: MainComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'purchase-order', component: PurchaseOrderComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'filtered-page', component: FilteredPageComponent },
   { path: '**', redirectTo: 'main', pathMatch: 'prefix' }
 ];
 

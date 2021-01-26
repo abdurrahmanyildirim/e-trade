@@ -1,6 +1,6 @@
 .current-photo {
-  width: 450px;
-  height: 450px;
+  width: 448px;
+  height: 448px;
   border: 1px solid #ccc;
   cursor: zoom-in;
   background-size: 100%;
@@ -9,7 +9,7 @@
 }
 
 .all-photo {
-  height: 90px;
+  height: 40px;
   width: 100%;
   margin: 5px 0;
   display: flex;
@@ -17,8 +17,8 @@
 }
 
 .photo {
-  width: 90px;
-  height: 90px;
+  width: 40px;
+  height: 40px;
   margin-left: 5px;
   cursor: pointer;
   border-radius: 3px;

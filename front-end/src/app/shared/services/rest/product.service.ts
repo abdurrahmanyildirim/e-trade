@@ -12,6 +12,16 @@ export class ProductService {
     return this.http.get<Product[]>(this.configService.config.domain + 'product/products');
   }
 
+  categories(): Observable<any> {
+    return this.http.get<any>(this.configService.config.domain + 'category/categories');
+  }
+
+  productsByCategory(category: string): Observable<Product[]> {
+    return this.http.get<Product[]>(
+      this.configService.config.domain + 'product/get-by-category?category=' + category
+    );
+  }
+
   // getProductsByCategory(category: Category) {
   //   return this.http.get<Product[]>(environment.domain + 'products.json');
   // }

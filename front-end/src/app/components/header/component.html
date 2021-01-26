@@ -2,6 +2,13 @@
   <div class="navbar-container">
     <div class="brand">ER TRADE</div>
     <button mat-button routerLink="main"><mat-icon>home</mat-icon> Ana Sayfa</button>
+    <button
+      mat-button
+      *ngFor="let category of categories"
+      (click)="navigateToFilteredPage(category.name)"
+    >
+      {{firstLetterUppercase( category.name)}}
+    </button>
     <div class="spacer"></div>
     <button mat-button routerLink="cart" class="cart" *ngIf="isAuth">
       <mat-icon> shopping_cart</mat-icon>

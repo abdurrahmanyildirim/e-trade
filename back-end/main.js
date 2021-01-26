@@ -4,6 +4,14 @@ const http = require('http').Server(app);
 // const io = require('socket.io')(http);
 require('./app_server/models/db');
 const cors = require('cors');
+// const Category = require('./app_server/models/category');
+
+// const categories = [{ name: 'tava' }, { name: 'tencere' }, { name: 'tabak' }];
+
+// categories.forEach((cy) => {
+//   const dbCategory = new Category(cy);
+//   dbCategory.save();
+// });
 
 app.use(cors());
 app.use(express.json());
