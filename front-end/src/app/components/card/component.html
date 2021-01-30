@@ -1,17 +1,17 @@
-<main class="container mat-elevation-z2">
+<main class="container mat-elevation-z2" routerLink="/product-detail/{{product._id}}">
   <div class="brand">{{product.brand}}</div>
   <div class="name mat-body-2">{{product.name}}</div>
-  <div class="body">
-    <img class="img" [src]="product.photos[0].path" [alt]="product.name" />
-  </div>
+  <img class="img" [src]="product.photos[0].path" [alt]="product.name" />
   <div class="footer">
-    <div class="discount mat-body-2">%{{product.discountRate * 100}} indirim</div>
+    <div class="discount mat-body-2" *ngIf="product.discountRate>0">
+      %{{product.discountRate * 100}} indirim
+    </div>
     <div class="price mat-body-2">
       <span *ngIf="product.discountRate>0" class="normal-price"> {{product.price}} TL</span>
 
       {{product.price - product.price * product.discountRate}} TL
     </div>
-    <div class="button-area">
+    <!-- <div class="button-area">
       <button
         routerLink="/product-detail/{{product._id}}"
         class="button"
@@ -20,6 +20,6 @@
       >
         İncele
       </button>
-    </div>
+    </div> -->
   </div>
 </main>

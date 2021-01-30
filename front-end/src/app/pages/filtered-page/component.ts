@@ -1,18 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { isPresent } from 'src/app/shared/util/common';
+import { FilterFactory } from './factory';
+import { Filter, SortType, SortTypes } from './model';
 
 @Component({
   selector: 'app-filtered-page',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  viewProviders: [FilterFactory]
 })
-export class FilteredPageComponent implements OnInit {
+export class FilteredPageComponent implements OnInit, OnDestroy {
   subs = new Subscription();
   products: Product[];
-  constructor(private activatedRoute: ActivatedRoute, private productService: ProductService) {}
+  brands: string[];
+  pageIndex: number;
+  totalProductCount: number;
+  filter: Filter = {
+    brands: new Map<string, string>(),
+    sortType: SortTypes.none
+  };
+  sortingTypes: SortType[] = [
+    {
+      key: SortTypes.none,
+      text: 'Hiçbiri'
+    },
+    {
+      key: SortTypes.asc,
+      text: 'Artan Fiyat'
+    },
+    {
+      key: SortTypes.desc,
+      text: 'Azalan Fiyat'
+    }
+  ];
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private productService: ProductService,
+    private filterFactory: FilterFactory
+  ) {}
 
   ngOnInit(): void {
     const sub = this.activatedRoute.queryParams.subscribe((params) => {
@@ -23,11 +53,55 @@ export class FilteredPageComponent implements OnInit {
   }
 
   initProductsByCategory(category: string): void {
-    this.productService.productsByCategory(category).subscribe({
+    const sub = this.productService.productsByCategory(category).subscribe({
       next: (products) => {
-        this.products = products;
+        this.initBrands(products);
+        this.totalProductCount = products.length;
+        this.products = products.slice(0, 12);
+        this.filterFactory.products = products;
+        setTimeout(() => {
+          sub.unsubscribe();
+        });
       },
       error: (err) => console.log(err)
     });
+  }
+
+  initBrands(products: Product[]): void {
+    this.brands = [];
+    products.forEach((product) => {
+      if (this.brands.indexOf(product.brand) < 0) {
+        this.brands.push(product.brand);
+      }
+    });
+  }
+
+  sortByType(sortType: SortTypes): void {
+    this.filter.sortType = sortType;
+    const products = this.filterFactory.create(this.filter);
+    this.totalProductCount = products.length;
+    this.products = products.splice(0, 12);
+  }
+
+  filterByBrand(brand: string): void {
+    if (this.filter.brands.has(brand)) {
+      this.filter.brands.delete(brand);
+    } else {
+      this.filter.brands.set(brand, brand);
+    }
+    const products = this.filterFactory.create(this.filter);
+    this.totalProductCount = products.length;
+    this.products = products.splice(0, 12);
+  }
+
+  onPaginationChange(pagination: any): void {
+    const index = pagination.pageIndex;
+    this.products = this.filterFactory.create(this.filter).slice(index * 12, index * 12 + 12);
+  }
+
+  ngOnDestroy(): void {
+    if (isPresent(this.subs)) {
+      this.subs.unsubscribe();
+    }
   }
 }

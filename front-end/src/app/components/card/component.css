@@ -1,40 +1,45 @@
 .container {
-  width: 200px;
-  padding: 10px;
+  width: 210px;
+  height: 314px;
   overflow: hidden;
   border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+  transform: translateY(0);
 }
 
-.brand{
+.container:hover {
+  transition: 0.3s;
+  transform: translateY(-3px);
+  box-shadow: 0px 5px 3px -3px rgba(0, 0, 0, 0.2), 4px 4px 4px 0px rgba(0, 0, 0, 0.14),
+    3px 3px 7px 0px rgba(0, 0, 0, 0.12);
+}
+
+.brand {
   text-align: center;
   text-transform: uppercase;
   font-size: 16px;
   font-weight: 600;
+  padding: 5px 5px 0 5px;
 }
 
 .name {
-  height: 30px;
-  width: 100%;
-  padding: 0 4px;
+  height: 25px;
   text-align: center;
-}
-
-.body {
-  height: 180px;
-  width: 180px;
-  margin: auto;
+  padding: 0 5px;
 }
 
 .img {
-  height: 180px;
-  width: 180px;
+  height: 210px;
+  width: 210px;
+  margin: auto;
 }
 
 .footer {
   width: 100%;
 }
 
-.discount{
+.discount {
   text-align: center;
 }
 
@@ -42,13 +47,13 @@
   text-align: center;
 }
 
-.normal-price{
+.normal-price {
   text-decoration: line-through;
   color: rgb(143, 143, 143);
 }
 
 .button-area {
-  padding-top: 5px;
+  padding: 5px;
 }
 
 .button {

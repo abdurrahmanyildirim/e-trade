@@ -1,6 +1,49 @@
 <main class="container" *ngIf="products">
-  <div class="filters">Sa</div>
-  <div class="products">
+  <div class="filters">
+    <div class="filters-body">
+      <div class="filter-item">
+        <span class="title mat-body-2">Marka</span>
+        <mat-checkbox
+          class="example-margin"
+          *ngFor="let brand of brands"
+          (change)="filterByBrand(brand)"
+        >
+          {{brand | titlecase}}
+        </mat-checkbox>
+      </div>
+      <div class="filter-item">
+        <span class="title mat-body-2">Sıralama Şekli</span>
+        <mat-radio-group class="sort-items">
+          <mat-radio-button
+            class="sort-item"
+            *ngFor="let sort of sortingTypes"
+            [value]="sort.key"
+            [checked]="sort.key==='none'"
+            (change)="sortByType(sort.key)"
+          >
+            {{sort.text}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </div>
+  <div class="products" *ngIf="products.length>0">
     <app-card *ngFor="let product of products" [product]="product" class="product"></app-card>
+    <mat-paginator
+      [length]="totalProductCount"
+      [pageSize]="12"
+      [hidePageSize]="true"
+      (page)="onPaginationChange($event)"
+      style="width: 100%"
+    >
+    </mat-paginator>
+  </div>
+
+  <div
+    *ngIf="products.length<=0"
+    class="mat-body-2"
+    style="text-align: center; width: 100%; margin-top: 20px"
+  >
+    Ürün bulunamadı.
   </div>
 </main>

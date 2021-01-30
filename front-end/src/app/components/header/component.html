@@ -1,13 +1,16 @@
 <main class="custom-navbar mat-elevation-z3">
   <div class="navbar-container">
-    <div class="brand">ER TRADE</div>
-    <button mat-button routerLink="main"><mat-icon>home</mat-icon> Ana Sayfa</button>
+    <!-- <div class="brand">ER TRADE</div> -->
+    <!-- <mat-icon>home</mat-icon> -->
+    <button mat-button routerLink="main">
+      <img src="assets/img/logo.svg" alt="logo" style="width: 26px;height: 26px;" /> ER TRADE
+    </button>
     <button
       mat-button
       *ngFor="let category of categories"
       (click)="navigateToFilteredPage(category.name)"
     >
-      {{firstLetterUppercase( category.name)}}
+      {{category.name | titlecase}}
     </button>
     <div class="spacer"></div>
     <button mat-button routerLink="cart" class="cart" *ngIf="isAuth">

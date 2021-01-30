@@ -52,10 +52,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subs.add(sub);
   }
 
-  firstLetterUppercase(name: string): string {
-    return name[0].toUpperCase() + name.slice(1);
-  }
-
   initCurrentUser(): void {
     const sub = this.authService.isAuth.subscribe((isAuth) => {
       this.isAuth = isAuth;
