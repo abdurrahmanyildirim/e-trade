@@ -4,19 +4,10 @@
       <app-photos class="photos" [photos]="product.photos"></app-photos>
       <section class="general">
         <div class="info">
-          <div class="name">{{product.name}}</div>
+          <div class="name mat-body-2">{{product.name}}</div>
           <div class="brand text-primary font-label2">{{product.brand}}</div>
           <div class="rate">
-            <span *ngFor="let rate of [1,2,3,4,5]">
-              <span class="star-icon star" *ngIf="product.rate-rate >= 0"></span>
-              <span
-                class="half-plus-quarter-star-icon star"
-                *ngIf="product.rate-rate === -0.25"
-              ></span>
-              <span class="half-star-icon star" *ngIf="product.rate-rate === -0.50"></span>
-              <span class="quarter-star-icon star" *ngIf="product.rate-rate === -0.75"></span>
-              <span class="empty-star-icon star" *ngIf="product.rate-rate <=-1"></span>
-            </span>
+            <app-star [givenRate]="product.rate"></app-star>
           </div>
           <div class="desc">{{product.description}}</div>
           <div class="price">
@@ -48,6 +39,17 @@
       </section>
     </section>
     <hr />
-    <section class="bottom">Burada yorum yapma olacak</section>
+    <section class="bottom">
+      <div class="mat-body-2 bottom-title">Ürün Değerlendirmeleri</div>
+      <div class="comments">
+        <div *ngFor="let comment of product.comments" class="comment">
+          <div class="comment-info">
+            <span class="comment-name mat-body-2">{{comment.name}}</span> -
+            <app-star [givenRate]="comment.rate"></app-star>
+          </div>
+          <div class="comment-desc mat-body-2">{{comment.description}}</div>
+        </div>
+      </div>
+    </section>
   </div>
 </main>

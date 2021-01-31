@@ -1,0 +1,11 @@
+<span *ngFor="let rate of [1,2,3,4,5]">
+  <span class="star-icon star" *ngIf="givenRate-rate >= 0"></span>
+  <span class="star" *ngIf="givenRate-rate < 0 && givenRate-rate > -1">
+    <span
+      class="star-icon percent-star"
+      [ngStyle]="{'width': ( 1 - (rate - givenRate)) * 100 + '%'}"
+    ></span>
+    <span class="empty-star-icon star"></span>
+  </span>
+  <span class="empty-star-icon star" *ngIf="givenRate-rate <=-1"></span>
+</span>

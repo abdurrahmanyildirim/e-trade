@@ -1,0 +1,13 @@
+.star {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  position: relative;
+}
+
+.percent-star {
+  position: absolute;
+  left: 0;
+  height: 14px;
+  z-index: 5;
+}

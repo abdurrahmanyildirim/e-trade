@@ -1,8 +1,15 @@
 <main class="container">
-  <b *ngIf="!configService.configInited">Yükleniyor...</b>
-  <app-header class="header" *ngIf="configService.configInited"></app-header>
-  <div class="main" *ngIf="configService.configInited">
+  <mat-progress-spinner
+    [color]="'primary'"
+    [mode]="'indeterminate'"
+    [value]="'30'"
+    *ngIf="!splashService.configInited"
+    style="margin: auto"
+  >
+  </mat-progress-spinner>
+  <app-header class="header" *ngIf="splashService.configInited"></app-header>
+  <div class="main" *ngIf="splashService.configInited">
     <router-outlet></router-outlet>
   </div>
-  <app-footer class="footer" *ngIf="configService.configInited"></app-footer>
+  <app-footer class="footer" *ngIf="splashService.configInited"></app-footer>
 </main>

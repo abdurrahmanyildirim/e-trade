@@ -109,7 +109,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
           this.orderSub = this.cartService.purchaseOrder(contactInfo).subscribe({
             next: (response) => {
               this.orderStatus = 1;
-              this.cartService.initCart();
+              this.cartService.initCart().subscribe();
             },
             error: (err) => {
               this.orderStatus = 2;

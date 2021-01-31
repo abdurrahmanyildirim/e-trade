@@ -18,7 +18,9 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
   products: Product[];
   brands: string[];
   pageIndex: number;
+  pageSize: number = 12;
   totalProductCount: number;
+  showSplash = true;
   filter: Filter = {
     brands: new Map<string, string>(),
     sortType: SortTypes.none
@@ -57,8 +59,9 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
       next: (products) => {
         this.initBrands(products);
         this.totalProductCount = products.length;
-        this.products = products.slice(0, 12);
+        this.products = products.slice(0, this.pageSize);
         this.filterFactory.products = products;
+        this.showSplash = false;
         setTimeout(() => {
           sub.unsubscribe();
         });
@@ -80,7 +83,7 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
     this.filter.sortType = sortType;
     const products = this.filterFactory.create(this.filter);
     this.totalProductCount = products.length;
-    this.products = products.splice(0, 12);
+    this.products = products.splice(0, this.pageSize);
   }
 
   filterByBrand(brand: string): void {
@@ -91,12 +94,14 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
     }
     const products = this.filterFactory.create(this.filter);
     this.totalProductCount = products.length;
-    this.products = products.splice(0, 12);
+    this.products = products.splice(0, this.pageSize);
   }
 
   onPaginationChange(pagination: any): void {
     const index = pagination.pageIndex;
-    this.products = this.filterFactory.create(this.filter).slice(index * 12, index * 12 + 12);
+    this.products = this.filterFactory
+      .create(this.filter)
+      .slice(index * this.pageSize, index * this.pageSize + this.pageSize);
   }
 
   ngOnDestroy(): void {

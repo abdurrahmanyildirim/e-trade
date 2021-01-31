@@ -1,7 +1,7 @@
 <main class="container" *ngIf="products">
   <div class="filters">
     <div class="filters-body">
-      <div class="filter-item">
+      <div class="filter-item" *ngIf="brands.length>0">
         <span class="title mat-body-2">Marka</span>
         <mat-checkbox
           class="example-margin"
@@ -27,16 +27,20 @@
       </div>
     </div>
   </div>
-  <div class="products" *ngIf="products.length>0">
+  <div class="products" *ngIf="products.length>0 && !showSplash">
     <app-card *ngFor="let product of products" [product]="product" class="product"></app-card>
     <mat-paginator
       [length]="totalProductCount"
-      [pageSize]="12"
+      [pageSize]="pageSize"
       [hidePageSize]="true"
       (page)="onPaginationChange($event)"
       style="width: 100%"
     >
     </mat-paginator>
+  </div>
+  <div class="splash" *ngIf="showSplash">
+    <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'" [value]="'30'">
+    </mat-progress-spinner>
   </div>
 
   <div

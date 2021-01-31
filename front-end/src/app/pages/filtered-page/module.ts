@@ -8,10 +8,9 @@ import { FormsModule } from '@angular/forms';
 import { CardModule } from 'src/app/components/card/module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { getTurkishPaginatorIntl } from './paginator-intl';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [FilteredPageComponent],
@@ -24,7 +23,8 @@ import { getTurkishPaginatorIntl } from './paginator-intl';
     CardModule,
     MatCheckboxModule,
     MatRadioModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule
   ],
   providers: [{ provide: MatPaginatorIntl, useValue: getTurkishPaginatorIntl() }],
   exports: [FilteredPageComponent]

@@ -5,7 +5,7 @@
 
 .container {
   margin-top: 10px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); */
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -37,6 +37,7 @@
 
 .name {
   padding-top: 10px;
+  font-size: 16px;
 }
 
 .brand {
@@ -71,14 +72,26 @@
   margin-left: 10px;
 }
 
-.star {
-  width: 14px;
-  height: 14px;
-  display: inline-block;
-  position: relative;
-}
-
 .bottom {
   padding-bottom: 5px;
-  text-align: center;
+  /* text-align: center; */
+}
+
+.bottom-title {
+  font-size: 18px;
+}
+
+.comments {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.comment {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+}
+
+.comment-name {
+  font-size: 16px;
 }

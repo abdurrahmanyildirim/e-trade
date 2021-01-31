@@ -46,8 +46,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.authService.saveToken(loginResponse.token);
           this.authService.currentUser.next(loginResponse.info);
           this.authService.isAuth.next(true);
-          this.cartService.initCart();
-          this.router.navigateByUrl('main');
+          this.cartService.initCart().subscribe(() => {
+            this.router.navigateByUrl('main');
+          });
           // this.alertifyService.success('Giriş yapıldı.');
         },
         (err) => {

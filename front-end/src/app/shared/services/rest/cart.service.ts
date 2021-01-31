@@ -23,15 +23,22 @@ export class CartService implements OnDestroy {
     this.initCart();
   }
 
-  initCart(): void {
-    if (this.authService.loggedIn()) {
-      this.getCartFromDb().subscribe((cart) => {
-        this.cart.next(cart);
-      });
-    } else {
-      const orders = JSON.parse(window.localStorage.getItem(StorageKey.Cart)) || [];
-      this.cart.next(orders);
-    }
+  initCart(): Observable<void> {
+    return new Observable((observer) => {
+      if (this.authService.loggedIn()) {
+        const sub = this.getCartFromDb().subscribe((cart) => {
+          this.cart.next(cart);
+          observer.next();
+          observer.complete();
+          sub.unsubscribe();
+        });
+      } else {
+        const orders = JSON.parse(window.localStorage.getItem(StorageKey.Cart)) || [];
+        this.cart.next(orders);
+        observer.next();
+        observer.complete();
+      }
+    });
   }
 
   purchaseOrder(contactInfo: Contact): Observable<any> {

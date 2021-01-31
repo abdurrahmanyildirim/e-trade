@@ -12,6 +12,8 @@ import { ProductService } from './shared/services/rest/product.service';
 import { RestInterceptor } from './shared/services/rest/rest-interceptor';
 import localeTr from '@angular/common/locales/tr';
 import { registerLocaleData } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SplashService } from './shared/services/site/splash.service';
 
 registerLocaleData(localeTr);
 
@@ -24,15 +26,16 @@ registerLocaleData(localeTr);
     PagesModule,
     HeaderModule,
     FooterModule,
-    HttpClientModule
+    HttpClientModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'tr' },
-    ConfigService,
+    SplashService,
     {
       provide: APP_INITIALIZER,
-      useFactory: (cs: ConfigService) => () => cs.initSiteConfig(),
-      deps: [ConfigService],
+      useFactory: (cs: SplashService) => () => cs.init(),
+      deps: [SplashService],
       multi: true
     },
     { provide: HTTP_INTERCEPTORS, useClass: RestInterceptor, multi: true },
