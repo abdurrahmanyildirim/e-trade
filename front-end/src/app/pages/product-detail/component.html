@@ -38,14 +38,13 @@
         </div>
       </section>
     </section>
-    <hr />
     <section class="bottom">
       <div class="mat-body-2 bottom-title">Ürün Değerlendirmeleri</div>
       <div class="comments">
         <div *ngFor="let comment of product.comments" class="comment">
           <div class="comment-info">
             <span class="comment-name mat-body-2">{{comment.name}}</span> -
-            <app-star [givenRate]="comment.rate"></app-star>
+            <app-star [givenRate]="comment.rate" style="display: inline-block"></app-star>
           </div>
           <div class="comment-desc mat-body-2">{{comment.description}}</div>
         </div>

@@ -1,10 +1,30 @@
 <main class="container">
-  <!-- <div class="photo">
-    <p class="mat-body-2">Kapıda Ödeme garantisi ile güvenli alışveriş seni bekliyor</p>
-    <p class="mat-body-2">Her türlü ev aletini uygun fiyattan alabilirsiniz.</p>
-  </div> -->
-  <!-- <img src="assets/img/main-photo.jpg" style="width: 1100px; height: 550px" alt="main" /> -->
-  <section class="products" *ngIf="products">
-    <app-card *ngFor="let product of products" [product]="product"></app-card>
+  <div class="photo">
+    <!-- <p class="mat-body-2">Kapıda Ödeme garantisi ile güvenli alışveriş seni bekliyor</p>
+    <p class="mat-body-2">Her türlü ev aletini uygun fiyattan alabilirsiniz.</p> -->
+  </div>
+  <section class="section" *ngIf="discounted">
+    <div class="section-title mat-body-2">İndirimdekiler</div>
+    <div class="section-items">
+      <app-card
+        class="section-item"
+        *ngFor="let product of discounted"
+        [product]="product"
+      ></app-card>
+    </div>
   </section>
+
+  <section class="section" *ngIf="mostLiked">
+    <div class="section-title mat-body-2">En Çok Beğenilenler</div>
+    <div class="section-items">
+      <app-card
+        class="section-item"
+        *ngFor="let product of mostLiked"
+        [product]="product"
+      ></app-card>
+    </div>
+  </section>
+  <!-- <section class="products" *ngIf="products">
+    <app-card *ngFor="let product of products" [product]="product"></app-card>
+  </section> -->
 </main>

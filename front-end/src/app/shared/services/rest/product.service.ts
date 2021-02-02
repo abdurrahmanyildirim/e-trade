@@ -22,7 +22,7 @@ export class ProductService {
     );
   }
 
-  // getProductsByCategory(category: Category) {
-  //   return this.http.get<Product[]>(environment.domain + 'products.json');
-  // }
+  productById(id: string): Observable<Product> {
+    return this.http.get<Product>(this.configService.config.domain + 'product/get-by-id?id=' + id);
+  }
 }

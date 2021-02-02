@@ -18,7 +18,7 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
   products: Product[];
   brands: string[];
   pageIndex: number;
-  pageSize: number = 12;
+  pageSize: number = 16;
   totalProductCount: number;
   showSplash = true;
   filter: Filter = {

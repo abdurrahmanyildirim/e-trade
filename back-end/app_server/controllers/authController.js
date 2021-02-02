@@ -89,10 +89,13 @@ module.exports.checkNickName = (req, res) => {
 
 module.exports.verifyToken = (req, res, next) => {
   const authorization = req.headers.authorization;
+  if (!authorization) {
+    return res.status(401).send({ message: 'Yetkisiz işlem' });
+  }
   const token = authorization.split(' ')[1];
   jwt.verify(token, config.TOKEN_KEY, (err, decoded) => {
     if (err) {
-      return res.status(400).send('Geçersiz anahtar');
+      return res.status(401).send('Geçersiz anahtar');
     }
     req.id = decoded._id;
     next();

@@ -40,9 +40,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   }
 
   getProductById(): void {
-    const subs = this.productService.allProducts().subscribe({
-      next: (products) => {
-        this.product = products.find((product) => product._id === this.productId);
+    const subs = this.productService.productById(this.productId).subscribe({
+      next: (product) => {
+        this.product = product;
       }
     });
     this.subscription.add(subs);

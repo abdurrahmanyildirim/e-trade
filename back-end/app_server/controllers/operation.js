@@ -9,6 +9,9 @@ module.exports.updateCart = (req, res, next) => {
       return res.status(400).send({ message: 'Kullanıcı bulunamadı' });
     }
     const orders = req.body;
+    if (!orders) {
+      return res.status(404).send({ message: 'Siparişler boş bırakılamaz.' });
+    }
     const newCart = orders.map((order) => {
       return { productId: order.productId, quantity: order.quantity };
     });

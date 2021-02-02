@@ -1,13 +1,25 @@
-.star {
-  width: 14px;
-  height: 14px;
-  display: inline-block;
+.container {
+  display: flex;
+  height: 21px;
+  justify-content: flex-start;
+  width: fit-content;
+}
+
+.star-container {
+  margin-right: 2px;
   position: relative;
+}
+
+.star {
+  width: 21px;
+  height: 20px;
+  display: inline-block;
 }
 
 .percent-star {
   position: absolute;
   left: 0;
-  height: 14px;
+  height: 20px;
   z-index: 5;
+  margin-right: 2px;
 }
