@@ -7,4 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class StarComponent {
   @Input() givenRate: number;
+  @Input() height?: number;
+  @Input() width?: number;
 }

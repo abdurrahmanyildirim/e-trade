@@ -1,6 +1,5 @@
 .container {
   display: flex;
-  height: 21px;
   justify-content: flex-start;
   width: fit-content;
 }
@@ -10,16 +9,10 @@
   position: relative;
 }
 
-.star {
-  width: 21px;
-  height: 20px;
-  display: inline-block;
-}
-
 .percent-star {
   position: absolute;
   left: 0;
-  height: 20px;
+  bottom: 0;
   z-index: 5;
   margin-right: 2px;
 }

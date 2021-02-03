@@ -53,8 +53,11 @@
 
 .price {
   padding-top: 10px;
-  color: #ccc;
+}
+
+.normal-price {
   text-decoration: line-through;
+  color: rgb(143, 143, 143);
 }
 
 .operation {

@@ -13,7 +13,7 @@ const rangeLabel = (page: number, pageSize: number, length: number) => {
   const endIndex =
     startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
 
-  return `${startIndex + 1} - ${endIndex} arası gösteriliyor - Toplam Ürün : ${length}`;
+  return `${startIndex + 1} - ${endIndex} arası gösteriliyor - Toplam : ${length}`;
 };
 
 export const getTurkishPaginatorIntl = () => {

@@ -16,6 +16,7 @@ export class MainComponent implements OnInit, OnDestroy {
   carousel = false;
   discounted: Product[];
   mostLiked: Product[];
+  newProducts: Product[];
 
   constructor(private productService: ProductService) {}
 
@@ -40,6 +41,10 @@ export class MainComponent implements OnInit, OnDestroy {
 
   initMostLiked(): void {
     this.mostLiked = this.products.sort((a: Product, b: Product) => b.rate - a.rate).slice(0, 5);
+  }
+
+  initNewProducts(): void {
+    // this.newProducts = this.products.sort((a:Product,b:Product)=>a.)
   }
 
   ngOnDestroy(): void {

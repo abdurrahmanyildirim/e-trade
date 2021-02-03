@@ -5,12 +5,13 @@
   border-radius: 5px;
   cursor: pointer;
   transition: 0.2s;
-  transform: translateY(0);
+  backface-visibility: hidden;
+  transform: translateZ(0) scale(1, 1);
 }
 
 .container:hover {
   transition: 0.3s;
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
 }
 
@@ -26,12 +27,45 @@
   height: 25px;
   text-align: center;
   padding: 0 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .img {
   height: 210px;
   width: 210px;
-  margin: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.discount-badge {
+  width: 160px;
+  height: 30px;
+  background-color: red;
+  position: absolute;
+  top: 20px;
+  left: -40px;
+  transform: rotate(-45deg);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dotted-line {
+  width: 100%;
+  height: 2px;
+}
+
+.top-dotted {
+  border-bottom: 1px dotted white;
+}
+
+.bottom-dotted {
+  border-top: 1px dotted white;
 }
 
 .footer {
@@ -40,6 +74,12 @@
 
 .discount {
   text-align: center;
+}
+
+.star {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .price {

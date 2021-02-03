@@ -1,4 +1,8 @@
-<main class="container" *ngIf="products">
+<div class="splash" *ngIf="mainSplash">
+  <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'" [value]="'30'">
+  </mat-progress-spinner>
+</div>
+<main class="container" *ngIf="!mainSplash">
   <div class="filters">
     <div class="filters-body">
       <div class="filter-item" *ngIf="brands.length>0">

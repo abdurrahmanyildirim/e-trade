@@ -1,25 +1,22 @@
 <main class="container mat-elevation-z2" routerLink="/product-detail/{{product._id}}">
-  <div class="brand">{{product.brand}}</div>
-  <div class="name mat-body-2">{{product.name}}</div>
-  <img class="img" [src]="product.photos[0].path" [alt]="product.name" />
-  <div class="footer">
-    <div class="discount mat-body-2" *ngIf="product.discountRate>0">
+  <div class="img" [ngStyle]="{'background-image': 'url(' + product.photos[0].path + ')'}">
+    <div class="discount-badge mat-body-2" *ngIf="product.discountRate>0">
+      <div class="dotted-line top-dotted"></div>
       %{{product.discountRate * 100}} indirim
+      <div class="dotted-line bottom-dotted"></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="brand">{{product.brand}}</div>
+    <div class="name mat-body-2">{{product.name}}</div>
+    <div class="star">
+      <app-star [givenRate]="product.rate" [width]="15" [height]="14"></app-star>
     </div>
     <div class="price mat-body-2">
-      <span *ngIf="product.discountRate>0" class="normal-price"> {{product.price}} TL</span>
-
-      {{product.price - product.price * product.discountRate}} TL
+      <span *ngIf="product.discountRate>0" class="normal-price">
+        {{product.price | number : '.2'}} TL
+      </span>
+      {{product.price - product.price * product.discountRate | number : '.2'}} TL
     </div>
-    <!-- <div class="button-area">
-      <button
-        routerLink="/product-detail/{{product._id}}"
-        class="button"
-        mat-raised-button
-        color="primary"
-      >
-        İncele
-      </button>
-    </div> -->
   </div>
 </main>

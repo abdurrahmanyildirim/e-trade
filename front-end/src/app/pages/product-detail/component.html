@@ -7,17 +7,15 @@
           <div class="name mat-body-2">{{product.name}}</div>
           <div class="brand text-primary font-label2">{{product.brand}}</div>
           <div class="rate">
-            <app-star [givenRate]="product.rate"></app-star>
+            <app-star [givenRate]="product.rate" [width]="21" [height]="20"></app-star>
           </div>
           <div class="desc">{{product.description}}</div>
-          <div class="price">
-            <span class="font-bold2">{{product.price | number : '.2'}} TL</span>
-          </div>
-          <div class="discounted-price">
-            <span class="font-bold2"
-              >{{(product.price - product.price *product.discountRate) | number : '.2'}} TL
-              <span>%{{product.discountRate * 100}} indirimli</span></span
-            >
+          <div class="price font-bold2">
+            <span class="normal-price" *ngIf="product.discountRate>0">
+              {{product.price | number : '.2'}} TL
+            </span>
+            {{(product.price - product.price *product.discountRate) | number : '.2'}} TL
+            <span *ngIf="product.discountRate>0">%{{product.discountRate * 100}} indirimli</span>
           </div>
         </div>
         <div class="operation">
@@ -44,7 +42,12 @@
         <div *ngFor="let comment of product.comments" class="comment">
           <div class="comment-info">
             <span class="comment-name mat-body-2">{{comment.name}}</span> -
-            <app-star [givenRate]="comment.rate" style="display: inline-block"></app-star>
+            <app-star
+              [givenRate]="comment.rate"
+              style="display: inline-block"
+              [width]="21"
+              [height]="20"
+            ></app-star>
           </div>
           <div class="comment-desc mat-body-2">{{comment.description}}</div>
         </div>

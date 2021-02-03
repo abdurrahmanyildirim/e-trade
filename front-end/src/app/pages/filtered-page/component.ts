@@ -20,6 +20,7 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
   pageIndex: number;
   pageSize: number = 16;
   totalProductCount: number;
+  mainSplash = true;
   showSplash = true;
   filter: Filter = {
     brands: new Map<string, string>(),
@@ -48,6 +49,7 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const sub = this.activatedRoute.queryParams.subscribe((params) => {
+      this.mainSplash = true;
       const key = 'category';
       this.initProductsByCategory(params[key]);
     });
@@ -61,6 +63,7 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
         this.totalProductCount = products.length;
         this.products = products.slice(0, this.pageSize);
         this.filterFactory.products = products;
+        this.mainSplash = false;
         this.showSplash = false;
         setTimeout(() => {
           sub.unsubscribe();
@@ -80,13 +83,16 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
   }
 
   sortByType(sortType: SortTypes): void {
+    this.showSplash = true;
     this.filter.sortType = sortType;
     const products = this.filterFactory.create(this.filter);
     this.totalProductCount = products.length;
     this.products = products.splice(0, this.pageSize);
+    this.showSplash = false;
   }
 
   filterByBrand(brand: string): void {
+    this.showSplash = true;
     if (this.filter.brands.has(brand)) {
       this.filter.brands.delete(brand);
     } else {
@@ -95,13 +101,16 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
     const products = this.filterFactory.create(this.filter);
     this.totalProductCount = products.length;
     this.products = products.splice(0, this.pageSize);
+    this.showSplash = false;
   }
 
   onPaginationChange(pagination: any): void {
+    this.showSplash = true;
     const index = pagination.pageIndex;
     this.products = this.filterFactory
       .create(this.filter)
       .slice(index * this.pageSize, index * this.pageSize + this.pageSize);
+    this.showSplash = false;
   }
 
   ngOnDestroy(): void {
