@@ -1,5 +1,6 @@
 const Order = require('../models/order');
 const Product = require('../models/product');
+const Status = require('../models/status');
 
 module.exports.getOrders = (req, res) => {
   Order.find({ userId: req.id }, (err, orders) => {
@@ -46,5 +47,23 @@ module.exports.orderDetail = async (req, res) => {
       status: order.status,
       contactInfo: order.contactInfo
     });
+  });
+};
+
+module.exports.allOrders = (req, res) => {
+  Order.find((err, orders) => {
+    if (err) {
+      return res.status(400).send({ message: 'Veri tabanı hatası' });
+    }
+    return res.status(200).send(orders);
+  });
+};
+
+module.exports.getStatuses = (req, res) => {
+  Status.find((err, statuses) => {
+    if (err) {
+      return res.status(400).send({ message: 'Veritabanı hatasi' });
+    }
+    return res.status(200).send(statuses);
   });
 };

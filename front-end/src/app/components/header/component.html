@@ -3,17 +3,23 @@
     <!-- <div class="brand">ER TRADE</div> -->
     <!-- <mat-icon>home</mat-icon> -->
     <button mat-button routerLink="main">
-      <img src="assets/img/logo.svg" alt="logo" style="width: 26px;height: 26px;" /> ER TRADE
+      <img src="assets/img/logo.svg" alt="logo" style="width: 26px; height: 26px" /> ER TRADE
     </button>
-    <button
-      mat-button
-      *ngFor="let category of categories"
-      (click)="navigateToFilteredPage(category.name)"
-    >
-      {{category.name | titlecase}}
-    </button>
+    <span *ngIf="roles.client === role">
+      <button
+        mat-button
+        *ngFor="let category of categories"
+        (click)="navigateToFilteredPage(category.name)"
+      >
+        {{category.name | titlecase}}
+      </button>
+    </span>
+    <span *ngIf="roles.admin === role">
+      <button mat-button routerLink="mn-orders">Siparişler</button>
+    </span>
+
     <div class="spacer"></div>
-    <button mat-button routerLink="cart" class="cart" *ngIf="isAuth">
+    <button mat-button routerLink="cart" class="cart" *ngIf="isAuth && roles.client===role">
       <mat-icon> shopping_cart</mat-icon>
       Sepetim
       <div class="custom-badge" *ngIf="cartLength>0">{{cartLength}}</div>
@@ -29,7 +35,7 @@
       Hesabım
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink="orders">
+      <button mat-menu-item routerLink="orders" *ngIf="roles.client===role">
         <mat-icon>pending_actions</mat-icon> Siparişlerim
       </button>
       <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon> Çıkış</button>

@@ -1,7 +1,6 @@
 const User = require('../models/user');
 const Product = require('../models/product');
 const Order = require('../models/order');
-const { use } = require('../routes/authRoute');
 
 module.exports.updateCart = (req, res, next) => {
   User.findOne({ _id: req.id }, (err, user) => {
@@ -9,7 +8,7 @@ module.exports.updateCart = (req, res, next) => {
       return res.status(400).send({ message: 'Kullanıcı bulunamadı' });
     }
     const orders = req.body;
-    if (!orders) {
+    if (!orders || orders.length <= 0) {
       return res.status(404).send({ message: 'Siparişler boş bırakılamaz.' });
     }
     const newCart = orders.map((order) => {

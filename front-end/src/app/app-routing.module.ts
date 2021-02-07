@@ -9,6 +9,7 @@ import { RegisterComponent } from './pages/auth/register/component';
 import { OrdersComponent } from './pages/orders/component';
 import { OrderDetailComponent } from './pages/order-detail/component';
 import { FilteredPageComponent } from './pages/filtered-page/component';
+import { MnOrdersComponent } from './admin/orders/component';
 
 const routes: Routes = [
   { path: 'main', component: MainComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'filtered-page', component: FilteredPageComponent },
+  { path: 'mn-orders', component: MnOrdersComponent },
   { path: '**', redirectTo: 'main', pathMatch: 'prefix' }
 ];
 

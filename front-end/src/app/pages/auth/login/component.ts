@@ -2,9 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Location } from '@angular/common';
 import { StorageKey } from 'src/app/shared/models/storage';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
+import { LocalStorageService } from 'src/app/shared/services/site/local-storage.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 import { LoginUser } from './model';
@@ -23,7 +25,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private cartService: CartService
+    private cartService: CartService,
+    private localStorage: LocalStorageService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -42,12 +46,15 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.user = Object.assign({}, this.form.value);
       const sub = this.authService.login(this.user).subscribe(
         (loginResponse) => {
-          window.localStorage.setItem(StorageKey.User, JSON.stringify(loginResponse.info));
+          this.localStorage.setObject(StorageKey.User, loginResponse.info);
           this.authService.saveToken(loginResponse.token);
           this.authService.currentUser.next(loginResponse.info);
           this.authService.isAuth.next(true);
           this.cartService.initCart().subscribe(() => {
-            this.router.navigateByUrl('main');
+            this.localStorage.removeItem(StorageKey.Cart);
+            console.log(this.authService.getRole());
+            this.authService.role.next(this.authService.getRole());
+            this.location.back();
           });
           // this.alertifyService.success('Giriş yapıldı.');
         },

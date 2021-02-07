@@ -63,7 +63,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
     };
   }
 
-  onKeypress() {
+  onKeypress(): void {
     setTimeout(() => {
       const phone = this.form.value.phone.split(' ').join('');
       let maskedPhone = '';

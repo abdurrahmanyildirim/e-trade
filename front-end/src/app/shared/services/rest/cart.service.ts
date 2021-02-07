@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { Contact } from 'src/app/pages/purchase-order/model';
 import { Order } from '../../models/order';
 import { StorageKey } from '../../models/storage';
 import { isPresent } from '../../util/common';
 import { ConfigService } from '../site/config.service';
+import { LocalStorageService } from '../site/local-storage.service';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -18,7 +20,9 @@ export class CartService implements OnDestroy {
   constructor(
     private authService: AuthService,
     private http: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private localStorage: LocalStorageService,
+    private router: Router
   ) {
     this.initCart();
   }
@@ -33,8 +37,8 @@ export class CartService implements OnDestroy {
           sub.unsubscribe();
         });
       } else {
-        const orders = JSON.parse(window.localStorage.getItem(StorageKey.Cart)) || [];
-        this.cart.next(orders);
+        // const orders = this.localStorage.getObject<Order[]>(StorageKey.Cart) || [];
+        this.cart.next([]);
         observer.next();
         observer.complete();
       }
@@ -50,6 +54,9 @@ export class CartService implements OnDestroy {
 
   updateCart(orders: Order[]): void {
     if (this.authService.loggedIn()) {
+      if (orders.length <= 0) {
+        return;
+      }
       this.updateDbCart(orders).subscribe({
         next: (data) => {
           this.cart.next(orders);
@@ -57,8 +64,9 @@ export class CartService implements OnDestroy {
         error: (err) => console.log(err)
       });
     } else {
-      this.updateLocaleStorage(orders);
-      this.cart.next(orders);
+      this.router.navigateByUrl('login');
+      // this.updateLocaleStorage(orders);
+      // this.cart.next(orders);
     }
   }
 
@@ -74,7 +82,7 @@ export class CartService implements OnDestroy {
   }
 
   updateLocaleStorage(orders: Order[]): void {
-    window.localStorage.setItem(StorageKey.Cart, JSON.stringify(orders));
+    this.localStorage.setObject(StorageKey.Cart, orders);
   }
 
   ngOnDestroy(): void {

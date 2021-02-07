@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
+import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
@@ -13,12 +14,11 @@ import { ObjectHelper } from 'src/app/shared/util/helper/object';
 export class MainComponent implements OnInit, OnDestroy {
   sub: Subscription;
   products: Product[];
-  carousel = false;
   discounted: Product[];
   mostLiked: Product[];
   newProducts: Product[];
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.initProducts();

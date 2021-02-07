@@ -20,7 +20,8 @@ module.exports.login = (req, res) => {
         const token = jwt.sign(
           {
             _id: user._id,
-            email: user.email
+            email: user.email,
+            role: user.role
           },
           config.TOKEN_KEY,
           {
@@ -97,6 +98,31 @@ module.exports.verifyToken = (req, res, next) => {
     if (err) {
       return res.status(401).send('Geçersiz anahtar');
     }
+    req.id = decoded._id;
+    next();
+  });
+};
+
+const roles = {
+  admin: 'Admin',
+  client: 'Client'
+};
+
+module.exports.verifyAdmin = (req, res, next) => {
+  const authorization = req.headers.authorization;
+  if (!authorization) {
+    return res.status(401).send({ message: 'Yetkisiz işlem' });
+  }
+  const token = authorization.split(' ')[1];
+  jwt.verify(token, config.TOKEN_KEY, (err, decoded) => {
+    if (err) {
+      return res.status(401).send('Geçersiz anahtar');
+    }
+    const role = decoded.role;
+    if (role !== roles.admin) {
+      return res.status(404).send({ message: 'Yetkisiz işlem' });
+    }
+
     req.id = decoded._id;
     next();
   });

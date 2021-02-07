@@ -14,6 +14,7 @@ import localeTr from '@angular/common/locales/tr';
 import { registerLocaleData } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SplashService } from './shared/services/site/splash.service';
+import { AdminModule } from './admin/module';
 
 registerLocaleData(localeTr);
 
@@ -24,6 +25,7 @@ registerLocaleData(localeTr);
     BrowserAnimationsModule,
     AppRoutingModule,
     PagesModule,
+    AdminModule,
     HeaderModule,
     FooterModule,
     HttpClientModule,

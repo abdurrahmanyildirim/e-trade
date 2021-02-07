@@ -29,7 +29,7 @@ export class RestInterceptor implements HttpInterceptor {
   private headers(): HttpHeaders {
     let headers = new HttpHeaders().set(
       'Authorization',
-      'Bearer ' + window.localStorage.getItem(StorageKey.Token)
+      'jwt ' + window.localStorage.getItem(StorageKey.Token)
     );
     headers = headers.append('Content-Type', 'application/json');
     return headers;

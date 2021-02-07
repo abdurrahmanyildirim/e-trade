@@ -4,12 +4,17 @@ const http = require('http').Server(app);
 // const io = require('socket.io')(http);
 require('./app_server/models/db');
 const cors = require('cors');
-// const Category = require('./app_server/models/category');
+// const Status = require('./app_server/models/status');
 
-// const categories = [{ name: 'tava' }, { name: 'tencere' }, { name: 'tabak' }];
+// const categories = [
+//   {
+//     key: -1,
+//     desc: 'İptal Edildi'
+//   }
+// ];
 
 // categories.forEach((cy) => {
-//   const dbCategory = new Category(cy);
+//   const dbCategory = new Status(cy);
 //   dbCategory.save();
 // });
 

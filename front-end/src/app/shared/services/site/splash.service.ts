@@ -11,7 +11,7 @@ export class SplashService {
 
   constructor(private configService: ConfigService, private cartService: CartService) {}
 
-  init() {
+  init(): void {
     const obs = [this.cartService.initCart()];
     this.configService.initSiteConfig().subscribe({
       next: () => {

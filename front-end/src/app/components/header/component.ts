@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Roles } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
@@ -18,6 +19,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   cartLength = 0;
   isAuth = false;
   categories: any;
+  roles = Roles;
+  role: Roles;
   subs = new Subscription();
 
   constructor(
@@ -31,6 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.checkCart();
     this.initCategories();
     this.initCurrentUser();
+    this.initRole();
   }
 
   checkCart(): void {
@@ -55,6 +59,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   initCurrentUser(): void {
     const sub = this.authService.isAuth.subscribe((isAuth) => {
       this.isAuth = isAuth;
+    });
+    this.subs.add(sub);
+  }
+
+  initRole(): void {
+    const sub = this.authService.role.subscribe((role) => {
+      this.role = role;
     });
     this.subs.add(sub);
   }
