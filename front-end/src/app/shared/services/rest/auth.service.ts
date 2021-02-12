@@ -49,6 +49,10 @@ export class AuthService {
     return !!this.token;
   }
 
+  getUser(id: string): Observable<User> {
+    return this.http.get<User>(this.configService.config.domain + 'auth/user/' + id);
+  }
+
   get token(): string {
     return this.localStorage.getItem(StorageKey.Token);
   }
@@ -62,13 +66,17 @@ export class AuthService {
   }
 
   getRole(): Roles {
-    if (this.jwt) {
-      return this.jwt.decodeToken<User>(this.token).role;
+    if (this.loggedIn()) {
+      if (this.jwt) {
+        return this.jwt.decodeToken(this.token).role;
+      } else {
+        let jwt = new JwtHelperService();
+        const role = jwt.decodeToken(this.token).role;
+        jwt = null;
+        return role;
+      }
     } else {
-      let jwt = new JwtHelperService();
-      const role = jwt.decodeToken<User>(this.token).role;
-      jwt = null;
-      return role;
+      return Roles.client;
     }
   }
 }

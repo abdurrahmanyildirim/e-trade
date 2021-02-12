@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { OrderList } from 'src/app/pages/orders/model';
-import { Order } from 'src/app/shared/models/order';
+import { OrderList, Status } from 'src/app/shared/models/order';
 import { OrderService } from 'src/app/shared/services/rest/order.service';
 import { isPresent } from 'src/app/shared/util/common';
-import { Status } from './model';
 
 @Component({
   selector: 'app-mn-orders',
@@ -39,7 +38,8 @@ export class MnOrdersComponent implements OnInit, OnDestroy {
   currentType = Object.assign({}, this.orderTypes[1]);
   statuses: Status[];
   subs = new Subscription();
-  constructor(private orderService: OrderService) {}
+
+  constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
     this.initStatuses();
@@ -58,8 +58,6 @@ export class MnOrdersComponent implements OnInit, OnDestroy {
   }
 
   initCurrentOrderList(): void {
-    console.log(this.currentType);
-    console.log(this.orders);
     this.currentList = this.orders
       .filter((order) => order.status[order.status.length - 1].key === this.currentType.key)
       .slice();
@@ -74,6 +72,10 @@ export class MnOrdersComponent implements OnInit, OnDestroy {
       error: (err) => console.log(err)
     });
     this.subs.add(sub);
+  }
+
+  navigateToDetail(id: string): void {
+    this.router.navigateByUrl('mn-order-detail/' + id);
   }
 
   ngOnDestroy(): void {

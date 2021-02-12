@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Status } from 'src/app/admin/orders/model';
-import { OrderDetail } from 'src/app/pages/order-detail/model';
-import { OrderList } from 'src/app/pages/orders/model';
+import { OrderDetail, OrderList, Status } from '../../models/order';
 import { ConfigService } from '../site/config.service';
 
 @Injectable({
@@ -28,7 +26,9 @@ export class OrderService {
     return this.http.get<Status[]>(this.configService.config.domain + 'order/statuses');
   }
 
-  // getProductsByCategory(category: Category) {
-  //   return this.http.get<Product[]>(environment.domain + 'products.json');
-  // }
+  updateOrderStatus(id: string, status: Status): Observable<void> {
+    return this.http.post<void>(this.configService.config.domain + 'order/update-status/' + id, {
+      status
+    });
+  }
 }

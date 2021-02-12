@@ -30,6 +30,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this.products = results;
         this.initDiscountedProducts();
         this.initMostLiked();
+        this.initNewProducts();
       },
       error: (err) => console.log(err)
     });
@@ -44,7 +45,10 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   initNewProducts(): void {
-    // this.newProducts = this.products.sort((a:Product,b:Product)=>a.)
+    this.newProducts = this.products
+      .sort((a: Product, b: Product) => b.rate - a.rate)
+      .reverse()
+      .slice(0, 5);
   }
 
   ngOnDestroy(): void {

@@ -25,12 +25,12 @@
     </div>
   </section>
 
-  <section class="section" *ngIf="mostLiked">
+  <section class="section" *ngIf="newProducts">
     <div class="section-title mat-body-2">Yeni ürünler</div>
     <div class="section-items">
       <app-card
         class="section-item"
-        *ngFor="let product of mostLiked"
+        *ngFor="let product of newProducts"
         [product]="product"
       ></app-card>
     </div>

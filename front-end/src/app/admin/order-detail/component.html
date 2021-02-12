@@ -1,0 +1,61 @@
+<div class="container" *ngIf="isInited">
+  <div class="top">
+    <div class="card flex">
+      <div class="card-header mat-body-2">Sipariş Bilgileri</div>
+      <div class="contact-body">
+        <span class="mat-body-2">
+          Alıcı : {{currentUser.firstName + ' ' + currentUser.lastName}}</span
+        >
+        <span class="mat-body-2">
+          Adres : {{order.contactInfo.address}} - {{order.contactInfo.district + '/' +
+          order.contactInfo.city}}
+        </span>
+        <span class="mat-body-2"> Tel No : 0{{order.contactInfo.phone}}</span>
+        <span class="mat-body-2"> Tarih : {{order.date | date:'medium'}}</span>
+        <span class="mat-body-2"> Durum : {{order.status[order.status.length -1 ].desc}}</span>
+      </div>
+    </div>
+    <div class="card status-card">
+      <div class="card-header mat-body-2">Sipariş Düzenleme</div>
+      <div class="order-setting">
+        <mat-form-field appearance="fill" class="order-type">
+          <mat-select [(value)]="currentStatus.key">
+            <mat-option
+              *ngFor="let status of statuses"
+              [value]="status.key"
+            >
+              {{status.desc}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-flat-button color="primary" class="update-button" (click)="updateOrderStatus()">
+          Güncelle
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card flex">
+    <div class="card-header mat-body-2">Ürün Bilgileri</div>
+    <div class="products">
+      <div class="product" *ngFor="let product of order.products">
+        <img [src]="product.photoPath" alt="product" class="photo" />
+        <div class="info">
+          <div class="brand">{{product.brand | uppercase}}</div>
+          <div class="name mat-body-2">{{product.name}}</div>
+          <div class="quantity mat-body-2">{{product.quantity}} Adet</div>
+          <div class="discount mat-body-2">%{{product.discountRate * 100}} İndirimli</div>
+          <div class="price mat-body-2">
+            <span *ngIf="product.discountRate > 0" class="normal-price">
+              {{product.price*product.quantity}} TL</span
+            >
+            <span
+              >{{(product.price - product.discountRate * product.price) * product.quantity}}
+              TL</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

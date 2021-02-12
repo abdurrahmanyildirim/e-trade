@@ -11,7 +11,7 @@
     <span class="order-item">{{order.date | date:'mediumDate'}}</span>
     <span class="order-item"> {{order.contactInfo.city + '/' + order.contactInfo.district}} </span>
     <span class="order-item"> {{order.products.length}} Ürün </span>
-    <button mat-icon-button class="button" color="primary">
+    <button mat-icon-button class="button" color="primary" (click)="navigateToDetail(order._id)">
       <mat-icon>arrow_forward_ios</mat-icon>
     </button>
   </div>

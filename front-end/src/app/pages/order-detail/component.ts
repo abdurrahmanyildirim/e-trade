@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OrderDetail } from 'src/app/shared/models/order';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { OrderService } from 'src/app/shared/services/rest/order.service';
-import { OrderDetail } from './model';
 
 @Component({
   selector: 'app-order-detail',
@@ -12,7 +12,6 @@ import { OrderDetail } from './model';
   providers: [OrderService]
 })
 export class OrderDetailComponent implements OnInit {
-  orderId: string;
   order: OrderDetail;
   currentUser: User;
 

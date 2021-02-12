@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { OrderList, OrderListProduct } from 'src/app/shared/models/order';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { OrderService } from 'src/app/shared/services/rest/order.service';
-import { OrderList, OrderListProduct } from './model';
+import { isPresent } from 'src/app/shared/util/common';
 
 @Component({
   selector: 'app-orders',
@@ -11,7 +13,7 @@ import { OrderList, OrderListProduct } from './model';
   styleUrls: ['./component.css'],
   providers: [OrderService]
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
   orderListType = [
     {
       key: 'allOrders',
@@ -29,6 +31,7 @@ export class OrdersComponent implements OnInit {
   currentList: any = this.orderListType[0];
   orderList: OrderList[];
   currentUser: User;
+  sub: Subscription;
 
   constructor(
     private orderService: OrderService,
@@ -42,7 +45,7 @@ export class OrdersComponent implements OnInit {
   }
 
   initOrders(): void {
-    this.orderService.getOrders().subscribe({
+    this.sub = this.orderService.getOrders().subscribe({
       next: (orders) => {
         this.orderList = orders.sort(
           (a: OrderList, b: OrderList) => new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -62,5 +65,11 @@ export class OrdersComponent implements OnInit {
 
   navigateToDetail(id: string): void {
     this.router.navigateByUrl('order-detail/' + id);
+  }
+
+  ngOnDestroy(): void {
+    if (isPresent(this.sub)) {
+      this.sub.unsubscribe();
+    }
   }
 }
