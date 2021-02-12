@@ -4,6 +4,7 @@ const controller = require('../controllers/authController');
 
 router.post('/login', controller.login);
 router.post('/register', controller.register);
-router.get('/check-nick-name', controller.checkNickName);
+router.use(controller.verifyAdmin);
+router.get('/user/:id', controller.getUser);
 
 module.exports = router;

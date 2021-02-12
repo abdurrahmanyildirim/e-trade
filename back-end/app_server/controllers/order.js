@@ -67,3 +67,28 @@ module.exports.getStatuses = (req, res) => {
     return res.status(200).send(statuses);
   });
 };
+
+module.exports.updateStatus = (req, res) => {
+  const id = req.params.id;
+  const status = req.body.status;
+  if (!id || !status) {
+    return res.status(404).send({ message: 'Hatalı api isteği' });
+  }
+  Order.findOne({ _id: id }, (err, order) => {
+    if (err) {
+      return res.status(400).send({ message: 'Veri tabanı hatası' });
+    }
+    order.status.push({
+      key: status.key,
+      desc: status.desc,
+      date: Date.now()
+    });
+    const newOrder = new Order(order);
+    newOrder.save((err) => {
+      if (err) {
+        return res.status(500).send({ message: 'Veri tabanı hatası' });
+      }
+      return res.status(200).send();
+    });
+  });
+};

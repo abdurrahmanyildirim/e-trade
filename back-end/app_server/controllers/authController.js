@@ -71,21 +71,19 @@ module.exports.register = (req, res) => {
   }
 };
 
-module.exports.checkNickName = (req, res) => {
-  if (!req.url) {
-    return res.status(404).send({ message: 'Kullanıcı adı boş olamaz.' });
-  } else {
-    let nickName = req.query.nickName;
-    User.find({ nickName: nickName }, (err, data) => {
-      if (data.length > 0) {
-        return res
-          .status(400)
-          .send({ message: 'Bu kullanıcı adı başka bir kişi tarafından kullanılmaktadır.' });
-      } else {
-        return res.status(200).send({ message: 'Bu kullanıcı adını kullanabilirsiniz.' });
-      }
-    });
-  }
+module.exports.getUser = (req, res) => {
+  const id = req.params.id;
+  User.findOne({ _id: id }, (err, user) => {
+    if (err) {
+      return res.status(404).send({ message: 'Bağlantı hatası' });
+    }
+    const newUser = {
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName
+    };
+    return res.status(200).send(newUser);
+  });
 };
 
 module.exports.verifyToken = (req, res, next) => {
@@ -122,18 +120,6 @@ module.exports.verifyAdmin = (req, res, next) => {
     if (role !== roles.admin) {
       return res.status(404).send({ message: 'Yetkisiz işlem' });
     }
-
-    req.id = decoded._id;
     next();
   });
 };
-
-// module.exports.decodeToken = async (req, res, next) => {
-//   if (!req.headers.authorization) {
-//     return res.status(400).send('Token tespit edilemedi');
-//   }
-//   const authorization = req.headers.authorization;
-//   const token = authorization.split(' ')[1];
-
-//   next();
-// };

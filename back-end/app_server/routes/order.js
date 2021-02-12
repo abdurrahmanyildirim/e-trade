@@ -8,5 +8,6 @@ router.get('/detail/:id', controller.orderDetail);
 router.use(authController.verifyAdmin);
 router.get('/all-orders', controller.allOrders);
 router.get('/statuses', controller.getStatuses);
+router.post('/update-status/:id', controller.updateStatus);
 
 module.exports = router;
