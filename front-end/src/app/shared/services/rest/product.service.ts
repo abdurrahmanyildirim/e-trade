@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from '../../models/product';
+import { Category, CloudinaryPhoto, Product } from '../../models/product';
 import { ConfigService } from '../site/config.service';
 
 @Injectable()
@@ -12,8 +12,8 @@ export class ProductService {
     return this.http.get<Product[]>(this.configService.config.domain + 'product/products');
   }
 
-  categories(): Observable<any> {
-    return this.http.get<any>(this.configService.config.domain + 'category/categories');
+  categories(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.configService.config.domain + 'category/categories');
   }
 
   productsByCategory(category: string): Observable<Product[]> {
@@ -24,5 +24,12 @@ export class ProductService {
 
   productById(id: string): Observable<Product> {
     return this.http.get<Product>(this.configService.config.domain + 'product/get-by-id?id=' + id);
+  }
+
+  uploadPhoto(image: FormData): Observable<CloudinaryPhoto> {
+    return this.http.post<CloudinaryPhoto>(
+      this.configService.config.domain + 'photo/upload',
+      image
+    );
   }
 }

@@ -1,0 +1,51 @@
+.container {
+  margin-top: 10px;
+  width: 900px;
+}
+
+.card {
+  width: 898px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.header {
+  height: 20px;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  background-color: rgb(226, 226, 226);
+}
+
+.body {
+  display: flex;
+  padding: 10px;
+}
+
+.info {
+  flex: 1;
+}
+
+.field {
+  width: 80%;
+}
+
+.photos-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.photo-upload-button {
+  margin: 0 auto;
+  width: 350px;
+  height: 50px;
+}
+
+.uploaded-photos {
+  margin-top: 10px;
+}
+
+.submit-button {
+  width: 80%;
+}

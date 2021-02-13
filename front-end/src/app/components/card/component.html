@@ -10,7 +10,13 @@
     <div class="brand">{{product.brand}}</div>
     <div class="name mat-body-2">{{product.name}}</div>
     <div class="star">
-      <app-star [givenRate]="product.rate" [width]="15" [height]="14"></app-star>
+      <span *ngIf="product.rate<=0">Yeni Ürün</span>
+      <app-star
+        *ngIf="product.rate>0"
+        [givenRate]="product.rate"
+        [width]="15"
+        [height]="14"
+      ></app-star>
     </div>
     <div class="price mat-body-2">
       <span *ngIf="product.discountRate>0" class="normal-price">

@@ -1,11 +1,12 @@
 export interface Product {
-  _id: string;
+  _id?: string;
   name: string;
   category: Category;
   price: number;
   description: string;
   discountRate: number;
   stockQuantity: number;
+  isActive?: boolean;
   photos: CloudinaryPhoto[];
   rate: number;
   comments: Comment[];
@@ -20,13 +21,17 @@ export interface Comment {
 }
 
 export interface CloudinaryPhoto {
-  _id: string;
+  _id?: string;
   path: string;
   publicId: string;
 }
 
-export enum Category {
-  tava = 'tava',
-  tencere = 'tencere',
-  tabak = 'tabak'
+export interface Category {
+  name: string;
 }
+
+// export enum Category {
+//   tava = 'tava',
+//   tencere = 'tencere',
+//   tabak = 'tabak'
+// }

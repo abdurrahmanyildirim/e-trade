@@ -1,7 +1,7 @@
 const authRoute = require('./authRoute');
 // const settingRoute = require('./settingRoute');
 const productRoute = require('./productRoute');
-const accountRoute = require('./accountRoute');
+const accountRoute = require('./photo');
 const fileUpload = require('express-fileupload');
 const authController = require('../controllers/authController');
 const operation = require('./operation');
@@ -15,7 +15,6 @@ module.exports = (app) => {
   app.use(authController.verifyToken);
   app.use('/operation', operation);
   app.use('/order', order);
-  //   app.use(authController.decodeToken);
-  //   app.use(fileUpload({ useTempFiles: true }));
-  //   app.use('/account', accountRoute);
+  app.use(fileUpload({ useTempFiles: true }));
+  app.use('/photo', accountRoute);
 };

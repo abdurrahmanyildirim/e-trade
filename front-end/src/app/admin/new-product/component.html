@@ -1,0 +1,117 @@
+<main class="container" *ngIf="categories">
+  <section class="card">
+    <div class="header mat-body-2">Ürün Bilgileri</div>
+    <div class="body">
+      <div class="info">
+        <form [formGroup]="form" (ngSubmit)="insertProduct()">
+          <p>
+            <mat-form-field class="field">
+              <input type="text" matInput placeholder="Ürün adı" formControlName="name" />
+              <mat-error
+                *ngIf="form.get('name').hasError('required') && form.get('name').hasError('isNull')&& form.get('name').touched"
+              >
+                *Ürün Adı boş bırakılamaz
+              </mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="field">
+              <mat-select [(value)]="currentCategory.name" (selectionChange)="onCategoryChange()">
+                <mat-option *ngFor="let category of categories" [value]="category.name">
+                  {{category.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="field">
+              <input type="text" matInput placeholder="Fiyat" formControlName="price" />
+              <mat-error
+                *ngIf="form.get('price').hasError('required') && form.get('price').hasError('isNull')&& form.get('price').touched"
+              >
+                *Fiyat bilgisi boş bırakılamaz
+              </mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="field">
+              <input
+                type="text"
+                matInput
+                placeholder="İndirim Oranı"
+                formControlName="discountRate"
+              />
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="field">
+              <input
+                type="text"
+                matInput
+                placeholder="Stok miktarı"
+                formControlName="stockQuantity"
+              />
+              <mat-error
+                *ngIf="form.get('stockQuantity').hasError('required') && form.get('stockQuantity').hasError('isNull')&& form.get('stockQuantity').touched"
+              >
+                *Stok miktarı giriniz.
+              </mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="field">
+              <mat-label>Marka</mat-label>
+              <input type="text" matInput placeholder="Marka" formControlName="brand" />
+              <mat-error
+                *ngIf="form.get('brand').hasError('required') && form.get('brand').hasError('isNull')&& form.get('brand').touched"
+              >
+                *Bir marka ismi giriniz.
+              </mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="field">
+              <mat-label>Ürün Açıklaması</mat-label>
+              <textarea matInput formControlName="description"></textarea>
+              <mat-error
+                *ngIf="form.get('description').hasError('required') && form.get('description').hasError('isNull')&& form.get('description').touched"
+              >
+                *Ürün açıklama alana boş bırakılamaz
+              </mat-error>
+            </mat-form-field>
+          </p>
+
+          <div class="button">
+            <button
+              type="submit"
+              class="submit-button"
+              color="primary"
+              [disabled]="!form.valid"
+              mat-raised-button
+            >
+              Ürünü Ekle
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="photos-section">
+        <button mat-stroked-button (click)="fileInput.click()" class="photo-upload-button">
+          <mat-icon>upload</mat-icon>
+          Fotoğraf Yükle
+          <input
+            type="file"
+            name=""
+            multiple
+            accept=".jpg,.jpeg,.png"
+            hidden
+            (change)="onPhotoUpload($event)"
+            #fileInput
+          />
+        </button>
+        <div class="uploaded-photos" *ngIf="uploadedPhotos.length>0">
+          <app-mn-photos [photos]="uploadedPhotos"></app-mn-photos>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

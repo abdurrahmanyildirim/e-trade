@@ -3,13 +3,13 @@ import { CloudinaryPhoto } from 'src/app/shared/models/product';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
 @Component({
-  selector: 'app-photos',
+  selector: 'app-mn-photos',
   templateUrl: './component.html',
   styleUrls: ['./component.css']
 })
-export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input() photos: CloudinaryPhoto[];
-  currentPhoto: CloudinaryPhoto;
+export class MnPhotosComponent implements OnInit, AfterViewInit, OnDestroy {
+  @Input() photos: any[];
+  currentPhoto: any;
 
   ngOnInit(): void {
     this.currentPhoto = this.photos[0];

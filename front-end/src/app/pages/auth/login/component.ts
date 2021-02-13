@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { LocalStorageService } from 'src/app/shared/services/site/local-storage.service';
 import { isPresent } from 'src/app/shared/util/common';
-import { ObjectHelper } from 'src/app/shared/util/helper/object';
 import { LoginUser } from './model';
 
 @Component({
@@ -52,7 +51,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.authService.isAuth.next(true);
           this.cartService.initCart().subscribe(() => {
             this.localStorage.removeItem(StorageKey.Cart);
-            console.log(this.authService.getRole());
             this.authService.role.next(this.authService.getRole());
             this.location.back();
           });
@@ -72,6 +70,5 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (isPresent(this.subs)) {
       this.subs.unsubscribe();
     }
-    ObjectHelper.removeReferances(this);
   }
 }

@@ -11,6 +11,7 @@ import { OrderDetailComponent } from './pages/order-detail/component';
 import { FilteredPageComponent } from './pages/filtered-page/component';
 import { MnOrdersComponent } from './admin/orders/component';
 import { MnOrderDetailComponent } from './admin/order-detail/component';
+import { MnNewProductComponent } from './admin/new-product/component';
 
 const routes: Routes = [
   { path: 'main', component: MainComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'filtered-page', component: FilteredPageComponent },
   { path: 'mn-orders', component: MnOrdersComponent },
   { path: 'mn-order-detail/:id', component: MnOrderDetailComponent },
+  { path: 'mn-new-product', component: MnNewProductComponent },
   { path: '**', redirectTo: 'main', pathMatch: 'prefix' }
 ];
 
