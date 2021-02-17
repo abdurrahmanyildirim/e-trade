@@ -14,36 +14,19 @@ import { ObjectHelper } from 'src/app/shared/util/helper/object';
   styleUrls: ['./component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  value = '';
-  hasCartItem = false;
-  cartLength = 0;
-  isAuth = false;
   categories: any;
   roles = Roles;
-  role: Roles;
   subs = new Subscription();
 
   constructor(
-    private cartService: CartService,
-    private authService: AuthService,
+    public cartService: CartService,
+    public authService: AuthService,
     private router: Router,
     private productService: ProductService
   ) {}
 
   ngOnInit(): void {
-    this.checkCart();
     this.initCategories();
-    this.initCurrentUser();
-    this.initRole();
-  }
-
-  checkCart(): void {
-    const sub = this.cartService.cart.subscribe((orders) => {
-      if (isPresent(orders)) {
-        this.cartLength = orders.length;
-      }
-    });
-    this.subs.add(sub);
   }
 
   initCategories(): void {
@@ -52,20 +35,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.categories = categories;
       },
       error: (err) => console.log(err)
-    });
-    this.subs.add(sub);
-  }
-
-  initCurrentUser(): void {
-    const sub = this.authService.isAuth.subscribe((isAuth) => {
-      this.isAuth = isAuth;
-    });
-    this.subs.add(sub);
-  }
-
-  initRole(): void {
-    const sub = this.authService.role.subscribe((role) => {
-      this.role = role;
     });
     this.subs.add(sub);
   }

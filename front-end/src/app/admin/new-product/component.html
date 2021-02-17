@@ -8,7 +8,7 @@
             <mat-form-field class="field">
               <input type="text" matInput placeholder="Ürün adı" formControlName="name" />
               <mat-error
-                *ngIf="form.get('name').hasError('required') && form.get('name').hasError('isNull')&& form.get('name').touched"
+                *ngIf="form.get('name').hasError('required') || form.get('name').hasError('isNull') || form.get('name').touched"
               >
                 *Ürün Adı boş bırakılamaz
               </mat-error>
@@ -27,7 +27,7 @@
             <mat-form-field class="field">
               <input type="text" matInput placeholder="Fiyat" formControlName="price" />
               <mat-error
-                *ngIf="form.get('price').hasError('required') && form.get('price').hasError('isNull')&& form.get('price').touched"
+                *ngIf="form.get('price').hasError('required') || form.get('price').hasError('isNull')|| form.get('price').touched"
               >
                 *Fiyat bilgisi boş bırakılamaz
               </mat-error>
@@ -52,7 +52,7 @@
                 formControlName="stockQuantity"
               />
               <mat-error
-                *ngIf="form.get('stockQuantity').hasError('required') && form.get('stockQuantity').hasError('isNull')&& form.get('stockQuantity').touched"
+                *ngIf="form.get('stockQuantity').hasError('required') || form.get('stockQuantity').hasError('isNull')|| form.get('stockQuantity').touched"
               >
                 *Stok miktarı giriniz.
               </mat-error>
@@ -60,10 +60,9 @@
           </p>
           <p>
             <mat-form-field class="field">
-              <mat-label>Marka</mat-label>
               <input type="text" matInput placeholder="Marka" formControlName="brand" />
               <mat-error
-                *ngIf="form.get('brand').hasError('required') && form.get('brand').hasError('isNull')&& form.get('brand').touched"
+                *ngIf="form.get('brand').hasError('required') || form.get('brand').hasError('isNull')|| form.get('brand').touched"
               >
                 *Bir marka ismi giriniz.
               </mat-error>
@@ -74,7 +73,7 @@
               <mat-label>Ürün Açıklaması</mat-label>
               <textarea matInput formControlName="description"></textarea>
               <mat-error
-                *ngIf="form.get('description').hasError('required') && form.get('description').hasError('isNull')&& form.get('description').touched"
+                *ngIf="form.get('description').hasError('required') || form.get('description').hasError('isNull')|| form.get('description').touched"
               >
                 *Ürün açıklama alana boş bırakılamaz
               </mat-error>
@@ -86,10 +85,11 @@
               type="submit"
               class="submit-button"
               color="primary"
-              [disabled]="!form.valid"
-              mat-raised-button
+              [disabled]="form.invalid"
+              mat-flat-button
             >
-              Ürünü Ekle
+              <mat-icon>save</mat-icon>
+              Kaydet
             </button>
           </div>
         </form>
@@ -111,6 +111,7 @@
         <div class="uploaded-photos" *ngIf="uploadedPhotos.length>0">
           <app-mn-photos [photos]="uploadedPhotos"></app-mn-photos>
         </div>
+        <!-- <button (click)="uploadPhotos()">Deneme</button> -->
       </div>
     </div>
   </section>

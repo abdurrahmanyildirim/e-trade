@@ -20,9 +20,9 @@
     </div>
     <div class="price mat-body-2">
       <span *ngIf="product.discountRate>0" class="normal-price">
-        {{product.price | number : '.2'}} TL
+        {{product.price | number : '1.2'}} TL
       </span>
-      {{product.price - product.price * product.discountRate | number : '.2'}} TL
+      {{product.price - product.price * product.discountRate | number : '1.2'}} TL
     </div>
   </div>
 </main>

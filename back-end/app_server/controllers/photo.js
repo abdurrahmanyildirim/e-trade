@@ -9,15 +9,23 @@ module.exports.photoUpload = async (req, res) => {
     api_key: config.cloudinary_settings.api_key,
     api_secret: config.cloudinary_settings.api_secret
   });
+  const imagesInfo = [];
+  for (const photo of req.files.photos) {
+    const image = await cloudinaryImageUploadMethod(photo.tempFilePath);
+    imagesInfo.push({
+      publicId: image.public_id,
+      path: image.url
+    });
+  }
+  return res.status(200).send(imagesInfo);
+};
 
-  cloudinary.uploader.upload(req.files.image.tempFilePath, async (err, image) => {
-    if (err) {
-      console.log(err);
-      return res.status(401).send('Fotoğraf yükleme başarısız.');
-    }
-    const publicId = image.public_id;
-    const path = image.url;
-    return res.status(201).json({ publicId, path });
+const cloudinaryImageUploadMethod = async (tempFilePath) => {
+  return new Promise((resolve) => {
+    cloudinary.uploader.upload(tempFilePath, { folder: 'product/' }, (err, image) => {
+      if (err) return res.status(500).send('upload image error');
+      resolve(image);
+    });
   });
 };
 

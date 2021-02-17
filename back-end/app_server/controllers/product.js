@@ -9,8 +9,6 @@ module.exports.getProducts = (req, res) => {
   });
 };
 
-module.exports.getCategories = (req, res) => {};
-
 module.exports.getByCategory = (req, res) => {
   const category = req.query.category;
   Product.find({ category }, (err, products) => {
@@ -28,5 +26,29 @@ module.exports.getProductById = (req, res) => {
       return res.status(404).send();
     }
     return res.status(200).send(product);
+  });
+};
+
+module.exports.addNewProduct = (req, res) => {
+  const newProduct = {
+    name: req.body.name,
+    category: req.body.category,
+    price: req.body.price,
+    description: req.body.description,
+    discountRate: req.body.discountRate,
+    stockQuantity: req.body.stockQuantity,
+    brand: req.body.brand,
+    rate: 0,
+    isActive: true,
+    photos: req.body.photos,
+    comments: []
+  };
+
+  const product = new Product(newProduct);
+  product.save((err) => {
+    if (err) {
+      return res.status(400).send({ message: 'Ekleme sırasında hata meydana geldi' });
+    }
+    return res.status(200).send({ message: 'Ürün eklendi.' });
   });
 };

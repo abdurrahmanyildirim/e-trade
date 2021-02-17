@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { CardModule } from 'src/app/components/card/module';
+import { CardModule } from 'src/app/shared/components/card/module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';

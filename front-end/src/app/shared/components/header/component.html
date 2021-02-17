@@ -1,11 +1,10 @@
 <main class="custom-navbar mat-elevation-z3">
   <div class="navbar-container">
-    <!-- <div class="brand">ER TRADE</div> -->
     <!-- <mat-icon>home</mat-icon> -->
     <button mat-button routerLink="main">
       <img src="assets/img/logo.svg" alt="logo" style="width: 26px; height: 26px" /> ER TRADE
     </button>
-    <span *ngIf="roles.client === role">
+    <span *ngIf="(this.authService.role | async) === roles.client">
       <button
         mat-button
         *ngFor="let category of categories"
@@ -14,29 +13,40 @@
         {{category.name | titlecase}}
       </button>
     </span>
-    <span *ngIf="roles.admin === role">
+    <span *ngIf="(this.authService.role | async) === roles.admin">
       <button mat-button routerLink="mn-orders">Siparişler</button>
       <button mat-button routerLink="mn-new-product">Ürün Ekle</button>
     </span>
 
     <div class="spacer"></div>
-    <button mat-button routerLink="cart" class="cart" *ngIf="isAuth && roles.client===role">
+    <button
+      mat-button
+      routerLink="cart"
+      class="cart"
+      *ngIf="(this.authService.isAuth | async) &&  (this.authService.role | async) === roles.client"
+    >
       <mat-icon> shopping_cart</mat-icon>
       Sepetim
-      <div class="custom-badge" *ngIf="cartLength>0">{{cartLength}}</div>
+      <div class="custom-badge" *ngIf="(this.cartService.cart | async).length>0">
+        {{(this.cartService.cart | async).length}}
+      </div>
     </button>
-    <button mat-button routerLink="login" *ngIf="!isAuth">
+    <button mat-button routerLink="login" *ngIf="!(this.authService.isAuth | async)">
       <mat-icon>login</mat-icon> Giriş Yap
     </button>
-    <button mat-button routerLink="register" *ngIf="!isAuth">
+    <button mat-button routerLink="register" *ngIf="!(this.authService.isAuth | async)">
       <mat-icon>person_add_alt_1</mat-icon> Üye Ol
     </button>
-    <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAuth">
+    <button mat-button [matMenuTriggerFor]="menu" *ngIf="(this.authService.isAuth | async)">
       <mat-icon>account_circle</mat-icon>
       Hesabım
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink="orders" *ngIf="roles.client===role">
+      <button
+        mat-menu-item
+        routerLink="orders"
+        *ngIf="(this.authService.role | async) === roles.client"
+      >
         <mat-icon>pending_actions</mat-icon> Siparişlerim
       </button>
       <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon> Çıkış</button>

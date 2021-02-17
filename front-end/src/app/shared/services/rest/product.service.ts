@@ -26,10 +26,14 @@ export class ProductService {
     return this.http.get<Product>(this.configService.config.domain + 'product/get-by-id?id=' + id);
   }
 
-  uploadPhoto(image: FormData): Observable<CloudinaryPhoto> {
-    return this.http.post<CloudinaryPhoto>(
+  uploadPhoto(photos: FormData): Observable<CloudinaryPhoto[]> {
+    return this.http.post<CloudinaryPhoto[]>(
       this.configService.config.domain + 'photo/upload',
-      image
+      photos
     );
+  }
+
+  addNewProduct(product: Product): Observable<void> {
+    return this.http.post<void>(this.configService.config.domain + 'product/new-product', product);
   }
 }

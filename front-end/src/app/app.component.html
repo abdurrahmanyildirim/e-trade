@@ -13,6 +13,6 @@
   </div>
   <app-footer
     class="footer"
-    *ngIf="splashService.configInited && role === roles.client"
+    *ngIf="splashService.configInited && (authService.role | async) === roles.client"
   ></app-footer>
 </main>

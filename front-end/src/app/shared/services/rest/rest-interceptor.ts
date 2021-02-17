@@ -31,7 +31,7 @@ export class RestInterceptor implements HttpInterceptor {
       'Authorization',
       'jwt ' + window.localStorage.getItem(StorageKey.Token)
     );
-    headers = headers.append('Content-Type', 'application/json');
+    // headers = headers.append('Content-Type', 'application/json');
     return headers;
   }
 }
