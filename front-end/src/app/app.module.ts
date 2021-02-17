@@ -15,11 +15,13 @@ import { registerLocaleData } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SplashService } from './shared/services/site/splash.service';
 import { AdminModule } from './admin/module';
+import { SnackbarComponent } from './shared/components/snackbar/component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 registerLocaleData(localeTr);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SnackbarComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -27,6 +29,7 @@ registerLocaleData(localeTr);
     PagesModule,
     AdminModule,
     HeaderModule,
+    MatSnackBarModule,
     FooterModule,
     HttpClientModule,
     MatProgressSpinnerModule

@@ -6,7 +6,7 @@ html {
   height: 100%;
   padding: 0;
   margin: 0;
-  font-family: 'Roboto', sans-serif !important;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
   overflow-x: hidden;
   color: #494949;
   /* background-color: rgb(233, 233, 233); */
@@ -41,60 +41,17 @@ html {
   outline: none;
 }
 
-.font-label {
-  font-family: inherit;
-  font-size: 10px;
-  line-height: 14px;
+.error-snackbar {
+  background-color: #f8d7da;
+  color: #721c24;
 }
 
-.font-label2 {
-  font-family: inherit;
-  font-size: 12px;
-  line-height: 16px;
+.info-snackbar {
+  background-color: #cce5ff;
+  color: #004085;
 }
 
-.font-regular {
-  font-family: inherit;
-  font-size: 14px;
-  line-height: 19px;
-}
-
-.font-bold {
-  font-family: inherit;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 19px;
-}
-
-.font-bold2 {
-  font-family: inherit;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 19px;
-}
-
-.font-h2 {
-  font-family: inherit;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 33px;
-}
-
-.myClass {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-}
-
-/* .text-primary {
-  color: #5d5d5d;
-} */
-
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+.success-snackbar {
+  background-color: #d4edda;
+  color: #155724;
 }

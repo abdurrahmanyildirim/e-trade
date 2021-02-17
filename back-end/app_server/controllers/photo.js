@@ -2,16 +2,16 @@ const cloudinary = require('cloudinary').v2;
 const config = require('../../config');
 const User = require('../models/user');
 // const crypto = require('crypto');
+cloudinary.config({
+  cloud_name: config.cloudinary_settings.cloud_name,
+  api_key: config.cloudinary_settings.api_key,
+  api_secret: config.cloudinary_settings.api_secret
+});
 
 module.exports.photoUpload = async (req, res) => {
-  cloudinary.config({
-    cloud_name: config.cloudinary_settings.cloud_name,
-    api_key: config.cloudinary_settings.api_key,
-    api_secret: config.cloudinary_settings.api_secret
-  });
   const imagesInfo = [];
   for (const photo of req.files.photos) {
-    const image = await cloudinaryImageUploadMethod(photo.tempFilePath);
+    const image = await cloudinaryImageUploadMethod(photo.tempFilePath, 'product/');
     imagesInfo.push({
       publicId: image.public_id,
       path: image.url
@@ -20,9 +20,9 @@ module.exports.photoUpload = async (req, res) => {
   return res.status(200).send(imagesInfo);
 };
 
-const cloudinaryImageUploadMethod = async (tempFilePath) => {
+const cloudinaryImageUploadMethod = async (tempFilePath, folder) => {
   return new Promise((resolve) => {
-    cloudinary.uploader.upload(tempFilePath, { folder: 'product/' }, (err, image) => {
+    cloudinary.uploader.upload(tempFilePath, { folder }, (err, image) => {
       if (err) return res.status(500).send('upload image error');
       resolve(image);
     });

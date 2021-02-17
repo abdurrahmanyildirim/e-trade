@@ -10,7 +10,7 @@
             <app-star [givenRate]="product.rate" [width]="21" [height]="20"></app-star>
           </div>
           <div class="desc">{{product.description}}</div>
-          <div class="price font-bold2">
+          <div class="price mat-body-2">
             <span class="normal-price" *ngIf="product.discountRate>0">
               {{product.price | number : '.2'}} TL
             </span>

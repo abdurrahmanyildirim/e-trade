@@ -10,8 +10,10 @@ import {
 import { Router } from '@angular/router';
 import { error } from 'protractor';
 import { Observable, Subscription } from 'rxjs';
+import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Category, CloudinaryPhoto, Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 import { isPresent } from 'src/app/shared/util/common';
 
 @Component({
@@ -36,7 +38,9 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private productService: ProductService
+    private productService: ProductService,
+    private snackBar: SnackbarService,
+    private screenHolder: ScreenHolderService
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +53,7 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
       category: new FormControl(null, [Validators.required, this.nullValidator()]),
       price: new FormControl(0, [
         Validators.required,
-        Validators.pattern(/^[0-9]*$/),
+        Validators.pattern(/^[0-9.]*$/),
         this.nullValidator()
       ]),
       description: new FormControl(null, [Validators.required, this.nullValidator()]),
@@ -57,12 +61,12 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.max(100),
         Validators.min(0),
-        Validators.pattern(/^[0-9]*$/),
+        Validators.pattern(/^[0-9.]*$/),
         this.nullValidator()
       ]),
       stockQuantity: new FormControl(20, [
         Validators.required,
-        Validators.pattern(/^[0-9]*$/),
+        Validators.pattern(/^[0-9]*[.]*[0-9]$/),
         this.nullValidator()
       ]),
       brand: new FormControl(null, [Validators.required, this.nullValidator()]),
@@ -107,6 +111,7 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
         });
       }
     }
+    event.target.files = null;
   }
 
   isSupportedFile(file: File): boolean {
@@ -176,7 +181,7 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       return;
     }
-
+    this.screenHolder.show();
     this.uploadPhotos().subscribe({
       next: (photos) => {
         this.form.patchValue({
@@ -186,17 +191,34 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
         const product = Object.assign({}, this.form.value) as Product;
         product.comments = [];
         product.rate = 0;
-        console.log(product);
         const sub = this.productService.addNewProduct(product).subscribe({
           next: () => {
             console.log('Ürün EKlendi.');
+            this.screenHolder.hide();
+            this.resetAllData();
+            this.snackBar.showSuccess('Ürün Eklendi.');
           },
-          error: (err) => console.log(err)
+          error: (err) => {
+            this.screenHolder.hide();
+            this.resetAllData();
+            this.snackBar.showError('Ürün ekleme sırasında hata oldu.');
+            console.log(err);
+          }
         });
         this.subs.add(sub);
       },
-      error: (err) => console.log('Fotolar yüklenemedi')
+      error: (err) => {
+        this.screenHolder.hide();
+        this.snackBar.showError('Fotoğraflar yüklenemedi.');
+        console.log(err);
+      }
     });
+  }
+
+  resetAllData(): void {
+    this.form.reset();
+    this.photos = [];
+    this.uploadedPhotos = [];
   }
 
   ngOnDestroy(): void {
