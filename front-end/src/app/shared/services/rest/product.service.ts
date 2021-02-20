@@ -8,6 +8,25 @@ import { ConfigService } from '../site/config.service';
 export class ProductService {
   constructor(private http: HttpClient, private configService: ConfigService) {}
 
+  uploadPhotos(photos: File[]): Observable<CloudinaryPhoto[]> {
+    return new Observable<CloudinaryPhoto[]>((observer) => {
+      const fd = new FormData();
+      photos.forEach((photo) => {
+        fd.append('photos', photo, photo.name);
+      });
+      const sub = this.uploadPhoto(fd).subscribe({
+        next: (uploadedPhotos: CloudinaryPhoto[]) => {
+          observer.next(uploadedPhotos);
+          sub.unsubscribe();
+          observer.complete();
+        },
+        error: (err) => {
+          observer.error(err);
+        }
+      });
+    });
+  }
+
   allProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.configService.config.domain + 'product/products');
   }

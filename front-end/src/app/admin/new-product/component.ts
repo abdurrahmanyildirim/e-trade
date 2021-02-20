@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,7 +8,6 @@ import {
   Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { error } from 'protractor';
 import { Observable, Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Category, CloudinaryPhoto, Product } from 'src/app/shared/models/product';
@@ -28,10 +27,12 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
     ['png', 'png']
   ]);
   photos: File[] = [];
+  @ViewChild('stepper') stepper: any;
   counter = 11;
   uploadedPhotos: CloudinaryPhoto[] = [];
   subs = new Subscription();
-  form: FormGroup;
+  infoForm: FormGroup;
+  photosForm: FormGroup;
   categories: Category[];
   currentCategory: Category;
 
@@ -44,32 +45,34 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.createForm();
+    this.createForms();
   }
 
-  createForm(): void {
-    this.form = this.fb.group({
+  createForms(): void {
+    this.infoForm = this.fb.group({
       name: new FormControl(null, [Validators.required, this.nullValidator()]),
       category: new FormControl(null, [Validators.required, this.nullValidator()]),
-      price: new FormControl(0, [
+      price: new FormControl(null, [
         Validators.required,
         Validators.pattern(/^[0-9.]*$/),
         this.nullValidator()
       ]),
       description: new FormControl(null, [Validators.required, this.nullValidator()]),
-      discountRate: new FormControl(0, [
+      discountRate: new FormControl(null, [
         Validators.required,
         Validators.max(100),
         Validators.min(0),
-        Validators.pattern(/^[0-9.]*$/),
+        Validators.pattern(/^[0-9]*$/),
         this.nullValidator()
       ]),
-      stockQuantity: new FormControl(20, [
+      stockQuantity: new FormControl(null, [
         Validators.required,
-        Validators.pattern(/^[0-9]*[.]*[0-9]$/),
+        Validators.pattern(/^[0-9]*$/),
         this.nullValidator()
       ]),
-      brand: new FormControl(null, [Validators.required, this.nullValidator()]),
+      brand: new FormControl(null, [Validators.required, this.nullValidator()])
+    });
+    this.photosForm = this.fb.group({
       photos: new FormControl([], [Validators.required, this.nullValidator()])
     });
     this.initCategories();
@@ -86,25 +89,24 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
 
   onPhotoUpload(event: any): void {
     const files = event.target.files;
+    if (this.photos.length >= 4 || files.length > 4) {
+      this.snackBar.showError('En fazla 4 fotoğraf yüklenebilir');
+      return;
+    }
     for (const file of files) {
       if (this.isSupportedFile(file)) {
         this.readFile(file).subscribe({
           next: (fileString) => {
             this.counter++;
             this.photos.push(file);
-            this.uploadedPhotos.push({
+            const photo = {
               path: fileString as string,
               publicId: 'photo' + this.counter,
               _id: 'photoId' + this.counter
-            });
-            const photos = this.form.value.photos;
-            photos.push({
-              path: fileString as string,
-              publicId: 'photo' + this.counter,
-              _id: 'photoId' + this.counter
-            });
-            this.form.patchValue({
-              photos
+            };
+            this.uploadedPhotos.push(photo);
+            this.photosForm.patchValue({
+              photos: this.uploadedPhotos
             });
           },
           error: (err) => console.log(err)
@@ -143,7 +145,7 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
       next: (categories) => {
         this.currentCategory = categories[0];
         this.categories = categories.slice();
-        this.form.patchValue({
+        this.infoForm.patchValue({
           category: categories[0].name
         });
       },
@@ -153,47 +155,25 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(): void {
-    this.form.patchValue({
+    this.infoForm.patchValue({
       category: this.currentCategory.name
     });
   }
 
-  uploadPhotos(): Observable<CloudinaryPhoto[]> {
-    return new Observable<CloudinaryPhoto[]>((observer) => {
-      const fd = new FormData();
-      this.photos.forEach((photo) => {
-        fd.append('photos', photo, photo.name);
-      });
-      const sub = this.productService.uploadPhoto(fd).subscribe({
-        next: (photos: CloudinaryPhoto[]) => {
-          observer.next(photos);
-          observer.complete();
-        },
-        error: (err) => {
-          observer.error(err);
-        }
-      });
-      this.subs.add(sub);
-    });
-  }
-
   insertProduct(): void {
-    if (this.form.invalid) {
+    if (this.infoForm.invalid || this.photosForm.invalid) {
       return;
     }
     this.screenHolder.show();
-    this.uploadPhotos().subscribe({
+    const sub = this.productService.uploadPhotos(this.photos.reverse()).subscribe({
       next: (photos) => {
-        this.form.patchValue({
-          photos,
-          discountRate: this.form.value.discountRate / 100
-        });
-        const product = Object.assign({}, this.form.value) as Product;
+        const product = Object.assign({}, this.infoForm.value) as Product;
+        product.discountRate = product.discountRate / 100;
+        product.photos = photos;
         product.comments = [];
         product.rate = 0;
-        const sub = this.productService.addNewProduct(product).subscribe({
+        const sub1 = this.productService.addNewProduct(product).subscribe({
           next: () => {
-            console.log('Ürün EKlendi.');
             this.screenHolder.hide();
             this.resetAllData();
             this.snackBar.showSuccess('Ürün Eklendi.');
@@ -205,7 +185,7 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
             console.log(err);
           }
         });
-        this.subs.add(sub);
+        this.subs.add(sub1);
       },
       error: (err) => {
         this.screenHolder.hide();
@@ -213,12 +193,15 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     });
+    this.subs.add(sub);
   }
 
   resetAllData(): void {
-    this.form.reset();
+    this.infoForm.reset();
+    this.photosForm.reset();
     this.photos = [];
     this.uploadedPhotos = [];
+    this.stepper.reset();
   }
 
   ngOnDestroy(): void {

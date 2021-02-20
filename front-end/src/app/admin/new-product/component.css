@@ -3,22 +3,10 @@
   width: 900px;
 }
 
-.card {
-  width: 898px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.header {
-  height: 20px;
-  padding: 10px;
-  border-radius: 5px 5px 0 0;
-  background-color: rgb(226, 226, 226);
-}
-
-.body {
+.step-container {
   display: flex;
-  padding: 10px;
+  align-items: center;
+  flex-direction: column;
 }
 
 .info {
@@ -26,7 +14,7 @@
 }
 
 .field {
-  width: 80%;
+  width: 50%;
 }
 
 .photos-section {
@@ -38,7 +26,8 @@
 
 .photo-upload-button {
   margin: 0 auto;
-  width: 350px;
+  margin-top: 10px;
+  width: 410px;
   height: 50px;
 }
 

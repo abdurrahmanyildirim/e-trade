@@ -1,0 +1,53 @@
+.container {
+  margin-top: 10px;
+  width: 900px;
+}
+
+.top {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.title {
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.products {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.flex {
+  flex: 1;
+}
+
+.half-flex {
+  flex: 0.5;
+}
+
+.name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-right: 5px;
+}
+
+.star {
+  width: 12px;
+  height: 11px;
+  display: inline-block;
+}

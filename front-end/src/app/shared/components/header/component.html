@@ -15,6 +15,7 @@
     </span>
     <span *ngIf="(this.authService.role | async) === roles.admin">
       <button mat-button routerLink="mn-orders">Siparişler</button>
+      <button mat-button routerLink="mn-products">Ürünler</button>
       <button mat-button routerLink="mn-new-product">Ürün Ekle</button>
     </span>
 

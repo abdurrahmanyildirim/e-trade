@@ -2,7 +2,7 @@
   <div class="img" [ngStyle]="{'background-image': 'url(' + product.photos[0].path + ')'}">
     <div class="discount-badge mat-body-2" *ngIf="product.discountRate>0">
       <div class="dotted-line top-dotted"></div>
-      %{{product.discountRate * 100}} indirim
+      %{{product.discountRate * 100 | number :'.0-0'}} indirim
       <div class="dotted-line bottom-dotted"></div>
     </div>
   </div>
@@ -20,9 +20,9 @@
     </div>
     <div class="price mat-body-2">
       <span *ngIf="product.discountRate>0" class="normal-price">
-        {{product.price | number : '1.2'}} TL
+        {{product.price | number : '1.2-2'}} TL
       </span>
-      {{product.price - product.price * product.discountRate | number : '1.2'}} TL
+      {{product.price - product.price * product.discountRate | number : '1.2-2'}} TL
     </div>
   </div>
 </main>

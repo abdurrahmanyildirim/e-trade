@@ -2,8 +2,16 @@ import { NgModule } from '@angular/core';
 import { MnNewProductModule } from './new-product/module';
 import { MnOrderDetailModule } from './order-detail/module';
 import { MnOrdersModule } from './orders/module';
+import { MnProductDetailModule } from './product-detail/module';
+import { MnProductsModule } from './products/module';
 
 @NgModule({
-  imports: [MnOrdersModule, MnOrderDetailModule, MnNewProductModule]
+  imports: [
+    MnOrdersModule,
+    MnOrderDetailModule,
+    MnNewProductModule,
+    MnProductsModule,
+    MnProductDetailModule
+  ]
 })
 export class AdminModule {}

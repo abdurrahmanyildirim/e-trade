@@ -1,0 +1,36 @@
+<main class="container" *ngIf="currentList">
+  <div class="top">
+    <span class="title mat-body-2">Ürünlerim</span>
+    <mat-form-field appearance="fill" class="order-type">
+      <mat-select [(value)]="currentCategory" (valueChange)="initCurrentList()">
+        <mat-option *ngFor="let category of categories" [value]="category"
+          >{{category.name}}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="products" *ngFor="let product of currentList">
+    <span class="name flex">{{product.name}}</span>
+    <span class="flex"> {{product.brand}} </span>
+    <span class="half-flex">
+      {{product.price - (product.price * product.discountRate) | number:'.2-2'}} TL
+    </span>
+    <span class="half-flex"> %{{100 * product.discountRate | number:'.0-0'}} İndirim </span>
+    <span class="half-flex">
+      {{product.rate}}
+      <span class="star-icon star"></span>
+    </span>
+    <button
+      mat-icon-button
+      class="button half-flex"
+      color="primary"
+      (click)="navigateToDetail(product._id)"
+    >
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
+  </div>
+  <p></p>
+  <p *ngIf="currentList.length<=0" style="text-align: center" class="mat-body-2">
+    Bu kategoride sipariş yok.
+  </p>
+</main>

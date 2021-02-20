@@ -37,7 +37,10 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   initDiscountedProducts(): void {
-    this.discounted = this.products.filter((product) => product.discountRate > 0).slice(0, 5);
+    this.discounted = this.products
+      .filter((product) => product.discountRate > 0)
+      .sort((a: Product, b: Product) => b.discountRate - a.discountRate)
+      .slice(0, 5);
   }
 
   initMostLiked(): void {

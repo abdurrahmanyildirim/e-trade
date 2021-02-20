@@ -6,10 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { MnPhotosComponent } from './photos/component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { PhotosModule } from 'src/app/shared/components/photos/module';
 
 @NgModule({
-  declarations: [MnNewProductComponent, MnPhotosComponent],
+  declarations: [MnNewProductComponent],
   imports: [
     BrowserModule,
     MatSelectModule,
@@ -17,7 +18,9 @@ import { MnPhotosComponent } from './photos/component';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatStepperModule,
+    PhotosModule
   ],
   exports: [MnNewProductComponent]
 })

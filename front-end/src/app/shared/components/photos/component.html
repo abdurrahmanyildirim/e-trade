@@ -1,13 +1,13 @@
 <main class="container">
   <div
     class="current-photo"
-    [ngStyle]="{'background-image':  'url(' + currentPhoto.path + ')'}"
+    [ngStyle]="{'background-image' : 'url(' + currentPhoto.path + ')', 'width' : width  + 'px', 'height' : height + 'px'}"
     (mouseenter)="onMouseEnter($event)"
     (mouseleave)="onMouseLeave($event)"
     (mousemove)="onMouseMove($event)"
     id="curr-{{currentPhoto._id}}"
   ></div>
-  <section class="all-photo">
+  <section class="all-photo" [style.maxWidth]="width + 'px'">
     <div
       class="photo"
       *ngFor="let photo of photos"

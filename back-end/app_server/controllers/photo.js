@@ -10,7 +10,8 @@ cloudinary.config({
 
 module.exports.photoUpload = async (req, res) => {
   const imagesInfo = [];
-  for (const photo of req.files.photos) {
+  const photos = Array.isArray(req.files.photos) ? req.files.photos : [req.files.photos];
+  for (const photo of photos) {
     const image = await cloudinaryImageUploadMethod(photo.tempFilePath, 'product/');
     imagesInfo.push({
       publicId: image.public_id,

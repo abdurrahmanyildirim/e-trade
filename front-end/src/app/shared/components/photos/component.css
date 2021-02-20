@@ -1,6 +1,4 @@
 .current-photo {
-  width: 448px;
-  height: 448px;
   border: 1px solid #ccc;
   cursor: zoom-in;
   background-size: 100%;
@@ -14,6 +12,7 @@
   margin: 5px 0;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .photo {

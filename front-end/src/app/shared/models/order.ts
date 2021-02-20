@@ -4,7 +4,7 @@ export interface Order {
   productId: string;
   brand: string;
   name: string;
-  category: Category;
+  category: string;
   price: number;
   discountRate: number;
   photo: string;

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CloudinaryPhoto } from 'src/app/shared/models/product';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
@@ -9,6 +9,8 @@ import { ObjectHelper } from 'src/app/shared/util/helper/object';
 })
 export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() photos: CloudinaryPhoto[];
+  @Input() width: number;
+  @Input() height: number;
   currentPhoto: CloudinaryPhoto;
 
   ngOnInit(): void {

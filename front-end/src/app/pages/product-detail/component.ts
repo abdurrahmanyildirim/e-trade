@@ -18,7 +18,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   quantity = 1;
   productId: string;
   orders: Order[];
-  subscription = new Subscription();
+  subs = new Subscription();
   addTocartClick = new Subject<Product>();
   product: Product;
 
@@ -30,7 +30,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     const subs = this.activatedRouter.params.subscribe((params) => {
       this.productId = params.id;
     });
-    this.subscription.add(subs);
+    this.subs.add(subs);
   }
 
   ngOnInit(): void {
@@ -43,9 +43,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     const subs = this.productService.productById(this.productId).subscribe({
       next: (product) => {
         this.product = product;
-      }
+      },
+      error: (error) => console.log(error)
     });
-    this.subscription.add(subs);
+    this.subs.add(subs);
   }
 
   initAddToCartStream(): void {
@@ -70,12 +71,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         this.cartService.updateCart(this.orders);
       }
     });
-    this.subscription.add(sub);
+    this.subs.add(sub);
   }
 
   ngOnDestroy(): void {
-    if (isPresent(this.subscription)) {
-      this.subscription.unsubscribe();
+    if (isPresent(this.subs)) {
+      this.subs.unsubscribe();
     }
     ObjectHelper.removeReferances(this);
   }
