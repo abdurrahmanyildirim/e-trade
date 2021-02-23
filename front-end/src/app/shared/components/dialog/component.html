@@ -1,0 +1,7 @@
+<mat-dialog-content class="mat-body-2"> {{data.desc}} </mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-raised-button color="warn" [mat-dialog-close]="false">{{data.refuseButton}}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
+    {{data.acceptButton}}
+  </button>
+</mat-dialog-actions>

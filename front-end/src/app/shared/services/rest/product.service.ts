@@ -41,6 +41,16 @@ export class ProductService {
     );
   }
 
+  remove(id: string): Observable<boolean> {
+    return this.http.get<boolean>(this.configService.config.domain + 'product/remove?id=' + id);
+  }
+
+  inactive(id: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      this.configService.config.domain + 'product/change-situation?id=' + id
+    );
+  }
+
   productById(id: string): Observable<Product> {
     return this.http.get<Product>(this.configService.config.domain + 'product/get-by-id?id=' + id);
   }

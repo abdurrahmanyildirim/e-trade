@@ -28,19 +28,19 @@ export class CartService implements OnDestroy {
   }
 
   initCart(): Observable<void> {
-    return new Observable((observer) => {
+    return new Observable((observable) => {
       if (this.authService.loggedIn()) {
         const sub = this.getCartFromDb().subscribe((cart) => {
           this.cart.next(cart);
-          observer.next();
-          observer.complete();
+          observable.next();
+          observable.complete();
           sub.unsubscribe();
         });
       } else {
         // const orders = this.localStorage.getObject<Order[]>(StorageKey.Cart) || [];
         this.cart.next([]);
-        observer.next();
-        observer.complete();
+        observable.next();
+        observable.complete();
       }
     });
   }

@@ -8,5 +8,7 @@ router.get('/get-by-category', controller.getByCategory);
 router.get('/get-by-id', controller.getProductById);
 router.use(authController.verifyAdmin);
 router.post('/new-product', controller.addNewProduct);
+router.post('/remove', controller.remove);
+router.post('/change-situation', controller.changeSituation);
 
 module.exports = router;

@@ -52,3 +52,30 @@ module.exports.addNewProduct = (req, res) => {
     return res.status(200).send({ message: 'Ürün eklendi.' });
   });
 };
+
+module.exports.remove = (req, res) => {
+  const id = req.query.id;
+  Product.findByIdAndRemove(id, (err) => {
+    if (err) {
+      return res.status(404).send({ message: 'Ürün silirken hata oldu.' });
+    }
+    return res.status(200).send({ message: 'Ürün silindi' });
+  });
+};
+
+module.exports.changeSituation = (req, res) => {
+  const id = req.query.id;
+  Product.findOne({ _id: id }, (err, dbProduct) => {
+    if (err) {
+      return res.status(400).send({ message: 'Veri tabanı hatası' });
+    }
+    dbProduct.isActive = !dbProduct.isActive;
+    const product = new Product(dbProduct);
+    product.save((err) => {
+      if (err) {
+        return res.status(400).send({ message: 'Veri tabanı hatası' });
+      }
+      return res.status(200).send({ isActive: dbProduct.isActive });
+    });
+  });
+};
