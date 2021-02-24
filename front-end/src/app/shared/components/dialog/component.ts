@@ -17,4 +17,6 @@ export interface DialogData {
   acceptButton: string;
   refuseButton: string;
   desc: string;
+  onClose: (result: boolean) => void;
+  onError?: (error: any) => void;
 }

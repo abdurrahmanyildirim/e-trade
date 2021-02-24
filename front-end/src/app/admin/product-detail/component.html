@@ -48,9 +48,12 @@
           <input type="text" matInput placeholder="Fiyat" formControlName="price" />
           <div matSuffix class="turkish-lira lira"></div>
           <mat-error
-            *ngIf="form.get('price').hasError('required') || form.get('price').hasError('isNull') || form.get('price').touched"
+            *ngIf="(form.get('price').hasError('required') || form.get('price').hasError('isNull')) && form.get('price').touched"
           >
             *Fiyat boş bırakılamaz
+          </mat-error>
+          <mat-error *ngIf="form.get('price').hasError('pattern') && form.get('price').touched">
+            *Fiyat hatalı
           </mat-error>
         </mat-form-field>
         <mat-form-field class="field">
@@ -77,12 +80,7 @@
       </div>
 
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="changeSituation()" *ngIf="product.isActive">
-          <mat-icon>visibility_off</mat-icon>Gizle
-        </button>
-        <button mat-menu-item *ngIf="!product.isActive">
-          <mat-icon>visibility</mat-icon>Görünür Yap
-        </button>
+        <button mat-menu-item (click)="saveChanges()"><mat-icon>save</mat-icon>Kaydet</button>
         <button mat-menu-item (click)="remove()"><mat-icon>delete</mat-icon>Kaldır</button>
       </mat-menu>
     </div>

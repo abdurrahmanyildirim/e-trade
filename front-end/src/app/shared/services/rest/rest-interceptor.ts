@@ -27,7 +27,7 @@ export class RestInterceptor implements HttpInterceptor {
   }
 
   private headers(): HttpHeaders {
-    let headers = new HttpHeaders().set(
+    const headers = new HttpHeaders().set(
       'Authorization',
       'jwt ' + window.localStorage.getItem(StorageKey.Token)
     );

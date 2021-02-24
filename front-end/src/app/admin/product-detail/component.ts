@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -11,6 +12,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DialogService } from 'src/app/shared/components/dialog/service';
+import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
@@ -31,7 +33,9 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
     public productService: ProductService,
     private activatedRoute: ActivatedRoute,
     private dialogService: DialogService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBarService: SnackbarService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +60,7 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
 
   initProductForm(): void {
     this.form = this.fb.group({
+      _id: this.product._id,
       name: new FormControl(this.product.name, [Validators.required, this.nullValidator()]),
       category: new FormControl(this.product.category, [Validators.required, this.nullValidator()]),
       description: new FormControl(this.product.description, [
@@ -71,12 +76,12 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
       ]),
       price: new FormControl(this.product.price, [
         Validators.required,
-        Validators.pattern(/^[0-9]*$/),
+        Validators.pattern(/^[0-9]*.?[0-9]{1,2}$/),
         this.nullValidator()
       ]),
       stockQuantity: new FormControl(this.product.stockQuantity, [
         Validators.required,
-        Validators.pattern(/^[0-9.]*$/),
+        Validators.pattern(/^[0-9]*$/),
         this.nullValidator()
       ]),
       isActive: new FormControl(this.product.isActive + '', [
@@ -89,19 +94,9 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
         this.nullValidator()
       ]),
       rate: new FormControl(this.product.rate, [Validators.required, this.nullValidator()]),
-      comments: new FormControl(this.product.comments, [Validators.required, this.nullValidator()]),
+      comments: new FormControl(this.product.comments),
       brand: new FormControl(this.product.brand, [Validators.required, this.nullValidator()])
     });
-
-    // name: string;
-    // category: string;
-    // price: number;
-    // description: string;
-    // discountRate: number;
-    // stockQuantity: number;
-    // isActive?: boolean;
-    // rate: number;
-    // brand: string;
   }
 
   nullValidator(): (AbstractControl) => ValidationErrors | null {
@@ -114,44 +109,58 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
   }
 
   remove(): void {
-    this.dialogService
-      .openDialog({
-        acceptButton: 'Onayla',
-        refuseButton: 'Vazgeç',
-        desc: 'Bu ürünü kaldırmak istediğinize emin misiniz?'
-      })
-      .subscribe({
-        next: (result) => {
-          console.log(result);
-        },
-        error: (err) => {
-          console.log(err);
+    this.dialogService.openDialog({
+      acceptButton: 'Onayla',
+      refuseButton: 'Vazgeç',
+      desc: 'Bu ürünü kaldırmak istediğinize emin misiniz?',
+      onClose: (result) => {
+        if (result) {
+          this.productService.remove(this.productId).subscribe({
+            next: (res) => {
+              this.snackBarService.showSuccess('Ürün Silindi.');
+              // TODO : Fotoğrafların da silinmesi sağlanacak
+              this.location.back();
+            },
+            error: (error) => {
+              this.snackBarService.showError('Silerken bir hata meydana geldi');
+              console.log(error);
+            }
+          });
         }
-      });
+      }
+    });
   }
 
-  changeSituation(): void {
-    let desc = '';
-    if (this.product.isActive) {
-      desc =
-        'Ürünü gizlediğinizde kullanılıcılar bu ürünü göremeyecektir.\n Gizlemek istediğinize emin misiniz?';
-    } else {
-      desc = 'Ürünü gizliliği kaldırılacak. Kaldırmak istediğinize emin misiniz?';
+  saveChanges(): void {
+    if (this.form.invalid) {
+      console.log(this.form.value);
+      this.snackBarService.showError('Kaydetmeden önce bütün bilgileri girdiğinizden emin olunuz!');
+      return;
     }
-    this.dialogService
-      .openDialog({
-        acceptButton: 'Onayla',
-        refuseButton: 'Vazgeç',
-        desc
-      })
-      .subscribe({
-        next: (result) => {
-          console.log(result);
-        },
-        error: (err) => {
-          console.log(err);
+    const product = Object.assign({}, this.form.value);
+    product.isActive = product.isActive === 'true';
+    product.discountRate = product.discountRate / 100;
+    this.dialogService.openDialog({
+      acceptButton: 'Onayla',
+      refuseButton: 'Vazgeç',
+      desc: 'Yaptığınız değişiklikleri kaydetmek istediğinize emin misiniz?',
+      onClose: (result) => {
+        if (result) {
+          this.productService.update(product).subscribe({
+            next: (res) => {
+              this.snackBarService.showSuccess('Değişiklikler Kaydedildi.');
+            },
+            error: (error) => {
+              this.snackBarService.showError('Bir hata meydana geldi.');
+              console.log(error);
+            }
+          });
         }
-      });
+      },
+      onError: (error) => {
+        console.log(error);
+      }
+    });
   }
 
   ngOnDestroy(): void {

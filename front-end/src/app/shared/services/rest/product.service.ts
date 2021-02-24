@@ -41,14 +41,12 @@ export class ProductService {
     );
   }
 
-  remove(id: string): Observable<boolean> {
-    return this.http.get<boolean>(this.configService.config.domain + 'product/remove?id=' + id);
+  remove(id: string): Observable<any> {
+    return this.http.delete<any>(this.configService.config.domain + 'product/remove?id=' + id);
   }
 
-  inactive(id: string): Observable<boolean> {
-    return this.http.get<boolean>(
-      this.configService.config.domain + 'product/change-situation?id=' + id
-    );
+  update(product: Product): Observable<any> {
+    return this.http.post<any>(this.configService.config.domain + 'product/update', product);
   }
 
   productById(id: string): Observable<Product> {
