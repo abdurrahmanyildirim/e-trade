@@ -57,25 +57,18 @@ module.exports.remove = (req, res) => {
   const id = req.query.id;
   Product.findByIdAndRemove(id, (err) => {
     if (err) {
-      return res.status(404).send({ message: 'Ürün silirken hata oldu.' });
+      return res.status(404).send({ message: 'Ürün silinirken hata oldu.' });
     }
     return res.status(200).send({ message: 'Ürün silindi' });
   });
 };
 
-module.exports.changeSituation = (req, res) => {
-  const id = req.query.id;
-  Product.findOne({ _id: id }, (err, dbProduct) => {
+module.exports.update = (req, res) => {
+  const product = req.body;
+  Product.findByIdAndUpdate({ _id: product._id }, product, (err) => {
     if (err) {
-      return res.status(400).send({ message: 'Veri tabanı hatası' });
+      return res.status(401).send({ message: 'Bir hata meydana geldi.' });
     }
-    dbProduct.isActive = !dbProduct.isActive;
-    const product = new Product(dbProduct);
-    product.save((err) => {
-      if (err) {
-        return res.status(400).send({ message: 'Veri tabanı hatası' });
-      }
-      return res.status(200).send({ isActive: dbProduct.isActive });
-    });
+    res.status(200).send({ message: 'Güncelleme başarılı' });
   });
 };
