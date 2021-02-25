@@ -69,3 +69,8 @@
 .brand-text {
   font-size: 12px;
 }
+
+.numeric{
+  display: flex;
+  justify-content: center;
+}

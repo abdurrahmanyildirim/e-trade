@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { StarModule } from 'src/app/shared/components/star/module';
 import { PhotosModule } from 'src/app/shared/components/photos/module';
+import { NumericInputModule } from 'src/app/shared/components/numeric-input/module';
 
 @NgModule({
   declarations: [ProductDetailComponent],
@@ -17,7 +18,8 @@ import { PhotosModule } from 'src/app/shared/components/photos/module';
     MatIconModule,
     MatButtonModule,
     StarModule,
-    PhotosModule
+    PhotosModule,
+    NumericInputModule
   ],
   exports: [ProductDetailComponent]
 })

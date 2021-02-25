@@ -8,6 +8,7 @@ import { CartComponent } from './component';
 import { CartDetailComponent } from './detail/component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { NumericInputModule } from 'src/app/shared/components/numeric-input/module';
 
 @NgModule({
   declarations: [CartComponent, CartDetailComponent],
@@ -18,7 +19,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    RouterModule
+    RouterModule,
+    NumericInputModule
   ],
   exports: [CartComponent]
 })

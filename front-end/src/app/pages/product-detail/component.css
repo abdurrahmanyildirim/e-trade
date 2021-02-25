@@ -60,11 +60,8 @@
 }
 
 .operation {
-  margin-top: 3rem;
-}
-
-.numeric {
-  width: 90px;
+  margin-top: 4rem;
+  display: flex
 }
 
 .button {

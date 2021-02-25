@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const cloudinaryService = require('../services/cloudinary');
 
 module.exports.getProducts = (req, res) => {
   Product.find((err, products) => {
@@ -53,11 +54,20 @@ module.exports.addNewProduct = (req, res) => {
   });
 };
 
-module.exports.remove = (req, res) => {
+module.exports.remove = async (req, res) => {
   const id = req.query.id;
-  Product.findByIdAndRemove(id, (err) => {
+  const product = await Product.findOne({ _id: id });
+  Product.findByIdAndRemove(id, async (err) => {
     if (err) {
       return res.status(404).send({ message: 'Ürün silinirken hata oldu.' });
+    }
+    for (const photo of product.photos) {
+      try {
+        await cloudinaryService.remove(photo.publicId);
+      } catch (error) {
+        console.log(error);
+        console.log('Foto Silinemedi');
+      }
     }
     return res.status(200).send({ message: 'Ürün silindi' });
   });

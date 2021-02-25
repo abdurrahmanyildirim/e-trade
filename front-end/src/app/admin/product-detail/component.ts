@@ -15,6 +15,7 @@ import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 import { isPresent } from 'src/app/shared/util/common';
 
 @Component({
@@ -35,7 +36,8 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     private fb: FormBuilder,
     private snackBarService: SnackbarService,
-    private location: Location
+    private location: Location,
+    private screenHolder: ScreenHolderService
   ) {}
 
   ngOnInit(): void {
@@ -67,7 +69,7 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
         Validators.required,
         this.nullValidator()
       ]),
-      discountRate: new FormControl(this.product.discountRate * 100, [
+      discountRate: new FormControl((this.product.discountRate * 100).toFixed(0), [
         Validators.required,
         Validators.max(100),
         Validators.min(0),
@@ -115,42 +117,49 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
       desc: 'Bu ürünü kaldırmak istediğinize emin misiniz?',
       onClose: (result) => {
         if (result) {
+          this.screenHolder.show();
           this.productService.remove(this.productId).subscribe({
             next: (res) => {
+              this.screenHolder.hide();
               this.snackBarService.showSuccess('Ürün Silindi.');
-              // TODO : Fotoğrafların da silinmesi sağlanacak
               this.location.back();
             },
             error: (error) => {
+              this.screenHolder.hide();
               this.snackBarService.showError('Silerken bir hata meydana geldi');
               console.log(error);
             }
           });
         }
+      },
+      onError: (error) => {
+        console.log(error);
       }
     });
   }
 
   saveChanges(): void {
     if (this.form.invalid) {
-      console.log(this.form.value);
       this.snackBarService.showError('Kaydetmeden önce bütün bilgileri girdiğinizden emin olunuz!');
       return;
     }
     const product = Object.assign({}, this.form.value);
     product.isActive = product.isActive === 'true';
-    product.discountRate = product.discountRate / 100;
+    product.discountRate = parseFloat((product.discountRate / 100).toFixed(2));
     this.dialogService.openDialog({
       acceptButton: 'Onayla',
       refuseButton: 'Vazgeç',
       desc: 'Yaptığınız değişiklikleri kaydetmek istediğinize emin misiniz?',
       onClose: (result) => {
         if (result) {
+          this.screenHolder.show();
           this.productService.update(product).subscribe({
             next: (res) => {
+              this.screenHolder.hide();
               this.snackBarService.showSuccess('Değişiklikler Kaydedildi.');
             },
             error: (error) => {
+              this.screenHolder.hide();
               this.snackBarService.showError('Bir hata meydana geldi.');
               console.log(error);
             }

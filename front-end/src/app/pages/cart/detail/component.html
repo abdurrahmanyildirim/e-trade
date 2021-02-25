@@ -19,10 +19,10 @@
         <span class="brand-text">Marka : {{order.brand}}</span>
       </section>
       <section class="section quantity">{{order.quantity}}</section>
-      <section class="section price">{{order.price | number:'.2' }} TL</section>
-      <section class="section discount">%{{order.discountRate * 100}}</section>
+      <section class="section price">{{order.price | number:'.2-2' }} TL</section>
+      <section class="section discount">%{{order.discountRate * 100 | number:'.0-0'}}</section>
       <section class="section total-price">
-        {{(order.price - order.price *order.discountRate) * order.quantity | number :'.2'}} TL
+        {{(order.price - order.price *order.discountRate) * order.quantity | number :'.2-2'}} TL
       </section>
       <section class="section remove">
         <button mat-icon-button (click)="onOrderRemove(order)">
@@ -30,17 +30,13 @@
         </button>
       </section>
       <section class="section quantity-change-section">
-        <mat-form-field class="quantity-changer">
-          <mat-label>Adet</mat-label>
-          <input
-            matInput
-            type="number"
-            min="1"
-            max="100"
-            [(ngModel)]="order.quantity"
-            (change)="emitChanges()"
-          />
-        </mat-form-field>
+        <div class="numeric">
+          <app-numeric-input
+            [width]="80"
+            [(quantity)]="order.quantity"
+            (quantityChange)="emitChanges()"
+          ></app-numeric-input>
+        </div>
       </section>
     </div>
   </div>
