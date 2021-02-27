@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -7,13 +7,15 @@ import {
   ValidationErrors,
   Validators
 } from '@angular/forms';
+import { MatHorizontalStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
-import { Category, CloudinaryPhoto, Product } from 'src/app/shared/models/product';
+import { Category, Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 import { isPresent } from 'src/app/shared/util/common';
+import { PhotoUploadComponent } from './photo-upload/component';
 
 @Component({
   selector: 'app-mn-new-product',
@@ -21,15 +23,9 @@ import { isPresent } from 'src/app/shared/util/common';
   styleUrls: ['./component.css']
 })
 export class MnNewProductComponent implements OnInit, OnDestroy {
-  suppotedPhotos = new Map<string, string>([
-    ['jpg', 'jpg'],
-    ['jpeg', 'jpeg'],
-    ['png', 'png']
-  ]);
+  @ViewChild('stepper') stepper: MatHorizontalStepper;
+  @ViewChild('photoUpload') photoUploadComponent: PhotoUploadComponent;
   photos: File[] = [];
-  @ViewChild('stepper') stepper: any;
-  counter = 11;
-  uploadedPhotos: CloudinaryPhoto[] = [];
   subs = new Subscription();
   infoForm: FormGroup;
   photosForm: FormGroup;
@@ -87,56 +83,10 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
     };
   }
 
-  onPhotoUpload(event: any): void {
-    const files = event.target.files;
-    if (this.photos.length >= 4 || files.length > 4) {
-      this.snackBar.showError('En fazla 4 fotoğraf yüklenebilir');
-      return;
-    }
-    for (const file of files) {
-      if (this.isSupportedFile(file)) {
-        this.readFile(file).subscribe({
-          next: (fileString) => {
-            this.counter++;
-            this.photos.push(file);
-            const photo = {
-              path: fileString as string,
-              publicId: 'photo' + this.counter,
-              _id: 'photoId' + this.counter
-            };
-            this.uploadedPhotos.push(photo);
-            this.photosForm.patchValue({
-              photos: this.uploadedPhotos
-            });
-          },
-          error: (err) => console.log(err)
-        });
-      }
-    }
-    event.target.files = null;
-  }
-
-  isSupportedFile(file: File): boolean {
-    const ext = file.name.split('.')[file.name.split('.').length - 1];
-    if (!this.suppotedPhotos.has(ext)) {
-      return false;
-    }
-    return true;
-  }
-
-  readFile(file: File): Observable<string> {
-    return new Observable<string>((observer) => {
-      try {
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (e) => {
-          observer.next(reader.result as string);
-          reader = null;
-          observer.complete();
-        };
-      } catch (error) {
-        observer.error(error);
-      }
+  onFilesChange(files: File[]) {
+    this.photos = files;
+    this.photosForm.patchValue({
+      photos: this.photos
     });
   }
 
@@ -175,12 +125,13 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
         const sub1 = this.productService.addNewProduct(product).subscribe({
           next: () => {
             this.screenHolder.hide();
-            this.resetAllData();
+            this.reset();
             this.snackBar.showSuccess('Ürün Eklendi.');
           },
           error: (err) => {
             this.screenHolder.hide();
-            this.resetAllData();
+            this.stepper.previous();
+            this.stepper.previous();
             this.snackBar.showError('Ürün ekleme sırasında hata oldu.');
             console.log(err);
           }
@@ -196,11 +147,11 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
     this.subs.add(sub);
   }
 
-  resetAllData(): void {
+  reset(): void {
     this.infoForm.reset();
     this.photosForm.reset();
     this.photos = [];
-    this.uploadedPhotos = [];
+    this.photoUploadComponent.reset();
     this.stepper.reset();
   }
 

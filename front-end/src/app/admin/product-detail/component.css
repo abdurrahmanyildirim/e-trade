@@ -28,11 +28,11 @@
 }
 
 .field {
-  width: 70%;
+  width: 90%;
   padding-bottom: 4px;
 }
 
-.radio-buttons{
+.radio-buttons {
   padding-bottom: 20px;
 }
 
@@ -62,12 +62,26 @@
 
 .actions {
   position: absolute;
-  top: 0;
+  top: 20px;
   right: 0;
 }
 
-.lira{
+.lira {
   display: inline-block;
   width: 18px;
   height: 18px;
+}
+
+.textarea-field {
+  width: 90%;
+  min-height: 100px;
+}
+
+.text-area {
+  width: 100%;
+  min-height: 100px;
+}
+
+.photos {
+  padding-top: 20px;
 }

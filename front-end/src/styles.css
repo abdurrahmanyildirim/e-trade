@@ -3,33 +3,34 @@
 body,
 html {
   width: 100%;
-  height: 100%;
+  box-sizing: border-box;
+  height: 100vh;
   padding: 0;
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   overflow-x: hidden;
   color: #494949;
-  /* background-color: rgb(233, 233, 233); */
 }
 
 ::-webkit-scrollbar-track,
-.widget-content ::-webkit-scrollbar-track {
-  width: 5px;
+::-webkit-scrollbar-track {
+  width: 10px;
   background-color: white;
   box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.25);
 }
 
 ::-webkit-scrollbar,
-.widget-content ::-webkit-scrollbar {
-  width: 5px;
+::-webkit-scrollbar {
+  width: 10px;
   height: 12px;
   background-color: #f2f2f2;
 }
 
 ::-webkit-scrollbar-thumb,
-.widget-content ::-webkit-scrollbar-thumb {
-  width: 5px;
-  background-color: rgba(26, 42, 107, 0.2);
+::-webkit-scrollbar-thumb {
+  width: 12px;
+  /* background-color: rgba(26, 42, 107, 0.2); */
+  background-color: rgba(26, 42, 107, 0.1);
 }
 
 .bg-success {

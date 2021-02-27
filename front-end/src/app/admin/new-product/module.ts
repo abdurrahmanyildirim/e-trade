@@ -7,10 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
-import { PhotosModule } from 'src/app/shared/components/photos/module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { PhotoUploadComponent } from './photo-upload/component';
 
 @NgModule({
-  declarations: [MnNewProductComponent],
+  declarations: [MnNewProductComponent, PhotoUploadComponent],
   imports: [
     BrowserModule,
     MatSelectModule,
@@ -20,7 +21,7 @@ import { PhotosModule } from 'src/app/shared/components/photos/module';
     ReactiveFormsModule,
     MatInputModule,
     MatStepperModule,
-    PhotosModule
+    DragDropModule
   ],
   exports: [MnNewProductComponent]
 })

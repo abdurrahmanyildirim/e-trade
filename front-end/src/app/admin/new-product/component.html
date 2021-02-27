@@ -77,22 +77,7 @@
       <form [formGroup]="photosForm">
         <ng-template matStepLabel>Fotoğraflar</ng-template>
         <div class="step-container">
-          <button mat-stroked-button (click)="fileInput.click()" class="photo-upload-button">
-            <mat-icon>upload</mat-icon>
-            Fotoğraf Yükle
-            <input
-              type="file"
-              name=""
-              multiple
-              accept=".jpg,.jpeg,.png"
-              hidden
-              (change)="onPhotoUpload($event)"
-              #fileInput
-            />
-          </button>
-          <div class="uploaded-photos" *ngIf="uploadedPhotos.length>0">
-            <app-photos [width]="408" [height]="408" [photos]="uploadedPhotos"></app-photos>
-          </div>
+          <app-photo-upload (filesChange)="onFilesChange($event)" #photoUpload></app-photo-upload>
           <div
             style="width: 408px; display: flex; justify-content: space-between; margin-top: 10px"
           >

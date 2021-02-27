@@ -27,8 +27,12 @@ export class ProductService {
     });
   }
 
-  allProducts(): Observable<Product[]> {
+  products(): Observable<Product[]> {
     return this.http.get<Product[]>(this.configService.config.domain + 'product/products');
+  }
+
+  allProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.configService.config.domain + 'product/all-products');
   }
 
   categories(): Observable<Category[]> {

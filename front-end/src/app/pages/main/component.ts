@@ -25,7 +25,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   initProducts(): void {
-    this.sub = this.productService.allProducts().subscribe({
+    this.sub = this.productService.products().subscribe({
       next: (results) => {
         this.products = results;
         this.initDiscountedProducts();

@@ -2,6 +2,15 @@ const Product = require('../models/product');
 const cloudinaryService = require('../services/cloudinary');
 
 module.exports.getProducts = (req, res) => {
+  Product.find({ isActive: true }, (err, products) => {
+    if (err) {
+      return res.status(404).send({ message: 'Bir hata meydana geldi' });
+    }
+    return res.status(200).send(products);
+  });
+};
+
+module.exports.getAllProducts = (req, res) => {
   Product.find((err, products) => {
     if (err) {
       return res.status(404).send({ message: 'Bir hata meydana geldi' });
@@ -12,7 +21,7 @@ module.exports.getProducts = (req, res) => {
 
 module.exports.getByCategory = (req, res) => {
   const category = req.query.category;
-  Product.find({ category }, (err, products) => {
+  Product.find({ category, isActive: true }, (err, products) => {
     if (err) {
       return res.status(404).send({ message: 'Bir hata meydana geldi.' });
     }

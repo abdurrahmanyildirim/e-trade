@@ -51,3 +51,11 @@
   height: 11px;
   display: inline-block;
 }
+
+.visible {
+  color: #4BB543;
+}
+
+.not-visible {
+  color: #ff3333;
+}

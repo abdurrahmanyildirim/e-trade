@@ -35,9 +35,9 @@
           ></app-star>
           <div *ngIf="product.rate > 0" class="mat-body-2"></div>
         </div>
-        <mat-form-field class="field">
+        <mat-form-field class="field" class="textarea-field">
           <mat-label>Ürün Açıklaması</mat-label>
-          <textarea matInput formControlName="description"></textarea>
+          <textarea matInput formControlName="description" class="text-area"></textarea>
           <mat-error
             *ngIf="form.get('description').hasError('required') || form.get('description').hasError('isNull')|| form.get('description').touched"
           >

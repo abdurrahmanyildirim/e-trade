@@ -10,5 +10,6 @@ router.use(authController.verifyAdmin);
 router.post('/new-product', controller.addNewProduct);
 router.delete('/remove', controller.remove);
 router.post('/update', controller.update);
+router.get('/all-products', controller.getAllProducts);
 
 module.exports = router;

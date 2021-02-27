@@ -1,11 +1,19 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { CloudinaryPhoto } from 'src/app/shared/models/product';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
 @Component({
   selector: 'app-photos',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() photos: CloudinaryPhoto[];

@@ -1,0 +1,26 @@
+<button mat-stroked-button (click)="fileInput.click()" class="photo-upload-button">
+  <mat-icon>upload</mat-icon>
+  Fotoğraf Yükle
+  <input
+    type="file"
+    name=""
+    multiple
+    accept=".jpg,.jpeg,.png"
+    hidden
+    (change)="onPhotoUpload($event)"
+    #fileInput
+  />
+</button>
+<div
+  class="photos-container"
+  *ngIf="uploadedPhotos.length>0"
+  cdkDropList
+  (cdkDropListDropped)="drop($event)"
+>
+  <div *ngFor="let photo of uploadedPhotos" class="photo-container" cdkDrag>
+    <div class="photo-placeholder" *cdkDragPlaceholder></div>
+    <img [src]="photo.path" class="photo" />
+    <button mat-icon-button (click)="extractPhoto(photo)"><mat-icon>close</mat-icon></button>
+  </div>
+</div>
+
