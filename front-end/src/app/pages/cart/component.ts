@@ -6,13 +6,11 @@ import { Order } from 'src/app/shared/models/order';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
-import { SlideInOutAnimation } from './animations';
 
 @Component({
   selector: 'app-cart-detail',
   templateUrl: './component.html',
-  styleUrls: ['./component.css'],
-  animations: [SlideInOutAnimation]
+  styleUrls: ['./component.css']
 })
 export class CartComponent implements OnInit, OnDestroy {
   orders: Order[];

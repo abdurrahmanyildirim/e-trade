@@ -14,7 +14,7 @@ import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Category, Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
-import { isPresent } from 'src/app/shared/util/common';
+import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { PhotoUploadComponent } from './photo-upload/component';
 
 @Component({
@@ -46,41 +46,32 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
 
   createForms(): void {
     this.infoForm = this.fb.group({
-      name: new FormControl(null, [Validators.required, this.nullValidator()]),
-      category: new FormControl(null, [Validators.required, this.nullValidator()]),
+      name: new FormControl(null, [Validators.required, nullValidator()]),
+      category: new FormControl(null, [Validators.required, nullValidator()]),
       price: new FormControl(null, [
         Validators.required,
         Validators.pattern(/^[0-9.]*$/),
-        this.nullValidator()
+        nullValidator()
       ]),
-      description: new FormControl(null, [Validators.required, this.nullValidator()]),
+      description: new FormControl(null, [Validators.required, nullValidator()]),
       discountRate: new FormControl(null, [
         Validators.required,
         Validators.max(100),
         Validators.min(0),
         Validators.pattern(/^[0-9]*$/),
-        this.nullValidator()
+        nullValidator()
       ]),
       stockQuantity: new FormControl(null, [
         Validators.required,
         Validators.pattern(/^[0-9]*$/),
-        this.nullValidator()
+        nullValidator()
       ]),
-      brand: new FormControl(null, [Validators.required, this.nullValidator()])
+      brand: new FormControl(null, [Validators.required, nullValidator()])
     });
     this.photosForm = this.fb.group({
-      photos: new FormControl([], [Validators.required, this.nullValidator()])
+      photos: new FormControl([], [Validators.required, nullValidator()])
     });
     this.initCategories();
-  }
-
-  nullValidator(): (AbstractControl) => ValidationErrors | null {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value ? control.value : '';
-      return !!control.parent && !!control.parent.value && (value + '').trim().length >= 0
-        ? null
-        : { isNull: { value: false } };
-    };
   }
 
   onFilesChange(files: File[]) {

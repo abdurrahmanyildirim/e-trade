@@ -9,8 +9,9 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
-import { isPresent } from 'src/app/shared/util/common';
+import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 import { RegisterUser } from './model';
 
@@ -22,8 +23,13 @@ import { RegisterUser } from './model';
 export class RegisterComponent implements OnInit, OnDestroy {
   form: FormGroup;
   user: RegisterUser;
-  sub: Subscription;
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: SnackbarService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -34,18 +40,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
       firstName: new FormControl('', [
         Validators.required,
         Validators.maxLength(30),
-        this.nullValidator()
+        nullValidator()
       ]),
       lastName: new FormControl('', [
         Validators.required,
         Validators.maxLength(30),
-        this.nullValidator()
+        nullValidator()
       ]),
-      email: new FormControl('', [Validators.required, Validators.email, this.nullValidator()]),
+      email: new FormControl('', [Validators.required, Validators.email, nullValidator()]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
-        this.nullValidator()
+        nullValidator()
       ]),
       confirmPassword: new FormControl(null, [this.matchingFields()])
     });
@@ -62,39 +68,26 @@ export class RegisterComponent implements OnInit, OnDestroy {
     };
   }
 
-  nullValidator(): (AbstractControl) => ValidationErrors | null {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value ? control.value : '';
-      return !!control.parent && !!control.parent.value && value.trim() !== ''
-        ? null
-        : { isNull: { value: false } };
-    };
-  }
-
   register(): void {
     if (this.form.valid) {
       this.user = Object.assign({}, this.form.value);
-      this.sub = this.authService.register(this.user).subscribe(
+      this.authService.register(this.user).subscribe(
         (data) => {
-          console.log(data);
-          // this.authService.saveToken(data.token);
-          // this.alertifyService.success('Giriş yapıldı.');
+          this.snackBar.showSuccess('Üyelik işlemleri yapıldı.');
           this.router.navigateByUrl('login');
         },
         (err) => {
           console.log(err);
+          this.snackBar.showError('Bir hata meydana geldi. Lütfen bilgilerinizi kontrol ediniz!');
           this.form.reset();
-          // this.alertifyService.alert('Hatalı giriş! Lütfen tekrar deneyiniz.');
-          // this.loginForm.reset();
+          this.form.patchValue({
+            password: '',
+            confirmPassword: ''
+          });
         }
       );
     }
   }
 
-  ngOnDestroy(): void {
-    if (isPresent(this.sub)) {
-      this.sub.unsubscribe();
-    }
-    ObjectHelper.removeReferances(this);
-  }
+  ngOnDestroy(): void {}
 }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Order } from 'src/app/shared/models/order';
+import { UtilityService } from 'src/app/shared/services/site/utility.service';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
 @Component({
@@ -11,7 +12,7 @@ export class CartDetailComponent implements OnDestroy {
   @Input() orders: Order[];
   @Output() orderListChange = new EventEmitter<Order[]>();
 
-  onQuantityChange(): void {}
+  constructor(private utilService: UtilityService) {}
 
   onOrderRemove(removedOrder: Order): void {
     const indexRemovedOrder = this.orders.indexOf(removedOrder);
@@ -21,6 +22,10 @@ export class CartDetailComponent implements OnDestroy {
 
   emitChanges(): void {
     this.orderListChange.emit(this.orders);
+  }
+
+  showPhotoBigger(path: string): void {
+    this.utilService.photoShower(path);
   }
 
   ngOnDestroy(): void {

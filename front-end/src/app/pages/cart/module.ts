@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
@@ -9,9 +9,13 @@ import { CartDetailComponent } from './detail/component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NumericInputModule } from 'src/app/shared/components/numeric-input/module';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { PurchaseOrderComponent } from './purchase-order/component';
 
 @NgModule({
-  declarations: [CartComponent, CartDetailComponent],
+  declarations: [CartComponent, CartDetailComponent, PurchaseOrderComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -20,7 +24,11 @@ import { NumericInputModule } from 'src/app/shared/components/numeric-input/modu
     MatIconModule,
     MatInputModule,
     RouterModule,
-    NumericInputModule
+    NumericInputModule,
+    MatStepperModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    MatCheckboxModule
   ],
   exports: [CartComponent]
 })

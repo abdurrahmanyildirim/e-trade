@@ -2,20 +2,25 @@
   <div class="order-list-container">
     <div class="order" *ngFor="let order of orders">
       <section class="photo-info flex">
-        <img [src]="order.photo" alt="Main-Photo" class="photo" />
+        <img
+          [src]="order.photo"
+          alt="Main-Photo"
+          class="photo"
+          (click)="showPhotoBigger(order.photo)"
+        />
         <div class="name-brand">
-          {{order.name}}
+          <span class="name" routerLink="/product-detail/{{order.productId}}">
+            {{order.name}}
+          </span>
           <div class="mat-small">{{order.brand}}</div>
         </div>
       </section>
       <section class="section half-flex">
-        <div class="numeric">
-          <app-numeric-input
-            [width]="80"
-            [(quantity)]="order.quantity"
-            (quantityChange)="emitChanges()"
-          ></app-numeric-input>
-        </div>
+        <app-numeric-input
+          [width]="80"
+          [(quantity)]="order.quantity"
+          (quantityChange)="emitChanges()"
+        ></app-numeric-input>
       </section>
       <section class="section half-flex">
         <div *ngIf="order.discountRate>0" class="normal-price">
@@ -25,10 +30,9 @@
           {{(order.price - order.price * order.discountRate) * order.quantity | number :'.2-2'}} TL
         </div>
       </section>
-
       <section class="section half-flex">
         <button mat-icon-button (click)="onOrderRemove(order)">
-          <mat-icon color="warn">remove_shopping_cart</mat-icon>
+          <mat-icon class="remove-icon">delete_forever</mat-icon>
         </button>
       </section>
     </div>

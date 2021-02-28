@@ -31,8 +31,14 @@
   display: flex;
 }
 
+.name {
+  cursor: pointer;
+  outline: none;
+}
+
 .name-brand {
   margin-left: 10px;
+  padding-right: 10px;
 }
 
 .section {
@@ -40,8 +46,8 @@
 }
 
 .photo {
-  width: 78px;
-  border: 1px solid #ccc;
+  width: 80px;
+  cursor: pointer;
   border-radius: 2px;
 }
 
@@ -55,4 +61,12 @@
 
 .half-flex {
   flex: 0.2;
+}
+
+.remove-icon {
+  color: #ccc;
+}
+
+.remove-icon:hover {
+  color: #f44336;
 }

@@ -7,7 +7,7 @@
           <mat-form-field>
             <input type="text" matInput placeholder="İsim" formControlName="firstName" />
             <mat-error
-              *ngIf="(form.get('firstName').hasError('required') || form.get('firstName').hasError('isNull') )&& form.get('firstName').touched"
+              *ngIf="(form.get('firstName').hasError('required') || form.get('firstName').hasError('isNull'))&& form.get('firstName').touched"
             >
               *İsim alanı zorunlu.
             </mat-error>
@@ -23,7 +23,7 @@
           <mat-form-field>
             <input type="text" matInput placeholder="soyisim" formControlName="lastName" />
             <mat-error
-              *ngIf="(form.get('lastName').hasError('required') || form.get('firstName').hasError('isNull') )&& form.get('lastName').touched"
+              *ngIf="(form.get('lastName').hasError('required') || form.get('firstName').hasError('isNull'))&& form.get('lastName').touched"
             >
               *Soyisim alanı zorunlu.
             </mat-error>
@@ -38,7 +38,7 @@
           <mat-form-field>
             <input type="text" matInput placeholder="E-Mail" formControlName="email" />
             <mat-error
-              *ngIf="(form.get('email').hasError('required') || form.get('firstName').hasError('isNull') )&& form.get('email').touched"
+              *ngIf="(form.get('email').hasError('required') || form.get('firstName').hasError('isNull'))&& form.get('email').touched"
             >
               *Email alanı zorunlu.
             </mat-error>

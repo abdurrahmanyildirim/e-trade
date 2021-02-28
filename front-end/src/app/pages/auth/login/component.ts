@@ -1,14 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 import { StorageKey } from 'src/app/shared/models/storage';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { LocalStorageService } from 'src/app/shared/services/site/local-storage.service';
-import { isPresent } from 'src/app/shared/util/common';
 import { LoginUser } from './model';
+import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +17,6 @@ import { LoginUser } from './model';
 export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup;
   user: LoginUser;
-  subs = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -26,7 +24,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private cartService: CartService,
     private localStorage: LocalStorageService,
-    private location: Location
+    private location: Location,
+    private snackBar: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   createForm(): void {
     this.form = this.fb.group({
-      email: new FormControl(null, [Validators.required, Validators.email]),
+      email: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required])
     });
   }
@@ -43,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   login(): void {
     if (this.form.valid) {
       this.user = Object.assign({}, this.form.value);
-      const sub = this.authService.login(this.user).subscribe(
+      this.authService.login(this.user).subscribe(
         (loginResponse) => {
           this.localStorage.setObject(StorageKey.User, loginResponse.info);
           this.authService.saveToken(loginResponse.token);
@@ -54,21 +53,17 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.authService.role.next(this.authService.getRole());
             this.location.back();
           });
-          // this.alertifyService.success('Giriş yapıldı.');
         },
         (err) => {
           console.error(err.error);
-          // this.alertifyService.alert('Hatalı giriş! Lütfen tekrar deneyiniz.');
-          this.form.reset();
+          this.snackBar.showError('Girilen isim veya şifre hatalı!');
+          this.form.patchValue({
+            password: ''
+          });
         }
       );
-      this.subs.add(sub);
     }
   }
 
-  ngOnDestroy(): void {
-    if (isPresent(this.subs)) {
-      this.subs.unsubscribe();
-    }
-  }
+  ngOnDestroy(): void {}
 }

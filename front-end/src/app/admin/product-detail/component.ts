@@ -16,7 +16,7 @@ import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
-import { isPresent } from 'src/app/shared/util/common';
+import { isPresent, nullValidator } from 'src/app/shared/util/common';
 
 @Component({
   selector: 'app-mn-product-detail',
@@ -63,51 +63,36 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
   initProductForm(): void {
     this.form = this.fb.group({
       _id: this.product._id,
-      name: new FormControl(this.product.name, [Validators.required, this.nullValidator()]),
-      category: new FormControl(this.product.category, [Validators.required, this.nullValidator()]),
+      name: new FormControl(this.product.name, [Validators.required, nullValidator()]),
+      category: new FormControl(this.product.category, [Validators.required, nullValidator()]),
       description: new FormControl(this.product.description, [
         Validators.required,
-        this.nullValidator()
+        nullValidator()
       ]),
       discountRate: new FormControl((this.product.discountRate * 100).toFixed(0), [
         Validators.required,
         Validators.max(100),
         Validators.min(0),
         Validators.pattern(/^[0-9]*$/),
-        this.nullValidator()
+        nullValidator()
       ]),
       price: new FormControl(this.product.price, [
         Validators.required,
         Validators.pattern(/^[0-9]*.?[0-9]{1,2}$/),
-        this.nullValidator()
+        nullValidator()
       ]),
       stockQuantity: new FormControl(this.product.stockQuantity, [
         Validators.required,
         Validators.pattern(/^[0-9]*$/),
-        this.nullValidator()
+        nullValidator()
       ]),
-      isActive: new FormControl(this.product.isActive + '', [
-        Validators.required,
-        this.nullValidator()
-      ]),
-      photos: new FormControl(this.product.photos, [Validators.required, this.nullValidator()]),
-      addedDate: new FormControl(this.product.addedDate, [
-        Validators.required,
-        this.nullValidator()
-      ]),
-      rate: new FormControl(this.product.rate, [Validators.required, this.nullValidator()]),
+      isActive: new FormControl(this.product.isActive + '', [Validators.required, nullValidator()]),
+      photos: new FormControl(this.product.photos, [Validators.required, nullValidator()]),
+      addedDate: new FormControl(this.product.addedDate, [Validators.required, nullValidator()]),
+      rate: new FormControl(this.product.rate, [Validators.required, nullValidator()]),
       comments: new FormControl(this.product.comments),
-      brand: new FormControl(this.product.brand, [Validators.required, this.nullValidator()])
+      brand: new FormControl(this.product.brand, [Validators.required, nullValidator()])
     });
-  }
-
-  nullValidator(): (AbstractControl) => ValidationErrors | null {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value ? control.value : '';
-      return !!control.parent && !!control.parent.value && (value + '').trim().length >= 0
-        ? null
-        : { isNull: { value: false } };
-    };
   }
 
   remove(): void {

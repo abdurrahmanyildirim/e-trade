@@ -1,19 +1,23 @@
 <main class="container" *ngIf="orders.length>0">
   <section class="operations">
-    <app-cart-info [orders]="orders" (orderListChange)="onOrderListChange($event)"></app-cart-info>
+    <mat-horizontal-stepper linear #stepper>
+      <mat-step>
+        <ng-template matStepLabel>Sepeti Detayı</ng-template>
+        <app-cart-info
+          [orders]="orders"
+          (orderListChange)="onOrderListChange($event)"
+        ></app-cart-info>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Sipariş Onay</ng-template>
+        <app-purchase-order></app-purchase-order>
+      </mat-step>
+    </mat-horizontal-stepper>
   </section>
   <section class="summary">
-    <span class=" mat-title">Sipariş Özeti</span>
+    <span class="mat-title">Sipariş Özeti</span>
     <span class="summary-info">Toplam {{orders.length}} ürün</span>
     <span class="summary-info">Toplam Fiyat : {{totalCost | number:'.2-2'}} TL</span>
-    <button
-      mat-flat-button
-      type="submit"
-      class="purchase-button bg-success"
-      (click)="changeStatus()"
-    >
-      Siparişi Tamamla
-    </button>
   </section>
 </main>
 
