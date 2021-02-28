@@ -1,35 +1,14 @@
 <main class="container">
   <div class="order-list-container">
-    <div class="titles">
-      <div class="section photo">Resim</div>
-      <div class="section info">Ürün Bilgisi</div>
-      <div class="section quantity">Adet</div>
-      <div class="section price">Birim Fiyat</div>
-      <div class="section discount">İndirim</div>
-      <div class="section total-price">Ürün Toplam Fiyatı</div>
-      <div class="section remove">Çıkar</div>
-      <div class="section quantity-change-section">Artır/Azalt</div>
-    </div>
     <div class="order" *ngFor="let order of orders">
-      <section class="photo">
+      <section class="photo-info flex">
         <img [src]="order.photo" alt="Main-Photo" class="photo" />
+        <div class="name-brand">
+          {{order.name}}
+          <div class="mat-small">{{order.brand}}</div>
+        </div>
       </section>
-      <section class="section info">
-        {{order.name}} <br />
-        <span class="brand-text">Marka : {{order.brand}}</span>
-      </section>
-      <section class="section quantity">{{order.quantity}}</section>
-      <section class="section price">{{order.price | number:'.2-2' }} TL</section>
-      <section class="section discount">%{{order.discountRate * 100 | number:'.0-0'}}</section>
-      <section class="section total-price">
-        {{(order.price - order.price *order.discountRate) * order.quantity | number :'.2-2'}} TL
-      </section>
-      <section class="section remove">
-        <button mat-icon-button (click)="onOrderRemove(order)">
-          <mat-icon color="warn">remove_shopping_cart</mat-icon>
-        </button>
-      </section>
-      <section class="section quantity-change-section">
+      <section class="section half-flex">
         <div class="numeric">
           <app-numeric-input
             [width]="80"
@@ -37,6 +16,20 @@
             (quantityChange)="emitChanges()"
           ></app-numeric-input>
         </div>
+      </section>
+      <section class="section half-flex">
+        <div *ngIf="order.discountRate>0" class="normal-price">
+          {{order.price * order.quantity}} TL
+        </div>
+        <div>
+          {{(order.price - order.price * order.discountRate) * order.quantity | number :'.2-2'}} TL
+        </div>
+      </section>
+
+      <section class="section half-flex">
+        <button mat-icon-button (click)="onOrderRemove(order)">
+          <mat-icon color="warn">remove_shopping_cart</mat-icon>
+        </button>
       </section>
     </div>
   </div>

@@ -3,11 +3,11 @@
     <app-cart-info [orders]="orders" (orderListChange)="onOrderListChange($event)"></app-cart-info>
   </section>
   <section class="summary">
-    <span class="summary-title">Sipariş Özeti</span>
+    <span class=" mat-title">Sipariş Özeti</span>
     <span class="summary-info">Toplam {{orders.length}} ürün</span>
     <span class="summary-info">Toplam Fiyat : {{totalCost | number:'.2-2'}} TL</span>
     <button
-      mat-raised-button
+      mat-flat-button
       type="submit"
       class="purchase-button bg-success"
       (click)="changeStatus()"

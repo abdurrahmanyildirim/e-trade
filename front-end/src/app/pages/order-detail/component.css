@@ -19,10 +19,9 @@
 }
 
 .products {
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  gap: 10px;
-  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 0 10px 10px;
 }
 
 .product {
@@ -31,7 +30,9 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   display: flex;
-  /* align-items: center; */
+  flex: 0.5;
+  margin-right: 10px;
+  margin-top: 10px;
 }
 
 .photo {
@@ -48,13 +49,13 @@
 }
 
 .brand {
-  font-size: 20px;
-  line-height: 22px;
+  font-size: 16px;
+  line-height: 16px;
   font-size: 600;
 }
 
 .name {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .normal-price {

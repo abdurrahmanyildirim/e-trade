@@ -1,5 +1,4 @@
 const authRoute = require('./authRoute');
-// const settingRoute = require('./settingRoute');
 const productRoute = require('./productRoute');
 const accountRoute = require('./photo');
 const fileUpload = require('express-fileupload');
