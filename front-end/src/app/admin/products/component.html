@@ -11,7 +11,7 @@
   </div>
   <div class="products" *ngFor="let product of currentList">
     <span class="name flex">{{product.name}}</span>
-    <span class="flex"> {{product.brand}} </span>
+    <span class="brand"> {{product.brand}} </span>
     <span class="half-flex">
       <span *ngIf="product.isActive">
         <mat-icon class="visible">visibility</mat-icon>
@@ -21,21 +21,25 @@
       </span>
     </span>
     <span class="half-flex">
+      <div class="normal-price" *ngIf="product.discountRate>0">
+        {{product.price | number:'.2-2'}} TL
+      </div>
       {{product.price - (product.price * product.discountRate) | number:'.2-2'}} TL
     </span>
-    <span class="half-flex"> %{{100 * product.discountRate | number:'.0-0'}} İndirim </span>
     <span class="half-flex">
       {{product.rate}}
       <span class="star-icon star"></span>
     </span>
-    <button
-      mat-icon-button
-      class="button half-flex"
-      color="primary"
-      (click)="navigateToDetail(product._id)"
-    >
-      <mat-icon>arrow_forward_ios</mat-icon>
-    </button>
+    <span class="half-flex">
+      <button
+        mat-icon-button
+        class="button"
+        color="primary"
+        (click)="navigateToDetail(product._id)"
+      >
+        <mat-icon>arrow_forward_ios</mat-icon>
+      </button>
+    </span>
   </div>
   <p></p>
   <p *ngIf="currentList.length<=0" style="text-align: center" class="mat-body-2">

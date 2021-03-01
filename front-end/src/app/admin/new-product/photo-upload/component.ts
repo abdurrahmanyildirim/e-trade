@@ -28,6 +28,8 @@ export class PhotoUploadComponent {
       this.snackBar.showError('En fazla 4 fotoğraf yüklenebilir');
       return;
     }
+    const length = files.length;
+    let i = 0;
     for (const file of files) {
       if (this.isSupportedFile(file)) {
         this.readFile(file).subscribe({
@@ -39,7 +41,12 @@ export class PhotoUploadComponent {
               publicId: 'photo' + this.counter,
               _id: 'photoId' + this.counter
             });
-            this.emitFiles();
+            i++;
+            if (i === length) {
+              this.files.reverse();
+              this.uploadedPhotos.reverse();
+              this.emitFiles();
+            }
           },
           error: (err) => console.log(err)
         });
@@ -72,7 +79,7 @@ export class PhotoUploadComponent {
     });
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.uploadedPhotos, event.previousIndex, event.currentIndex);
     moveItemInArray(this.files, event.previousIndex, event.currentIndex);
     this.emitFiles();
@@ -85,12 +92,12 @@ export class PhotoUploadComponent {
     this.emitFiles();
   }
 
-  reset() {
+  reset(): void {
     this.files = [];
     this.uploadedPhotos = [];
   }
 
-  emitFiles() {
+  emitFiles(): void {
     this.filesChange.emit(this.files);
   }
 }

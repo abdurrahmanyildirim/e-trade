@@ -1,15 +1,9 @@
-import { Component, EventEmitter, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  Validators
-} from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Category, Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
@@ -74,7 +68,7 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
     this.initCategories();
   }
 
-  onFilesChange(files: File[]) {
+  onFilesChange(files: File[]): void {
     this.photos = files;
     this.photosForm.patchValue({
       photos: this.photos
@@ -106,28 +100,30 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
       return;
     }
     this.screenHolder.show();
-    const sub = this.productService.uploadPhotos(this.photos.reverse()).subscribe({
+    const sub = this.productService.uploadPhotos(this.photos).subscribe({
       next: (photos) => {
         const product = Object.assign({}, this.infoForm.value) as Product;
         product.discountRate = product.discountRate / 100;
         product.photos = photos;
         product.comments = [];
         product.rate = 0;
-        const sub1 = this.productService.addNewProduct(product).subscribe({
-          next: () => {
-            this.screenHolder.hide();
-            this.reset();
-            this.snackBar.showSuccess('Ürün Eklendi.');
-          },
-          error: (err) => {
-            this.screenHolder.hide();
-            this.stepper.previous();
-            this.stepper.previous();
-            this.snackBar.showError('Ürün ekleme sırasında hata oldu.');
-            console.log(err);
-          }
-        });
-        this.subs.add(sub1);
+        this.productService
+          .addNewProduct(product)
+          .pipe(first())
+          .subscribe({
+            next: () => {
+              this.screenHolder.hide();
+              this.reset();
+              this.snackBar.showSuccess('Ürün Eklendi.');
+            },
+            error: (err) => {
+              this.screenHolder.hide();
+              this.stepper.previous();
+              this.stepper.previous();
+              this.snackBar.showError('Ürün ekleme sırasında hata oldu.');
+              console.log(err);
+            }
+          });
       },
       error: (err) => {
         this.screenHolder.hide();
@@ -139,8 +135,6 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
   }
 
   reset(): void {
-    this.infoForm.reset();
-    this.photosForm.reset();
     this.photos = [];
     this.photoUploadComponent.reset();
     this.stepper.reset();

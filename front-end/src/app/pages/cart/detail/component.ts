@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { DialogService } from 'src/app/shared/components/dialog/service';
 import { Order } from 'src/app/shared/models/order';
 import { UtilityService } from 'src/app/shared/services/site/utility.service';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
@@ -12,12 +13,21 @@ export class CartDetailComponent implements OnDestroy {
   @Input() orders: Order[];
   @Output() orderListChange = new EventEmitter<Order[]>();
 
-  constructor(private utilService: UtilityService) {}
+  constructor(private utilService: UtilityService, private dialogService: DialogService) {}
 
   onOrderRemove(removedOrder: Order): void {
-    const indexRemovedOrder = this.orders.indexOf(removedOrder);
-    this.orders.splice(indexRemovedOrder, 1);
-    this.emitChanges();
+    this.dialogService.openDialog({
+      acceptButton: 'Onayla',
+      refuseButton: 'Vazgeç',
+      desc: 'Ürünü sepetinizden kaldırmak istediğinize emin misiniz?',
+      onClose: (result) => {
+        if (result) {
+          const indexRemovedOrder = this.orders.indexOf(removedOrder);
+          this.orders.splice(indexRemovedOrder, 1);
+          this.emitChanges();
+        }
+      }
+    });
   }
 
   emitChanges(): void {

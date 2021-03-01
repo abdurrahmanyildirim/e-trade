@@ -36,7 +36,12 @@
 }
 
 .half-flex {
-  flex: 0.5;
+  flex: 0.4;
+  text-align: center;
+}
+
+.normal-price {
+  text-decoration: line-through;
 }
 
 .name {
@@ -46,6 +51,10 @@
   margin-right: 5px;
 }
 
+.brand{
+  flex: 0.7;
+}
+
 .star {
   width: 12px;
   height: 11px;
@@ -53,7 +62,7 @@
 }
 
 .visible {
-  color: #4BB543;
+  color: #4bb543;
 }
 
 .not-visible {

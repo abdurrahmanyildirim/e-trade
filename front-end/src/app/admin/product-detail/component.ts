@@ -17,6 +17,8 @@ import { Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { UtilityService } from 'src/app/shared/services/site/utility.service';
 
 @Component({
   selector: 'app-mn-product-detail',
@@ -37,7 +39,8 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private snackBarService: SnackbarService,
     private location: Location,
-    private screenHolder: ScreenHolderService
+    private screenHolder: ScreenHolderService,
+    private utilityService: UtilityService
   ) {}
 
   ngOnInit(): void {
@@ -155,6 +158,17 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     });
+  }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    moveItemInArray(this.product.photos, event.previousIndex, event.currentIndex);
+    this.form.patchValue({
+      photos: this.product.photos
+    });
+  }
+
+  showPhoto(path: string): void {
+    this.utilityService.photoShower(path);
   }
 
   ngOnDestroy(): void {

@@ -1,89 +1,96 @@
 <main class="container" *ngIf="product">
-  <div class="top">
-    <div class="photos">
-      <app-photos [photos]="product.photos" [width]="448" [height]="448"></app-photos>
-    </div>
-    <div class="info">
-      <form [formGroup]="form" class="form">
-        <mat-form-field class="field">
-          <input type="text" matInput placeholder="Ürün adı" formControlName="name" />
-          <mat-error
-            *ngIf="form.get('name').hasError('required') || form.get('name').hasError('isNull') || form.get('name').touched"
-          >
-            *Ürün Adı boş bırakılamaz
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="field">
-          <input type="text" matInput placeholder="Marka" formControlName="brand" />
-          <mat-error
-            *ngIf="form.get('brand').hasError('required') || form.get('brand').hasError('isNull') || form.get('brand').touched"
-          >
-            *Marka boş bırakılamaz
-          </mat-error>
-        </mat-form-field>
-        <mat-radio-group formControlName="isActive" class="radio-buttons">
-          <mat-radio-button value="true">Aktif</mat-radio-button>&nbsp;
-          <mat-radio-button value="false">Pasif</mat-radio-button>
-        </mat-radio-group>
-        <div class="rate">
-          <div *ngIf="product.rate <= 0" class="mat-body-1">Değerlendirilmedi</div>
-          <app-star
-            *ngIf="product.rate > 0"
-            [givenRate]="product.rate"
-            [width]="17"
-            [height]="16"
-          ></app-star>
-          <div *ngIf="product.rate > 0" class="mat-body-2"></div>
-        </div>
-        <mat-form-field class="field" class="textarea-field">
-          <mat-label>Ürün Açıklaması</mat-label>
-          <textarea matInput formControlName="description" class="text-area"></textarea>
-          <mat-error
-            *ngIf="form.get('description').hasError('required') || form.get('description').hasError('isNull')|| form.get('description').touched"
-          >
-            *Ürün açıklama alana boş bırakılamaz
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="field">
-          <input type="text" matInput placeholder="Fiyat" formControlName="price" />
-          <div matSuffix class="turkish-lira lira"></div>
-          <mat-error
-            *ngIf="(form.get('price').hasError('required') || form.get('price').hasError('isNull')) && form.get('price').touched"
-          >
-            *Fiyat boş bırakılamaz
-          </mat-error>
-          <mat-error *ngIf="form.get('price').hasError('pattern') && form.get('price').touched">
-            *Fiyat hatalı
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="field">
-          <span matPrefix>% &nbsp;</span>
-          <mat-label>İndirim Oranı</mat-label>
-          <input type="text" matInput formControlName="discountRate" />
-          <mat-error
-            *ngIf="form.get('discountRate').hasError('required') || form.get('discountRate').hasError('isNull') || form.get('discountRate').touched"
-          >
-            *Boş bırakılamaz
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="field">
-          <input type="text" matInput placeholder="Stok Adedi" formControlName="stockQuantity" />
-          <mat-error
-            *ngIf="form.get('stockQuantity').hasError('required') || form.get('stockQuantity').hasError('isNull') || form.get('stockQuantity').touched"
-          >
-            *Boş bırakılamaz
-          </mat-error>
-        </mat-form-field>
-      </form>
-      <div class="actions">
-        <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+  <div class="info">
+    <form [formGroup]="form" class="form">
+      <mat-form-field class="field">
+        <input type="text" matInput placeholder="Ürün adı" formControlName="name" />
+        <mat-error
+          *ngIf="form.get('name').hasError('required') || form.get('name').hasError('isNull') || form.get('name').touched"
+        >
+          *Ürün Adı boş bırakılamaz
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="field">
+        <input type="text" matInput placeholder="Marka" formControlName="brand" />
+        <mat-error
+          *ngIf="form.get('brand').hasError('required') || form.get('brand').hasError('isNull') || form.get('brand').touched"
+        >
+          *Marka boş bırakılamaz
+        </mat-error>
+      </mat-form-field>
+      <mat-radio-group formControlName="isActive" class="rate">
+        <mat-radio-button value="true">Aktif</mat-radio-button>&nbsp;
+        <mat-radio-button style="margin-left: 10px" value="false">Pasif</mat-radio-button>
+      </mat-radio-group>
+      <div class="rate">
+        <div *ngIf="product.rate <= 0" class="mat-body-1">Değerlendirilmedi</div>
+        <app-star
+          *ngIf="product.rate > 0"
+          [givenRate]="product.rate"
+          [width]="17"
+          [height]="16"
+        ></app-star>
+        <div *ngIf="product.rate > 0" class="mat-body-2"></div>
       </div>
-
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="saveChanges()"><mat-icon>save</mat-icon>Kaydet</button>
-        <button mat-menu-item (click)="remove()"><mat-icon>delete</mat-icon>Kaldır</button>
-      </mat-menu>
-    </div>
+      <div
+        class="photos-container"
+        *ngIf="product.photos.length>0"
+        cdkDropList
+        cdkDropListOrientation="horizontal"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <img
+          *ngFor="let photo of product.photos"
+          cdkDrag
+          [src]="photo.path"
+          class="photo"
+          (click)="showPhoto(photo.path)"
+        />
+      </div>
+      <mat-form-field class="field" class="textarea-field">
+        <mat-label>Ürün Açıklaması</mat-label>
+        <textarea matInput formControlName="description" class="text-area"></textarea>
+        <mat-error
+          *ngIf="form.get('description').hasError('required') || form.get('description').hasError('isNull')|| form.get('description').touched"
+        >
+          *Ürün açıklama alana boş bırakılamaz
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="field">
+        <input type="text" matInput placeholder="Fiyat" formControlName="price" />
+        <div matSuffix class="turkish-lira lira"></div>
+        <mat-error
+          *ngIf="(form.get('price').hasError('required') || form.get('price').hasError('isNull')) && form.get('price').touched"
+        >
+          *Fiyat boş bırakılamaz
+        </mat-error>
+        <mat-error *ngIf="form.get('price').hasError('pattern') && form.get('price').touched">
+          *Fiyat hatalı
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="field">
+        <span matPrefix>% &nbsp;</span>
+        <mat-label>İndirim Oranı</mat-label>
+        <input type="text" matInput formControlName="discountRate" />
+        <mat-error
+          *ngIf="form.get('discountRate').hasError('required') || form.get('discountRate').hasError('isNull') || form.get('discountRate').touched"
+        >
+          *Boş bırakılamaz
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="field">
+        <input type="text" matInput placeholder="Stok Adedi" formControlName="stockQuantity" />
+        <mat-error
+          *ngIf="form.get('stockQuantity').hasError('required') || form.get('stockQuantity').hasError('isNull') || form.get('stockQuantity').touched"
+        >
+          *Boş bırakılamaz
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <button mat-flat-button color="primary" (click)="saveChanges()">
+      <mat-icon>save</mat-icon> Değişiklikleri Kaydet
+    </button>
+    <!-- <button mat-flat-button color="primary" (click)="remove()">
+      <mat-icon>save</mat-icon> Sil
+    </button> -->
   </div>
-  <div class="bottom"></div>
 </main>

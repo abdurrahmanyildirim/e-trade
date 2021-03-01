@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Category, CloudinaryPhoto, Product } from '../../models/product';
 import { ConfigService } from '../site/config.service';
 
@@ -14,16 +15,17 @@ export class ProductService {
       photos.forEach((photo) => {
         fd.append('photos', photo, photo.name);
       });
-      const sub = this.uploadPhoto(fd).subscribe({
-        next: (uploadedPhotos: CloudinaryPhoto[]) => {
-          observer.next(uploadedPhotos);
-          sub.unsubscribe();
-          observer.complete();
-        },
-        error: (err) => {
-          observer.error(err);
-        }
-      });
+      this.uploadPhoto(fd)
+        .pipe(first())
+        .subscribe({
+          next: (uploadedPhotos: CloudinaryPhoto[]) => {
+            observer.next(uploadedPhotos);
+            observer.complete();
+          },
+          error: (err) => {
+            observer.error(err);
+          }
+        });
     });
   }
 
