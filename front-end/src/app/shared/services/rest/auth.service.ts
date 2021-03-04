@@ -53,6 +53,10 @@ export class AuthService {
     return this.http.get<User>(this.configService.config.domain + 'auth/user/' + id);
   }
 
+  getContactInfo(): Observable<any> {
+    return this.http.get<any>(this.configService.config.domain + 'auth/contact-info');
+  }
+
   get token(): string {
     return this.localStorage.getItem(StorageKey.Token);
   }

@@ -86,6 +86,25 @@ module.exports.getUser = (req, res) => {
   });
 };
 
+module.exports.contactInfo = (req, res) => {
+  const id = req.id;
+  User.findOne({ _id: id }, (err, user) => {
+    if (err) {
+      return res.status(404).send({ message: 'Bağlantı hatası' });
+    }
+    let newUser = {};
+    if (user.addresses.length > 0 && user.phones.length > 0) {
+      newUser = {
+        city: user.addresses[0].city,
+        district: user.addresses[0].district,
+        address: user.addresses[0].address,
+        phone: user.phones[0].phone
+      };
+    }
+    return res.status(200).send(newUser);
+  });
+};
+
 module.exports.verifyToken = (req, res, next) => {
   const authorization = req.headers.authorization;
   if (!authorization) {

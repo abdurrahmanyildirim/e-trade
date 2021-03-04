@@ -1,0 +1,66 @@
+.container {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.general {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.rate {
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 41px;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.all-rates {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  height: 25px;
+}
+
+.ratings {
+  display: flex;
+  align-items: flex-start;
+  margin-right: 10px;
+}
+
+.rate-value {
+  font-size: 16px;
+  line-height: 16px;
+  margin-right: 3px;
+}
+
+.rating-comments {
+  height: 100%;
+  width: fit-content;
+  border-radius: 5px;
+}
+
+.progress-bar {
+  width: 200px;
+  height: 10px;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #1e457c;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background: #e4e8eb;
+}
+
+::ng-deep .mat-progress-bar {
+  border-radius: 2px;
+}

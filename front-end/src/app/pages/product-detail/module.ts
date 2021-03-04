@@ -8,9 +8,12 @@ import { FormsModule } from '@angular/forms';
 import { StarModule } from 'src/app/shared/components/star/module';
 import { PhotosModule } from 'src/app/shared/components/photos/module';
 import { NumericInputModule } from 'src/app/shared/components/numeric-input/module';
+import { MatTabsModule } from '@angular/material/tabs';
+import { CommentsComponent } from './comments/component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
-  declarations: [ProductDetailComponent],
+  declarations: [ProductDetailComponent, CommentsComponent],
   imports: [
     CommonModule,
     MatInputModule,
@@ -19,7 +22,9 @@ import { NumericInputModule } from 'src/app/shared/components/numeric-input/modu
     MatButtonModule,
     StarModule,
     PhotosModule,
-    NumericInputModule
+    NumericInputModule,
+    MatTabsModule,
+    MatProgressBarModule
   ],
   exports: [ProductDetailComponent]
 })

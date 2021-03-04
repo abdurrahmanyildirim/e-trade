@@ -6,6 +6,7 @@
 .navbar-container {
   color: #555;
   max-width: 1150px;
+  width: 100%;
   min-height: 40px;
   display: flex;
   align-items: center;

@@ -10,9 +10,10 @@ import {
 import { Router } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { nullValidator } from 'src/app/shared/util/common';
-import { Contact } from './model';
+import { Contact, UserInfo } from './model';
 
 @Component({
   selector: 'app-purchase-order',
@@ -26,29 +27,49 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
   form: FormGroup;
   contactInfo: Contact;
   orderSub: Subscription;
+  userInfo: UserInfo;
+  inited = false;
 
-  constructor(private cartService: CartService, private router: Router, private fb: FormBuilder) {
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {
     if (this.cartService.cart.value.length <= 0) {
       this.router.navigateByUrl('cart');
     }
   }
 
   ngOnInit(): void {
-    this.createForm();
+    this.initUserInfo();
   }
 
   createForm(): void {
     this.form = this.fb.group({
-      phone: new FormControl('', [
+      phone: new FormControl(this.userInfo.phone, [
         Validators.required,
         nullValidator(),
         Validators.maxLength(13),
         Validators.minLength(13)
       ]),
-      address: new FormControl('', [Validators.required, nullValidator()]),
-      city: new FormControl('', [Validators.required, nullValidator()]),
-      district: new FormControl('', [Validators.required, nullValidator()]),
+      address: new FormControl(this.userInfo.address, [Validators.required, nullValidator()]),
+      city: new FormControl(this.userInfo.city, [Validators.required, nullValidator()]),
+      district: new FormControl(this.userInfo.district, [Validators.required, nullValidator()]),
       contractChecked: new FormControl(false, Validators.requiredTrue)
+    });
+    if (this.userInfo.phone) {
+      this.onKeypress();
+    }
+    this.inited = true;
+  }
+
+  initUserInfo(): void {
+    this.authService.getContactInfo().subscribe({
+      next: (info) => {
+        this.userInfo = info;
+        this.createForm();
+      }
     });
   }
 

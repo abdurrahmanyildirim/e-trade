@@ -1,35 +1,42 @@
 <main class="main-container" *ngIf="product">
   <div class="container">
+    <!-- TODO : Yorumlar düzenlenecek -->
+    <!-- TODO : Kategori kırılımı eklenecek -->
     <section class="top">
-      <app-photos
-        class="photos"
-        [width]="448"
-        [height]="448"
-        [photos]="product.photos"
-      ></app-photos>
+      <app-photos [width]="448" [height]="448" [photos]="product.photos"></app-photos>
       <section class="general">
-        <div class="info">
-          <div class="name mat-body-2">{{product.name}}</div>
-          <div class="brand text-primary">{{product.brand}}</div>
+        <div class="name mat-body-2">{{product.name}}</div>
+        <div>{{product.brand}}</div>
+        <div class="price-rate">
+          <div class="discount-price">
+            <span class="discount-box" *ngIf="product.discountRate>0"
+              >%{{product.discountRate *100 | number : '.0-0'}}
+              <div>indirim</div>
+            </span>
+            <span class="price">
+              <div class="normal-price" *ngIf="product.discountRate>0">
+                {{product.price | number : '.2'}} TL
+              </div>
+              {{(product.price - product.price *product.discountRate) | number : '.2-2'}} TL
+            </span>
+          </div>
           <div class="rate">
+            <div>{{product.rate | number}}</div>
             <app-star [givenRate]="product.rate" [width]="21" [height]="20"></app-star>
           </div>
-          <div class="desc">{{product.description}}</div>
-          <div class="price mat-body-2">
-            <span class="normal-price" *ngIf="product.discountRate>0">
-              {{product.price | number : '.2'}} TL
-            </span>
-            {{(product.price - product.price *product.discountRate) | number : '.2-2'}} TL
-            <span *ngIf="product.discountRate>0"
-              >%{{product.discountRate * 100 | number :'.0-0'}} indirimli</span
-            >
-          </div>
+        </div>
+        <div class="desc">
+          <div class="mat-body-2">Ürün Hakkında</div>
+          <div>{{product.description}}</div>
+        </div>
+        <div class="stock-quantity">
+          <div class="mat-body-2">Kalan</div>
+          <div>{{product.stockQuantity}} Adet</div>
         </div>
         <div class="operation">
           <div class="numeric">
             <app-numeric-input [(quantity)]="quantity" [width]="120"></app-numeric-input>
           </div>
-
           <button
             mat-flat-button
             class="button"
@@ -42,22 +49,27 @@
         </div>
       </section>
     </section>
-    <section class="bottom">
-      <div class="mat-body-2 bottom-title">Ürün Değerlendirmeleri</div>
-      <div class="comments">
-        <div *ngFor="let comment of product.comments" class="comment">
-          <div class="comment-info">
-            <span class="comment-name mat-body-2">{{comment.name}}</span> -
-            <app-star
-              [givenRate]="comment.rate"
-              style="display: inline-block"
-              [width]="21"
-              [height]="20"
-            ></app-star>
+    <!-- <section class="bottom">
+      <mat-tab-group>
+        <mat-tab label="Ürün Hakkında"> {{product.description}} </mat-tab>
+        <mat-tab label="Değerlendirmeler">
+          <div class="tab-container">
+            <app-comments
+              [comments]="product.comments"
+              [rate]="product.rate"
+              *ngIf="product.comments.length>0"
+            ></app-comments>
+
+            <div
+              class="mat-body-2"
+              style="text-align: center; margin-top: 10px"
+              *ngIf="product.comments.length<=0"
+            >
+              Henüz ürünü değerlendiren olmamış.
+            </div>
           </div>
-          <div class="comment-desc mat-body-2">{{comment.description}}</div>
-        </div>
-      </div>
-    </section>
+        </mat-tab>
+      </mat-tab-group>
+    </section> -->
   </div>
 </main>

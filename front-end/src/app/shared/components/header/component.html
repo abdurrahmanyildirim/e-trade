@@ -4,7 +4,7 @@
       <img src="assets/img/logo.svg" alt="logo" style="width: 26px; height: 26px" /> ER TRADE
     </button>
     <span
-      *ngIf="(this.authService.role | async) === roles.client || !(this.authService.isAuth | async)"
+      *ngIf="(this.authService.role | async) === roles.client || (this.authService.isAuth | async) === false"
     >
       <button
         mat-button
@@ -35,10 +35,10 @@
         {{(this.cartService.cart | async).length}}
       </div>
     </button>
-    <button mat-button routerLink="login" *ngIf="!(this.authService.isAuth | async)">
+    <button mat-button routerLink="login" *ngIf="(this.authService.isAuth | async) === false">
       <mat-icon>login</mat-icon> Giriş Yap
     </button>
-    <button mat-button routerLink="register" *ngIf="!(this.authService.isAuth | async)">
+    <button mat-button routerLink="register" *ngIf="(this.authService.isAuth | async) === false">
       <mat-icon>person_add_alt_1</mat-icon> Üye Ol
     </button>
     <button mat-button [matMenuTriggerFor]="menu" *ngIf="(this.authService.isAuth | async)">
