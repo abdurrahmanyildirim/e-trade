@@ -15,8 +15,5 @@
   <div class="main" *ngIf="splashService.configInited">
     <router-outlet></router-outlet>
   </div>
-  <app-footer
-    class="footer"
-    *ngIf="splashService.configInited && (authService.role | async) === roles.client"
-  ></app-footer>
+  <app-footer class="footer" *ngIf="splashService.configInited"></app-footer>
 </main>

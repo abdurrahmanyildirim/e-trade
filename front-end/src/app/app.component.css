@@ -16,9 +16,7 @@
 
 .header {
   z-index: 10;
-  position: sticky;
   padding-bottom: 10px;
-  top: 0;
 }
 
 .footer {
