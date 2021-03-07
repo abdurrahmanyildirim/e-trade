@@ -2,7 +2,7 @@
   <section class="top">
     <div class="items">
       <div class="brand center">
-        <img src="assets/img/logo.svg" alt="logo" style="width: 26px; height: 26px" /> ER TRADE
+        <img src="assets/img/logo.png" alt="logo" style="width: 145px; height: 60px" />
       </div>
       <div class="search center">
         <div class="input-container">
@@ -65,12 +65,13 @@
         <button mat-icon-button (click)="onMobileNavMenuClick()">
           <mat-icon>reorder</mat-icon>
         </button>
-        <div class="mobile-brand" style="display: flex; align-items: center">Er Ticaret</div>
+        <div class="mobile-brand" style="display: flex; align-items: center">
+          <img src="assets/img/logo.png" alt="" style="width: 60px; height: 25px" />
+        </div>
         <div class="mobile-tools">
           <button mat-icon-button routerLink="cart" *ngIf="(this.authService.isAuth | async)">
             <mat-icon
               [matBadge]="(this.cartService.cart | async).length"
-              [matBadgeHidden]="(this.cartService.cart | async).length<=0 ? 'hidden' : ''"
               matBadgeColor="warn"
               matBadgeSize="small"
             >
@@ -112,7 +113,7 @@
         <button mat-button routerLink="main" class="mobile-nav-item" (click)="closeNav()">
           ANA SAYFA
         </button>
-        <button
+        <!-- <button
           mat-button
           class="mobile-nav-item"
           routerLink="mn-orders"
@@ -138,7 +139,7 @@
           *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
         >
           ÜRÜN EKLE
-        </button>
+        </button> -->
         <button
           mat-button
           class="mobile-nav-item"

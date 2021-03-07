@@ -41,12 +41,58 @@
       </div>
     </div>
   </div>
+  <div class="mobile-filter-button" id="mobile-filter-button">
+    <button mat-flat-button color="primary" (click)="toggleMobileFilters()">
+      <mat-icon>filter_alt</mat-icon> Filtrele
+    </button>
+  </div>
+  <div class="mobile-filter-body" #mobileFiltersBody>
+    <div class="mobile-filters" #mobileFilters>
+      <div>
+        <mat-icon (click)="toggleMobileFilters()">close</mat-icon>
+      </div>
+      <div class="filter-item" *ngIf="categories">
+        <span class="title mat-body-2">Kategori</span>
+        <mat-radio-group class="sort-items">
+          <mat-radio-button
+            class="sort-item"
+            *ngFor="let category of categories"
+            [value]="category.name"
+            [checked]="category.name === filter.category ? true : false"
+            (change)="filterByCategory(category)"
+          >
+            {{category.name | titlecase}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="filter-item" *ngIf="brands.length>0">
+        <span class="title mat-body-2">Marka</span>
+        <mat-checkbox *ngFor="let brand of brands" (change)="filterByBrand(brand)">
+          {{brand | titlecase}}
+        </mat-checkbox>
+      </div>
+      <div class="filter-item">
+        <span class="title mat-body-2">Sıralama Şekli</span>
+        <mat-radio-group class="sort-items">
+          <mat-radio-button
+            class="sort-item"
+            *ngFor="let sort of sortingTypes"
+            [value]="sort.key"
+            [checked]="sort.key==='none'"
+            (change)="sortByType(sort.key)"
+          >
+            {{sort.text}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </div>
   <div class="products" *ngIf="products && !showSplash">
     <div class="search-key" *ngIf="filter.sKey">
       <span class="mat-body-2">"{{filter.sKey}}"</span> arama sonuçları
       <mat-icon class="remove-key" (click)="removeSearchKey()">close</mat-icon>
     </div>
-    <div class="results">
+    <div class="results" id="results">
       <app-card *ngFor="let product of products" [product]="product" class="product"></app-card>
       <div
         *ngIf="products.length<=0"

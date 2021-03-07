@@ -80,6 +80,65 @@
 .splash {
   display: flex;
   height: 100%;
+  width: 100%;
   justify-content: center;
   align-items: center;
+}
+
+.mobile-filter-button {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  transition: height 0.3s ease-in-out;
+  border-top: 1px solid #ccc;
+  z-index: 2;
+  overflow-x: hidden;
+}
+
+.mobile-filter-body {
+  width: 0;
+  position: fixed;
+  overflow-x: hidden;
+  right: 0;
+  top: 0;
+  height: 100%;
+  z-index: 20;
+  display: flex;
+  justify-content: flex-end;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.mobile-filters {
+  width: 0;
+  background-color: white;
+  height: 100%;
+  padding: 0 5px;
+  transition: width 0.5s ease-in-out;
+}
+
+@media only screen and (max-width: 650px) {
+  .filters {
+    display: none;
+  }
+
+  .results {
+    justify-content: center;
+  }
+
+  .mobile-filter-button {
+    height: 40px;
+  }
+
+  .filter-item {
+    padding: 0 5px 5px 5px;
+  }
+
+  .title {
+    margin: 0;
+  }
 }

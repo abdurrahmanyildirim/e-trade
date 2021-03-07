@@ -30,3 +30,13 @@
   height: 100%;
   z-index: 1001;
 }
+
+@media only screen and (max-width: 650px) {
+  .footer {
+    padding-top: 20px;
+  }
+
+  .header{
+    padding-bottom: 5px;
+  }
+}

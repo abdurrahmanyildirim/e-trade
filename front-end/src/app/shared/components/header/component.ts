@@ -62,7 +62,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.mobileNavMenu.nativeElement.style.width) {
       this.mobileNavMenu.nativeElement.style.width = null;
     } else {
-      this.mobileNavMenu.nativeElement.style.display = 'flex';
       this.mobileNavMenu.nativeElement.style.width = 100 + '%';
     }
   }

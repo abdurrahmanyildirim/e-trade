@@ -18,6 +18,11 @@
   padding-bottom: 5px;
 }
 
+.carousel {
+  width: 460px;
+  height: 460px;
+}
+
 .general {
   display: flex;
   flex-direction: column;
@@ -128,4 +133,21 @@
 
 .tab-container {
   min-height: 300px;
+}
+
+@media only screen and (max-width: 650px) {
+  .container {
+    padding-top: 0;
+    width: 100%;
+  }
+
+  .top {
+    flex-direction: column;
+    padding: 0 5px;
+  }
+
+  .general {
+    padding: 0;
+    width: 100%;
+  }
 }

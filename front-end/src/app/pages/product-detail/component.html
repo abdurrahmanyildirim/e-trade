@@ -3,7 +3,11 @@
     <!-- TODO : Yorumlar düzenlenecek -->
     <!-- TODO : Kategori kırılımı eklenecek -->
     <section class="top">
-      <app-photos [width]="448" [height]="448" [photos]="product.photos"></app-photos>
+      <app-photos
+        [width]="photos.width"
+        [height]="photos.height"
+        [photos]="product.photos"
+      ></app-photos>
       <section class="general">
         <div class="name mat-body-2">{{product.name}}</div>
         <div>{{product.brand}}</div>

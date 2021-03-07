@@ -1,6 +1,14 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { fromEvent, Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { Order } from 'src/app/shared/models/order';
 import { Product } from 'src/app/shared/models/product';
@@ -14,13 +22,17 @@ import { ObjectHelper } from 'src/app/shared/util/helper/object';
   templateUrl: './component.html',
   styleUrls: ['./component.css']
 })
-export class ProductDetailComponent implements OnInit, OnDestroy {
+export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   quantity = 1;
   productId: string;
   orders: Order[];
   subs = new Subscription();
   addTocartClick = new Subject<Product>();
   product: Product;
+  photos = {
+    width: 448,
+    height: 448
+  };
 
   constructor(
     private cartService: CartService,
@@ -32,11 +44,31 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     });
     this.subs.add(subs);
   }
+  ngAfterViewInit(): void {
+    this.listenResize();
+    document.body.scrollTop = 0;
+  }
 
   ngOnInit(): void {
     this.getProductById();
     this.orders = this.cartService.cart.value;
     this.initAddToCartStream();
+  }
+
+  listenResize() {
+    if (document.body.clientWidth <= 650) {
+      setTimeout(() => {
+        this.photos.width = this.photos.height = document.body.clientWidth - 12;
+      }, 200);
+    }
+    const sub = fromEvent(window, 'resize').subscribe((event: any) => {
+      if (document.body.clientWidth <= 650) {
+        this.photos.width = this.photos.height = document.body.clientWidth - 12;
+      } else {
+        this.photos.width = this.photos.height = 448;
+      }
+    });
+    this.subs.add(sub);
   }
 
   getProductById(): void {

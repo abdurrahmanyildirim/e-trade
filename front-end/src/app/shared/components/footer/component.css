@@ -50,6 +50,7 @@
 
   .content {
     flex-direction: column;
+    padding: 0 5px;
   }
 
   .section {

@@ -11,6 +11,7 @@ import { NumericInputModule } from 'src/app/shared/components/numeric-input/modu
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommentsComponent } from './comments/component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [ProductDetailComponent, CommentsComponent],
@@ -24,7 +25,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     PhotosModule,
     NumericInputModule,
     MatTabsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    CarouselModule
   ],
   exports: [ProductDetailComponent]
 })

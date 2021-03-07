@@ -69,7 +69,6 @@ export class MainComponent implements OnInit, OnDestroy {
       .filter((product) => product.discountRate > 0)
       .sort((a: Product, b: Product) => b.discountRate - a.discountRate)
       .slice(0, 15);
-    // console.log(this.discounted);
   }
 
   initMostLiked(): void {

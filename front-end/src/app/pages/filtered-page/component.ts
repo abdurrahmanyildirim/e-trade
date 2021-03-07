@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { Category, Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
@@ -13,7 +13,7 @@ import { Filter, SortType, SortTypes } from './model';
   styleUrls: ['./component.css'],
   viewProviders: [FilterFactory]
 })
-export class FilteredPageComponent implements OnInit, OnDestroy {
+export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
   subs = new Subscription();
   products: Product[];
   brands: string[];
@@ -43,6 +43,12 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
       text: 'Azalan Fiyat'
     }
   ];
+  @ViewChild('mobileFilters') mobileFilters: ElementRef<HTMLElement>;
+  @ViewChild('mobileFiltersBody') mobileFiltersBody: ElementRef<HTMLElement>;
+  touchSubs = new Subscription();
+  touchStart: number;
+  touchEnd: number;
+  previousScrollTop = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -50,8 +56,43 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
     private filterFactory: FilterFactory
   ) {}
 
+  ngAfterViewInit(): void {}
+
   ngOnInit(): void {
     this.initParams();
+    document.body.addEventListener('scroll', this.listenBodyScroll);
+  }
+
+  listenBodyScroll(e: any): void {
+    const filterPlace = document.getElementById('mobile-filter-button');
+    if (document.body.scrollTop > this.previousScrollTop) {
+      if (filterPlace.style.height !== '0') {
+        filterPlace.style.height = '0';
+      }
+    } else {
+      if (filterPlace.style.height !== '40px') {
+        filterPlace.style.height = '40px';
+      }
+    }
+    this.previousScrollTop = document.body.scrollTop;
+  }
+
+  handleTouchEvents() {
+    const sub1 = fromEvent(this.mobileFiltersBody.nativeElement, 'touchstart').subscribe(
+      (event: TouchEvent) => {
+        this.touchStart = event.changedTouches[0].screenX;
+      }
+    );
+    const sub2 = fromEvent(this.mobileFiltersBody.nativeElement, 'touchend').subscribe(
+      (event: TouchEvent) => {
+        this.touchEnd = event.changedTouches[0].screenX;
+        if (this.touchStart < this.touchEnd) {
+          this.toggleMobileFilters();
+        }
+      }
+    );
+    this.touchSubs.add(sub1);
+    this.touchSubs.add(sub2);
   }
 
   initParams(): void {
@@ -85,6 +126,24 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
         this.showSplash = false;
       }
     });
+  }
+
+  toggleMobileFilters() {
+    if (this.mobileFilters.nativeElement.style.width) {
+      this.mobileFilters.nativeElement.style.width = null;
+      if (isPresent(this.touchSubs)) {
+        this.touchSubs.unsubscribe();
+        this.touchSubs = new Subscription();
+      }
+      setTimeout(() => {
+        this.mobileFiltersBody.nativeElement.style.width = null;
+        document.body.scrollTop = 0;
+      }, 500);
+    } else {
+      this.mobileFiltersBody.nativeElement.style.width = 100 + '%';
+      this.mobileFilters.nativeElement.style.width = 60 + '%';
+      this.handleTouchEvents();
+    }
   }
 
   removeSearchKey(): void {
@@ -140,6 +199,7 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
     this.products = this.filterFactory
       .create(this.filter)
       .slice(index * this.pageSize, index * this.pageSize + this.pageSize);
+    document.body.scrollTop = 0;
     this.showSplash = false;
   }
 
@@ -147,5 +207,6 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
     if (isPresent(this.subs)) {
       this.subs.unsubscribe();
     }
+    document.body.removeEventListener('scroll', this.listenBodyScroll);
   }
 }
