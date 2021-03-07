@@ -1,40 +1,91 @@
 <main class="container">
   <div class="order-list-container">
-    <div class="order" *ngFor="let order of orders">
-      <section class="photo-info flex">
+    <span class="mobile" *ngIf="isMobile">
+      <div class="order" *ngFor="let order of orders">
         <img
           [src]="order.photo"
           alt="Main-Photo"
           class="photo"
           (click)="showPhotoBigger(order.photo)"
         />
-        <div class="name-brand">
-          <span class="name" routerLink="/product-detail/{{order.productId}}">
-            {{order.name}}
-          </span>
-          <div class="mat-small">{{order.brand}}</div>
-        </div>
-      </section>
-      <section class="section half-flex">
-        <app-numeric-input
-          [width]="80"
-          [(quantity)]="order.quantity"
-          (quantityChange)="emitChanges()"
-        ></app-numeric-input>
-      </section>
-      <section class="section half-flex">
-        <div *ngIf="order.discountRate>0" class="normal-price">
-          {{order.price * order.quantity}} TL
-        </div>
-        <div>
-          {{(order.price - order.price * order.discountRate) * order.quantity | number :'.2-2'}} TL
-        </div>
-      </section>
-      <section class="section half-flex">
-        <button mat-icon-button (click)="onOrderRemove(order)">
-          <mat-icon class="remove-icon">delete_forever</mat-icon>
-        </button>
-      </section>
-    </div>
+        <section class="info-operations">
+          <section class="name-brand">
+            <div
+              style="
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                max-width: 150px;
+              "
+            >
+              <span class="name" routerLink="/product-detail/{{order.productId}}">
+                {{order.name}}
+              </span>
+              <div class="mat-small brand">{{order.brand}}</div>
+            </div>
+            <button mat-icon-button (click)="onOrderRemove(order)">
+              <mat-icon class="remove-icon">delete_forever</mat-icon>
+            </button>
+          </section>
+          <section class="quantity-price">
+            <div class="numeric-container">
+              <app-numeric-input
+                [width]="40"
+                [(quantity)]="order.quantity"
+                (quantityChange)="emitChanges()"
+              ></app-numeric-input>
+            </div>
+            <div class="price-content">
+              <div *ngIf="order.discountRate>0" class="normal-price">
+                {{order.price * order.quantity}} TL
+              </div>
+              <div>
+                {{(order.price - order.price * order.discountRate) * order.quantity | number
+                :'.2-2'}} TL
+              </div>
+            </div>
+          </section>
+        </section>
+      </div>
+    </span>
+    <span class="desktop" *ngIf="!isMobile">
+      <div class="order" *ngFor="let order of orders">
+        <section class="photo-info flex">
+          <img
+            [src]="order.photo"
+            alt="Main-Photo"
+            class="photo"
+            (click)="showPhotoBigger(order.photo)"
+          />
+          <div class="name-brand">
+            <span class="name" routerLink="/product-detail/{{order.productId}}">
+              {{order.name}}
+            </span>
+            <div class="mat-small">{{order.brand}}</div>
+          </div>
+        </section>
+        <section class="section half-flex">
+          <app-numeric-input
+            [width]="80"
+            [(quantity)]="order.quantity"
+            (quantityChange)="emitChanges()"
+          ></app-numeric-input>
+        </section>
+        <section class="section half-flex">
+          <div *ngIf="order.discountRate>0" class="normal-price">
+            {{order.price * order.quantity}} TL
+          </div>
+          <div>
+            {{(order.price - order.price * order.discountRate) * order.quantity | number :'.2-2'}}
+            TL
+          </div>
+        </section>
+        <section class="section half-flex">
+          <button mat-icon-button (click)="onOrderRemove(order)">
+            <mat-icon class="remove-icon">delete_forever</mat-icon>
+          </button>
+        </section>
+      </div>
+    </span>
   </div>
 </main>

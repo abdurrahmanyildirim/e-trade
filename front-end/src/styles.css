@@ -55,3 +55,15 @@ html {
   background-color: #d4edda;
   color: #155724;
 }
+
+@media only screen and (max-width: 650px) {
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-track {
+    width: 0;
+  }
+
+  ::-webkit-scrollbar,
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+}

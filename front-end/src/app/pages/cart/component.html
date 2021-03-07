@@ -19,6 +19,13 @@
     <span class="summary-info">Toplam {{orders.length}} ürün</span>
     <span class="summary-info">Toplam Fiyat : {{totalCost | number:'.2-2'}} TL</span>
   </section>
+  <div class="navigate-place">
+    <span class="mat-body-2">Toplam : {{totalCost | number:'.2-2'}} TL </span>
+    <button mat-flat-button color="primary" (click)="this.toggleStepper()">
+      <span *ngIf="cartStepActive">Ödeme Yap</span>
+      <span *ngIf="!cartStepActive">Sepeti Göster</span>
+    </button>
+  </div>
 </main>
 
 <div *ngIf="orders.length<=0" class="empty-text">

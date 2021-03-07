@@ -68,16 +68,18 @@ export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
     if (document.body.scrollTop > this.previousScrollTop) {
       if (filterPlace.style.height !== '0') {
         filterPlace.style.height = '0';
+        filterPlace.style.padding = '0 0';
       }
     } else {
       if (filterPlace.style.height !== '40px') {
         filterPlace.style.height = '40px';
+        filterPlace.style.padding = '10px 0';
       }
     }
     this.previousScrollTop = document.body.scrollTop;
   }
 
-  handleTouchEvents() {
+  handleTouchEvents(): void {
     const sub1 = fromEvent(this.mobileFiltersBody.nativeElement, 'touchstart').subscribe(
       (event: TouchEvent) => {
         this.touchStart = event.changedTouches[0].screenX;

@@ -14,6 +14,8 @@
 .header {
   z-index: 10;
   padding-bottom: 10px;
+  position: sticky;
+  top: 0;
 }
 
 .footer {
@@ -36,7 +38,7 @@
     padding-top: 20px;
   }
 
-  .header{
+  .header {
     padding-bottom: 5px;
   }
 }

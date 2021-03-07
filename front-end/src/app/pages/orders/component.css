@@ -1,5 +1,5 @@
 .container {
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 
 .header-content {
@@ -7,9 +7,11 @@
   justify-content: space-between;
   align-items: flex-start;
   width: 900px;
+  margin: 0 auto;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 1.34375em 1.34375em 0 1.34375em;
+  box-sizing: border-box;
 }
 
 .header-text {
@@ -26,8 +28,9 @@
 .custom-card {
   width: 100%;
   border-radius: 5px;
-  margin-top: 10px;
+  max-width: 900px;
   border: 1px solid #ccc;
+  margin: 10px auto 0 auto;
 }
 
 .card-header {
@@ -61,4 +64,46 @@
   margin: 10px 5px;
   border-radius: 5px;
   border: 1px solid #ccc;
+}
+
+@media only screen and (max-width: 650px) {
+  .container {
+    width: 100%;
+    padding: 0 5px 5px 5px;
+    box-sizing: border-box;
+  }
+
+  .mobile-card {
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .mobile-card-header {
+    display: flex;
+    border-bottom: 1px solid rgb(236, 236, 236);
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .card-body {
+    padding: 0 5px 5px 0;
+  }
+
+  .card-body-item {
+    border-radius: 5px;
+    margin-top: 0;
+    padding: 0;
+    border: none;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .photo {
+    margin: 5px 0 0 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
 }

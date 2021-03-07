@@ -1,6 +1,6 @@
 <main class="container">
-  <section *ngIf="orderStatus === -1">
-    <form [formGroup]="form" (ngSubmit)="purchaseOrder()" *ngIf="inited">
+  <section *ngIf="orderStatus === -1" class="section">
+    <form [formGroup]="form" (ngSubmit)="purchaseOrder()" *ngIf="inited" class="form">
       <p>
         <mat-form-field class="field">
           <mat-label>Tel No</mat-label>
@@ -59,9 +59,9 @@
         </mat-form-field>
       </p>
       <p>
-        <mat-checkbox color="primary" formControlName="contractChecked"
-          >Mesafeli satış sözleşmesini okudum ve kabul ediyorum.</mat-checkbox
-        >
+        <mat-checkbox color="primary" formControlName="contractChecked">
+          <span class="check-box">Mesafeli satış sözleşmesini okudum ve kabul ediyorum.</span>
+        </mat-checkbox>
         <mat-error
           *ngIf="form.get('contractChecked').hasError('required') && form.get('contractChecked').touched"
         >

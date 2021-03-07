@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { OrderList, OrderListProduct } from 'src/app/shared/models/order';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
@@ -29,17 +30,22 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
   ];
   currentList: any = this.orderListType[0];
-  orderList: OrderList[];
+  orderList: any[];
   currentUser: User;
   sub: Subscription;
+  isMobile = false;
 
   constructor(
     private orderService: OrderService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
+    if (document.body.clientWidth <= 650) {
+      this.isMobile = true;
+    }
     this.currentUser = this.authService.currentUser.value;
     this.initOrders();
   }
@@ -47,9 +53,14 @@ export class OrdersComponent implements OnInit, OnDestroy {
   initOrders(): void {
     this.sub = this.orderService.getOrders().subscribe({
       next: (orders) => {
-        this.orderList = orders.sort(
-          (a: OrderList, b: OrderList) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
+        this.orderList = orders
+          .sort(
+            (a: OrderList, b: OrderList) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          )
+          .map((order: any) => {
+            order.totalPrice = this.calculateTotalPrice(order);
+            return order;
+          });
       },
       error: (err) => console.log(err)
     });

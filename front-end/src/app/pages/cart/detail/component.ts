@@ -9,11 +9,17 @@ import { ObjectHelper } from 'src/app/shared/util/helper/object';
   templateUrl: './component.html',
   styleUrls: ['./component.css']
 })
-export class CartDetailComponent implements OnDestroy {
+export class CartDetailComponent implements OnDestroy, OnInit {
   @Input() orders: Order[];
   @Output() orderListChange = new EventEmitter<Order[]>();
+  isMobile = false;
 
   constructor(private utilService: UtilityService, private dialogService: DialogService) {}
+  ngOnInit(): void {
+    if (document.body.clientWidth <= 650) {
+      this.isMobile = true;
+    }
+  }
 
   onOrderRemove(removedOrder: Order): void {
     this.dialogService.openDialog({

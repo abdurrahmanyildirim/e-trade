@@ -4,13 +4,16 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UtilityService {
-
   photoShower(path: string): void {
     let back = this.backGroundElem();
     const img = document.createElement('img');
     img.src = path;
-    img.style.width = '400px';
-    img.style.height = '400px';
+    const foo =
+      document.body.clientWidth >= document.body.clientHeight
+        ? document.body.clientHeight * 0.6
+        : document.body.clientWidth * 0.6;
+    img.style.width = foo + 'px';
+    img.style.height = foo + 'px';
     const imgContainer = document.createElement('div');
     imgContainer.style.position = 'relative';
     const closeBtn = this.closeButton();

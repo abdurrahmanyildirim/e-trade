@@ -22,6 +22,7 @@
   border-top: 1px solid #ccc;
   border-radius: 2px 2px 0 0;
 }
+
 .order:last-child {
   border-bottom: 1px solid #ccc;
   border-radius: 0 0 2px 2px;
@@ -47,6 +48,7 @@
 
 .photo {
   width: 80px;
+  height: 80px;
   cursor: pointer;
   border-radius: 2px;
 }
@@ -69,4 +71,58 @@
 
 .remove-icon:hover {
   color: #f44336;
+}
+
+@media only screen and (max-width: 650px) {
+  .photo {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .order {
+    padding: 5px;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+
+  .name-brand {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 5px;
+    padding-right: 0;
+  }
+
+  .name {
+    font-size: 12px;
+  }
+
+  .brand {
+    font-size: 10px;
+  }
+
+  .quantity-price {
+    margin-left: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .info-operations {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+    min-height: 80px;
+  }
+
+  .numeric-container {
+    height: 25px;
+    width: 55px;
+  }
+
+  .price-content {
+    font-size: 12px;
+  }
 }

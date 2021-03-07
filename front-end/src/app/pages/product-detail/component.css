@@ -150,4 +150,13 @@
     padding: 0;
     width: 100%;
   }
+
+  .numeric {
+    flex: 1;
+  }
+
+  .button{
+    flex: 1;
+    margin-left: 5px;
+  }
 }

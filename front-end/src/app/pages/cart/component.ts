@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -17,6 +18,8 @@ export class CartComponent implements OnInit, OnDestroy {
   subs = new Subscription();
   quantityChange = new Subject<Order[]>();
   totalCost: number;
+  cartStepActive = true;
+  @ViewChild('stepper') stepper: MatStepper;
 
   constructor(private cartService: CartService, private router: Router) {}
 
@@ -32,6 +35,16 @@ export class CartComponent implements OnInit, OnDestroy {
         this.calculateTotalCost();
       }
     });
+  }
+
+  toggleStepper(): void {
+    if (this.cartStepActive) {
+      this.stepper.next();
+      this.cartStepActive = false;
+    } else {
+      this.stepper.previous();
+      this.cartStepActive = true;
+    }
   }
 
   initQuantityChange(): void {

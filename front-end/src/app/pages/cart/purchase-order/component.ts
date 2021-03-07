@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { nullValidator } from 'src/app/shared/util/common';
@@ -34,7 +35,8 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackbar: SnackbarService
   ) {
     if (this.cartService.cart.value.length <= 0) {
       this.router.navigateByUrl('cart');
@@ -106,7 +108,9 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
                 timer(3000)
                   .pipe(first())
                   .subscribe(() => {
-                    this.cartService.initCart().subscribe();
+                    this.snackbar.showSuccess('Siparişiniz Alındı.');
+                    this.cartService.initCart().pipe(first()).subscribe();
+                    this.router.navigateByUrl('main');
                   });
               },
               error: (err) => {
