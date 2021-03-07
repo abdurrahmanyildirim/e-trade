@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [HeaderComponent],
@@ -23,7 +24,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatMenuModule,
     MatToolbarModule,
     MatAutocompleteModule,
-    MatInputModule
+    MatInputModule,
+    MatSidenavModule
   ],
   exports: [HeaderComponent]
 })

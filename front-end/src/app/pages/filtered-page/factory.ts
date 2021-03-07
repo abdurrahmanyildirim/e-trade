@@ -5,8 +5,12 @@ import { Filter, SortTypes } from './model';
 @Injectable()
 export class FilterFactory {
   products: Product[];
+  brands: string[];
   create(filter: Filter): Product[] {
     let products = this.sortByType(filter.sortType);
+    products = this.filterByCategory(products, filter);
+    products = this.filterBySearchKey(products, filter);
+    this.initBrands(products);
     products = this.filterByBrand(products, filter);
     return products;
   }
@@ -37,5 +41,40 @@ export class FilterFactory {
     } else {
       return products.filter((product) => filter.brands.has(product.brand));
     }
+  }
+
+  private filterByCategory(products: Product[], filter: Filter): Product[] {
+    if (filter.category.length <= 0) {
+      return products;
+    } else {
+      return products.filter((product) => {
+        const reg = new RegExp(filter.category, 'gi');
+        if (product.category.search(reg) >= 0) {
+          return product;
+        }
+      });
+    }
+  }
+
+  private filterBySearchKey(products: Product[], filter: Filter): Product[] {
+    if (filter.sKey.length <= 0) {
+      return products;
+    } else {
+      return products.filter((product) => {
+        const reg = new RegExp(filter.sKey, 'gi');
+        if (product.name.search(reg) >= 0) {
+          return product;
+        }
+      });
+    }
+  }
+
+  private initBrands(products: Product[]): void {
+    this.brands = [];
+    products.forEach((product) => {
+      if (this.brands.indexOf(product.brand) < 0) {
+        this.brands.push(product.brand);
+      }
+    });
   }
 }

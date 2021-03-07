@@ -27,37 +27,129 @@
               </div>
             </mat-option>
           </mat-autocomplete>
-          <mat-icon>search</mat-icon>
+          <mat-icon class="search-icon" (click)="onSerchClick()">search</mat-icon>
         </div>
       </div>
       <div class="tools center">
         <button mat-button routerLink="cart" class="cart" *ngIf="(this.authService.isAuth | async)">
           <mat-icon> shopping_cart</mat-icon>
-          Sepetim
+          <span class="icon-text">Sepetim</span>
           <div class="custom-badge" *ngIf="(this.cartService.cart | async).length>0">
             {{(this.cartService.cart | async).length}}
           </div>
         </button>
         <button mat-button routerLink="login" *ngIf="(this.authService.isAuth | async) === false">
-          <mat-icon>login</mat-icon> Giriş Yap
+          <mat-icon>login</mat-icon> <span class="icon-text">Giriş Yap</span>
         </button>
         <button
           mat-button
           routerLink="register"
           *ngIf="(this.authService.isAuth | async) === false"
         >
-          <mat-icon>person_add_alt_1</mat-icon> Üye Ol
+          <mat-icon>person_add_alt_1</mat-icon> <span class="icon-text">Üye Ol</span>
         </button>
         <button mat-button [matMenuTriggerFor]="menu" *ngIf="(this.authService.isAuth | async)">
           <mat-icon>account_circle</mat-icon>
-          Hesabım
+          <span class="icon-text">Hesabım</span>
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item routerLink="orders">
-            <mat-icon>pending_actions</mat-icon> Siparişlerim
+            <mat-icon>pending_actions</mat-icon> <span class="icon-text">Siparişlerim</span>
           </button>
-          <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon> Çıkış</button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon> <span class="icon-text">Çıkış</span>
+          </button>
         </mat-menu>
+      </div>
+      <div class="mobile">
+        <button mat-icon-button (click)="onMobileNavMenuClick()">
+          <mat-icon>reorder</mat-icon>
+        </button>
+        <div class="mobile-brand" style="display: flex; align-items: center">Er Ticaret</div>
+        <div class="mobile-tools">
+          <button mat-icon-button routerLink="cart" *ngIf="(this.authService.isAuth | async)">
+            <mat-icon
+              [matBadge]="(this.cartService.cart | async).length"
+              [matBadgeHidden]="(this.cartService.cart | async).length<=0 ? 'hidden' : ''"
+              matBadgeColor="warn"
+              matBadgeSize="small"
+            >
+              shopping_cart</mat-icon
+            >
+          </button>
+          <button
+            mat-icon-button
+            routerLink="login"
+            *ngIf="(this.authService.isAuth | async) === false"
+          >
+            <mat-icon>login</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            routerLink="register"
+            *ngIf="(this.authService.isAuth | async) === false"
+          >
+            <mat-icon>person_add_alt_1</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            *ngIf="(this.authService.isAuth | async)"
+          >
+            <mat-icon>account_circle</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="orders">
+              <mat-icon>pending_actions</mat-icon>
+            </button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>logout</mat-icon>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="mobile-nav-menu" #mobileNavMenu>
+        <button mat-button routerLink="main" class="mobile-nav-item" (click)="closeNav()">
+          ANA SAYFA
+        </button>
+        <button
+          mat-button
+          class="mobile-nav-item"
+          routerLink="mn-orders"
+          *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
+          (click)="closeNav()"
+        >
+          SİPARİŞLER
+        </button>
+        <button
+          mat-button
+          class="mobile-nav-item"
+          routerLink="mn-products"
+          (click)="closeNav()"
+          *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
+        >
+          ÜRÜNLER
+        </button>
+        <button
+          mat-button
+          class="mobile-nav-item"
+          routerLink="mn-new-product"
+          (click)="closeNav()"
+          *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
+        >
+          ÜRÜN EKLE
+        </button>
+        <button
+          mat-button
+          class="mobile-nav-item"
+          *ngFor="let category of categories"
+          (click)="navigateToFilteredPage(category.name)"
+        >
+          {{category.name | uppercase}}
+        </button>
+        <button mat-button routerLink="main" class="mobile-nav-item" (click)="closeNav()">
+          İLETİŞİM
+        </button>
       </div>
     </div>
   </section>

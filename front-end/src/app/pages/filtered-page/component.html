@@ -5,13 +5,23 @@
 <main class="container" *ngIf="!mainSplash">
   <div class="filters">
     <div class="filters-body">
+      <div class="filter-item" *ngIf="categories">
+        <span class="title mat-body-2">Kategori</span>
+        <mat-radio-group class="sort-items">
+          <mat-radio-button
+            class="sort-item"
+            *ngFor="let category of categories"
+            [value]="category.name"
+            [checked]="category.name === filter.category ? true : false"
+            (change)="filterByCategory(category)"
+          >
+            {{category.name | titlecase}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
       <div class="filter-item" *ngIf="brands.length>0">
         <span class="title mat-body-2">Marka</span>
-        <mat-checkbox
-          class="example-margin"
-          *ngFor="let brand of brands"
-          (change)="filterByBrand(brand)"
-        >
+        <mat-checkbox *ngFor="let brand of brands" (change)="filterByBrand(brand)">
           {{brand | titlecase}}
         </mat-checkbox>
       </div>
@@ -31,9 +41,23 @@
       </div>
     </div>
   </div>
-  <div class="products" *ngIf="products.length>0 && !showSplash">
-    <app-card *ngFor="let product of products" [product]="product" class="product"></app-card>
+  <div class="products" *ngIf="products && !showSplash">
+    <div class="search-key" *ngIf="filter.sKey">
+      <span class="mat-body-2">"{{filter.sKey}}"</span> arama sonuçları
+      <mat-icon class="remove-key" (click)="removeSearchKey()">close</mat-icon>
+    </div>
+    <div class="results">
+      <app-card *ngFor="let product of products" [product]="product" class="product"></app-card>
+      <div
+        *ngIf="products.length<=0"
+        class="mat-body-2"
+        style="text-align: center; width: 100%; margin-top: 20px"
+      >
+        Ürün bulunamadı.
+      </div>
+    </div>
     <mat-paginator
+      *ngIf="products.length>0"
       [length]="totalProductCount"
       [pageSize]="pageSize"
       [hidePageSize]="true"
@@ -45,13 +69,5 @@
   <div class="splash" *ngIf="showSplash">
     <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'" [value]="'30'">
     </mat-progress-spinner>
-  </div>
-
-  <div
-    *ngIf="products.length<=0"
-    class="mat-body-2"
-    style="text-align: center; width: 100%; margin-top: 20px"
-  >
-    Ürün bulunamadı.
   </div>
 </main>

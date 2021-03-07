@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -19,9 +19,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   categories: any;
   roles = Roles;
   subs = new Subscription();
-  searchKey: string = '';
+  searchKey = '';
   products: SearchProduct[];
   filteredProducts: SearchProduct[] = [];
+  @ViewChild('mobileNavMenu') mobileNavMenu: ElementRef<HTMLElement>;
 
   constructor(
     public cartService: CartService,
@@ -53,7 +54,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   navigateToFilteredPage(category: string): void {
+    this.closeNav();
     this.router.navigateByUrl('filtered-page?category=' + category);
+  }
+
+  onMobileNavMenuClick(): void {
+    if (this.mobileNavMenu.nativeElement.style.width) {
+      this.mobileNavMenu.nativeElement.style.width = null;
+    } else {
+      this.mobileNavMenu.nativeElement.style.display = 'flex';
+      this.mobileNavMenu.nativeElement.style.width = 100 + '%';
+    }
+  }
+
+  closeNav(): void {
+    this.mobileNavMenu.nativeElement.style.width = null;
   }
 
   onKeyup(): void {
@@ -91,16 +106,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSelectionChange(product: SearchProduct) {
+  onSerchClick(): void {
+    this.router.navigateByUrl('filtered-page?searchKey=' + this.searchKey);
     this.searchKey = '';
-    const href = window.location.href;
-    if (href.includes('product-detail')) {
-      this.router.navigateByUrl('product-detail/' + product._id).then(() => {
-        window.location.reload();
-      });
-    } else {
-      this.router.navigateByUrl('product-detail/' + product._id);
-    }
+  }
+
+  onSelectionChange(product: SearchProduct): void {
+    this.router.navigateByUrl('filtered-page?searchKey=' + product.name);
+    setTimeout(() => {
+      this.searchKey = '';
+    });
   }
 
   ngOnDestroy(): void {

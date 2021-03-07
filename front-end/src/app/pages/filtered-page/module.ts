@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { CardModule } from 'src/app/shared/components/card/module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { getTurkishPaginatorIntl } from './paginator-intl';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -24,7 +25,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatCheckboxModule,
     MatRadioModule,
     MatPaginatorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatIconModule
   ],
   providers: [{ provide: MatPaginatorIntl, useValue: getTurkishPaginatorIntl() }],
   exports: [FilteredPageComponent]

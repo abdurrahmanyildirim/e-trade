@@ -14,4 +14,6 @@ export enum SortTypes {
 export interface Filter {
   brands: any;
   sortType: SortTypes;
+  category: string;
+  sKey: string;
 }

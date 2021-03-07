@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
@@ -15,8 +16,35 @@ export class MainComponent implements OnInit, OnDestroy {
   sub: Subscription;
   products: Product[];
   discounted: Product[];
+  @ViewChild('photo') photo: HTMLElement;
   mostLiked: Product[];
   newProducts: Product[];
+  owlOptions: OwlOptions = {
+    loop: true,
+    autoplay: true,
+    center: true,
+    items: 2,
+    navText: ['<', '>'],
+    dots: false,
+    responsive: {
+      0: {
+        items: 1
+      },
+      460: {
+        items: 2
+      },
+      690: {
+        items: 3
+      },
+      920: {
+        items: 4
+      },
+      1100: {
+        items: 5
+      }
+    },
+    nav: true
+  };
 
   constructor(private productService: ProductService, private authService: AuthService) {}
 
@@ -40,18 +68,23 @@ export class MainComponent implements OnInit, OnDestroy {
     this.discounted = this.products
       .filter((product) => product.discountRate > 0)
       .sort((a: Product, b: Product) => b.discountRate - a.discountRate)
-      .slice(0, 5);
+      .slice(0, 15);
+    // console.log(this.discounted);
   }
 
   initMostLiked(): void {
-    this.mostLiked = this.products.sort((a: Product, b: Product) => b.rate - a.rate).slice(0, 5);
+    this.mostLiked = this.products.sort((a: Product, b: Product) => b.rate - a.rate).slice(0, 15);
   }
 
   initNewProducts(): void {
     this.newProducts = this.products
       .sort((a: Product, b: Product) => b.rate - a.rate)
       .reverse()
-      .slice(0, 5);
+      .slice(0, 15);
+  }
+
+  resize():void {
+    
   }
 
   ngOnDestroy(): void {

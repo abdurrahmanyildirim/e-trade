@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Product } from 'src/app/shared/models/product';
+import { Category, Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { FilterFactory } from './factory';
@@ -17,6 +17,7 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
   subs = new Subscription();
   products: Product[];
   brands: string[];
+  categories: Category[];
   pageIndex: number;
   pageSize = 16;
   totalProductCount: number;
@@ -24,6 +25,8 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
   showSplash = true;
   filter: Filter = {
     brands: new Map<string, string>(),
+    category: '',
+    sKey: '',
     sortType: SortTypes.none
   };
   sortingTypes: SortType[] = [
@@ -43,41 +46,59 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private productService: ProductService,
+    public productService: ProductService,
     private filterFactory: FilterFactory
   ) {}
 
   ngOnInit(): void {
+    this.initParams();
+  }
+
+  initParams(): void {
     const sub = this.activatedRoute.queryParams.subscribe((params) => {
       this.mainSplash = true;
+      this.initCategories();
       const key = 'category';
-      this.initProductsByCategory(params[key]);
+      const category = params[key];
+      if (isPresent(category)) {
+        this.filter.category = category;
+      }
+      const sKey = 'searchKey';
+      const searchKey = params[sKey];
+      if (isPresent(searchKey)) {
+        this.filter.sKey = searchKey;
+      }
+      this.initProducts();
     });
     this.subs.add(sub);
   }
 
-  initProductsByCategory(category: string): void {
-    const sub = this.productService.productsByCategory(category).subscribe({
+  initProducts(): void {
+    this.productService.products().subscribe({
       next: (products) => {
-        this.initBrands(products);
-        this.totalProductCount = products.length;
-        this.products = products.slice(0, this.pageSize);
         this.filterFactory.products = products;
+        const filteredProducts = this.filterFactory.create(this.filter);
+        this.products = filteredProducts.slice(0, this.pageSize);
+        this.totalProductCount = filteredProducts.length;
+        this.brands = this.filterFactory.brands.slice();
         this.mainSplash = false;
         this.showSplash = false;
-        setTimeout(() => {
-          sub.unsubscribe();
-        });
-      },
-      error: (err) => console.log(err)
+      }
     });
   }
 
-  initBrands(products: Product[]): void {
-    this.brands = [];
-    products.forEach((product) => {
-      if (this.brands.indexOf(product.brand) < 0) {
-        this.brands.push(product.brand);
+  removeSearchKey(): void {
+    this.filter.sKey = '';
+    this.initProducts();
+  }
+
+  initCategories(): void {
+    this.productService.categories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (error) => {
+        console.log(error);
       }
     });
   }
@@ -85,10 +106,7 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
   sortByType(sortType: SortTypes): void {
     this.showSplash = true;
     this.filter.sortType = sortType;
-    const products = this.filterFactory.create(this.filter);
-    this.totalProductCount = products.length;
-    this.products = products.splice(0, this.pageSize);
-    this.showSplash = false;
+    this.initProductsByFilter();
   }
 
   filterByBrand(brand: string): void {
@@ -98,8 +116,20 @@ export class FilteredPageComponent implements OnInit, OnDestroy {
     } else {
       this.filter.brands.set(brand, brand);
     }
+    this.initProductsByFilter();
+  }
+
+  filterByCategory(category: Category): void {
+    this.showSplash = true;
+    this.filter.category = category.name;
+    this.filter.brands = new Map([]);
+    this.initProductsByFilter();
+  }
+
+  initProductsByFilter(): void {
     const products = this.filterFactory.create(this.filter);
     this.totalProductCount = products.length;
+    this.brands = this.filterFactory.brands.slice();
     this.products = products.splice(0, this.pageSize);
     this.showSplash = false;
   }
