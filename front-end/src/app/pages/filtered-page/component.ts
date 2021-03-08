@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Category, Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
@@ -60,7 +61,9 @@ export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.initParams();
-    document.body.addEventListener('scroll', this.listenBodyScroll);
+    if (document.body.clientWidth <= 650) {
+      document.body.addEventListener('scroll', this.listenBodyScroll);
+    }
   }
 
   listenBodyScroll(e: any): void {
@@ -130,9 +133,10 @@ export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  toggleMobileFilters() {
+  toggleMobileFilters(): void {
     if (this.mobileFilters.nativeElement.style.width) {
       this.mobileFilters.nativeElement.style.width = null;
+      this.mobileFilters.nativeElement.style.padding = '0';
       if (isPresent(this.touchSubs)) {
         this.touchSubs.unsubscribe();
         this.touchSubs = new Subscription();
@@ -140,10 +144,16 @@ export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
       setTimeout(() => {
         this.mobileFiltersBody.nativeElement.style.width = null;
         document.body.scrollTop = 0;
-      }, 500);
+      }, 400);
     } else {
       this.mobileFiltersBody.nativeElement.style.width = 100 + '%';
       this.mobileFilters.nativeElement.style.width = 60 + '%';
+      this.mobileFilters.nativeElement.style.padding = '0 5px';
+      // fromEvent(this.mobileFiltersBody.nativeElement, 'click')
+      //   .pipe(first())
+      //   .subscribe(() => {
+      //     console.log('Clicked');
+      //   });
       this.handleTouchEvents();
     }
   }

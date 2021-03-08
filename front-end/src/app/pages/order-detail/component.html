@@ -1,21 +1,67 @@
-<div class="card" *ngIf="order">
-  <div class="card-header mat-body-2">Sipariş Bilgileri</div>
-  <div class="contact-body">
-    <span class="mat-body-2"> Alıcı : {{currentUser.firstName + ' ' + currentUser.lastName}}</span>
-    <span class="mat-body-2">
-      Adres : {{order.contactInfo.address}} - {{order.contactInfo.district + '/' +
-      order.contactInfo.city}}
-    </span>
-    <span class="mat-body-2"> Tel No : 0{{order.contactInfo.phone}}</span>
-    <span class="mat-body-2"> Tarih : {{order.date | date:'medium'}}</span>
-    <span class="mat-body-2"> Durum : {{order.status[order.status.length -1 ].desc}}</span>
+<div class="container">
+  <div class="card" *ngIf="order">
+    <div class="card-header mat-body-2">Sipariş Bilgileri</div>
+    <div class="contact-body">
+      <span>
+        <span class="mat-body-2">Alıcı :</span>
+        {{currentUser.firstName + ' ' + currentUser.lastName}}
+      </span>
+      <span>
+        <span class="mat-body-2">Adres :</span> {{order.contactInfo.address}} -
+        {{order.contactInfo.district + '/' + order.contactInfo.city}}
+      </span>
+      <span><span class="mat-body-2">Tel No :</span> 0{{order.contactInfo.phone}}</span>
+      <span> <span class="mat-body-2">Tarih :</span> {{order.date | date:'medium'}}</span>
+      <span>
+        <span class="mat-body-2">Durum :</span> {{order.status[order.status.length -1 ].desc}}
+      </span>
+    </div>
   </div>
-</div>
 
-<div class="card" *ngIf="order">
-  <div class="card-header mat-body-2">Ürün Bilgileri</div>
-  <div class="products">
-    <div class="product" *ngFor="let product of order.products">
+  <div class="card" *ngIf="order">
+    <div class="card-header mat-body-2">Ürün Bilgileri</div>
+    <div class="products">
+      <div class="product" *ngFor="let product of order.products">
+        <img [src]="product.photoPath" alt="product" class="photo" />
+        <div class="info">
+          <div class="brand">{{product.brand | uppercase}}</div>
+          <div class="name mat-body-1">{{product.name}}</div>
+          <div class="quantity mat-body-1">{{product.quantity}} Adet</div>
+          <div class="discount mat-body-1">
+            %{{product.discountRate * 100 | number : '.0-0'}} İndirimli
+          </div>
+          <div class="price mat-body-2">
+            <span *ngIf="product.discountRate > 0" class="normal-price">
+              {{product.price*product.quantity | number : '.2-2'}} TL</span
+            >
+            <span
+              >{{(product.price - product.discountRate * product.price) * product.quantity | number
+              : '.2-2'}} TL</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile -->
+  <div class="mobile-card" *ngIf="order">
+    <span>
+      <span class="mat-body-2">Alıcı :</span>
+      {{currentUser.firstName + ' ' + currentUser.lastName}}
+    </span>
+    <span>
+      <span class="mat-body-2">Adres :</span> {{order.contactInfo.address}} -
+      {{order.contactInfo.district + '/' + order.contactInfo.city}}
+    </span>
+    <span><span class="mat-body-2">Tel No :</span> 0{{order.contactInfo.phone}}</span>
+    <span> <span class="mat-body-2">Tarih :</span> {{order.date | date:'medium'}}</span>
+    <span>
+      <span class="mat-body-2">Durum :</span> {{order.status[order.status.length -1 ].desc}}
+    </span>
+  </div>
+
+  <div class="mobile-card" *ngIf="order">
+    <div class="mobile-product" *ngFor="let product of order.products">
       <img [src]="product.photoPath" alt="product" class="photo" />
       <div class="info">
         <div class="brand">{{product.brand | uppercase}}</div>
@@ -24,7 +70,7 @@
         <div class="discount mat-body-1">
           %{{product.discountRate * 100 | number : '.0-0'}} İndirimli
         </div>
-        <div class="price mat-body-2">
+        <div class="price mat-body-1">
           <span *ngIf="product.discountRate > 0" class="normal-price">
             {{product.price*product.quantity | number : '.2-2'}} TL</span
           >

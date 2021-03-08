@@ -1,8 +1,13 @@
+.container {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
 .card {
-  width: 900px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .card-header {
@@ -21,18 +26,18 @@
 .products {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 0 10px 10px;
+  padding: 10px 0 0 10px;
 }
 
 .product {
   height: 200px;
-  width: 100%;
+  min-width: 432px;
   border: 1px solid #ccc;
   border-radius: 5px;
   display: flex;
   flex: 0.5;
   margin-right: 10px;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .photo {
@@ -62,4 +67,84 @@
   color: rgb(143, 143, 143);
   text-decoration: line-through;
   margin-right: 5px;
+}
+
+.mobile-card {
+  display: none;
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.mobile-product {
+  display: flex;
+}
+
+@media only screen and (max-width: 650px) {
+  .card {
+    display: none;
+  }
+
+  .container {
+    width: 100%;
+    padding: 0 5px 5px 5px;
+    box-sizing: border-box;
+  }
+
+  .mobile-card {
+    display: flex;
+  }
+
+  .mobile-product {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    border-bottom: 1px solid rgb(236, 236, 236);
+    padding-bottom: 5px;
+  }
+
+  .mobile-product:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+
+  .photo {
+    width: 70px;
+    height: 70px;
+    margin: 0;
+    border-radius: 5px;
+    border: none;
+  }
+
+  .brand {
+    font-size: 14px;
+    line-height: 15px;
+    font-size: 600;
+  }
+
+  .info {
+    margin-left: 5px;
+    margin-top: 0;
+  }
+
+  .name {
+    margin-top: 0;
+    font-size: 12px;
+  }
+
+  .quantity {
+    font-size: 12px;
+  }
+
+  .discount {
+    font-size: 12px;
+  }
+
+  .price {
+    font-size: 12px;
+  }
 }
