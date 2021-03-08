@@ -82,7 +82,7 @@ export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.previousScrollTop = document.body.scrollTop;
   }
 
-  handleTouchEvents(): void {
+  handleTouchAndClickEvents(): void {
     const sub1 = fromEvent(this.mobileFiltersBody.nativeElement, 'touchstart').subscribe(
       (event: TouchEvent) => {
         this.touchStart = event.changedTouches[0].screenX;
@@ -96,8 +96,16 @@ export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     );
+    const sub3 = fromEvent(this.mobileFiltersBody.nativeElement, 'click').subscribe(
+      (event: MouseEvent) => {
+        if (event.target === this.mobileFiltersBody.nativeElement) {
+          this.toggleMobileFilters();
+        }
+      }
+    );
     this.touchSubs.add(sub1);
     this.touchSubs.add(sub2);
+    this.touchSubs.add(sub3);
   }
 
   initParams(): void {
@@ -144,17 +152,12 @@ export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
       setTimeout(() => {
         this.mobileFiltersBody.nativeElement.style.width = null;
         document.body.scrollTop = 0;
-      }, 400);
+      }, 350);
     } else {
       this.mobileFiltersBody.nativeElement.style.width = 100 + '%';
       this.mobileFilters.nativeElement.style.width = 60 + '%';
       this.mobileFilters.nativeElement.style.padding = '0 5px';
-      // fromEvent(this.mobileFiltersBody.nativeElement, 'click')
-      //   .pipe(first())
-      //   .subscribe(() => {
-      //     console.log('Clicked');
-      //   });
-      this.handleTouchEvents();
+      this.handleTouchAndClickEvents();
     }
   }
 
