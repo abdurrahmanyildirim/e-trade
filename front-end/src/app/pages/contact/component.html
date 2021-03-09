@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="contact-text">İletişim Formu</div>
+  <form [formGroup]="form" (ngSubmit)="sendContactRequest()" class="form">
+    <mat-form-field appearance="outline">
+      <input type="text" matInput placeholder="Adınız" apperance="outline" formControlName="name" />
+      <mat-error
+        *ngIf="(form.get('name').hasError('required') || form.get('name').hasError('isNull')) && form.get('name').touched"
+      >
+        *İsim alanı zorunlu.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <input
+        type="text"
+        matInput
+        placeholder="Mail adresiniz"
+        apperance="outline"
+        formControlName="email"
+      />
+      <mat-error
+        *ngIf="(form.get('email').hasError('required') || form.get('email').hasError('isNull')) && form.get('email').touched"
+      >
+        *Email alanı zorunlu.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Telefon</mat-label>
+      <input
+        type="tel"
+        matInput
+        maxlength="14"
+        minlength="14"
+        placeholder="Telefon(0555 555 55 55)"
+        apperance="outline"
+        formControlName="phone"
+        (keypress)="onKeypress()"
+      />
+      <mat-error
+        *ngIf="(form.get('phone').hasError('required') || form.get('phone').hasError('isNull')) && form.get('phone').touched"
+      >
+        *Telefon alanı zorunlu.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="textarea-field">
+      <textarea
+        matInput
+        placeholder="Mesajınız..."
+        apperance="outline"
+        formControlName="desc"
+        class="text-area"
+      ></textarea>
+      <mat-error
+        *ngIf="(form.get('desc').hasError('required') || form.get('desc').hasError('isNull')) && form.get('desc').touched"
+      >
+        *Mesaj alanı zorunlu.
+      </mat-error>
+    </mat-form-field>
+    <button mat-flat-button color="primary" [disabled]="form.invalid" type="submit">Gönder</button>
+  </form>
+</div>

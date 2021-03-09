@@ -14,5 +14,9 @@ export class AppComponent implements OnDestroy {
   sub: Subscription;
   constructor(public splashService: SplashService, public authService: AuthService) {}
 
+  scrollToTop(): void {
+    document.body.scrollTop = 0;
+  }
+
   ngOnDestroy(): void {}
 }

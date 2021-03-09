@@ -6,6 +6,7 @@ import { AuthModule } from './auth/module';
 import { OrdersModule } from './orders/module';
 import { OrderDetailModule } from './order-detail/module';
 import { FilteredPageModule } from './filtered-page/module';
+import { ContactModule } from './contact/module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { FilteredPageModule } from './filtered-page/module';
     AuthModule,
     OrdersModule,
     OrderDetailModule,
-    FilteredPageModule
+    FilteredPageModule,
+    ContactModule
   ]
 })
 export class PagesModule {}

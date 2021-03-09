@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { StorageKey } from '../../models/storage';
 
-/** Pass untouched request through to the next request handler. */
 @Injectable()
 export class RestInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}

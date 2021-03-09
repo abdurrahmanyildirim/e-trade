@@ -67,7 +67,7 @@
         <div class="brand">{{product.brand | uppercase}}</div>
         <div class="name mat-body-1">{{product.name}}</div>
         <div class="quantity mat-body-1">{{product.quantity}} Adet</div>
-        <div class="discount mat-body-1">
+        <div class="discount mat-body-1" *ngIf="product.discountRate>0">
           %{{product.discountRate * 100 | number : '.0-0'}} İndirimli
         </div>
         <div class="price mat-body-1">

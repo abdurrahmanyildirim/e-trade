@@ -6,11 +6,13 @@ const authController = require('../controllers/authController');
 const operation = require('./operation');
 const order = require('./order');
 const category = require('./category');
+const contact = require('./contact');
 
 module.exports = (app) => {
   app.use('/auth', authRoute);
   app.use('/product', productRoute);
   app.use('/category', category);
+  app.use('/contact', contact);
   app.use(authController.verifyToken);
   app.use('/operation', operation);
   app.use('/order', order);

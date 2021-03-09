@@ -54,7 +54,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   navigateToFilteredPage(category: string): void {
-    this.closeNav();
+    if (document.body.clientWidth <= 650) {
+      this.onMobileNavMenuClick();
+    }
     this.router.navigateByUrl('filtered-page?category=' + category);
   }
 
@@ -64,10 +66,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       this.mobileNavMenu.nativeElement.style.width = 100 + '%';
     }
-  }
-
-  closeNav(): void {
-    this.mobileNavMenu.nativeElement.style.width = null;
   }
 
   onKeyup(): void {

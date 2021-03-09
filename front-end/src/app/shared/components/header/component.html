@@ -110,36 +110,14 @@
         </div>
       </div>
       <div class="mobile-nav-menu" #mobileNavMenu>
-        <button mat-button routerLink="main" class="mobile-nav-item" (click)="closeNav()">
+        <button
+          mat-button
+          routerLink="main"
+          class="mobile-nav-item"
+          (click)="onMobileNavMenuClick()"
+        >
           ANA SAYFA
         </button>
-        <!-- <button
-          mat-button
-          class="mobile-nav-item"
-          routerLink="mn-orders"
-          *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
-          (click)="closeNav()"
-        >
-          SİPARİŞLER
-        </button>
-        <button
-          mat-button
-          class="mobile-nav-item"
-          routerLink="mn-products"
-          (click)="closeNav()"
-          *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
-        >
-          ÜRÜNLER
-        </button>
-        <button
-          mat-button
-          class="mobile-nav-item"
-          routerLink="mn-new-product"
-          (click)="closeNav()"
-          *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
-        >
-          ÜRÜN EKLE
-        </button> -->
         <button
           mat-button
           class="mobile-nav-item"
@@ -148,7 +126,12 @@
         >
           {{category.name | uppercase}}
         </button>
-        <button mat-button routerLink="main" class="mobile-nav-item" (click)="closeNav()">
+        <button
+          mat-button
+          routerLink="contact"
+          class="mobile-nav-item"
+          (click)="onMobileNavMenuClick()"
+        >
           İLETİŞİM
         </button>
       </div>
@@ -189,7 +172,7 @@
       >
         {{category.name | uppercase}}
       </button>
-      <button mat-button routerLink="main" class="nav">İLETİŞİM</button>
+      <button mat-button routerLink="contact" class="nav">İLETİŞİM</button>
     </div>
   </section>
 </main>

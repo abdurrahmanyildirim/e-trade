@@ -13,7 +13,7 @@
   </mat-progress-spinner>
   <app-header class="header" *ngIf="splashService.configInited"></app-header>
   <div class="main" *ngIf="splashService.configInited">
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="scrollToTop()"></router-outlet>
   </div>
   <app-footer class="footer" *ngIf="splashService.configInited"></app-footer>
 </main>

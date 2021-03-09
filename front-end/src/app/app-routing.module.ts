@@ -15,6 +15,7 @@ import { AuthGuard } from './shared/guards/auth';
 import { AdminGuard } from './shared/guards/admin';
 import { MnProductsComponent } from './admin/products/component';
 import { MnProductDetailComponent } from './admin/product-detail/component';
+import { ContactComponent } from './pages/contact/component';
 
 const routes: Routes = [
   { path: 'main', component: MainComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
   },
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+  { path: 'contact', component: ContactComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'filtered-page', component: FilteredPageComponent },
