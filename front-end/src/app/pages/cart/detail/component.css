@@ -53,6 +53,10 @@
   border-radius: 2px;
 }
 
+.numeric-container {
+  height: 35px;
+}
+
 .normal-price {
   text-decoration: line-through;
 }

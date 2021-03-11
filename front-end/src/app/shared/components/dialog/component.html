@@ -1,9 +1,21 @@
-<mat-dialog-content class="mat-body-2" style="text-align: center">
-  {{data.desc}}
-</mat-dialog-content>
-<mat-dialog-actions align="center">
-  <button mat-raised-button color="warn" [mat-dialog-close]="false">{{data.refuseButton}}</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
-    {{data.acceptButton}}
-  </button>
-</mat-dialog-actions>
+<span [ngSwitch]="data.dialog">
+  <ng-container *ngSwitchCase="DialogType.Confirm">
+    <mat-dialog-content class="mat-body-2" style="text-align: center">
+      {{data.desc}}
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+      <button mat-flat-button color="warn" [mat-dialog-close]="false">{{data.refuseButton}}</button>
+      <button mat-flat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
+        {{data.acceptButton}}
+      </button>
+    </mat-dialog-actions>
+  </ng-container>
+  <ng-container *ngSwitchCase="DialogType.Message">
+    <mat-dialog-content class="mat-body-1 message"> {{data.desc}} </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
+        {{data.acceptButton}}
+      </button>
+    </mat-dialog-actions>
+  </ng-container>
+</span>

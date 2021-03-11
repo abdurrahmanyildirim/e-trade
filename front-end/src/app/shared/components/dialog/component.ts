@@ -7,6 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./component.css']
 })
 export class DialogComponent {
+  DialogType = DialogType;
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
@@ -15,8 +16,14 @@ export class DialogComponent {
 
 export interface DialogData {
   acceptButton: string;
-  refuseButton: string;
+  refuseButton?: string;
   desc: string;
   onClose: (result: boolean) => void;
   onError?: (error: any) => void;
+  dialog: DialogType;
+}
+
+export enum DialogType {
+  Confirm = 'confirm',
+  Message = 'message'
 }

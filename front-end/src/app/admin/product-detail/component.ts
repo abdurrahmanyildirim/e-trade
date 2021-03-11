@@ -19,6 +19,7 @@ import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { UtilityService } from 'src/app/shared/services/site/utility.service';
+import { DialogType } from 'src/app/shared/components/dialog/component';
 
 @Component({
   selector: 'app-mn-product-detail',
@@ -99,10 +100,11 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
   }
 
   remove(): void {
-    this.dialogService.openDialog({
+    this.dialogService.confirm({
       acceptButton: 'Onayla',
       refuseButton: 'Vazgeç',
       desc: 'Bu ürünü kaldırmak istediğinize emin misiniz?',
+      dialog: DialogType.Confirm,
       onClose: (result) => {
         if (result) {
           this.screenHolder.show();
@@ -134,9 +136,10 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
     const product = Object.assign({}, this.form.value);
     product.isActive = product.isActive === 'true';
     product.discountRate = parseFloat((product.discountRate / 100).toFixed(2));
-    this.dialogService.openDialog({
+    this.dialogService.confirm({
       acceptButton: 'Onayla',
       refuseButton: 'Vazgeç',
+      dialog: DialogType.Confirm,
       desc: 'Yaptığınız değişiklikleri kaydetmek istediğinize emin misiniz?',
       onClose: (result) => {
         if (result) {

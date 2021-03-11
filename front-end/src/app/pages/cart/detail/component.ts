@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { Order } from 'src/app/shared/models/order';
 import { UtilityService } from 'src/app/shared/services/site/utility.service';
@@ -22,7 +23,7 @@ export class CartDetailComponent implements OnDestroy, OnInit {
   }
 
   onOrderRemove(removedOrder: Order): void {
-    this.dialogService.openDialog({
+    this.dialogService.confirm({
       acceptButton: 'Onayla',
       refuseButton: 'Vazgeç',
       desc: 'Ürünü sepetinizden kaldırmak istediğinize emin misiniz?',
@@ -32,7 +33,8 @@ export class CartDetailComponent implements OnDestroy, OnInit {
           this.orders.splice(indexRemovedOrder, 1);
           this.emitChanges();
         }
-      }
+      },
+      dialog: DialogType.Confirm
     });
   }
 

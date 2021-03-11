@@ -60,7 +60,6 @@ export class ContactComponent implements OnInit {
     this.contact = Object.assign({}, this.form.value);
     this.contactService.contactRequest(this.contact).subscribe({
       next: (res) => {
-        console.log(res);
         this.form.reset();
         Object.keys(this.form.controls).forEach((key) => {
           this.form.controls[key].setErrors(null);

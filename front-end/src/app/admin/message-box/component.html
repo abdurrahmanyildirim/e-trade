@@ -1,0 +1,44 @@
+<main class="container" *ngIf="messages">
+  <section class="filters">
+    <mat-radio-group>
+      <mat-radio-button value="1" class="option" [checked]="true" (click)="filterMessages()"
+        >Hepsi</mat-radio-button
+      >
+      <mat-radio-button value="2" class="option" (click)="filterMessages(true)"
+        >Okunmuş</mat-radio-button
+      >
+      <mat-radio-button value="3" class="option" (click)="filterMessages(false)"
+        >Okunmamış</mat-radio-button
+      >
+    </mat-radio-group>
+  </section>
+  <div class="messages">
+    <div class="message" *ngFor="let message of messages" (click)="showDesc(message)">
+      <div class="item">{{message.name}}</div>
+      <div class="item">{{message.email}}</div>
+      <div class="half-flex">{{message.phone}}</div>
+      <div style="flex: 0.4">{{message.sendDate | date:'mediumDate'}}</div>
+      <mat-icon
+        class="half-flex unread"
+        style="text-align: center; flex: 0.3"
+        *ngIf="!message.isRead"
+        >done</mat-icon
+      >
+      <mat-icon class="readed" style="text-align: center; flex: 0.3" *ngIf="message.isRead"
+        >done_all</mat-icon
+      >
+      <mat-icon
+        mat-icon-button
+        class="close"
+        (mouseover)="onCloseIcon=true"
+        (mouseleave)="onCloseIcon=false"
+        (click)="removeMessage(message)"
+        >close</mat-icon
+      >
+    </div>
+
+    <div class="mat-body-2" style="text-align: center" *ngIf="messages.length <=0">
+      Mesaj kutunuz boş
+    </div>
+  </div>
+</main>

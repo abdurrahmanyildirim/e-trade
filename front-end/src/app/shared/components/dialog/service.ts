@@ -10,10 +10,32 @@ import { DialogComponent, DialogData } from './component';
 export class DialogService {
   constructor(public dialog: MatDialog) {}
 
-  openDialog(data: DialogData): void {
+  confirm(data: DialogData): void {
     this.dialog
       .open(DialogComponent, {
-        width: '400px',
+        width: 'fit-content',
+        maxWidth: '90%',
+        data
+      })
+      .afterClosed()
+      .pipe(first())
+      .subscribe({
+        next: (result) => {
+          const res = isPresent(result) ? result : false;
+          data.onClose(res);
+        },
+        error: (err) => {
+          data.onError(err);
+        }
+      });
+  }
+
+  message(data: DialogData): void {
+    this.dialog
+      .open(DialogComponent, {
+        width: '500px',
+        maxWidth: '90%',
+        maxHeight: '60%',
         data
       })
       .afterClosed()

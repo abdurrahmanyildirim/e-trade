@@ -1,8 +1,12 @@
-<div class="mat-body-2" style="text-align: center; margin-top: 10px" *ngIf="!orderList">
+<div
+  class="mat-body-2"
+  style="text-align: center; margin-top: 10px"
+  *ngIf="orderList && orderList.length<=0"
+>
   Henüz siparişiniz bulunmamaktadır.
 </div>
 
-<div class="container" *ngIf="orderList">
+<div class="container" *ngIf="orderList && orderList.length>0">
   <span *ngIf="!isMobile">
     <div class="header-content">
       <span class="header-text mat-body-2">Siparişlerim</span>

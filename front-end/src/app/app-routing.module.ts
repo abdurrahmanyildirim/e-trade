@@ -16,6 +16,7 @@ import { AdminGuard } from './shared/guards/admin';
 import { MnProductsComponent } from './admin/products/component';
 import { MnProductDetailComponent } from './admin/product-detail/component';
 import { ContactComponent } from './pages/contact/component';
+import { MnMessageBoxComponent } from './admin/message-box/component';
 
 const routes: Routes = [
   { path: 'main', component: MainComponent },
@@ -50,6 +51,11 @@ const routes: Routes = [
   {
     path: 'mn-product-detail/:id',
     component: MnProductDetailComponent,
+    canActivate: [AuthGuard, AdminGuard]
+  },
+  {
+    path: 'mn-message-box',
+    component: MnMessageBoxComponent,
     canActivate: [AuthGuard, AdminGuard]
   },
   { path: '**', redirectTo: 'main', pathMatch: 'prefix' }

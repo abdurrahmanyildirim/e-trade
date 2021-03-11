@@ -48,13 +48,16 @@
         >
           <mat-icon>person_add_alt_1</mat-icon> <span class="icon-text">Üye Ol</span>
         </button>
-        <button mat-button [matMenuTriggerFor]="menu" *ngIf="(this.authService.isAuth | async)">
+        <button mat-button [matMenuTriggerFor]="deskMenu" *ngIf="(this.authService.isAuth | async)">
           <mat-icon>account_circle</mat-icon>
           <span class="icon-text">Hesabım</span>
         </button>
-        <mat-menu #menu="matMenu">
+        <mat-menu #deskMenu="matMenu">
           <button mat-menu-item routerLink="orders">
             <mat-icon>pending_actions</mat-icon> <span class="icon-text">Siparişlerim</span>
+          </button>
+          <button mat-menu-item routerLink="mn-message-box">
+            <mat-icon>email</mat-icon> <span class="icon-text">Mesajlar</span>
           </button>
           <button mat-menu-item (click)="logout()">
             <mat-icon>logout</mat-icon> <span class="icon-text">Çıkış</span>
@@ -94,17 +97,17 @@
           </button>
           <button
             mat-icon-button
-            [matMenuTriggerFor]="menu"
+            [matMenuTriggerFor]="mobileMenu"
             *ngIf="(this.authService.isAuth | async)"
           >
             <mat-icon>account_circle</mat-icon>
           </button>
-          <mat-menu #menu="matMenu">
+          <mat-menu #mobileMenu="matMenu">
             <button mat-menu-item routerLink="orders">
-              <mat-icon>pending_actions</mat-icon>
+              <mat-icon>pending_actions</mat-icon>Siparişlerim
             </button>
             <button mat-menu-item (click)="logout()">
-              <mat-icon>logout</mat-icon>
+              <mat-icon>logout</mat-icon>Çıkış Yap
             </button>
           </mat-menu>
         </div>
