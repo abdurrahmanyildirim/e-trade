@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  padding:  0 5px;
+  padding: 0 5px;
 }
 
 .photo {
@@ -14,9 +14,18 @@
   width: 100%;
   max-width: 1200px;
   height: 550px;
+  position: relative;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.prop-text {
+  position: absolute;
+  font-size: 20px;
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .section {
@@ -40,9 +49,12 @@
   }
 
   .photo {
-    /* display: none; */
     width: 100%;
     height: 200px;
     margin: 0 10px;
+  }
+
+  .container {
+    padding: 0;
   }
 }

@@ -9,7 +9,7 @@
           <input
             type="text"
             class="input"
-            placeholder="Aradığınız ürün adını yazınız..."
+            placeholder="Aradığınız ürün veya markayı yazınız..."
             matInput
             [matAutocomplete]="auto"
             (keyup)="onKeyup()"
@@ -18,12 +18,14 @@
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option
               *ngFor="let prod of filteredProducts"
-              [(value)]="prod.name"
+              [value]="prod.name"
               (onSelectionChange)="onSelectionChange(prod)"
             >
               <div class="search-result">
                 <div class="search-prod">{{prod.name}}</div>
-                <div class="search-brand">{{prod.brand}}</div>
+                <div class="search-brand">
+                  <span class="mat-small" style="margin: auto 0"> {{prod.brand}} </span>
+                </div>
               </div>
             </mat-option>
           </mat-autocomplete>
@@ -56,7 +58,11 @@
           <button mat-menu-item routerLink="orders">
             <mat-icon>pending_actions</mat-icon> <span class="icon-text">Siparişlerim</span>
           </button>
-          <button mat-menu-item routerLink="mn-message-box">
+          <button
+            mat-menu-item
+            routerLink="mn-message-box"
+            *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
+          >
             <mat-icon>email</mat-icon> <span class="icon-text">Mesajlar</span>
           </button>
           <button mat-menu-item (click)="logout()">
@@ -106,9 +112,7 @@
             <button mat-menu-item routerLink="orders">
               <mat-icon>pending_actions</mat-icon>Siparişlerim
             </button>
-            <button mat-menu-item (click)="logout()">
-              <mat-icon>logout</mat-icon>Çıkış Yap
-            </button>
+            <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon>Çıkış Yap</button>
           </mat-menu>
         </div>
       </div>

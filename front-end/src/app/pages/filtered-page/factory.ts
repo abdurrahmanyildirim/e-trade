@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Product } from 'src/app/shared/models/product';
-import { Filter, SortTypes } from './model';
+import { Filter, SortType } from './model';
 
 @Injectable()
 export class FilterFactory {
@@ -16,14 +16,14 @@ export class FilterFactory {
   }
 
   private sortByType(sortType: string): Product[] {
-    if (sortType === SortTypes.asc) {
+    if (sortType === SortType.asc) {
       return this.products
         .slice()
         .sort(
           (a: Product, b: Product) =>
             a.price - a.price * a.discountRate - (b.price - b.price * b.discountRate)
         );
-    } else if (sortType === SortTypes.desc) {
+    } else if (sortType === SortType.desc) {
       return this.products
         .slice()
         .sort(

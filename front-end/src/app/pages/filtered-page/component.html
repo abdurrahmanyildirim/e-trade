@@ -78,12 +78,25 @@
     <mat-radio-group class="sort-items">
       <mat-radio-button
         class="sort-item"
-        *ngFor="let sort of sortingTypes"
-        [value]="sort.key"
-        [checked]="sort.key==='none'"
-        (change)="sortByType(sort.key)"
+        [value]="SortType.none"
+        [checked]="true"
+        (change)="sortByType(SortType.none)"
       >
-        {{sort.text}}
+        Hiçbiri
+      </mat-radio-button>
+      <mat-radio-button
+        class="sort-item"
+        [value]="SortType.asc"
+        (change)="sortByType(SortType.asc)"
+      >
+        Artan Fiyat
+      </mat-radio-button>
+      <mat-radio-button
+        class="sort-item"
+        [value]="SortType.desc"
+        (change)="sortByType(SortType.desc)"
+      >
+        Azalan Fiyat
       </mat-radio-button>
     </mat-radio-group>
   </div>

@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.filteredProducts = this.products
       .filter((product) => {
         const key = new RegExp(this.searchKey, 'gi');
-        if (product.name.search(key) >= 0) {
+        if (product.name.search(key) >= 0 || product.brand.search(key) >= 0) {
           return product;
         }
       })
@@ -106,12 +106,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onSerchClick(): void {
     this.router.navigateByUrl('filtered-page?searchKey=' + this.searchKey);
     this.searchKey = '';
+    this.onKeyup();
   }
 
   onSelectionChange(product: SearchProduct): void {
     this.router.navigateByUrl('filtered-page?searchKey=' + product.name);
     setTimeout(() => {
       this.searchKey = '';
+      this.onKeyup();
     });
   }
 

@@ -1,12 +1,11 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
 import { Category, Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { FilterFactory } from './factory';
-import { Filter, SortType, SortTypes } from './model';
+import { Filter, SortType } from './model';
 
 @Component({
   selector: 'app-filtered-page',
@@ -28,22 +27,9 @@ export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
     brands: new Map<string, string>(),
     category: '',
     sKey: '',
-    sortType: SortTypes.none
+    sortType: SortType.none
   };
-  sortingTypes: SortType[] = [
-    {
-      key: SortTypes.none,
-      text: 'Hiçbiri'
-    },
-    {
-      key: SortTypes.asc,
-      text: 'Artan Fiyat'
-    },
-    {
-      key: SortTypes.desc,
-      text: 'Azalan Fiyat'
-    }
-  ];
+  SortType = SortType;
   @ViewChild('mobileFilters') mobileFilters: ElementRef<HTMLElement>;
   @ViewChild('mobileFiltersBody') mobileFiltersBody: ElementRef<HTMLElement>;
   touchSubs = new Subscription();
@@ -177,7 +163,7 @@ export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  sortByType(sortType: SortTypes): void {
+  sortByType(sortType: SortType): void {
     this.showSplash = true;
     this.filter.sortType = sortType;
     this.initProductsByFilter();

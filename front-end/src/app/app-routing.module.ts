@@ -17,6 +17,9 @@ import { MnProductsComponent } from './admin/products/component';
 import { MnProductDetailComponent } from './admin/product-detail/component';
 import { ContactComponent } from './pages/contact/component';
 import { MnMessageBoxComponent } from './admin/message-box/component';
+import { PrivacyPolicyComponent } from './pages/regulations/privacy-policy/component';
+import { SalesContractComponent } from './pages/regulations/sales-contract/component';
+import { AboutComponent } from './pages/regulations/about/component';
 
 const routes: Routes = [
   { path: 'main', component: MainComponent },
@@ -32,6 +35,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'filtered-page', component: FilteredPageComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: 'sales-contract', component: SalesContractComponent },
+  { path: 'about', component: AboutComponent },
   { path: 'mn-orders', component: MnOrdersComponent, canActivate: [AuthGuard, AdminGuard] },
   {
     path: 'mn-order-detail/:id',

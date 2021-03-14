@@ -1,11 +1,4 @@
-import { ESMap, Map } from 'typescript';
-
-export interface SortType {
-  key: string;
-  text: string;
-}
-
-export enum SortTypes {
+export enum SortType {
   asc = 'asc',
   desc = 'desc',
   none = 'none'
@@ -13,7 +6,7 @@ export enum SortTypes {
 
 export interface Filter {
   brands: any;
-  sortType: SortTypes;
+  sortType: SortType;
   category: string;
   sKey: string;
 }

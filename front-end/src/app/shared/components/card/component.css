@@ -44,7 +44,7 @@
 .discount-badge {
   width: 160px;
   height: 30px;
-  background-color: red;
+  background-color: #ff0800;
   position: absolute;
   top: 20px;
   left: -40px;
@@ -81,6 +81,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 20px;
 }
 
 .price {
@@ -105,4 +106,36 @@
   display: inline-block;
   width: 18px;
   height: 18px;
+}
+
+@media only screen and (max-width: 650px) {
+  .container {
+    width: 150px;
+    height: fit-content;
+  }
+
+  .img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .discount-badge {
+    width: 150px;
+    height: 25px;
+    justify-content: center;
+  }
+
+  .dotted-line {
+    display: none;
+  }
+
+  .brand {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px 5px 0 5px;
+  }
+
+  .name {
+    font-size: 12px;
+  }
 }

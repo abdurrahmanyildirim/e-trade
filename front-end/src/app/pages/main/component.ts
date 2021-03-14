@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
@@ -30,8 +30,11 @@ export class MainComponent implements OnInit, OnDestroy {
       0: {
         items: 1
       },
-      460: {
+      320: {
         items: 2
+      },
+      470: {
+        items: 3
       },
       690: {
         items: 3
@@ -82,9 +85,7 @@ export class MainComponent implements OnInit, OnDestroy {
       .slice(0, 15);
   }
 
-  resize():void {
-    
-  }
+  resize(): void {}
 
   ngOnDestroy(): void {
     if (isPresent(this.sub)) {

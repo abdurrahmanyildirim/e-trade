@@ -9,7 +9,7 @@
 .content {
   max-width: 1200px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin: 0 auto;
   height: 100%;
@@ -17,9 +17,9 @@
 
 .section {
   flex: 1;
-  border-right: 1px solid #ccc;
   height: 80%;
-  padding: 0 20px;
+  padding: 0 10px 0 0;
+  /* padding: 0 30px 0 10px; */
 }
 
 .section:last-child {
