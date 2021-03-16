@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/order');
-const authController = require('../controllers/authController');
+const authController = require('../controllers/auth');
 
 router.get('/get-orders', controller.getOrders);
 router.get('/detail/:id', controller.orderDetail);

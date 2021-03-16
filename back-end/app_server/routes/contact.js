@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/contact');
-const authController = require('../controllers/authController');
+const authController = require('../controllers/auth');
 
 router.post('/contact-request', controller.sendContactRequest);
 router.use(authController.verifyAdmin);

@@ -1,7 +1,10 @@
 const Contact = require('../models/contact');
+const cryptoService = require('../services/crypto');
 
 module.exports.sendContactRequest = (req, res) => {
   const contactReq = req.body;
+  contactReq.email = cryptoService.encrypt(contactReq.email);
+  contactReq.phone = cryptoService.encrypt(contactReq.phone);
   contactReq.isRead = false;
   contactReq.sendDate = Date.now();
   const contact = new Contact(contactReq);
@@ -17,6 +20,13 @@ module.exports.getMessages = (req, res) => {
   Contact.find((err, messages) => {
     if (err) {
       return res.status(404).send({ message: 'Beklenmeyen bir hata oldu.' });
+    }
+    if (messages && messages.length > 0) {
+      messages.map((message) => {
+        message.email = cryptoService.decrypt(message.email);
+        message.phone = cryptoService.decrypt(message.phone);
+        return message;
+      });
     }
     return res.status(200).send(messages);
   });

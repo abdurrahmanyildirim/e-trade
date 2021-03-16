@@ -10,12 +10,21 @@ import {
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { StorageKey } from '../../models/storage';
+import { CryptoService } from '../site/crypto';
 
 @Injectable()
 export class RestInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  crucialKeys = new Map([
+    ['password', 'password'],
+    ['email', 'email'],
+    ['address', 'address'],
+    ['phone', 'phone']
+  ]);
+
+  constructor(private authService: AuthService, private cryptoService: CryptoService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    req = this.cryptBody(req);
     if (this.authService.loggedIn()) {
       const authRequest = req.clone({
         headers: this.headers()
@@ -30,7 +39,19 @@ export class RestInterceptor implements HttpInterceptor {
       'Authorization',
       'jwt ' + window.localStorage.getItem(StorageKey.Token)
     );
-    // headers = headers.append('Content-Type', 'application/json');
     return headers;
+  }
+
+  private cryptBody(req: HttpRequest<any>): HttpRequest<any> {
+    const body = req.body;
+    for (const key in body) {
+      if (Object.prototype.hasOwnProperty.call(body, key)) {
+        if (this.crucialKeys.has(key)) {
+          const resolvedData = this.cryptoService.basicEncrypt(body[key]);
+          req.body[key] = resolvedData;
+        }
+      }
+    }
+    return req;
   }
 }
