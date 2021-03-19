@@ -47,7 +47,7 @@ export class CartService implements OnDestroy {
 
   purchaseOrder(contactInfo: Contact): Observable<any> {
     return this.http.post(
-      this.configService.config.domain + 'operation/purchase-order',
+      this.configService.config.baseUrl + 'operation/purchase-order',
       contactInfo
     );
   }
@@ -72,13 +72,13 @@ export class CartService implements OnDestroy {
 
   updateDbCart(orders: Order[]): Observable<Order[]> {
     return this.http.post<Order[]>(
-      this.configService.config.domain + 'operation/update-cart',
+      this.configService.config.baseUrl + 'operation/update-cart',
       orders
     );
   }
 
   getCartFromDb(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.configService.config.domain + 'operation/cart');
+    return this.http.get<Order[]>(this.configService.config.baseUrl + 'operation/cart');
   }
 
   updateLocaleStorage(orders: Order[]): void {

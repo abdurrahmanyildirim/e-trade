@@ -30,43 +30,43 @@ export class ProductService {
   }
 
   products(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.configService.config.domain + 'product/products');
+    return this.http.get<Product[]>(this.configService.config.baseUrl + 'product/products');
   }
 
   allProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.configService.config.domain + 'product/all-products');
+    return this.http.get<Product[]>(this.configService.config.baseUrl + 'product/all-products');
   }
 
   categories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.configService.config.domain + 'category/categories');
+    return this.http.get<Category[]>(this.configService.config.baseUrl + 'category/categories');
   }
 
   productsByCategory(category: string): Observable<Product[]> {
     return this.http.get<Product[]>(
-      this.configService.config.domain + 'product/get-by-category?category=' + category
+      this.configService.config.baseUrl + 'product/get-by-category?category=' + category
     );
   }
 
   remove(id: string): Observable<any> {
-    return this.http.delete<any>(this.configService.config.domain + 'product/remove?id=' + id);
+    return this.http.delete<any>(this.configService.config.baseUrl + 'product/remove?id=' + id);
   }
 
   update(product: Product): Observable<any> {
-    return this.http.post<any>(this.configService.config.domain + 'product/update', product);
+    return this.http.post<any>(this.configService.config.baseUrl + 'product/update', product);
   }
 
   productById(id: string): Observable<Product> {
-    return this.http.get<Product>(this.configService.config.domain + 'product/get-by-id?id=' + id);
+    return this.http.get<Product>(this.configService.config.baseUrl + 'product/get-by-id?id=' + id);
   }
 
   uploadPhoto(photos: FormData): Observable<CloudinaryPhoto[]> {
     return this.http.post<CloudinaryPhoto[]>(
-      this.configService.config.domain + 'photo/upload',
+      this.configService.config.baseUrl + 'photo/upload',
       photos
     );
   }
 
   addNewProduct(product: Product): Observable<void> {
-    return this.http.post<void>(this.configService.config.domain + 'product/new-product', product);
+    return this.http.post<void>(this.configService.config.baseUrl + 'product/new-product', product);
   }
 }

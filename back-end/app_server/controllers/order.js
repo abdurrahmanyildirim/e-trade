@@ -1,12 +1,23 @@
 const Order = require('../models/order');
 const Product = require('../models/product');
 const Status = require('../models/status');
+const cryptoService = require('../services/crypto');
 
 module.exports.getOrders = (req, res) => {
   Order.find({ userId: req.id }, (err, orders) => {
     if (err) {
       return res.status(404).send({ message: 'Siparişler bulunamadı' });
     }
+    orders.map((order) => {
+      const contactInfo = {
+        city: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.city)),
+        district: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.district)),
+        address: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.address)),
+        phone: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.phone))
+      };
+      order.contactInfo = contactInfo;
+      return order;
+    });
     return res.status(200).send(orders);
   });
 };
@@ -38,14 +49,19 @@ module.exports.orderDetail = async (req, res) => {
         name: dbProduct.name
       });
     });
-
+    const contactInfo = {
+      city: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.city)),
+      district: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.district)),
+      address: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.address)),
+      phone: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.phone))
+    };
     return res.status(200).send({
       userId: order.userId,
       date: order.date,
       products: orderedProducts,
       isActive: order.isActive,
       status: order.status,
-      contactInfo: order.contactInfo
+      contactInfo
     });
   });
 };
@@ -55,6 +71,16 @@ module.exports.allOrders = (req, res) => {
     if (err) {
       return res.status(400).send({ message: 'Veri tabanı hatası' });
     }
+    orders.map((order) => {
+      const contactInfo = {
+        city: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.city)),
+        district: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.district)),
+        address: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.address)),
+        phone: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.phone))
+      };
+      order.contactInfo = contactInfo;
+      return order;
+    });
     return res.status(200).send(orders);
   });
 };

@@ -1,4 +1,4 @@
 export interface SiteConfig {
-  domain: string;
+  baseUrl: string;
   mockUrl: string;
 }

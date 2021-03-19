@@ -1,4 +1,3 @@
-const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const config = require('../../config');
@@ -82,7 +81,7 @@ module.exports.getUser = (req, res) => {
       return res.status(404).send({ message: 'Bağlantı hatası' });
     }
     const newUser = {
-      email: user.email,
+      email: cryptoService.basicEncrypt(cryptoService.decrypt(user.email)),
       firstName: user.firstName,
       lastName: user.lastName
     };
@@ -99,10 +98,10 @@ module.exports.contactInfo = (req, res) => {
     let newUser = {};
     if (user.addresses.length > 0 && user.phones.length > 0) {
       newUser = {
-        city: user.addresses[0].city,
-        district: user.addresses[0].district,
-        address: user.addresses[0].address,
-        phone: user.phones[0].phone
+        city: cryptoService.basicEncrypt(cryptoService.decrypt(user.addresses[0].city)),
+        district: cryptoService.basicEncrypt(cryptoService.decrypt(user.addresses[0].district)),
+        address: cryptoService.basicEncrypt(cryptoService.decrypt(user.addresses[0].address)),
+        phone: cryptoService.basicEncrypt(cryptoService.decrypt(user.phones[0].phone))
       };
     }
     return res.status(200).send(newUser);

@@ -7,6 +7,13 @@
   padding: 20px 0;
 }
 
+.logo {
+  width: 145px;
+  height: 60px;
+  cursor: pointer;
+  outline: none;
+}
+
 .mobile {
   display: none;
 }

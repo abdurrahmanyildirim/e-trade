@@ -23,8 +23,8 @@ module.exports.getMessages = (req, res) => {
     }
     if (messages && messages.length > 0) {
       messages.map((message) => {
-        message.email = cryptoService.decrypt(message.email);
-        message.phone = cryptoService.decrypt(message.phone);
+        message.email = cryptoService.basicEncrypt(cryptoService.decrypt(message.email));
+        message.phone = cryptoService.basicEncrypt(cryptoService.decrypt(message.phone));
         return message;
       });
     }

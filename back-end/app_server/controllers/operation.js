@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const Product = require('../models/product');
 const Order = require('../models/order');
+const cryptoService = require('../services/crypto');
 
 module.exports.updateCart = (req, res, next) => {
   User.findOne({ _id: req.id }, (err, user) => {
@@ -85,10 +86,10 @@ module.exports.purchaseOrder = (req, res) => {
         status: [{ key: 0, desc: 'Siparişiniz alındı.', date: Date.now() }],
         products: orderedProducts,
         contactInfo: {
-          city: req.body.city,
-          district: req.body.district,
-          address: req.body.address,
-          phone: req.body.phone
+          city: cryptoService.encrypt(req.body.city),
+          district: cryptoService.encrypt(req.body.district),
+          address: cryptoService.encrypt(req.body.address),
+          phone: cryptoService.encrypt(req.body.phone)
         }
       });
       newOrder.save((err) => {
@@ -98,13 +99,13 @@ module.exports.purchaseOrder = (req, res) => {
         user.cart = [];
         user.phones[0] = {
           title: 'phone' + Date.now(),
-          phone: req.body.phone
+          phone: cryptoService.encrypt(req.body.phone)
         };
         user.addresses[0] = {
           title: 'address' + Date.now(),
-          city: req.body.city,
-          district: req.body.district,
-          address: req.body.address
+          city: cryptoService.encrypt(req.body.city),
+          district: cryptoService.encrypt(req.body.district),
+          address: cryptoService.encrypt(req.body.address)
         };
         const newUser = new User(user);
         newUser.save((err) => {
