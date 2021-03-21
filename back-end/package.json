@@ -4,9 +4,16 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "nodemon main.js"
+    "bundle": "webpack --config webpack.config.js --mode=production",
+    "start": "nodemon main.js",
+    "startDev": "set NODE_ENV=development && nodemon main.js",
+    "herokuLogin" : "heroku login"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack": "^5.27.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-node-externals": "^2.5.2"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

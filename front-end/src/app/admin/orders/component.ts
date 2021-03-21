@@ -49,7 +49,9 @@ export class MnOrdersComponent implements OnInit, OnDestroy {
   initOrders(): void {
     const sub = this.orderService.getAllOrders().subscribe({
       next: (orderList) => {
-        this.orders = orderList;
+        this.orders = orderList.sort(
+          (a: OrderList, b: OrderList) => new Date(b.date).getDate() - new Date(a.date).getDate()
+        );
         this.initCurrentOrderList();
       },
       error: (err) => console.log(err)

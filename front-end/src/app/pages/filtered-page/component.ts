@@ -58,11 +58,13 @@ export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
       if (filterPlace.style.height !== '0') {
         filterPlace.style.height = '0';
         filterPlace.style.padding = '0 0';
+        filterPlace.style.border = 'none';
       }
     } else {
       if (filterPlace.style.height !== '40px') {
         filterPlace.style.height = '40px';
         filterPlace.style.padding = '10px 0';
+        filterPlace.style.borderTop = '1px solid rgb(236, 236, 236);';
       }
     }
     this.previousScrollTop = document.body.scrollTop;
