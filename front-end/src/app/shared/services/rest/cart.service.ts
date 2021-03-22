@@ -54,9 +54,6 @@ export class CartService implements OnDestroy {
 
   updateCart(orders: Order[]): void {
     if (this.authService.loggedIn()) {
-      if (orders.length <= 0) {
-        return;
-      }
       this.updateDbCart(orders).subscribe({
         next: (data) => {
           this.cart.next(orders);

@@ -2,12 +2,7 @@
   <section class="top">
     <div class="items">
       <div class="brand center">
-        <img
-          src="assets/img/logo.png"
-          routerLink="main"
-          alt="logo"
-          class="logo"
-        />
+        <img src="assets/img/logo.png" routerLink="main" alt="logo" class="logo" />
       </div>
       <div class="search center">
         <div class="input-container">
@@ -62,6 +57,9 @@
         <mat-menu #deskMenu="matMenu">
           <button mat-menu-item routerLink="orders">
             <mat-icon>pending_actions</mat-icon> <span class="icon-text">Siparişlerim</span>
+          </button>
+          <button mat-menu-item routerLink="user-info">
+            <mat-icon>info</mat-icon> <span class="icon-text">Bilgilerim</span>
           </button>
           <button
             mat-menu-item

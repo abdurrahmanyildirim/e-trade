@@ -35,7 +35,8 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   display: flex;
-  flex: 0.5;
+  /* flex: 0.5; */
+  width: 45%;
   margin-right: 10px;
   margin-bottom: 10px;
 }
@@ -49,14 +50,14 @@
 }
 
 .info {
-  margin-left: 10px;
+  /* margin-left: 10px; */
   margin-top: 10px;
 }
 
 .brand {
   font-size: 16px;
   line-height: 16px;
-  font-size: 600;
+  font-weight: 600;
 }
 
 .name {
@@ -101,7 +102,7 @@
 
   .mobile-product {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 5px;
     border-bottom: 1px solid rgb(236, 236, 236);
     padding-bottom: 5px;

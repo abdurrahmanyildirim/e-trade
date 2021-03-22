@@ -30,8 +30,8 @@ html {
 ::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb {
   width: 8px;
-  background-color: #9fadbb;
-  /* background-color: rgba(26, 42, 107, 0.3); */
+  /* background-color: #9fadbb; */
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .bg-success {

@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 900px;
+  display: flex;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid rgb(236, 236, 236);
+  border-radius: 5px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 10px;
+}
+
+.section:first-child {
+  border-right: 1px solid rgb(236, 236, 236);
+}
+
+.section-header {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.field {
+  width: 100%;
+  /* margin-top: 6px; */
+}
+
+.field:first-child {
+  margin-top: 10px;
+}

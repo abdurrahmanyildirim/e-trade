@@ -8,11 +8,9 @@ import {
   Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
-import { ObjectHelper } from 'src/app/shared/util/helper/object';
 import { RegisterUser } from './model';
 
 @Component({

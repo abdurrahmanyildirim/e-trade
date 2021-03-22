@@ -7,6 +7,7 @@ import { OrdersModule } from './orders/module';
 import { OrderDetailModule } from './order-detail/module';
 import { FilteredPageModule } from './filtered-page/module';
 import { ContactModule } from './contact/module';
+import { UserInfoModule } from './user-info/module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ContactModule } from './contact/module';
     OrdersModule,
     OrderDetailModule,
     FilteredPageModule,
-    ContactModule
+    ContactModule,
+    UserInfoModule
   ]
 })
 export class PagesModule {}

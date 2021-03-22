@@ -1,0 +1,31 @@
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="initForm()" class="form">
+  <mat-form-field appearance="outline" class="field">
+    <mat-label>Şifreniz</mat-label>
+    <input type="password" matInput formControlName="currentPassword" />
+    <mat-error
+      *ngIf="(form.get('currentPassword').hasError('required') || form.get('currentPassword').hasError('isNull')) && form.get('currentPassword').touched"
+    >
+      *Zorunlu Alan
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="field">
+    <mat-label>Yeni Şifre</mat-label>
+    <input type="password" matInput formControlName="password" />
+    <mat-error
+      *ngIf="(form.get('password').hasError('required') || form.get('password').hasError('isNull')) && form.get('password').touched"
+    >
+      *Zorunlu Alan
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="field">
+    <mat-label>Yeni Şifre Tekrar</mat-label>
+    <input type="password" matInput formControlName="confirmPassword" />
+    <mat-error
+      *ngIf="form.get('confirmPassword').hasError('isMatching') && form.get('confirmPassword').touched"
+    >
+      *Şifreniz eşleşmiyor
+    </mat-error>
+  </mat-form-field>
+  <button mat-flat-button type="submit" color="primary">Güncelle</button>
+</form>

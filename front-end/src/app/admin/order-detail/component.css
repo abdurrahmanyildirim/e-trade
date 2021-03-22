@@ -54,19 +54,21 @@
 }
 
 .products {
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  gap: 10px;
-  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 0 0 10px;
 }
 
 .product {
   height: 200px;
-  width: 100%;
+  min-width: 432px;
   border: 1px solid #ccc;
   border-radius: 5px;
   display: flex;
-  /* align-items: center; */
+  /* flex: 0.5; */
+  width: 45%;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .photo {
@@ -78,18 +80,17 @@
 }
 
 .info {
-  margin-left: 10px;
   margin-top: 10px;
 }
 
 .brand {
-  font-size: 20px;
-  line-height: 22px;
-  font-size: 600;
+  font-size: 16px;
+  line-height: 17px;
+  font-weight: 600;
 }
 
 .name {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .normal-price {

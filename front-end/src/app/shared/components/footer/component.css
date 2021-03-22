@@ -18,8 +18,7 @@
 .section {
   flex: 1;
   height: 80%;
-  padding: 0 10px 0 0;
-  /* padding: 0 30px 0 10px; */
+  max-width: 250px;
 }
 
 .section:last-child {
@@ -28,7 +27,7 @@
 
 .section-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 10px;
 }
 

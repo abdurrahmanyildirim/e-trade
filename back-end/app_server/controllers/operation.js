@@ -9,7 +9,7 @@ module.exports.updateCart = (req, res, next) => {
       return res.status(400).send({ message: 'Kullanıcı bulunamadı' });
     }
     const orders = req.body;
-    if (!orders || orders.length <= 0) {
+    if (!orders) {
       return res.status(404).send({ message: 'Siparişler boş bırakılamaz.' });
     }
     const newCart = orders.map((order) => {

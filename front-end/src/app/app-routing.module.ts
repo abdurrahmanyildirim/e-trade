@@ -20,6 +20,7 @@ import { MnMessageBoxComponent } from './admin/message-box/component';
 import { PrivacyPolicyComponent } from './pages/regulations/privacy-policy/component';
 import { SalesContractComponent } from './pages/regulations/sales-contract/component';
 import { AboutComponent } from './pages/regulations/about/component';
+import { UserInfoComponent } from './pages/user-info/component';
 
 const routes: Routes = [
   { path: 'main', component: MainComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
   },
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+  { path: 'user-info', component: UserInfoComponent, canActivate: [AuthGuard] },
   { path: 'contact', component: ContactComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
