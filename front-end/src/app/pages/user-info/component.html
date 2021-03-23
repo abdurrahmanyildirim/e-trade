@@ -1,10 +1,34 @@
 <main class="container">
-  <section class="section">
-    <div class="section-header">Genel Bilgiler</div>
-    <app-general></app-general>
-  </section>
-  <section class="section">
-    <div class="section-header">Şifre Güncelleme</div>
-    <app-password-update></app-password-update>
-  </section>
+  <div class="navigation">
+    <button mat-button class="active" (click)="changeStep(0)" #nav>
+      <mat-icon>person</mat-icon>
+      Genel
+    </button>
+
+    <button mat-button (click)="changeStep(1)" #nav>
+      <mat-icon>lock</mat-icon>
+      Şifre
+    </button>
+
+    <button mat-button (click)="changeStep(2)" #nav>
+      <mat-icon>person_pin_circle</mat-icon>
+      İletişim
+    </button>
+  </div>
+  <mat-horizontal-stepper #stepper>
+    <mat-step>
+      <ng-template matStepLabel>Genel Bilgiler</ng-template>
+      <app-general></app-general>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Şifre Güncelleme</ng-template>
+      <app-password-update></app-password-update>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Şifre Güncelleme</ng-template>
+      <app-contact></app-contact>
+    </mat-step>
+  </mat-horizontal-stepper>
+
+  <!-- person lock person_pin_circle-->
 </main>

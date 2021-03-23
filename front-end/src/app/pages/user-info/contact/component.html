@@ -1,0 +1,57 @@
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="initForm()" class="form">
+  <mat-form-field appearance="outline" class="field">
+    <mat-label>Tel No</mat-label>
+    <span matPrefix>0 &nbsp;</span>
+    <input
+      type="tel"
+      matInput
+      maxlength="13"
+      minlength="13"
+      formControlName="phone"
+      (keypress)="onKeypress()"
+      required
+    />
+    <mat-icon matSuffix>mode_edit</mat-icon>
+    <mat-error
+      *ngIf="(form.get('phone').hasError('required') || form.get('phone').hasError('isNull') )&& form.get('phone').touched"
+    >
+      *Telefon zorunlu.
+    </mat-error>
+    <mat-error
+      *ngIf="form.get('phone').hasError('maxlength') || form.get('phone').hasError('minlength')"
+    >
+      *Telefon numarası 10 haneli olmalıdır.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="field">
+    <mat-label>Şehir</mat-label>
+    <input type="text" matInput placeholder="Şehir" formControlName="city" />
+    <mat-error
+      *ngIf="(form.get('city').hasError('required') || form.get('city').hasError('isNull')) && form.get('city').touched"
+    >
+      *Şehir alanı zorunlu.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="field">
+    <mat-label>İlçe</mat-label>
+    <input type="text" matInput placeholder="İlçe" formControlName="district" />
+    <mat-error
+      *ngIf="(form.get('district').hasError('required') || form.get('district').hasError('isNull')) && form.get('district').touched"
+    >
+      *İlçe alanı zorunlu.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="field">
+    <mat-label>Açık Adres</mat-label>
+    <textarea matInput placeholder="Açık Adres" formControlName="address"></textarea>
+    <mat-error
+      *ngIf="(form.get('address').hasError('required') || form.get('address').hasError('isNull') )&& form.get('address').touched"
+    >
+      *Adres zorunlu.
+    </mat-error>
+  </mat-form-field>
+  <button mat-flat-button [disabled]="form.invalid" type="submit" color="primary">Güncelle</button>
+</form>
