@@ -7,6 +7,7 @@ const operation = require('./operation');
 const order = require('./order');
 const category = require('./category');
 const contact = require('./contact');
+const user = require('./user');
 
 module.exports = (app) => {
   app.use('/auth', authRoute);
@@ -15,6 +16,7 @@ module.exports = (app) => {
   app.use('/contact', contact);
   app.use(authController.verifyToken);
   app.use('/operation', operation);
+  app.use('/user', user);
   app.use('/order', order);
   app.use(fileUpload({ useTempFiles: true }));
   app.use('/photo', accountRoute);

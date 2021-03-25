@@ -48,6 +48,10 @@ export class AuthService {
     });
   }
 
+  updateContactInfo(info: any): Observable<any> {
+    return this.http.post<any>(this.configService.config.baseUrl + 'user/update-contact', info);
+  }
+
   loggedIn(): boolean {
     return !!this.token;
   }
@@ -59,6 +63,14 @@ export class AuthService {
         return user;
       })
     );
+  }
+
+  updateGeneralInfo(info: User): Observable<any> {
+    return this.http.post<User>(this.configService.config.baseUrl + 'user/update-general', info);
+  }
+
+  updatePassword(info: any): Observable<any> {
+    return this.http.post<any>(this.configService.config.baseUrl + 'user/update-password', info);
   }
 
   getContactInfo(): Observable<any> {
@@ -81,7 +93,7 @@ export class AuthService {
     this.localStorage.setItem(StorageKey.Token, token);
   }
 
-  decodeToken(): User {
+  decodeToken(): any {
     return this.jwt.decodeToken(this.token);
   }
 

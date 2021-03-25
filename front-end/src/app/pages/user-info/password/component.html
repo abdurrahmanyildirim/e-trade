@@ -1,9 +1,9 @@
-<form *ngIf="form" [formGroup]="form" (ngSubmit)="initForm()" class="form">
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="update()" class="form">
   <mat-form-field appearance="outline" class="field">
     <mat-label>Şifreniz</mat-label>
-    <input type="password" matInput formControlName="currentPassword" />
+    <input type="password" matInput formControlName="password" />
     <mat-error
-      *ngIf="(form.get('currentPassword').hasError('required') || form.get('currentPassword').hasError('isNull')) && form.get('currentPassword').touched"
+      *ngIf="(form.get('password').hasError('required') || form.get('password').hasError('isNull')) && form.get('password').touched"
     >
       *Zorunlu Alan
     </mat-error>
@@ -11,9 +11,9 @@
 
   <mat-form-field appearance="outline" class="field">
     <mat-label>Yeni Şifre</mat-label>
-    <input type="password" matInput formControlName="password" />
+    <input type="password" matInput formControlName="newPassword" />
     <mat-error
-      *ngIf="(form.get('password').hasError('required') || form.get('password').hasError('isNull')) && form.get('password').touched"
+      *ngIf="(form.get('newPassword').hasError('required') || form.get('newPassword').hasError('isNull')) && form.get('newPassword').touched"
     >
       *Zorunlu Alan
     </mat-error>

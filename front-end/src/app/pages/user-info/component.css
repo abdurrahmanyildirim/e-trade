@@ -30,3 +30,10 @@
 ::ng-deep .mat-horizontal-content-container {
   padding: 0 !important;
 }
+
+@media only screen and (max-width: 650px) {
+  .container {
+    width: 95%;
+    min-width: 200px;
+  }
+}

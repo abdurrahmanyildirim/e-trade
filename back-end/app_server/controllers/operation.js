@@ -79,6 +79,10 @@ module.exports.purchaseOrder = (req, res) => {
           });
         }
       });
+      const city = cryptoService.encrypt(req.body.city);
+      const district = cryptoService.encrypt(req.body.district);
+      const address = cryptoService.encrypt(req.body.address);
+      const phone = cryptoService.encrypt(req.body.phone);
       const newOrder = new Order({
         userId: req.id,
         isActive: true,
@@ -86,10 +90,10 @@ module.exports.purchaseOrder = (req, res) => {
         status: [{ key: 0, desc: 'Siparişiniz alındı.', date: Date.now() }],
         products: orderedProducts,
         contactInfo: {
-          city: cryptoService.encrypt(req.body.city),
-          district: cryptoService.encrypt(req.body.district),
-          address: cryptoService.encrypt(req.body.address),
-          phone: cryptoService.encrypt(req.body.phone)
+          city,
+          district,
+          address,
+          phone
         }
       });
       newOrder.save((err) => {
@@ -99,13 +103,13 @@ module.exports.purchaseOrder = (req, res) => {
         user.cart = [];
         user.phones[0] = {
           title: 'phone' + Date.now(),
-          phone: cryptoService.encrypt(req.body.phone)
+          phone
         };
         user.addresses[0] = {
           title: 'address' + Date.now(),
-          city: cryptoService.encrypt(req.body.city),
-          district: cryptoService.encrypt(req.body.district),
-          address: cryptoService.encrypt(req.body.address)
+          city,
+          district,
+          address
         };
         const newUser = new User(user);
         newUser.save((err) => {

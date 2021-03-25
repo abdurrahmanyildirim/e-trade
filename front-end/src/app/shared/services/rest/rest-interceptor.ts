@@ -18,7 +18,9 @@ export class RestInterceptor implements HttpInterceptor {
     ['password', 'password'],
     ['email', 'email'],
     ['address', 'address'],
-    ['phone', 'phone']
+    ['phone', 'phone'],
+    ['confirmPassword', 'confirmPassword'],
+    ['newPassword', 'newPassword']
   ]);
 
   constructor(private authService: AuthService, private cryptoService: CryptoService) {}

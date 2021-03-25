@@ -3,15 +3,29 @@
 }
 
 .top {
-  background-color: #d5d8db;
+  /* background-color: #d5d8db; */
+  background-color: #b3e5fc;
   padding: 20px 0;
+  transition: padding 0.35s ease-in-out;
+}
+
+.logo-content {
+  cursor: pointer;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 .logo {
-  width: 145px;
+  width: 60px;
   height: 60px;
-  cursor: pointer;
   outline: none;
+}
+
+.logo-text {
+  font-size: 40px;
+  line-height: 50px;
+  font-weight: 600;
+  font-style: italic;
 }
 
 .mobile {
@@ -111,7 +125,10 @@
 }
 
 .navbar {
-  background-color: #9fadbb;
+  /* background-color: #9fadbb; */
+  /* background-color: #40c4ff; */
+  background-color: #00b0ff;
+  /* background-color: #0091ea; */
   position: sticky;
   top: 0;
   z-index: 10;
@@ -183,5 +200,12 @@
 
   .navbar {
     display: none;
+  }
+
+  .logo-text {
+    font-size: 14px;
+    line-height: 15px;
+    font-weight: 600;
+    font-style: italic;
   }
 }

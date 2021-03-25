@@ -1,8 +1,11 @@
 <main class="container" *ngIf="products">
-  <section class="top">
+  <section class="top" #top>
     <div class="items">
-      <div class="brand center">
-        <img src="assets/img/logo.png" routerLink="main" alt="logo" class="logo" />
+      <div class="brand">
+        <div class="logo-content center" routerLink="main">
+          <img src="assets/img/logo.png" alt="logo" class="logo" />
+          <span class="logo-text">TAŞER</span>
+        </div>
       </div>
       <div class="search center">
         <div class="input-container">
@@ -58,7 +61,7 @@
           <button mat-menu-item routerLink="orders">
             <mat-icon>pending_actions</mat-icon> <span class="icon-text">Siparişlerim</span>
           </button>
-          <button mat-menu-item routerLink="user-info">
+          <button mat-menu-item routerLink="user-info" *ngIf="(this.authService.isAuth | async)">
             <mat-icon>manage_accounts</mat-icon> <span class="icon-text">Hesap Bilgilerim</span>
           </button>
           <button
@@ -78,7 +81,8 @@
           <mat-icon>reorder</mat-icon>
         </button>
         <div class="mobile-brand" style="display: flex; align-items: center">
-          <img src="assets/img/logo.png" alt="" style="width: 60px; height: 25px" />
+          <img src="assets/img/logo.png" alt="" style="width: 25px; height: 25px" />
+          <span class="logo-text">TAŞER</span>
         </div>
         <div class="mobile-tools">
           <button mat-icon-button routerLink="cart" *ngIf="(this.authService.isAuth | async)">
@@ -114,6 +118,9 @@
           <mat-menu #mobileMenu="matMenu">
             <button mat-menu-item routerLink="orders">
               <mat-icon>pending_actions</mat-icon>Siparişlerim
+            </button>
+            <button mat-menu-item routerLink="user-info" *ngIf="(this.authService.isAuth | async)">
+              <mat-icon>manage_accounts</mat-icon> <span class="icon-text">Hesap Bilgilerim</span>
             </button>
             <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon>Çıkış Yap</button>
           </mat-menu>

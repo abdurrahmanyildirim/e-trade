@@ -13,31 +13,32 @@ module.exports.login = (req, res, next) => {
     User.findOne({ email: reqEmail }, (err, user) => {
       if (err) {
         return res.status(404).send(err);
-      } else if (!user) {
-        return res.status(404).send('Böyle bir kullanıcı kaydı yoktur.');
-      } else {
-        const isCompared = cryptoService.comparePassword(req.body.password, user.password);
-        if (!isCompared) {
-          return res.status(404).send('Hatalı şifre veya email');
-        }
-        const token = jwt.sign(
-          {
-            _id: user._id,
-            email: cryptoService.decrypt(user.email),
-            role: user.role
-          },
-          config.TOKEN_KEY,
-          {
-            expiresIn: '360d'
-          }
-        );
-        const info = {
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName
-        };
-        return res.status(200).send({ token, info });
       }
+      if (!user) {
+        return res.status(404).send('Böyle bir kullanıcı kaydı yoktur.');
+      }
+      const isCompared = cryptoService.comparePassword(req.body.password, user.password);
+      if (!isCompared) {
+        return res.status(404).send('Hatalı şifre veya email');
+      }
+
+      const token = jwt.sign(
+        {
+          _id: user._id,
+          email: cryptoService.decrypt(user.email),
+          role: user.role
+        },
+        config.TOKEN_KEY,
+        {
+          expiresIn: '360d'
+        }
+      );
+      const info = {
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName
+      };
+      return res.status(200).send({ token, info });
     });
   }
 };
@@ -47,29 +48,27 @@ module.exports.register = (req, res) => {
     return res.sendStatus(404).send({ message: 'Boş nesne gönderilemez.' });
   } else {
     let userData = req.body;
-    User.findOne({ email: userData.email }, (err, user) => {
+    User.findOne({ email: cryptoService.encrypt(userData.email) }, (err, user) => {
       if (err) {
         console.log(err);
         return res.status(404).send(err);
-      } else {
-        if (user) {
-          res.status(404).send({ message: 'Bu mail adresi daha önce kullanılmış.' });
-        } else {
-          const newUser = new User({
-            firstName: userData.firstName,
-            lastName: userData.lastName,
-            email: cryptoService.encrypt(userData.email),
-            password: cryptoService.hashPassword(userData.password),
-            role: 'Client'
-          });
-          newUser.save((err) => {
-            if (err) {
-              return res.status(404).send(err);
-            }
-            return res.status(201).send({ message: 'Yeni kullanıcı oluşturuldu.' });
-          });
-        }
       }
+      if (user) {
+        return res.status(404).send({ message: 'Bu mail adresi daha önce kullanılmış.' });
+      }
+      const newUser = new User({
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: cryptoService.encrypt(userData.email),
+        password: cryptoService.hashPassword(userData.password),
+        role: 'Client'
+      });
+      newUser.save((err) => {
+        if (err) {
+          return res.status(404).send(err);
+        }
+        return res.status(201).send({ message: 'Yeni kullanıcı oluşturuldu.' });
+      });
     });
   }
 };

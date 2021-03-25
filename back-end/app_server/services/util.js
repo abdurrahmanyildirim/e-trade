@@ -3,7 +3,9 @@ const crucialKeys = new Map([
   ['password', 'password'],
   ['email', 'email'],
   ['address', 'address'],
-  ['phone', 'phone']
+  ['phone', 'phone'],
+  ['confirmPassword', 'confirmPassword'],
+  ['newPassword', 'newPassword']
 ]);
 
 const bodyDecrypter = (req, res, next) => {

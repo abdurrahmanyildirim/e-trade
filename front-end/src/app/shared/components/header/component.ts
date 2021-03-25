@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   products: SearchProduct[];
   filteredProducts: SearchProduct[] = [];
   @ViewChild('mobileNavMenu') mobileNavMenu: ElementRef<HTMLElement>;
+  @ViewChild('top') top: ElementRef<HTMLElement>;
 
   constructor(
     public cartService: CartService,
