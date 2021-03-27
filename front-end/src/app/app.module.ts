@@ -7,14 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './shared/components/header/module';
 import { FooterModule } from './shared/components/footer/module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ConfigService } from './shared/services/site/config.service';
 import { ProductService } from './shared/services/rest/product.service';
 import { RestInterceptor } from './shared/services/rest/rest-interceptor';
 import localeTr from '@angular/common/locales/tr';
 import { registerLocaleData } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SplashService } from './shared/services/site/splash.service';
-import { AdminModule } from './admin/module';
 import { SnackbarComponent } from './shared/components/snackbar/component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -27,7 +25,6 @@ registerLocaleData(localeTr);
     BrowserAnimationsModule,
     AppRoutingModule,
     PagesModule,
-    AdminModule,
     HeaderModule,
     MatSnackBarModule,
     FooterModule,

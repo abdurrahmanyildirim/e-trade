@@ -5,21 +5,26 @@ import { CartModule } from './cart/module';
 import { AuthModule } from './auth/module';
 import { OrdersModule } from './orders/module';
 import { OrderDetailModule } from './order-detail/module';
-import { FilteredPageModule } from './filtered-page/module';
+import { FilterModule } from './filter/module';
 import { ContactModule } from './contact/module';
 import { UserInfoModule } from './user-info/module';
+import { ManagementModule } from './management/module';
+
+const modules = [
+  MainModule,
+  ProductDetailModule,
+  CartModule,
+  AuthModule,
+  OrdersModule,
+  OrderDetailModule,
+  FilterModule,
+  ContactModule,
+  UserInfoModule,
+  ManagementModule
+];
 
 @NgModule({
-  imports: [
-    MainModule,
-    ProductDetailModule,
-    CartModule,
-    AuthModule,
-    OrdersModule,
-    OrderDetailModule,
-    FilteredPageModule,
-    ContactModule,
-    UserInfoModule
-  ]
+  imports: modules,
+  exports: modules
 })
 export class PagesModule {}

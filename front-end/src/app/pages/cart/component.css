@@ -73,11 +73,11 @@
     display: none;
   }
 
-  ::ng-deep .mat-horizontal-stepper-header-container {
+  :host ::ng-deep .mat-horizontal-stepper-header-container {
     display: none !important;
   }
 
-  ::ng-deep .mat-horizontal-content-container {
+  :host ::ng-deep .mat-horizontal-content-container {
     padding: 0 5px 5px 5px !important;
   }
 }

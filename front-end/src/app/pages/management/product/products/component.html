@@ -4,7 +4,7 @@
     <mat-form-field appearance="fill" class="order-type">
       <mat-select [(value)]="currentCategory" (valueChange)="initCurrentList()">
         <mat-option *ngFor="let category of categories" [value]="category"
-          >{{category.name}}</mat-option
+          >{{category.name | uppercase}}</mat-option
         >
       </mat-select>
     </mat-form-field>

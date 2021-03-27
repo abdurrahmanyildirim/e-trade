@@ -3,11 +3,11 @@ import { DialogComponent } from './component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogService } from './service';
 import { MatButtonModule } from '@angular/material/button';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [DialogComponent],
-  imports: [MatDialogModule, MatButtonModule, BrowserModule],
+  imports: [MatDialogModule, MatButtonModule, CommonModule],
   providers: [DialogService],
   exports: [DialogComponent]
 })

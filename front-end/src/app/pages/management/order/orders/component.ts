@@ -77,7 +77,7 @@ export class MnOrdersComponent implements OnInit, OnDestroy {
   }
 
   navigateToDetail(id: string): void {
-    this.router.navigateByUrl('mn-order-detail/' + id);
+    this.router.navigateByUrl('management/order-detail/' + id);
   }
 
   ngOnDestroy(): void {

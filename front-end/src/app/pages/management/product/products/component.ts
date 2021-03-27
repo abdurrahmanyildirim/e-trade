@@ -1,9 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { Category, Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
-import { isPresent } from 'src/app/shared/util/common';
 
 @Component({
   selector: 'app-mn-products',
@@ -51,7 +49,7 @@ export class MnProductsComponent implements OnInit, OnDestroy {
   }
 
   navigateToDetail(id: string): void {
-    this.router.navigateByUrl('mn-product-detail/' + id);
+    this.router.navigateByUrl('management/product-detail/' + id);
   }
 
   ngOnDestroy(): void {}

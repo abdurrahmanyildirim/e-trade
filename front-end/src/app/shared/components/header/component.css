@@ -3,14 +3,15 @@
 }
 
 .top {
-  /* background-color: #d5d8db; */
-  background-color: #b3e5fc;
+  background-color: #cfd8dc;
+  /* background-color: #eceff1; */
   padding: 20px 0;
   transition: padding 0.35s ease-in-out;
 }
 
 .logo-content {
   cursor: pointer;
+  outline: none;
   width: fit-content;
   margin: 0 auto;
 }
@@ -22,10 +23,11 @@
 }
 
 .logo-text {
-  font-size: 40px;
+  font-size: 35px;
   line-height: 50px;
   font-weight: 600;
   font-style: italic;
+  user-select: none;
 }
 
 .mobile {
@@ -125,10 +127,8 @@
 }
 
 .navbar {
-  /* background-color: #9fadbb; */
-  /* background-color: #40c4ff; */
   background-color: #00b0ff;
-  /* background-color: #0091ea; */
+  /* background-color: #53aeff; */
   position: sticky;
   top: 0;
   z-index: 10;

@@ -28,11 +28,7 @@ export interface CloudinaryPhoto {
 }
 
 export interface Category {
+  _id?: string;
   name: string;
+  isActive?: boolean;
 }
-
-// export enum Category {
-//   tava = 'tava',
-//   tencere = 'tencere',
-//   tabak = 'tabak'
-// }

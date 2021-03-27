@@ -1,0 +1,44 @@
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  padding: 0 5px;
+  min-width: 200px;
+  max-width: 250px;
+  position: sticky;
+  top: 150px;
+}
+
+.route {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.active {
+  background-color: rgb(221, 221, 221);
+  border-left: 6px solid #00b0ff;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px 5px;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease-in-out;
+  background-color: rgb(248, 248, 248);
+}
+
+.btn:hover {
+  background-color: rgb(212, 212, 212);
+}

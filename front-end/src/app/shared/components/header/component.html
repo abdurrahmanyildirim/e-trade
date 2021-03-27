@@ -66,6 +66,14 @@
           </button>
           <button
             mat-menu-item
+            routerLink="management"
+            *ngIf="(this.authService.isAuth | async) && (this.authService.role | async) === roles.admin"
+          >
+            <mat-icon>admin_panel_settings</mat-icon>
+            <span class="icon-text">Yönetim Paneli</span>
+          </button>
+          <button
+            mat-menu-item
             routerLink="mn-message-box"
             *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
           >
@@ -156,40 +164,17 @@
   </section>
   <section class="navbar mat-elevation-z1">
     <div class="navbar-container">
-      <button mat-button routerLink="main" class="nav">ANA SAYFA</button>
+      <button mat-button routerLink="main" class="nav" style="color: white">ANA SAYFA</button>
       <button
         mat-button
         class="nav"
-        routerLink="mn-orders"
-        *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
-      >
-        SİPARİŞLER
-      </button>
-      <button
-        mat-button
-        class="nav"
-        routerLink="mn-products"
-        *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
-      >
-        ÜRÜNLER
-      </button>
-      <button
-        mat-button
-        class="nav"
-        routerLink="mn-new-product"
-        *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
-      >
-        ÜRÜN EKLE
-      </button>
-      <button
-        mat-button
-        class="nav"
+        style="color: white"
         *ngFor="let category of categories"
         (click)="navigateToFilteredPage(category.name)"
       >
         {{category.name | uppercase}}
       </button>
-      <button mat-button routerLink="contact" class="nav">İLETİŞİM</button>
+      <button mat-button routerLink="contact" class="nav" style="color: white">İLETİŞİM</button>
     </div>
   </section>
 </main>

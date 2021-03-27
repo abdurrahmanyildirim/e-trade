@@ -13,7 +13,7 @@ import { Filter, SortType } from './model';
   styleUrls: ['./component.css'],
   viewProviders: [FilterFactory]
 })
-export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
+export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
   subs = new Subscription();
   products: Product[];
   brands: string[];
@@ -55,17 +55,11 @@ export class FilteredPageComponent implements OnInit, OnDestroy, AfterViewInit {
   listenBodyScroll(e: any): void {
     const filterPlace = document.getElementById('mobile-filter-button');
     if (document.body.scrollTop > this.previousScrollTop) {
-      if (filterPlace.style.height !== '0') {
-        filterPlace.style.height = '0';
-        filterPlace.style.padding = '0 0';
-        filterPlace.style.border = 'none';
-      }
+      filterPlace.style.transition = 'transform 0.35s ease-in';
+      filterPlace.style.transform = 'translateY(50px)';
     } else {
-      if (filterPlace.style.height !== '40px') {
-        filterPlace.style.height = '40px';
-        filterPlace.style.padding = '10px 0';
-        filterPlace.style.borderTop = '1px solid rgb(236, 236, 236);';
-      }
+      filterPlace.style.transition = 'transform 0.35s ease-out';
+      filterPlace.style.transform = 'translateY(0)';
     }
     this.previousScrollTop = document.body.scrollTop;
   }

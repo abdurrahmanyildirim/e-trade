@@ -41,6 +41,12 @@ export class ProductService {
     return this.http.get<Category[]>(this.configService.config.baseUrl + 'category/categories');
   }
 
+  addCategory(category: string): Observable<any> {
+    return this.http.get<any>(
+      this.configService.config.baseUrl + 'category/add-category?category=' + category
+    );
+  }
+
   productsByCategory(category: string): Observable<Product[]> {
     return this.http.get<Product[]>(
       this.configService.config.baseUrl + 'product/get-by-category?category=' + category

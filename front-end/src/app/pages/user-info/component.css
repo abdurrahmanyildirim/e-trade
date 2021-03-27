@@ -19,15 +19,14 @@
 }
 
 .active {
-  background-color: #3f51b5;
-  color: white;
+  color: #3f51b5;
 }
 
-::ng-deep .mat-horizontal-stepper-header-container {
+:host ::ng-deep .mat-horizontal-stepper-header-container {
   display: none !important;
 }
 
-::ng-deep .mat-horizontal-content-container {
+:host ::ng-deep .mat-horizontal-content-container {
   padding: 0 !important;
 }
 
