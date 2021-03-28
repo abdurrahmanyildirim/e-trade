@@ -21,6 +21,8 @@ const productSchema = new Schema({
   ],
   comments: [
     {
+      orderId: { type: mongoose.SchemaTypes.ObjectId, required: true, ref: 'Order' },
+      userId: { type: mongoose.SchemaTypes.ObjectId, required: true, ref: 'User' },
       name: String,
       description: String,
       rate: Number

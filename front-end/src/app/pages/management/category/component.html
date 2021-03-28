@@ -2,18 +2,13 @@
   <div class="categories">
     <div class="category" *ngFor="let category of categories">
       <span>{{category.name | uppercase}}</span>
-      <button mat-icon-button><mat-icon>close</mat-icon></button>
+      <button mat-icon-button (click)="remove(category.name)"><mat-icon>close</mat-icon></button>
     </div>
   </div>
   <div class="add-category">
     <div style="display: flex; align-items: center">
       <input type="text" class="input" placeholder="Yeni Kategori" [(ngModel)]="newCategory" />
-      <button
-        mat-flat-button
-        color="primary"
-        (click)="addNewCategory()"
-        [disabled]="newCategory.length<=0"
-      >
+      <button mat-flat-button color="primary" (click)="insert()" [disabled]="newCategory.length<=0">
         Ekle
       </button>
     </div>

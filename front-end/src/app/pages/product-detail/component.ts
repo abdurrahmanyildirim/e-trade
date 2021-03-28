@@ -30,8 +30,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   addTocartClick = new Subject<Product>();
   product: Product;
   photos = {
-    width: 448,
-    height: 448
+    width: 450,
+    height: 450
   };
 
   constructor(

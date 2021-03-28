@@ -6,6 +6,8 @@ const authController = require('../controllers/auth');
 router.get('/products', controller.getProducts);
 router.get('/get-by-category', controller.getByCategory);
 router.get('/get-by-id', controller.getProductById);
+router.use(authController.verifyToken);
+router.get('/rating', controller.addComment);
 router.use(authController.verifyAdmin);
 router.post('/new-product', controller.addNewProduct);
 router.delete('/remove', controller.remove);

@@ -5,6 +5,7 @@ const authController = require('../controllers/auth');
 
 router.get('/categories', controller.getCategories);
 router.use(authController.verifyAdmin);
-router.get('/add-category', controller.addCategory);
+router.get('/insert', controller.insert);
+router.get('/remove', controller.remove);
 
 module.exports = router;

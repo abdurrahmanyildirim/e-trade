@@ -88,7 +88,7 @@
         <button mat-icon-button (click)="onMobileNavMenuClick()">
           <mat-icon>reorder</mat-icon>
         </button>
-        <div class="mobile-brand" style="display: flex; align-items: center">
+        <div class="mobile-brand" routerLink="main">
           <img src="assets/img/logo.png" alt="" style="width: 25px; height: 25px" />
           <span class="logo-text">TAŞER</span>
         </div>
@@ -162,19 +162,18 @@
       </div>
     </div>
   </section>
-  <section class="navbar mat-elevation-z1">
+  <section class="navbar">
     <div class="navbar-container">
-      <button mat-button routerLink="main" class="nav" style="color: white">ANA SAYFA</button>
-      <button
-        mat-button
+      <div routerLink="main" routerLinkActive="active" class="nav" #nav>ANA SAYFA</div>
+      <div
         class="nav"
-        style="color: white"
         *ngFor="let category of categories"
         (click)="navigateToFilteredPage(category.name)"
+        [class.active]="isLinkActive(category.name)"
       >
         {{category.name | uppercase}}
-      </button>
-      <button mat-button routerLink="contact" class="nav" style="color: white">İLETİŞİM</button>
+      </div>
+      <div routerLink="contact" routerLinkActive="active" class="nav">İLETİŞİM</div>
     </div>
   </section>
 </main>

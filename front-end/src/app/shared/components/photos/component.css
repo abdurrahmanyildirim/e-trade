@@ -1,12 +1,28 @@
+.container {
+  overflow: hidden;
+}
+
+.photos {
+  display: flex;
+  width: 450px;
+  height: 450px;
+  overflow: hidden;
+}
+
+.cover {
+  display: flex;
+  transform: translateX(0);
+  transition: transform 0.35s ease-in-out;
+}
+
 .current-photo {
-  border: 1px solid #ccc;
   cursor: zoom-in;
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.all-photo {
+.all-mini-photos {
   height: 40px;
   width: 100%;
   margin: 5px 0;
@@ -15,7 +31,7 @@
   flex-wrap: wrap;
 }
 
-.photo {
+.mini-photo {
   width: 40px;
   height: 40px;
   margin-left: 5px;

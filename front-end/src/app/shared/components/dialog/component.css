@@ -1,4 +1,20 @@
+::ng-deep .cdk-global-scrollblock {
+  overflow: hidden !important;
+}
+
 .message {
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.review {
+  text-align: center;
+  overflow: hidden;
+}
+
+.star {
+  display: inline-block;
+  width: 21px;
+  height: 20px;
+  cursor: pointer;
 }

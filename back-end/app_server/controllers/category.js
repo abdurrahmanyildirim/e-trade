@@ -1,4 +1,5 @@
 const Category = require('../models/category');
+const Product = require('../models/product');
 
 module.exports.getCategories = (req, res) => {
   Category.find({ isActive: true }, (err, categories) => {
@@ -9,18 +10,28 @@ module.exports.getCategories = (req, res) => {
   });
 };
 
-module.exports.removeCategory = (req, res) => {
-  const id = req.query.id;
-  Category.findOneAndUpdate({ _id: id }, { isActive: false }, (err, doc) => {
-    console.log(doc);
+module.exports.remove = (req, res) => {
+  const category = req.query.category;
+  Category.findOneAndUpdate({ name: category }, { isActive: false }, (err, doc) => {
     if (err) {
       return res.status(500).send({ message: 'Bir hata meydana geldi' });
     }
-    return res.status(200).send({ message: 'Kategori silindi.' });
+    Product.find({ category: doc.name }, (err, products) => {
+      products.forEach((product) => {
+        product.isActive = false;
+        const newProduct = new Product(product);
+        newProduct.save((err) => {
+          if (err) {
+            return res.status(500).send({ message: 'Ürünler silinirken bir hata meydana geldi' });
+          }
+        });
+      });
+      return res.status(200).send({ message: 'Kategori silindi.' });
+    });
   });
 };
 
-module.exports.addCategory = (req, res) => {
+module.exports.insert = (req, res) => {
   const category = req.query.category;
   Category.find({ name: category }, (err, categories) => {
     if (err) {

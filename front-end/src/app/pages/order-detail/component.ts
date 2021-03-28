@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderDetail } from 'src/app/shared/models/order';
+import { DialogType } from 'src/app/shared/components/dialog/component';
+import { DialogService } from 'src/app/shared/components/dialog/service';
+import { SnackbarService } from 'src/app/shared/components/snackbar/service';
+import { OrderDetail, OrderDetailProduct } from 'src/app/shared/models/order';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { OrderService } from 'src/app/shared/services/rest/order.service';
+import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -13,29 +18,60 @@ import { OrderService } from 'src/app/shared/services/rest/order.service';
 })
 export class OrderDetailComponent implements OnInit {
   order: OrderDetail;
+  orderId: string;
   currentUser: User;
 
   constructor(
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private productService: ProductService,
+    private dialogService: DialogService,
+    private screenHolder: ScreenHolderService,
+    private snackBar: SnackbarService
   ) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUser.value;
     this.activatedRoute.params.subscribe((params) => {
       // tslint:disable-next-line: no-string-literal
-      this.initOrder(params['id']);
+      this.orderId = params['id'];
+      this.initOrder();
     });
   }
 
-  initOrder(id: string): void {
-    this.orderService.orderDetail(id).subscribe({
+  initOrder(): void {
+    this.orderService.orderDetail(this.orderId).subscribe({
       next: (data) => {
         this.order = data;
       },
       error: (err) => console.log(err)
+    });
+  }
+
+  reviewDialog(product: OrderDetailProduct): void {
+    this.dialogService.review({
+      acceptButton: 'Tamamla',
+      refuseButton: 'Vazgeç',
+      desc: product.rate + '',
+      dialog: DialogType.Review,
+      onClose: (rate) => {
+        if (!rate) {
+          return;
+        }
+        this.screenHolder.show();
+        this.productService.rateProduct(product.productId, this.orderId, rate).subscribe({
+          next: () => {
+            this.screenHolder.hide();
+            this.snackBar.showInfo('Geri bildiriminiz için teşekkürler');
+            this.initOrder();
+          },
+          error: (err) => {
+            this.screenHolder.hide();
+            this.snackBar.showError(err.error.message);
+          }
+        });
+      }
     });
   }
 }

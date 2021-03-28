@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { OrderList, OrderListProduct } from 'src/app/shared/models/order';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
@@ -11,8 +10,7 @@ import { isPresent } from 'src/app/shared/util/common';
 @Component({
   selector: 'app-orders',
   templateUrl: './component.html',
-  styleUrls: ['./component.css'],
-  providers: [OrderService]
+  styleUrls: ['./component.css']
 })
 export class OrdersComponent implements OnInit, OnDestroy {
   orderListType = [

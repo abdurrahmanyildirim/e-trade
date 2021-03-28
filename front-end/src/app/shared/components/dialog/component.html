@@ -5,7 +5,7 @@
     </mat-dialog-content>
     <mat-dialog-actions align="center">
       <button mat-flat-button color="warn" [mat-dialog-close]="false">{{data.refuseButton}}</button>
-      <button mat-flat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
+      <button mat-flat-button class="primary-button" [mat-dialog-close]="true" cdkFocusInitial>
         {{data.acceptButton}}
       </button>
     </mat-dialog-actions>
@@ -13,9 +13,49 @@
   <ng-container *ngSwitchCase="DialogType.Message">
     <mat-dialog-content class="mat-body-1 message"> {{data.desc}} </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
+      <button mat-button class="primary-button" [mat-dialog-close]="true" cdkFocusInitial>
         {{data.acceptButton}}
       </button>
     </mat-dialog-actions>
+  </ng-container>
+  <ng-container *ngSwitchCase="DialogType.Review">
+    <mat-dialog-content class="mat-body-1 review">
+      <div>{{currentRate}}</div>
+      <span
+        class="star empty-star-icon"
+        (mouseover)="onMouseOverStar(0)"
+        (mouseleave)="onMouseLeaveStar()"
+        [mat-dialog-close]="1"
+        #star
+      ></span>
+      <span
+        class="star empty-star-icon"
+        (mouseover)="onMouseOverStar(1)"
+        (mouseleave)="onMouseLeaveStar()"
+        [mat-dialog-close]="2"
+        #star
+      ></span>
+      <span
+        class="star empty-star-icon"
+        (mouseover)="onMouseOverStar(2)"
+        (mouseleave)="onMouseLeaveStar()"
+        [mat-dialog-close]="3"
+        #star
+      ></span>
+      <span
+        class="star empty-star-icon"
+        (mouseover)="onMouseOverStar(3)"
+        (mouseleave)="onMouseLeaveStar()"
+        [mat-dialog-close]="4"
+        #star
+      ></span>
+      <span
+        class="star empty-star-icon"
+        (mouseover)="onMouseOverStar(4)"
+        (mouseleave)="onMouseLeaveStar()"
+        [mat-dialog-close]="5"
+        #star
+      ></span>
+    </mat-dialog-content>
   </ng-container>
 </span>

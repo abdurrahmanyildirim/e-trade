@@ -24,8 +24,9 @@
 }
 
 .active {
-  background-color: rgb(221, 221, 221);
+  background-color: #b0bec5 !important;
   border-left: 6px solid #00b0ff;
+  /* transform: translateX(10px); */
 }
 
 .btn {
@@ -36,9 +37,11 @@
   cursor: pointer;
   box-sizing: border-box;
   transition: background-color 0.3s ease-in-out;
-  background-color: rgb(248, 248, 248);
+  background-color: #cfd8dc;
+  /* transition: transform 0.25s ease-in; */
+  border-radius: 0 20px 20px 0;
 }
 
 .btn:hover {
-  background-color: rgb(212, 212, 212);
+  background-color: #b0bec5;
 }

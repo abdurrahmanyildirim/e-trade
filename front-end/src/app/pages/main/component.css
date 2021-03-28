@@ -13,7 +13,7 @@
   background-image: url(../../../assets/img/main.jpg);
   width: 100%;
   max-width: 1200px;
-  opacity: 0.8;
+  /* opacity: 0.9; */
   /* background-color: green !important; */
   height: 550px;
   position: relative;

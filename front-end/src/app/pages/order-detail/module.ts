@@ -5,10 +5,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [OrderDetailComponent],
-  imports: [MatCardModule, MatSelectModule, BrowserModule, FormsModule, MatButtonModule],
+  imports: [
+    MatCardModule,
+    MatSelectModule,
+    BrowserModule,
+    FormsModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   exports: [OrderDetailComponent]
 })
 export class OrderDetailModule {}

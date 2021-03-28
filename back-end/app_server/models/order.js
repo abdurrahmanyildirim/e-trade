@@ -11,7 +11,8 @@ const orderSchema = new Schema({
       quantity: Number,
       discountRate: Number,
       price: Number,
-      photoPath: String
+      photoPath: String,
+      rate: Number
     }
   ],
   isActive: Boolean,

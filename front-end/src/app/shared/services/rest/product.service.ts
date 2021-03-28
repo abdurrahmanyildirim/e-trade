@@ -41,9 +41,15 @@ export class ProductService {
     return this.http.get<Category[]>(this.configService.config.baseUrl + 'category/categories');
   }
 
-  addCategory(category: string): Observable<any> {
+  insertCategory(category: string): Observable<any> {
     return this.http.get<any>(
-      this.configService.config.baseUrl + 'category/add-category?category=' + category
+      this.configService.config.baseUrl + 'category/insert?category=' + category
+    );
+  }
+
+  removeCategory(category: string): Observable<any> {
+    return this.http.get<any>(
+      this.configService.config.baseUrl + 'category/remove?category=' + category
     );
   }
 
@@ -63,6 +69,18 @@ export class ProductService {
 
   productById(id: string): Observable<Product> {
     return this.http.get<Product>(this.configService.config.baseUrl + 'product/get-by-id?id=' + id);
+  }
+
+  rateProduct(productId: string, orderId: string, rate: Number): Observable<any> {
+    return this.http.get<any>(
+      this.configService.config.baseUrl +
+        'product/rating?rate=' +
+        rate +
+        '&productId=' +
+        productId +
+        '&orderId=' +
+        orderId
+    );
   }
 
   uploadPhoto(photos: FormData): Observable<CloudinaryPhoto[]> {

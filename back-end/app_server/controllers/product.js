@@ -1,4 +1,6 @@
 const Product = require('../models/product');
+const Order = require('../models/order');
+const User = require('../models/user');
 const cloudinaryService = require('../services/cloudinary');
 
 module.exports.getProducts = (req, res) => {
@@ -89,5 +91,68 @@ module.exports.update = (req, res) => {
       return res.status(401).send({ message: 'Bir hata meydana geldi.' });
     }
     res.status(200).send({ message: 'Güncelleme başarılı' });
+  });
+};
+
+module.exports.addComment = (req, res) => {
+  const orderId = req.query.orderId.toString();
+  const rate = req.query.rate;
+  const productId = req.query.productId.toString();
+  Order.findOne({ _id: orderId }, (err, order) => {
+    if (err) {
+      return res.status(500).send({ message: 'Beklenmeyen bir hata oldu.' });
+    }
+    const isOrdered = !!order.products.find(
+      (product) => product.productId.toString() === productId
+    );
+    if (!isOrdered) {
+      return res.status(400).send({ message: 'Satın alınmayan ürün oylanamaz.' });
+    }
+    Product.findOne({ _id: productId }, (err, product) => {
+      if (err) {
+        return res.status(500).send({ message: 'Beklenmeyen bir hata oldu.' });
+      }
+      User.findOne({ _id: req.id }, (err, user) => {
+        if (err) {
+          return res.status(500).send({ message: 'Beklenmeyen bir hata oldu.' });
+        }
+        const comment = product.comments.find(
+          (comment) =>
+            comment.userId.toString() === user._id.toString() &&
+            comment.orderId.toString() === orderId
+        );
+        if (comment) {
+          product.comments.find(
+            (comment) =>
+              comment.userId.toString() === user._id.toString() &&
+              comment.orderId.toString() === orderId
+          ).rate = rate;
+        } else {
+          product.comments.push({
+            orderId,
+            userId: user.id,
+            name: user.firstName + ' ' + user.lastName,
+            description: '',
+            rate
+          });
+        }
+        const totalRate = product.comments.reduce((acc, { rate }) => acc + rate, 0);
+        product.rate = Number.parseFloat((totalRate / product.comments.length).toFixed(2));
+        product.save((err) => {
+          if (err) {
+            return res.status(500).send({ message: 'Beklenmeyen bir hata oldu.' });
+          }
+          order.products.find(
+            (orderedProduct) => orderedProduct.productId.toString() === productId
+          ).rate = rate;
+          order.save((err) => {
+            if (err) {
+              return res.status(500).send({ message: 'Beklenmeyen bir hata oldu.' });
+            }
+            return res.status(200).send({ message: 'Puanlama yapıldı.' });
+          });
+        });
+      });
+    });
   });
 };

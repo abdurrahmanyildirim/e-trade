@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'filtered-page', component: FilterComponent },
+  { path: 'filter', component: FilterComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'sales-contract', component: SalesContractComponent },
   { path: 'about', component: AboutComponent },

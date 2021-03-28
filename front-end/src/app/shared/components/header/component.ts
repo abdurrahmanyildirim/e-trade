@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { Roles } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
@@ -24,12 +24,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   filteredProducts: SearchProduct[] = [];
   @ViewChild('mobileNavMenu') mobileNavMenu: ElementRef<HTMLElement>;
   @ViewChild('top') top: ElementRef<HTMLElement>;
+  @ViewChildren('nav') navs: ElementRef<HTMLElement>[];
 
   constructor(
     public cartService: CartService,
     public authService: AuthService,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -58,7 +60,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (document.body.clientWidth <= 650) {
       this.onMobileNavMenuClick();
     }
-    this.router.navigateByUrl('filtered-page?category=' + category);
+    this.router.navigateByUrl('filter?category=' + category);
+  }
+
+  isLinkActive(category: string): boolean {
+    const queryParams = this.activatedRoute.queryParams as BehaviorSubject<any>;
+    if (isPresent(queryParams.value.category) && queryParams.value.category.includes(category)) {
+      return true;
+    }
+    return false;
   }
 
   onMobileNavMenuClick(): void {
@@ -105,13 +115,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSerchClick(): void {
-    this.router.navigateByUrl('filtered-page?searchKey=' + this.searchKey);
+    this.router.navigateByUrl('filter?searchKey=' + this.searchKey);
     this.searchKey = '';
     this.onKeyup();
   }
 
   onSelectionChange(product: SearchProduct): void {
-    this.router.navigateByUrl('filtered-page?searchKey=' + product.name);
+    this.router.navigateByUrl('filter?searchKey=' + product.name);
     setTimeout(() => {
       this.searchKey = '';
       this.onKeyup();

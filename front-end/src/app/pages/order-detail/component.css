@@ -52,6 +52,7 @@
 .info {
   /* margin-left: 10px; */
   margin-top: 10px;
+  flex: 1;
 }
 
 .brand {
@@ -68,6 +69,11 @@
   color: rgb(143, 143, 143);
   text-decoration: line-through;
   margin-right: 5px;
+}
+
+.rate-button {
+  background-color: #00b0ff;
+  color: white;
 }
 
 .mobile-card {

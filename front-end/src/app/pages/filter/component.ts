@@ -8,7 +8,7 @@ import { FilterFactory } from './factory';
 import { Filter, SortType } from './model';
 
 @Component({
-  selector: 'app-filtered-page',
+  selector: 'app-filter',
   templateUrl: './component.html',
   styleUrls: ['./component.css'],
   viewProviders: [FilterFactory]

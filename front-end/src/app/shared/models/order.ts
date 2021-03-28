@@ -65,4 +65,5 @@ export interface OrderDetailProduct {
   photoPath: string;
   brand: string;
   name: string;
+  rate?: number;
 }
