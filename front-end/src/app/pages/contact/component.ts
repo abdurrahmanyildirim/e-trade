@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Contact } from 'src/app/shared/models/contact';
@@ -8,7 +8,8 @@ import { nullValidator } from 'src/app/shared/util/common';
 @Component({
   selector: 'app-contact',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactComponent implements OnInit {
   contact: Contact;
@@ -16,7 +17,8 @@ export class ContactComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private contactService: ContactService,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +37,7 @@ export class ContactComponent implements OnInit {
       ]),
       desc: new FormControl('', [Validators.required, nullValidator()])
     });
+    this.cd.detectChanges();
   }
 
   onKeypress(): void {

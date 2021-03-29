@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { throttleTime } from 'rxjs/operators';
 import { Order } from 'src/app/shared/models/order';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { isPresent } from 'src/app/shared/util/common';
@@ -48,7 +48,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   initQuantityChange(): void {
-    const sub = this.quantityChange.pipe(debounceTime(500)).subscribe({
+    const sub = this.quantityChange.pipe(throttleTime(500)).subscribe({
       next: (orders) => {
         this.cartService.updateCart(orders);
         this.calculateTotalCost();

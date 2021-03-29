@@ -1,5 +1,9 @@
 <main class="container mat-elevation-z2" routerLink="/product-detail/{{product._id}}">
-  <div class="img" [ngStyle]="{'background-image': 'url(' + product.photos[0].path + ')'}">
+  <div
+    class="img"
+    loading="lazy"
+    [ngStyle]="{'background-image': 'url(' + product.photos[0].path + ')'}"
+  >
     <div class="discount-badge mat-body-2" *ngIf="product.discountRate>0">
       <div class="dotted-line top-dotted"></div>
       %{{product.discountRate * 100 | number :'.0-0'}} indirim
@@ -10,7 +14,6 @@
     <div class="brand">{{product.brand}}</div>
     <div class="name mat-body-2">{{product.name}}</div>
     <div class="star">
-      <span *ngIf="product.rate<=0">Yeni Ürün</span>
       <app-star
         *ngIf="product.rate>0"
         [givenRate]="product.rate"

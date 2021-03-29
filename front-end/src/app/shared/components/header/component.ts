@@ -1,4 +1,13 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -13,7 +22,8 @@ import { SearchProduct } from './model';
 @Component({
   selector: 'app-header',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   categories: any;
@@ -31,18 +41,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     private router: Router,
     private productService: ProductService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.initCategories();
-    this.initProducts();
   }
 
   initCategories(): void {
     const sub = this.productService.categories().subscribe({
       next: (categories) => {
         this.categories = categories;
+        this.initProducts();
       },
       error: (err) => console.log(err)
     });
@@ -107,6 +118,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (products) => {
           this.products = products as SearchProduct[];
+          this.cd.detectChanges();
         },
         error: (err) => {
           console.log(err);

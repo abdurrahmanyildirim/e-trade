@@ -1,15 +1,8 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OwlOptions } from 'ngx-owl-carousel-o';
 import { fromEvent, Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { throttleTime } from 'rxjs/operators';
+import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Order } from 'src/app/shared/models/order';
 import { Product } from 'src/app/shared/models/product';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
@@ -37,7 +30,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   constructor(
     private cartService: CartService,
     private activatedRouter: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private snackbar: SnackbarService
   ) {
     const subs = this.activatedRouter.params.subscribe((params) => {
       this.productId = params.id;
@@ -82,7 +76,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   initAddToCartStream(): void {
-    const sub = this.addTocartClick.pipe(debounceTime(200)).subscribe({
+    const sub = this.addTocartClick.pipe(throttleTime(200)).subscribe({
       next: (product: Product) => {
         let newOrder = this.orders.find((order) => order.productId === product._id);
         if (isPresent(newOrder)) {
@@ -101,6 +95,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
           this.orders.push(newOrder);
         }
         this.cartService.updateCart(this.orders);
+        this.snackbar.showInfo('Sepete Eklendi.');
       }
     });
     this.subs.add(sub);

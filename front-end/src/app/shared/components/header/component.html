@@ -5,6 +5,7 @@
         <div class="logo-content center" routerLink="main">
           <img src="assets/img/logo.png" alt="logo" class="logo" />
           <span class="logo-text">TAŞER</span>
+          <!-- <img src="assets/img/brand.svg" alt="E trade" /> -->
         </div>
       </div>
       <div class="search center">
@@ -72,13 +73,6 @@
             <mat-icon>admin_panel_settings</mat-icon>
             <span class="icon-text">Yönetim Paneli</span>
           </button>
-          <button
-            mat-menu-item
-            routerLink="mn-message-box"
-            *ngIf="(this.authService.role | async) === roles.admin && (this.authService.isAuth | async)"
-          >
-            <mat-icon>email</mat-icon> <span class="icon-text">Mesajlar</span>
-          </button>
           <button mat-menu-item (click)="logout()">
             <mat-icon>logout</mat-icon> <span class="icon-text">Çıkış</span>
           </button>
@@ -91,6 +85,7 @@
         <div class="mobile-brand" routerLink="main">
           <img src="assets/img/logo.png" alt="" style="width: 25px; height: 25px" />
           <span class="logo-text">TAŞER</span>
+          <!-- <img src="assets/img/brand.svg" alt="E trade" style="height: 20px" /> -->
         </div>
         <div class="mobile-tools">
           <button mat-icon-button routerLink="cart" *ngIf="(this.authService.isAuth | async)">

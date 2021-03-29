@@ -97,18 +97,15 @@
 .operation {
   margin-top: 15px;
   display: flex;
+  justify-content: space-between;
 }
 
-.numeric{
-  width: 130px;
+.numeric {
+  width: 40%;
 }
-
-/**/
 
 .button {
-  background-color: #27c007;
-  color: white;
-  margin-left: 10px;
+  width: 40%;
 }
 
 .bottom {
@@ -153,15 +150,5 @@
   .general {
     padding: 0;
     width: 100%;
-  }
-
-  .numeric {
-    flex: 1;
-    width: '';
-  }
-
-  .button{
-    flex: 1;
-    margin-left: 5px;
   }
 }

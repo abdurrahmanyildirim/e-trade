@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { isPresent } from '../../util/common';
 
 @Component({
   selector: 'app-numeric-input',

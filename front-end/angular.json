@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "e-trader": {
+    "e-trade": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/e-trader",
+            "outputPath": "dist/e-trade",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "e-trader:build"
+            "browserTarget": "e-trade:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "e-trader:build:production"
+              "browserTarget": "e-trade:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "e-trader:build"
+            "browserTarget": "e-trade:build"
           }
         },
         "lint": {
@@ -86,5 +86,5 @@
       }
     }
   },
-  "defaultProject": "e-trader"
+  "defaultProject": "e-trade"
 }

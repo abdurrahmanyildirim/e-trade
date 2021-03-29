@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
 import { Category, Product } from 'src/app/shared/models/product';
@@ -11,7 +20,8 @@ import { Filter, SortType } from './model';
   selector: 'app-filter',
   templateUrl: './component.html',
   styleUrls: ['./component.css'],
-  viewProviders: [FilterFactory]
+  viewProviders: [FilterFactory],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
   subs = new Subscription();
@@ -40,7 +50,8 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     public productService: ProductService,
-    private filterFactory: FilterFactory
+    private filterFactory: FilterFactory,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngAfterViewInit(): void {}
@@ -104,7 +115,6 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
       if (isPresent(searchKey)) {
         this.filter.sKey = searchKey;
       }
-      this.initProducts();
     });
     this.subs.add(sub);
   }
@@ -119,6 +129,7 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
         this.brands = this.filterFactory.brands.slice();
         this.mainSplash = false;
         this.showSplash = false;
+        this.cd.detectChanges();
       }
     });
   }
@@ -152,6 +163,7 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
     this.productService.categories().subscribe({
       next: (categories) => {
         this.categories = categories;
+        this.initProducts();
       },
       error: (error) => {
         console.log(error);

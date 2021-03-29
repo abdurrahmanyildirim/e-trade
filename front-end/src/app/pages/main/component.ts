@@ -1,4 +1,11 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
@@ -10,7 +17,8 @@ import { ObjectHelper } from 'src/app/shared/util/helper/object';
 @Component({
   selector: 'app-main',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainComponent implements OnInit, OnDestroy {
   sub: Subscription;
@@ -25,6 +33,7 @@ export class MainComponent implements OnInit, OnDestroy {
     center: true,
     items: 2,
     navText: ['<', '>'],
+    lazyLoad: true,
     dots: false,
     responsive: {
       0: {
@@ -49,7 +58,11 @@ export class MainComponent implements OnInit, OnDestroy {
     nav: true
   };
 
-  constructor(private productService: ProductService, private authService: AuthService) {}
+  constructor(
+    private productService: ProductService,
+    private authService: AuthService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.initProducts();
@@ -62,6 +75,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this.initDiscountedProducts();
         this.initMostLiked();
         this.initNewProducts();
+        this.cd.detectChanges();
       },
       error: (err) => console.log(err)
     });
@@ -84,8 +98,6 @@ export class MainComponent implements OnInit, OnDestroy {
       .reverse()
       .slice(0, 15);
   }
-
-  resize(): void {}
 
   ngOnDestroy(): void {
     if (isPresent(this.sub)) {

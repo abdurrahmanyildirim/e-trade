@@ -8,7 +8,7 @@ module.exports.photoUpload = async (req, res) => {
       const image = await cloudinaryService.upload(photo.tempFilePath, 'product/');
       imagesInfo.push({
         publicId: image.public_id,
-        path: image.url
+        path: image.secure_url
       });
     } catch (error) {
       console.log(error);
