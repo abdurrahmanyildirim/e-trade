@@ -39,16 +39,16 @@ html {
 }
 
 .primary-button {
-  background-color: #00b0ff;
+  background-color: #03a9f4;
   color: white;
 }
 
-.primary-button-bg {
-  background-color: #00b0ff;
+.primary-bg {
+  background-color: #03a9f4;
 }
 
-.primary-button-color {
-  color: #00b0ff;
+.primary-color {
+  color: #03a9f4;
 }
 
 .error-snackbar {

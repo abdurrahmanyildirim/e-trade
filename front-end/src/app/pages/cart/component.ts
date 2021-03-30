@@ -3,6 +3,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
+import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Order } from 'src/app/shared/models/order';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { isPresent } from 'src/app/shared/util/common';
@@ -21,7 +22,11 @@ export class CartComponent implements OnInit, OnDestroy {
   cartStepActive = true;
   @ViewChild('stepper') stepper: MatStepper;
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private snackbar: SnackbarService
+  ) {}
 
   ngOnInit(): void {
     this.initOrders();
@@ -50,8 +55,19 @@ export class CartComponent implements OnInit, OnDestroy {
   initQuantityChange(): void {
     const sub = this.quantityChange.pipe(throttleTime(500)).subscribe({
       next: (orders) => {
-        this.cartService.updateCart(orders);
-        this.calculateTotalCost();
+        const subs2 = this.cartService.updateCart(this.orders).subscribe({
+          next: (result) => {
+            if (result) {
+              this.snackbar.showInfo('Sepetiniz güncellendi.');
+              this.calculateTotalCost();
+            }
+          },
+          error: (err) => {
+            console.error(err);
+            this.snackbar.showError('Güncelleme sırasında bir hata oldu');
+          }
+        });
+        this.subs.add(subs2);
       },
       error: (err) => console.log(err)
     });

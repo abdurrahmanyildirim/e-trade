@@ -10,7 +10,7 @@
   <span *ngIf="!isMobile">
     <div class="header-content">
       <span class="header-text mat-body-2">Siparişlerim</span>
-      <mat-form-field appearance="fill" class="order-type">
+      <mat-form-field appearance="outline" class="order-type">
         <mat-select [(value)]="currentList.key">
           <mat-option *ngFor="let type of orderListType" [value]="type.key"
             >{{type.text}}</mat-option

@@ -5,7 +5,7 @@
     </mat-dialog-content>
     <mat-dialog-actions align="center">
       <button mat-flat-button color="warn" [mat-dialog-close]="false">{{data.refuseButton}}</button>
-      <button mat-flat-button class="primary-button" [mat-dialog-close]="true" cdkFocusInitial>
+      <button mat-flat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
         {{data.acceptButton}}
       </button>
     </mat-dialog-actions>
@@ -13,7 +13,7 @@
   <ng-container *ngSwitchCase="DialogType.Message">
     <mat-dialog-content class="mat-body-1 message"> {{data.desc}} </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button class="primary-button" [mat-dialog-close]="true" cdkFocusInitial>
+      <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
         {{data.acceptButton}}
       </button>
     </mat-dialog-actions>

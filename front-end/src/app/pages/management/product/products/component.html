@@ -1,7 +1,7 @@
 <main class="container" *ngIf="currentList">
   <div class="top">
     <span class="title mat-body-2">Ürünlerim</span>
-    <mat-form-field appearance="fill" class="order-type">
+    <mat-form-field appearance="outline" class="order-type">
       <mat-select [(value)]="currentCategory" (valueChange)="initCurrentList()">
         <mat-option *ngFor="let category of categories" [value]="category"
           >{{category.name | uppercase}}</mat-option

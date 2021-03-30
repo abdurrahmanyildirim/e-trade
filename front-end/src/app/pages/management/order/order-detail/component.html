@@ -18,7 +18,7 @@
     <div class="card status-card">
       <div class="card-header mat-body-2">Sipariş Düzenleme</div>
       <div class="order-setting">
-        <mat-form-field appearance="fill" class="order-type">
+        <mat-form-field appearance="outline" class="order-type">
           <mat-select [(value)]="currentStatus.key">
             <mat-option *ngFor="let status of statuses" [value]="status.key">
               {{status.desc}}
@@ -49,8 +49,8 @@
               {{product.price*product.quantity | number : '.2-2'}} TL</span
             >
             <span
-              >{{(product.price - product.discountRate * product.price) * product.quantity | number :
-              '.2-2'}} TL</span
+              >{{(product.price - product.discountRate * product.price) * product.quantity | number
+              : '.2-2'}} TL</span
             >
           </div>
         </div>

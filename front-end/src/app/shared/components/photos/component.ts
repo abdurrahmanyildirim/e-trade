@@ -30,14 +30,18 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy {
   currentIndex = 0;
   touchStart: number;
   touchEnd: number;
+  isMobile = false;
 
   ngOnInit(): void {
     this.currentPhoto = this.photos[0];
+    if (document.body.clientWidth <= 650) {
+      this.isMobile = true;
+    }
   }
 
   ngAfterViewInit(): void {
     this.activeCurrentPhoto();
-    if (document.body.clientWidth <= 650) {
+    if (this.isMobile) {
       this.listenTouchEvents();
     }
   }
@@ -49,13 +53,13 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subs.add(subs);
     subs = fromEvent(this.cover.nativeElement, 'touchend').subscribe((event: TouchEvent) => {
       this.touchEnd = event.changedTouches[0].screenX;
-      if (this.touchStart < this.touchEnd) {
+      if (this.touchEnd - this.touchStart > 10) {
         if (this.currentIndex > 0) {
           this.currentIndex--;
           this.currentPhoto = this.photos[this.currentIndex];
           this.changePhoto(this.currentIndex, this.currentPhoto._id);
         }
-      } else {
+      } else if (this.touchStart - this.touchEnd > 10) {
         if (this.currentIndex < this.photos.length - 1) {
           this.currentIndex++;
           this.currentPhoto = this.photos[this.currentIndex];
@@ -64,6 +68,12 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
     this.subs.add(subs);
+  }
+
+  changePhoto(index: number, id: string): void {
+    this.currentIndex = index;
+    this.cover.nativeElement.style.transform = 'translateX(' + -index * this.width + 'px)';
+    this.onMiniPhotoClick(id);
   }
 
   onMiniPhotoClick(id: string): void {
@@ -102,12 +112,6 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy {
     const bgPosX = (mouseX / width) * 100;
     const bgPosY = (mouseY / height) * 100;
     image.style.backgroundPosition = `${bgPosX}% ${bgPosY}%`;
-  }
-
-  changePhoto(index: number, id: string): void {
-    this.currentIndex = index;
-    this.cover.nativeElement.style.transform = 'translateX(' + -index * this.width + 'px)';
-    this.onMiniPhotoClick(id);
   }
 
   ngOnDestroy(): void {

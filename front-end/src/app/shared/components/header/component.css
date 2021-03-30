@@ -129,9 +129,7 @@
 }
 
 .navbar {
-  /* background-color: #00b0ff; */
   background-color: #eceff1;
-  /* background-color: #53aeff; */
   position: sticky;
   top: 0;
   z-index: 10;
@@ -163,13 +161,13 @@
 }
 
 .nav:hover {
-  color: #00b0ff;
-  border-bottom: 3px solid #00b0ff;
+  color: #03a9f4;
+  border-bottom: 3px solid #03a9f4;
 }
 
 .active {
-  color: #00b0ff;
-  border-bottom: 3px solid #00b0ff;
+  color: #03a9f4;
+  border-bottom: 3px solid #03a9f4;
 }
 
 .cart {

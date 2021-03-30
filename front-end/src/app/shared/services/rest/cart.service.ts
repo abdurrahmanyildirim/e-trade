@@ -28,19 +28,19 @@ export class CartService implements OnDestroy {
   }
 
   initCart(): Observable<void> {
-    return new Observable((observable) => {
+    return new Observable((observer) => {
       if (this.authService.loggedIn()) {
         const sub = this.getCartFromDb().subscribe((cart) => {
           this.cart.next(cart);
-          observable.next();
-          observable.complete();
+          observer.next();
+          observer.complete();
           sub.unsubscribe();
         });
       } else {
         // const orders = this.localStorage.getObject<Order[]>(StorageKey.Cart) || [];
         this.cart.next([]);
-        observable.next();
-        observable.complete();
+        observer.next();
+        observer.complete();
       }
     });
   }
@@ -52,19 +52,26 @@ export class CartService implements OnDestroy {
     );
   }
 
-  updateCart(orders: Order[]): void {
-    if (this.authService.loggedIn()) {
-      this.updateDbCart(orders).subscribe({
-        next: (data) => {
-          this.cart.next(orders);
-        },
-        error: (err) => console.log(err)
-      });
-    } else {
-      this.router.navigateByUrl('login');
-      // this.updateLocaleStorage(orders);
-      // this.cart.next(orders);
-    }
+  updateCart(orders: Order[]): Observable<boolean> {
+    return new Observable((observer) => {
+      if (this.authService.loggedIn()) {
+        this.updateDbCart(orders).subscribe({
+          next: (data) => {
+            this.cart.next(orders);
+            observer.next(true);
+            observer.complete();
+          },
+          error: (err) => {
+            console.log(err);
+            observer.error(err);
+          }
+        });
+      } else {
+        this.router.navigateByUrl('login');
+        observer.next(false);
+        observer.complete();
+      }
+    });
   }
 
   updateDbCart(orders: Order[]): Observable<Order[]> {

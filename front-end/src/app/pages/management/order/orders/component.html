@@ -1,7 +1,7 @@
 <main class="container" *ngIf="orders">
   <div class="top">
     <span class="title mat-body-2">Siparişler</span>
-    <mat-form-field appearance="fill" class="order-type">
+    <mat-form-field appearance="outline" class="order-type">
       <mat-select [(value)]="currentType.key" (selectionChange)="initCurrentOrderList()">
         <mat-option *ngFor="let type of orderTypes" [value]="type.key">{{type.desc}}</mat-option>
       </mat-select>
@@ -11,12 +11,7 @@
     <span class="order-item">{{order.date | date:'mediumDate'}}</span>
     <span class="order-item"> {{order.contactInfo.city + '/' + order.contactInfo.district}} </span>
     <span class="order-item"> {{order.products.length}} Ürün </span>
-    <button
-      mat-icon-button
-      class="button"
-      color="primary"
-      (click)="navigateToDetail(order._id)"
-    >
+    <button mat-icon-button class="button" color="primary" (click)="navigateToDetail(order._id)">
       <mat-icon>arrow_forward_ios</mat-icon>
     </button>
   </div>

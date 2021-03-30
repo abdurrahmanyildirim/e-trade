@@ -3,7 +3,7 @@ const Product = require('../models/product');
 const Order = require('../models/order');
 const cryptoService = require('../services/crypto');
 
-module.exports.updateCart = (req, res, next) => {
+module.exports.updateCart = (req, res) => {
   User.findOne({ _id: req.id }, (err, user) => {
     if (err) {
       return res.status(400).send({ message: 'Kullanıcı bulunamadı' });

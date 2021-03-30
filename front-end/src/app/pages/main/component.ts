@@ -30,8 +30,6 @@ export class MainComponent implements OnInit, OnDestroy {
   owlOptions: OwlOptions = {
     loop: true,
     autoplay: true,
-    center: true,
-    items: 2,
     navText: ['<', '>'],
     lazyLoad: true,
     dots: false,

@@ -1,5 +1,5 @@
 <div class="container" >
   <div class="decrement side" (click)="decrement()">-</div>
-  <input type="text" class="input" [(ngModel)]="quantity" max="100" (keyup)="onKeyup($event)" />
+  <input type="text" class="input" [(ngModel)]="quantity" [max]="max" (keyup)="onKeyup($event)" />
   <div class="increment side" (click)="increment()">+</div>
 </div>

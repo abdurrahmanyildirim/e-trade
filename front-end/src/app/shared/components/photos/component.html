@@ -4,9 +4,9 @@
       <div
         class="current-photo"
         *ngFor="let photo of photos"
-        (mouseenter)="onMouseEnter($event)"
-        (mouseleave)="onMouseLeave($event)"
-        (mousemove)="onMouseMove($event)"
+        (mouseenter)="!isMobile ? onMouseEnter($event) : ''"
+        (mouseleave)="!isMobile ?  onMouseLeave($event) : ''"
+        (mousemove)="!isMobile ? onMouseMove($event) : ''"
         id="curr-{{photo._id}}"
         [ngStyle]="{'background-image' : 'url(' + photo.path + ')', 'width' : width  + 'px', 'height' : height + 'px'}"
       ></div>

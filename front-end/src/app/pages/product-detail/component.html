@@ -46,11 +46,15 @@
         </div>
         <div class="operation">
           <div class="numeric">
-            <app-numeric-input [(quantity)]="quantity"></app-numeric-input>
+            <app-numeric-input
+              [(quantity)]="quantity"
+              [max]="product.stockQuantity"
+            ></app-numeric-input>
           </div>
           <button
             mat-flat-button
-            class="button primary-button"
+            class="button"
+            color="primary"
             (click)="addTocartClick.next(product)"
           >
             <mat-icon>add_shopping_cart</mat-icon>

@@ -1,20 +1,22 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { ObjectHelper } from '../../util/helper/object';
 
 @Component({
   selector: 'app-numeric-input',
   templateUrl: './component.html',
   styleUrls: ['./component.css']
 })
-export class NumericInputComponent {
+export class NumericInputComponent implements OnDestroy {
   @Input() quantity: number;
   @Input() width?: number;
   @Input() height?: number;
+  @Input() max?: number;
   @Output() quantityChange = new EventEmitter<number>();
 
   numbers = '0123456789';
 
   increment(): void {
-    if (this.quantity >= 100) {
+    if (this.quantity >= this.max) {
       return;
     }
     this.quantity++;
@@ -42,12 +44,16 @@ export class NumericInputComponent {
         numbers += item;
       }
     }
-    const result = parseInt(numbers, 10) > 100 ? 100 : parseInt(numbers, 10);
+    const result = parseInt(numbers, 10) > this.max ? this.max : parseInt(numbers, 10);
     this.quantity = result;
     this.triggerChange();
   }
 
   triggerChange(): void {
     this.quantityChange.emit(this.quantity);
+  }
+
+  ngOnDestroy(): void {
+    ObjectHelper.removeReferances(this);
   }
 }

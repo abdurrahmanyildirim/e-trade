@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { fromEvent, Subject, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
@@ -13,7 +20,8 @@ import { ObjectHelper } from 'src/app/shared/util/helper/object';
 @Component({
   selector: 'app-detail',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   quantity = 1;
@@ -31,29 +39,31 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
     private cartService: CartService,
     private activatedRouter: ActivatedRoute,
     private productService: ProductService,
-    private snackbar: SnackbarService
-  ) {
+    private snackbar: SnackbarService,
+    private cd: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
     const subs = this.activatedRouter.params.subscribe((params) => {
       this.productId = params.id;
+      this.getProductById();
     });
     this.subs.add(subs);
+    this.orders = this.cartService.cart.value;
+    this.initAddToCartStream();
   }
+
   ngAfterViewInit(): void {
     this.listenResize();
     document.body.scrollTop = 0;
   }
 
-  ngOnInit(): void {
-    this.getProductById();
-    this.orders = this.cartService.cart.value;
-    this.initAddToCartStream();
-  }
-
-  listenResize() {
+  listenResize(): void {
     if (document.body.clientWidth <= 650) {
       setTimeout(() => {
         this.photos.width = this.photos.height = document.body.clientWidth - 12;
-      }, 200);
+        this.cd.detectChanges();
+      });
     }
     const sub = fromEvent(window, 'resize').subscribe((event: any) => {
       if (document.body.clientWidth <= 650) {
@@ -61,6 +71,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
       } else {
         this.photos.width = this.photos.height = 448;
       }
+      this.cd.detectChanges();
     });
     this.subs.add(sub);
   }
@@ -69,6 +80,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
     const subs = this.productService.productById(this.productId).subscribe({
       next: (product) => {
         this.product = product;
+        this.cd.detectChanges();
       },
       error: (error) => console.log(error)
     });
@@ -94,8 +106,21 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
           } as Order;
           this.orders.push(newOrder);
         }
-        this.cartService.updateCart(this.orders);
-        this.snackbar.showInfo('Sepete Eklendi.');
+        const subs2 = this.cartService.updateCart(this.orders).subscribe({
+          next: (result) => {
+            if (result) {
+              this.snackbar.showInfo('Sepete Eklendi.');
+            }
+          },
+          error: (err) => {
+            console.error(err);
+            this.snackbar.showError('sepete ekleme sırasında hata meydana geldi');
+          }
+        });
+        this.subs.add(subs2);
+      },
+      error: (err) => {
+        console.log(err);
       }
     });
     this.subs.add(sub);
