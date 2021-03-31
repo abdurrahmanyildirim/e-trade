@@ -3,25 +3,24 @@ const Product = require('../models/product');
 const Order = require('../models/order');
 const cryptoService = require('../services/crypto');
 
-module.exports.updateCart = (req, res) => {
-  User.findOne({ _id: req.id }, (err, user) => {
+module.exports.updateCart = async (req, res) => {
+  const user = await User.findOne({ _id: req.id });
+  if (!user) {
+    return res.status(400).send({ message: 'Kullanıcı bulunamadı' });
+  }
+  const orders = req.body;
+  if (!orders) {
+    return res.status(400).send({ message: 'Siparişler boş bırakılamaz.' });
+  }
+  const newCart = orders.map((order) => {
+    return { productId: order.productId, quantity: order.quantity };
+  });
+  user.cart = newCart;
+  user.save((err) => {
     if (err) {
-      return res.status(400).send({ message: 'Kullanıcı bulunamadı' });
+      return res.status(404).send({ message: 'Kayıt bir hata meydana geldi.' });
     }
-    const orders = req.body;
-    if (!orders) {
-      return res.status(404).send({ message: 'Siparişler boş bırakılamaz.' });
-    }
-    const newCart = orders.map((order) => {
-      return { productId: order.productId, quantity: order.quantity };
-    });
-    user.cart = newCart;
-    user.save((err) => {
-      if (err) {
-        return res.status(404).send({ message: 'Kayıt bir hata meydana geldi.' });
-      }
-      return res.status(200).send({ message: 'Sepet güncellendi.' });
-    });
+    return res.status(200).send({ message: 'Sepet güncellendi.' });
   });
 };
 

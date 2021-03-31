@@ -36,7 +36,7 @@
     <div class="card-header mat-body-2">Ürün Bilgileri</div>
     <div class="products">
       <div class="product" *ngFor="let product of order.products">
-        <img [src]="product.photoPath" alt="product" class="photo" />
+        <img [src]="product.photoPath" [alt]="product.brand" class="photo" />
         <div class="info">
           <div class="brand">{{product.brand | uppercase}}</div>
           <div class="name mat-body-2">{{product.name}}</div>

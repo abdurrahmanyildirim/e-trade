@@ -1,32 +1,7 @@
 <main class="container">
-  <div class="navigation">
-    <button mat-button class="active" (click)="changeStep(0)" #nav>
-      <mat-icon>person</mat-icon>
-      Genel
-    </button>
-
-    <button mat-button (click)="changeStep(1)" #nav>
-      <mat-icon>lock</mat-icon>
-      Şifre
-    </button>
-
-    <button mat-button (click)="changeStep(2)" #nav>
-      <mat-icon>person_pin_circle</mat-icon>
-      İletişim
-    </button>
-  </div>
-  <mat-horizontal-stepper #stepper>
-    <mat-step>
-      <ng-template matStepLabel>Genel Bilgiler</ng-template>
-      <app-general></app-general>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel style="display: none">Şifre Güncelleme</ng-template>
-      <app-password-update></app-password-update>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Şifre Güncelleme</ng-template>
-      <app-contact></app-contact>
-    </mat-step>
-  </mat-horizontal-stepper>
+  <mat-tab-group mat-stretch-tabs>
+    <mat-tab label="Genel"> <app-general></app-general> </mat-tab>
+    <mat-tab label="Şifre"> <app-password-update></app-password-update> </mat-tab>
+    <mat-tab label="İletişim"><app-contact></app-contact> </mat-tab>
+  </mat-tab-group>
 </main>

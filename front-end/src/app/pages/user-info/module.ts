@@ -7,8 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { GeneralComponent } from './general/component';
 import { PasswordUpdateComponent } from './password/component';
-import { MatStepperModule } from '@angular/material/stepper';
 import { ContactComponent } from './contact/component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [UserInfoComponent, GeneralComponent, PasswordUpdateComponent, ContactComponent],
@@ -18,8 +18,8 @@ import { ContactComponent } from './contact/component';
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatStepperModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTabsModule
   ],
   exports: [UserInfoComponent]
 })

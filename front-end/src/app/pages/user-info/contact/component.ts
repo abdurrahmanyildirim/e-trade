@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 import { nullValidator } from 'src/app/shared/util/common';
+import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './component.html',
   styleUrls: ['./component.css']
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, OnDestroy {
   form: FormGroup;
   userContactInfo: any;
 
@@ -90,5 +91,9 @@ export class ContactComponent implements OnInit {
         this.form.patchValue(this.userContactInfo);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    ObjectHelper.removeReferances(this);
   }
 }

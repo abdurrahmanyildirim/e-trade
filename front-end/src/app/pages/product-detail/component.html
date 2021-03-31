@@ -45,21 +45,30 @@
           <div>{{product.stockQuantity}} Adet</div>
         </div>
         <div class="operation">
-          <div class="numeric">
+          <div *ngIf="product.stockQuantity>0" class="numeric">
             <app-numeric-input
               [(quantity)]="quantity"
               [max]="product.stockQuantity"
             ></app-numeric-input>
           </div>
           <button
+            *ngIf="product.stockQuantity>0"
             mat-flat-button
             class="button"
             color="primary"
+            [disabled]="product.stockQuantity<=0"
             (click)="addTocartClick.next(product)"
           >
             <mat-icon>add_shopping_cart</mat-icon>
             Sepete Ekle
           </button>
+          <div
+            *ngIf="product.stockQuantity<=0"
+            class="mat-body-2"
+            style="text-align: center; width: 100%; font-size: 16px"
+          >
+            Stoklar Tükendi
+          </div>
         </div>
       </section>
     </section>

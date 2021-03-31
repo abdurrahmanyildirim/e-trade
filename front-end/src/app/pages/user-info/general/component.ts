@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 import { nullValidator } from 'src/app/shared/util/common';
+import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
 @Component({
   selector: 'app-general',
   templateUrl: './component.html',
   styleUrls: ['./component.css']
 })
-export class GeneralComponent implements OnInit {
+export class GeneralComponent implements OnInit, OnDestroy {
   form: FormGroup;
   user: User;
 
@@ -76,5 +77,9 @@ export class GeneralComponent implements OnInit {
         this.form.patchValue(this.user);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    ObjectHelper.removeReferances(this);
   }
 }

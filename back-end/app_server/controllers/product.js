@@ -41,6 +41,20 @@ module.exports.getProductById = (req, res) => {
   });
 };
 
+module.exports.checkStock = async (req, res) => {
+  const id = req.query.id;
+  const quantity = req.query.quantity;
+  const product = await Product.findOne({ _id: id });
+  if (!product) {
+    return res.status(500).send({ message: 'Bir hata meydana geldi.' });
+  }
+  const hasEnoughStock = product.quantity >= 0 && product.quantity >= quantity;
+  return res.status(200).send({
+    hasEnoughStock,
+    quantity: product.quantity
+  });
+};
+
 module.exports.addNewProduct = (req, res) => {
   const newProduct = {
     name: req.body.name,

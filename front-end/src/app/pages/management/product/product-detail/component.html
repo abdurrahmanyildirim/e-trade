@@ -42,6 +42,7 @@
           *ngFor="let photo of product.photos"
           cdkDrag
           [src]="photo.path"
+          alt="photo"
           class="photo"
           (click)="showPhoto(photo.path)"
         />

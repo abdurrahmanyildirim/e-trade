@@ -1,6 +1,4 @@
-import { Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { MatButton } from '@angular/material/button';
-import { MatStepper } from '@angular/material/stepper';
+import { Component, OnDestroy } from '@angular/core';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
 @Component({
@@ -8,24 +6,7 @@ import { ObjectHelper } from 'src/app/shared/util/helper/object';
   templateUrl: './component.html',
   styleUrls: ['./component.css']
 })
-export class UserInfoComponent implements OnInit, OnDestroy {
-  @ViewChild('stepper') stepper: MatStepper;
-  @ViewChildren('nav') navs: QueryList<MatButton>;
-
-  ngOnInit(): void {}
-
-  changeStep(index: number): void {
-    this.stepper.reset();
-    this.stepper.selectedIndex = index;
-    this.navs.forEach((nav, i) => {
-      if (i !== index) {
-        nav._elementRef.nativeElement.classList.remove('active');
-      } else {
-        nav._elementRef.nativeElement.classList.add('active');
-      }
-    });
-  }
-
+export class UserInfoComponent implements OnDestroy {
   ngOnDestroy(): void {
     ObjectHelper.removeReferances(this);
   }

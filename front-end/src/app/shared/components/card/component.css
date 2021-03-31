@@ -44,7 +44,8 @@
 .discount-badge {
   width: 160px;
   height: 30px;
-  background-color: #ff0800;
+  /* background-color: #ff0800; */
+  background-color: #ff2400;
   position: absolute;
   top: 20px;
   left: -40px;

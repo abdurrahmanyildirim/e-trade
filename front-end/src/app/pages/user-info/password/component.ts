@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -11,13 +11,14 @@ import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 import { nullValidator } from 'src/app/shared/util/common';
+import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
 @Component({
   selector: 'app-password-update',
   templateUrl: './component.html',
   styleUrls: ['./component.css']
 })
-export class PasswordUpdateComponent implements OnInit {
+export class PasswordUpdateComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   constructor(
@@ -80,5 +81,9 @@ export class PasswordUpdateComponent implements OnInit {
         this.form.reset();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    ObjectHelper.removeReferances(this);
   }
 }

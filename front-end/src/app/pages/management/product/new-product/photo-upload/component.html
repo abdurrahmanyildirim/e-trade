@@ -19,7 +19,7 @@
 >
   <div *ngFor="let photo of uploadedPhotos" class="photo-container" cdkDrag>
     <div class="photo-placeholder" *cdkDragPlaceholder></div>
-    <img [src]="photo.path" class="photo" />
+    <img [src]="photo.path" class="photo" alt="photo" />
     <button mat-icon-button (click)="extractPhoto(photo)"><mat-icon>close</mat-icon></button>
   </div>
 </div>
