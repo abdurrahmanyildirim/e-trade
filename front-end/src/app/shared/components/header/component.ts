@@ -17,6 +17,7 @@ import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
+import { CategoryService } from '../../services/rest/category';
 import { SearchProduct } from './model';
 
 @Component({
@@ -26,7 +27,6 @@ import { SearchProduct } from './model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  categories: any;
   roles = Roles;
   subs = new Subscription();
   searchKey = '';
@@ -42,22 +42,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
+    public categoryService: CategoryService,
     private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.initCategories();
-  }
-
-  initCategories(): void {
-    const sub = this.productService.categories().subscribe({
-      next: (categories) => {
-        this.categories = categories;
-        this.initProducts();
-      },
-      error: (err) => console.log(err)
-    });
-    this.subs.add(sub);
+    this.initProducts();
   }
 
   logout(): void {

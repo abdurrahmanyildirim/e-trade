@@ -3,7 +3,7 @@
     <span class="title mat-body-2">Ürünlerim</span>
     <mat-form-field appearance="outline" class="order-type">
       <mat-select [(value)]="currentCategory" (valueChange)="initCurrentList()">
-        <mat-option *ngFor="let category of categories" [value]="category"
+        <mat-option *ngFor="let category of (categoryService.categories| async)" [value]="category"
           >{{category.name | uppercase}}</mat-option
         >
       </mat-select>

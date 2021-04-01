@@ -139,7 +139,7 @@
         <button
           mat-button
           class="mobile-nav-item"
-          *ngFor="let category of categories"
+          *ngFor="let category of (categoryService.categories |async)"
           (click)="navigateToFilteredPage(category.name)"
         >
           {{category.name | uppercase}}
@@ -160,7 +160,7 @@
       <div routerLink="main" routerLinkActive="active" class="nav" #nav>ANA SAYFA</div>
       <div
         class="nav"
-        *ngFor="let category of categories"
+        *ngFor="let category of (categoryService.categories |async)"
         (click)="navigateToFilteredPage(category.name)"
         [class.active]="isLinkActive(category.name)"
       >

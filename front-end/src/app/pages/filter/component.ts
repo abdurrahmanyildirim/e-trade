@@ -11,6 +11,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
 import { Category, Product } from 'src/app/shared/models/product';
+import { CategoryService } from 'src/app/shared/services/rest/category';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { FilterFactory } from './factory';
@@ -27,7 +28,6 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
   subs = new Subscription();
   products: Product[];
   brands: string[];
-  categories: Category[];
   pageIndex: number;
   pageSize = 16;
   totalProductCount: number;
@@ -51,6 +51,7 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     public productService: ProductService,
     private filterFactory: FilterFactory,
+    public categoryService: CategoryService,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -104,7 +105,7 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
   initParams(): void {
     const sub = this.activatedRoute.queryParams.subscribe((params) => {
       this.mainSplash = true;
-      this.initCategories();
+      this.initProducts();
       const key = 'category';
       const category = params[key];
       if (isPresent(category)) {
@@ -157,18 +158,6 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
   removeSearchKey(): void {
     this.filter.sKey = '';
     this.initProducts();
-  }
-
-  initCategories(): void {
-    this.productService.categories().subscribe({
-      next: (categories) => {
-        this.categories = categories;
-        this.initProducts();
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
   }
 
   sortByType(sortType: SortType): void {

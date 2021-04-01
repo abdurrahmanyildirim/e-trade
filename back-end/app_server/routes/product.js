@@ -8,6 +8,7 @@ router.get('/get-by-category', controller.getByCategory);
 router.get('/get-by-id', controller.getProductById);
 router.use(authController.verifyToken);
 router.get('/rating', controller.addComment);
+router.post('/stock-control', controller.checkStock);
 router.use(authController.verifyAdmin);
 router.post('/new-product', controller.addNewProduct);
 router.delete('/remove', controller.remove);

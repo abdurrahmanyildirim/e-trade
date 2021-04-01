@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category, Product } from 'src/app/shared/models/product';
+import { CategoryService } from 'src/app/shared/services/rest/category';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 
 @Component({
@@ -11,12 +12,16 @@ import { ProductService } from 'src/app/shared/services/rest/product.service';
 export class MnProductsComponent implements OnInit, OnDestroy {
   products: Product[];
   currentList: Product[];
-  categories: Category[];
   currentCategory: Category;
 
-  constructor(private router: Router, public productService: ProductService) {}
+  constructor(
+    private router: Router,
+    public productService: ProductService,
+    public categoryService: CategoryService
+  ) {}
 
   ngOnInit(): void {
+    this.currentCategory = this.categoryService.categories.value[0];
     this.initProducts();
   }
 
@@ -24,7 +29,7 @@ export class MnProductsComponent implements OnInit, OnDestroy {
     this.productService.allProducts().subscribe({
       next: (products) => {
         this.products = products;
-        this.initCategories();
+        this.initCurrentList();
       }
     });
   }
@@ -33,19 +38,6 @@ export class MnProductsComponent implements OnInit, OnDestroy {
     this.currentList = this.products
       .filter((product) => product.category === this.currentCategory.name)
       .slice();
-  }
-
-  initCategories(): void {
-    this.productService.categories().subscribe({
-      next: (categories) => {
-        this.currentCategory = categories[0];
-        this.categories = categories.slice();
-        this.initCurrentList();
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
   }
 
   navigateToDetail(id: string): void {

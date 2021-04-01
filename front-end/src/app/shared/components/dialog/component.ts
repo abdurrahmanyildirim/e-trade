@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Inject, ViewChildren } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ProductInfo } from '../../models/product';
 
 @Component({
   selector: 'app-dialog',
@@ -59,10 +60,12 @@ export interface DialogData {
   onClose: (result: any) => void;
   onError?: (error: any) => void;
   dialog: DialogType;
+  products?: ProductInfo[];
 }
 
 export enum DialogType {
   Confirm = 'confirm',
   Message = 'message',
-  Review = 'review'
+  Review = 'review',
+  CartWarning = 'cartWarning'
 }

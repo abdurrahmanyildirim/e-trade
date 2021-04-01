@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { CartService } from '../rest/cart.service';
+import { CategoryService } from '../rest/category';
 import { ConfigService } from './config.service';
 
 @Injectable({
@@ -9,10 +10,14 @@ import { ConfigService } from './config.service';
 export class SplashService {
   configInited = false;
 
-  constructor(private configService: ConfigService, private cartService: CartService) {}
+  constructor(
+    private configService: ConfigService,
+    private cartService: CartService,
+    private categoryService: CategoryService
+  ) {}
 
   init(): void {
-    const obs = [this.cartService.initCart()];
+    const obs = [this.cartService.initCart(), this.categoryService.init()];
     this.configService.initSiteConfig().subscribe({
       next: () => {
         forkJoin(obs).subscribe({

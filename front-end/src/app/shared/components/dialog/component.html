@@ -5,7 +5,7 @@
     </mat-dialog-content>
     <mat-dialog-actions align="center">
       <button mat-flat-button color="warn" [mat-dialog-close]="false">{{data.refuseButton}}</button>
-      <button mat-flat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
+      <button mat-flat-button color="primary" [mat-dialog-close]="true">
         {{data.acceptButton}}
       </button>
     </mat-dialog-actions>
@@ -17,6 +17,9 @@
         {{data.acceptButton}}
       </button>
     </mat-dialog-actions>
+  </ng-container>
+  <ng-container *ngSwitchCase="DialogType.CartWarning">
+    <app-cart-warning [data]="data"></app-cart-warning>
   </ng-container>
   <ng-container *ngSwitchCase="DialogType.Review">
     <mat-dialog-content class="mat-body-1 review">

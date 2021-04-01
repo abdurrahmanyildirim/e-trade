@@ -1,6 +1,6 @@
 <main class="container" *ngIf="orders.length>0">
   <section class="operations">
-    <mat-horizontal-stepper linear #stepper>
+    <mat-horizontal-stepper linear (selectionChange)="onSelectionChange()" #stepper>
       <mat-step>
         <ng-template matStepLabel>Sepeti Detayı</ng-template>
         <app-cart-info
@@ -8,7 +8,7 @@
           (orderListChange)="onOrderListChange($event)"
         ></app-cart-info>
       </mat-step>
-      <mat-step>
+      <mat-step [completed]="false">
         <ng-template matStepLabel>Sipariş Onay</ng-template>
         <app-purchase-order></app-purchase-order>
       </mat-step>

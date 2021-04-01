@@ -53,12 +53,12 @@
 </main>
 
 <ng-template #filters>
-  <div class="filter-item" *ngIf="categories">
+  <div class="filter-item" *ngIf="products">
     <span class="title mat-body-2">Kategori</span>
     <mat-radio-group class="sort-items">
       <mat-radio-button
         class="sort-item"
-        *ngFor="let category of categories"
+        *ngFor="let category of (categoryService.categories | async)"
         [value]="category.name"
         [checked]="category.name === filter.category ? true : false"
         (change)="filterByCategory(category)"

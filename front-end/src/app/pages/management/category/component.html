@@ -1,6 +1,6 @@
 <main class="container">
   <div class="categories">
-    <div class="category" *ngFor="let category of categories">
+    <div class="category" *ngFor="let category of (categoryService.categories | async)">
       <span>{{category.name | uppercase}}</span>
       <button mat-icon-button (click)="remove(category.name)"><mat-icon>close</mat-icon></button>
     </div>

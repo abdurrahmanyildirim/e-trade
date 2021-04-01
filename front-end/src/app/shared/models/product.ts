@@ -32,3 +32,12 @@ export interface Category {
   name: string;
   isActive?: boolean;
 }
+
+export interface ProductInfo {
+  id: string;
+  isActive?: boolean;
+  name?: string;
+  hasEnoughStock?: boolean;
+  availableQuantity?: number;
+  quantity: number;
+}

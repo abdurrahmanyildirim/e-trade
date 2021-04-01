@@ -51,6 +51,27 @@ export class DialogService {
       });
   }
 
+  cartWarning(data: DialogData): void {
+    this.dialog
+      .open(DialogComponent, {
+        width: 'auto',
+        maxWidth: '90%',
+        maxHeight: '60%',
+        data
+      })
+      .afterClosed()
+      .pipe(first())
+      .subscribe({
+        next: (result) => {
+          const res = isPresent(result) ? result : false;
+          data.onClose(res);
+        },
+        error: (err) => {
+          data.onError(err);
+        }
+      });
+  }
+
   review(data: DialogData): void {
     this.dialog
       .open(DialogComponent, {

@@ -3,9 +3,13 @@ import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
+import { DialogType } from 'src/app/shared/components/dialog/component';
+import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Order } from 'src/app/shared/models/order';
+import { ProductInfo } from 'src/app/shared/models/product';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
+import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
@@ -25,7 +29,9 @@ export class CartComponent implements OnInit, OnDestroy {
   constructor(
     private cartService: CartService,
     private router: Router,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private productService: ProductService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +56,41 @@ export class CartComponent implements OnInit, OnDestroy {
       this.stepper.previous();
       this.cartStepActive = true;
     }
+  }
+
+  onSelectionChange(): void {
+    if (this.stepper.selectedIndex !== 0) {
+      return;
+    }
+    const prods = this.orders.slice().map((order) => {
+      return {
+        id: order.productId,
+        quantity: order.quantity
+      } as ProductInfo;
+    });
+    const subs = this.productService.stockControl(prods).subscribe({
+      next: (prodInfos) => {
+        const nonExistProducts = prodInfos.filter(
+          (prod) => prod.hasEnoughStock === false || prod.isActive === false
+        );
+        if (nonExistProducts.length > 0) {
+          this.stepper.selectedIndex = 0;
+          this.dialogService.cartWarning({
+            acceptButton: 'Tamam',
+            desc: 'Aşağıdaki bilgilere göre sepetinizi düzenleyiniz...',
+            dialog: DialogType.CartWarning,
+            onClose: (result) => {
+              // console.log(result);
+            },
+            products: nonExistProducts
+          });
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+    this.subs.add(subs);
   }
 
   initQuantityChange(): void {
@@ -84,10 +125,6 @@ export class CartComponent implements OnInit, OnDestroy {
       cost += (order.price - order.price * order.discountRate) * order.quantity;
     });
     this.totalCost = cost;
-  }
-
-  changeStatus(): void {
-    this.router.navigateByUrl('purchase-order');
   }
 
   ngOnDestroy(): void {

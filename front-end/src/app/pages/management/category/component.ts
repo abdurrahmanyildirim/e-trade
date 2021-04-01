@@ -4,6 +4,7 @@ import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Category } from 'src/app/shared/models/product';
+import { CategoryService } from 'src/app/shared/services/rest/category';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 
@@ -21,23 +22,11 @@ export class MnCategoryComponent implements OnInit, OnDestroy {
     public productService: ProductService,
     private snackbar: SnackbarService,
     private screenHolder: ScreenHolderService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    public categoryService: CategoryService
   ) {}
 
-  ngOnInit(): void {
-    this.initCategories();
-  }
-
-  initCategories(): void {
-    this.productService.categories().subscribe({
-      next: (categories) => {
-        this.categories = categories.slice();
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   insert(): void {
     this.screenHolder.show();
@@ -46,7 +35,8 @@ export class MnCategoryComponent implements OnInit, OnDestroy {
         this.screenHolder.hide();
         this.snackbar.showInfo(res.message);
         this.newCategory = '';
-        this.initCategories();
+        console.log(res);
+        this.categoryService.categories.next(res.categories);
       },
       error: (err) => {
         this.screenHolder.hide();
@@ -71,7 +61,7 @@ export class MnCategoryComponent implements OnInit, OnDestroy {
           next: (res) => {
             this.screenHolder.hide();
             this.snackbar.showInfo(res.message);
-            this.initCategories();
+            this.categoryService.categories.next(res.categories);
           },
           error: (err) => {
             this.screenHolder.hide();

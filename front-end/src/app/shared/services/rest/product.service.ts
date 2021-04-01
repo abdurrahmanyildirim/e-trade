@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { Category, CloudinaryPhoto, Product } from '../../models/product';
+import { Category, CloudinaryPhoto, Product, ProductInfo } from '../../models/product';
 import { ConfigService } from '../site/config.service';
 
 @Injectable()
@@ -39,6 +39,13 @@ export class ProductService {
 
   categories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.configService.config.baseUrl + 'category/categories');
+  }
+
+  stockControl(products: ProductInfo[]): Observable<ProductInfo[]> {
+    return this.http.post<ProductInfo[]>(
+      this.configService.config.baseUrl + 'product/stock-control',
+      products
+    );
   }
 
   insertCategory(category: string): Observable<any> {

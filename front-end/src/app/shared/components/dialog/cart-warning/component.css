@@ -1,0 +1,19 @@
+.product {
+  display: flex;
+  margin-top: 10px;
+}
+
+.name {
+  flex: 1;
+  margin-right: 5px;
+}
+
+.status {
+  flex: 0.3;
+  margin-right: 5px;
+}
+
+.stock {
+  flex: 0.1;
+  text-align: center;
+}
