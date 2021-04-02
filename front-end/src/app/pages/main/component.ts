@@ -67,16 +67,11 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   initProducts(): void {
-    this.sub = this.productService.products().subscribe({
-      next: (results) => {
-        this.products = results;
-        this.initDiscountedProducts();
-        this.initMostLiked();
-        this.initNewProducts();
-        this.cd.detectChanges();
-      },
-      error: (err) => console.log(err)
-    });
+    this.products = this.productService.products.value.slice();
+    this.initDiscountedProducts();
+    this.initMostLiked();
+    this.initNewProducts();
+    this.cd.detectChanges();
   }
 
   initDiscountedProducts(): void {
@@ -98,9 +93,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (isPresent(this.sub)) {
-      this.sub.unsubscribe();
-    }
     ObjectHelper.removeReferances(this);
   }
 }

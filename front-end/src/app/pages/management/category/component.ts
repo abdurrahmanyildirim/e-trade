@@ -30,7 +30,7 @@ export class MnCategoryComponent implements OnInit, OnDestroy {
 
   insert(): void {
     this.screenHolder.show();
-    this.productService.insertCategory(this.newCategory.toLocaleLowerCase().trim()).subscribe({
+    this.categoryService.insertCategory(this.newCategory.toLocaleLowerCase().trim()).subscribe({
       next: (res) => {
         this.screenHolder.hide();
         this.snackbar.showInfo(res.message);
@@ -57,7 +57,7 @@ export class MnCategoryComponent implements OnInit, OnDestroy {
           return;
         }
         this.screenHolder.show();
-        this.productService.removeCategory(category.toLocaleLowerCase().trim()).subscribe({
+        this.categoryService.removeCategory(category.toLocaleLowerCase().trim()).subscribe({
           next: (res) => {
             this.screenHolder.hide();
             this.snackbar.showInfo(res.message);

@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.authService.saveToken(loginResponse.token);
           this.authService.currentUser.next(loginResponse.info);
           this.authService.isAuth.next(true);
-          this.cartService.initCart().subscribe(() => {
+          this.cartService.init().subscribe(() => {
             this.localStorage.removeItem(StorageKey.Cart);
             this.authService.role.next(this.authService.getRole());
             this.location.back();

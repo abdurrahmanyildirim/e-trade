@@ -92,28 +92,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   initProducts(): void {
-    this.productService
-      .products()
-      .pipe(
-        map((products) =>
-          products.map((prod) => {
-            return {
-              name: prod.name,
-              brand: prod.brand,
-              _id: prod._id
-            };
-          })
-        )
-      )
-      .subscribe({
-        next: (products) => {
-          this.products = products as SearchProduct[];
-          this.cd.detectChanges();
-        },
-        error: (err) => {
-          console.log(err);
-        }
-      });
+    const products = this.productService.products.value.slice();
+    this.products = products.map((prod) => {
+      return {
+        name: prod.name,
+        brand: prod.brand,
+        _id: prod._id
+      };
+    });
+    this.cd.detectChanges();
   }
 
   onSerchClick(): void {

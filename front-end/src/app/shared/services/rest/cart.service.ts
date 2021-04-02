@@ -24,10 +24,10 @@ export class CartService implements OnDestroy {
     private localStorage: LocalStorageService,
     private router: Router
   ) {
-    this.initCart();
+    this.init();
   }
 
-  initCart(): Observable<void> {
+  init(): Observable<void> {
     return new Observable((observer) => {
       if (this.authService.loggedIn()) {
         const sub = this.getCartFromDb().subscribe((cart) => {

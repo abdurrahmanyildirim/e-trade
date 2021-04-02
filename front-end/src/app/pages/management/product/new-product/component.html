@@ -1,10 +1,11 @@
-<main class="container" *ngIf="categories">
+<main class="container">
   <mat-horizontal-stepper linear #stepper>
     <mat-step [stepControl]="infoForm">
       <form [formGroup]="infoForm">
         <ng-template matStepLabel>Ürün Bilgileri</ng-template>
         <div class="step-container">
-          <mat-form-field class="field">
+          <mat-form-field class="field" appearance="outline">
+            <mat-label>Ürün Adı</mat-label>
             <input type="text" matInput placeholder="Ürün adı" formControlName="name" />
             <mat-error
               *ngIf="infoForm.get('name').hasError('required') || infoForm.get('name').hasError('isNull') || infoForm.get('name').touched"
@@ -12,14 +13,19 @@
               *Ürün Adı boş bırakılamaz
             </mat-error>
           </mat-form-field>
-          <mat-form-field class="field">
-            <mat-select [(value)]="currentCategory.name" (selectionChange)="onCategoryChange()">
-              <mat-option *ngFor="let category of categories" [value]="category.name">
+          <mat-form-field class="field" appearance="outline">
+            <mat-label>Kategori</mat-label>
+            <mat-select formControlName="category">
+              <mat-option
+                *ngFor="let category of (categoryService.categories | async)"
+                [value]="category.name"
+              >
                 {{category.name | uppercase}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="field">
+          <mat-form-field class="field" appearance="outline">
+            <mat-label>Fiyat</mat-label>
             <input type="text" matInput placeholder="Fiyat" formControlName="price" />
             <mat-error
               *ngIf="infoForm.get('price').hasError('required') || infoForm.get('price').hasError('isNull')|| infoForm.get('price').touched"
@@ -27,7 +33,8 @@
               *Fiyat bilgisi boş bırakılamaz
             </mat-error>
           </mat-form-field>
-          <mat-form-field class="field">
+          <mat-form-field class="field" appearance="outline">
+            <mat-label>İndirim</mat-label>
             <input
               type="text"
               matInput
@@ -35,7 +42,8 @@
               formControlName="discountRate"
             />
           </mat-form-field>
-          <mat-form-field class="field">
+          <mat-form-field class="field" appearance="outline">
+            <mat-label>Stok Miktarı</mat-label>
             <input
               type="text"
               matInput
@@ -48,7 +56,8 @@
               *Stok miktarı giriniz.
             </mat-error>
           </mat-form-field>
-          <mat-form-field class="field">
+          <mat-form-field class="field" appearance="outline">
+            <mat-label>Marka</mat-label>
             <input type="text" matInput placeholder="Marka" formControlName="brand" />
             <mat-error
               *ngIf="infoForm.get('brand').hasError('required') || infoForm.get('brand').hasError('isNull')|| infoForm.get('brand').touched"
@@ -56,7 +65,7 @@
               *Bir marka ismi giriniz.
             </mat-error>
           </mat-form-field>
-          <mat-form-field class="field">
+          <mat-form-field class="field" appearance="outline">
             <mat-label>Ürün Açıklaması</mat-label>
             <textarea matInput formControlName="description"></textarea>
             <mat-error

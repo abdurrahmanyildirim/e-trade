@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { CartComponent } from './component';
 import { CartDetailComponent } from './detail/component';
@@ -14,11 +13,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { PurchaseOrderComponent } from './purchase-order/component';
 
+const routes: Routes = [{ path: 'cart', component: CartComponent }];
+
 @NgModule({
   declarations: [CartComponent, CartDetailComponent, PurchaseOrderComponent],
   imports: [
+    RouterModule.forChild(routes),
     CommonModule,
-    BrowserModule,
     FormsModule,
     MatButtonModule,
     MatIconModule,

@@ -22,14 +22,20 @@ import { MnMessageBoxComponent } from './message-box/component';
 import { MnCategoryComponent } from './category/component';
 
 const routes: Routes = [
-  { path: 'orders', component: MnOrdersComponent },
-  { path: 'order-detail/:id', component: MnOrderDetailComponent },
-  { path: 'products', component: MnProductsComponent },
-  { path: 'new-product', component: MnNewProductComponent },
-  { path: 'product-detail/:id', component: MnProductDetailComponent },
-  { path: 'message-box', component: MnMessageBoxComponent },
-  { path: 'category', component: MnCategoryComponent },
-  { path: '', redirectTo: 'orders', pathMatch: 'full' }
+  {
+    path: '',
+    component: ManagementComponent,
+    children: [
+      { path: 'orders', component: MnOrdersComponent },
+      { path: 'order-detail/:id', component: MnOrderDetailComponent },
+      { path: 'products', component: MnProductsComponent },
+      { path: 'new-product', component: MnNewProductComponent },
+      { path: 'product-detail/:id', component: MnProductDetailComponent },
+      { path: 'message-box', component: MnMessageBoxComponent },
+      { path: 'category', component: MnCategoryComponent },
+      { path: '', redirectTo: 'orders', pathMatch: 'full' }
+    ]
+  }
 ];
 
 @NgModule({

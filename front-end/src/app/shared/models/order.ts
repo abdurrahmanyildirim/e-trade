@@ -67,3 +67,11 @@ export interface OrderDetailProduct {
   name: string;
   rate?: number;
 }
+
+export enum Statuses {
+  Canceled = -1,
+  Received = 0,
+  Preparing = 1,
+  Cargo = 2,
+  Delivered = 3
+}

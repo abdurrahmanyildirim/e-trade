@@ -39,7 +39,14 @@
               : '.2-2'}} TL</span
             >
           </div>
-          <button (click)="reviewDialog(product)" mat-flat-button color="primary">Puanla</button>
+          <button
+            *ngIf="order.status[order.status.length-1].key === Statuses.Delivered"
+            (click)="reviewDialog(product)"
+            mat-flat-button
+            color="primary"
+          >
+            Puanla
+          </button>
         </div>
       </div>
     </div>
@@ -80,7 +87,10 @@
             '.2-2'}} TL</span
           >
         </div>
-        <div style="text-align: right">
+        <div
+          style="text-align: right"
+          *ngIf="order.status[order.status.length-1].key === Statuses.Delivered"
+        >
           <button (click)="reviewDialog(product)" mat-flat-button color="primary">Puanla</button>
         </div>
       </div>

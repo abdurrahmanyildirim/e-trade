@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { Category, CloudinaryPhoto, Product, ProductInfo } from '../../models/product';
+import { CloudinaryPhoto, Product, ProductInfo } from '../../models/product';
 import { ConfigService } from '../site/config.service';
 
 @Injectable()
 export class ProductService {
+  products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
+
   constructor(private http: HttpClient, private configService: ConfigService) {}
 
   uploadPhotos(photos: File[]): Observable<CloudinaryPhoto[]> {
@@ -29,7 +31,22 @@ export class ProductService {
     });
   }
 
-  products(): Observable<Product[]> {
+  init(): Observable<void> {
+    return new Observable<void>((observer) => {
+      this.getProducts().subscribe({
+        next: (products) => {
+          this.products.next(products);
+          observer.next();
+          observer.complete();
+        },
+        error: (error) => {
+          observer.error(error);
+        }
+      });
+    });
+  }
+
+  getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.configService.config.baseUrl + 'product/products');
   }
 
@@ -37,26 +54,10 @@ export class ProductService {
     return this.http.get<Product[]>(this.configService.config.baseUrl + 'product/all-products');
   }
 
-  categories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.configService.config.baseUrl + 'category/categories');
-  }
-
   stockControl(products: ProductInfo[]): Observable<ProductInfo[]> {
     return this.http.post<ProductInfo[]>(
       this.configService.config.baseUrl + 'product/stock-control',
       products
-    );
-  }
-
-  insertCategory(category: string): Observable<any> {
-    return this.http.get<any>(
-      this.configService.config.baseUrl + 'category/insert?category=' + category
-    );
-  }
-
-  removeCategory(category: string): Observable<any> {
-    return this.http.get<any>(
-      this.configService.config.baseUrl + 'category/remove?category=' + category
     );
   }
 
@@ -78,7 +79,7 @@ export class ProductService {
     return this.http.get<Product>(this.configService.config.baseUrl + 'product/get-by-id?id=' + id);
   }
 
-  rateProduct(productId: string, orderId: string, rate: Number): Observable<any> {
+  rateProduct(productId: string, orderId: string, rate: number): Observable<any> {
     return this.http.get<any>(
       this.configService.config.baseUrl +
         'product/rating?rate=' +

@@ -109,7 +109,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
                   .pipe(first())
                   .subscribe(() => {
                     this.snackbar.showSuccess('Siparişiniz Alındı.');
-                    this.cartService.initCart().pipe(first()).subscribe();
+                    this.cartService.init().pipe(first()).subscribe();
                     this.router.navigateByUrl('main');
                   });
               },

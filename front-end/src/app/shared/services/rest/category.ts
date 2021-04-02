@@ -32,4 +32,16 @@ export class CategoryService {
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.configService.config.baseUrl + 'category/categories');
   }
+
+  insertCategory(category: string): Observable<any> {
+    return this.http.get<any>(
+      this.configService.config.baseUrl + 'category/insert?category=' + category
+    );
+  }
+
+  removeCategory(category: string): Observable<any> {
+    return this.http.get<any>(
+      this.configService.config.baseUrl + 'category/remove?category=' + category
+    );
+  }
 }

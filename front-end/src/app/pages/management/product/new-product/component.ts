@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Category, Product } from 'src/app/shared/models/product';
+import { CategoryService } from 'src/app/shared/services/rest/category';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
@@ -23,15 +24,14 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
   subs = new Subscription();
   infoForm: FormGroup;
   photosForm: FormGroup;
-  categories: Category[];
-  currentCategory: Category;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private productService: ProductService,
     private snackBar: SnackbarService,
-    private screenHolder: ScreenHolderService
+    private screenHolder: ScreenHolderService,
+    public categoryService: CategoryService
   ) {}
 
   ngOnInit(): void {
@@ -65,33 +65,12 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
     this.photosForm = this.fb.group({
       photos: new FormControl([], [Validators.required, nullValidator()])
     });
-    this.initCategories();
   }
 
   onFilesChange(files: File[]): void {
     this.photos = files;
     this.photosForm.patchValue({
       photos: this.photos
-    });
-  }
-
-  initCategories(): void {
-    const sub = this.productService.categories().subscribe({
-      next: (categories) => {
-        this.currentCategory = categories[0];
-        this.categories = categories.slice();
-        this.infoForm.patchValue({
-          category: categories[0].name
-        });
-      },
-      error: (err) => console.log(err)
-    });
-    this.subs.add(sub);
-  }
-
-  onCategoryChange(): void {
-    this.infoForm.patchValue({
-      category: this.currentCategory.name
     });
   }
 

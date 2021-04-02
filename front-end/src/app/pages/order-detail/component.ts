@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
-import { OrderDetail, OrderDetailProduct } from 'src/app/shared/models/order';
+import { OrderDetail, OrderDetailProduct, Statuses } from 'src/app/shared/models/order';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { OrderService } from 'src/app/shared/services/rest/order.service';
@@ -20,6 +20,7 @@ export class OrderDetailComponent implements OnInit {
   order: OrderDetail;
   orderId: string;
   currentUser: User;
+  Statuses = Statuses;
 
   constructor(
     private activatedRoute: ActivatedRoute,

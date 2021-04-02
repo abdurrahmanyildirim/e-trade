@@ -58,6 +58,7 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {}
 
   ngOnInit(): void {
+    this.filterFactory.products = this.productService.products.value.slice();
     this.initParams();
     if (document.body.clientWidth <= 650) {
       document.body.addEventListener('scroll', this.listenBodyScroll);
@@ -77,12 +78,13 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   handleTouchAndClickEvents(): void {
-    const sub1 = fromEvent(this.mobileFiltersBody.nativeElement, 'touchstart').subscribe(
+    let subs = fromEvent(this.mobileFiltersBody.nativeElement, 'touchstart').subscribe(
       (event: TouchEvent) => {
         this.touchStart = event.changedTouches[0].screenX;
       }
     );
-    const sub2 = fromEvent(this.mobileFiltersBody.nativeElement, 'touchend').subscribe(
+    this.touchSubs.add(subs);
+    subs = fromEvent(this.mobileFiltersBody.nativeElement, 'touchend').subscribe(
       (event: TouchEvent) => {
         this.touchEnd = event.changedTouches[0].screenX;
         if (this.touchStart < this.touchEnd) {
@@ -90,22 +92,20 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     );
-    const sub3 = fromEvent(this.mobileFiltersBody.nativeElement, 'click').subscribe(
+    this.touchSubs.add(subs);
+    subs = fromEvent(this.mobileFiltersBody.nativeElement, 'click').subscribe(
       (event: MouseEvent) => {
         if (event.target === this.mobileFiltersBody.nativeElement) {
           this.toggleMobileFilters();
         }
       }
     );
-    this.touchSubs.add(sub1);
-    this.touchSubs.add(sub2);
-    this.touchSubs.add(sub3);
+    this.touchSubs.add(subs);
   }
 
   initParams(): void {
     const sub = this.activatedRoute.queryParams.subscribe((params) => {
       this.mainSplash = true;
-      this.initProducts();
       const key = 'category';
       const category = params[key];
       if (isPresent(category)) {
@@ -116,23 +116,11 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
       if (isPresent(searchKey)) {
         this.filter.sKey = searchKey;
       }
+      this.initProductsByFilter();
+      this.mainSplash = false;
+      this.cd.detectChanges();
     });
     this.subs.add(sub);
-  }
-
-  initProducts(): void {
-    this.productService.products().subscribe({
-      next: (products) => {
-        this.filterFactory.products = products;
-        const filteredProducts = this.filterFactory.create(this.filter);
-        this.products = filteredProducts.slice(0, this.pageSize);
-        this.totalProductCount = filteredProducts.length;
-        this.brands = this.filterFactory.brands.slice();
-        this.mainSplash = false;
-        this.showSplash = false;
-        this.cd.detectChanges();
-      }
-    });
   }
 
   toggleMobileFilters(): void {
@@ -157,7 +145,7 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   removeSearchKey(): void {
     this.filter.sKey = '';
-    this.initProducts();
+    this.initProductsByFilter();
   }
 
   sortByType(sortType: SortType): void {
