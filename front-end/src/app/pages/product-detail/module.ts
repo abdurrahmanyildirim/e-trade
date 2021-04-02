@@ -14,7 +14,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [{ path: 'product-detail/:id', component: ProductDetailComponent }];
+const routes: Routes = [{ path: '', component: ProductDetailComponent }];
 @NgModule({
   declarations: [ProductDetailComponent, CommentsComponent],
   imports: [

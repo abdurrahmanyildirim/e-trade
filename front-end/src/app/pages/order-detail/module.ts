@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {
-    path: 'order-detail/:id',
+    path: '',
     component: OrderDetailComponent
   }
 ];

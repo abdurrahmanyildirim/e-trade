@@ -66,7 +66,7 @@ module.exports.purchaseOrder = (req, res) => {
       }
       const orderedProducts = [];
       const cart = user.cart;
-      cart.forEach((order) => {
+      cart.forEach(async (order) => {
         const product = products.find((prod) => order.productId == prod.id);
         if (product) {
           orderedProducts.push({
@@ -76,6 +76,8 @@ module.exports.purchaseOrder = (req, res) => {
             price: product.price,
             photoPath: product.photos[0].path
           });
+          product.stockQuantity = product.stockQuantity - order.quantity;
+          await product.save();
         }
       });
       const city = cryptoService.encrypt(req.body.city);
@@ -110,8 +112,7 @@ module.exports.purchaseOrder = (req, res) => {
           district,
           address
         };
-        const newUser = new User(user);
-        newUser.save((err) => {
+        user.save((err) => {
           if (err) {
             console.log(err);
           }

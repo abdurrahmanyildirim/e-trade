@@ -13,7 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { PurchaseOrderComponent } from './purchase-order/component';
 
-const routes: Routes = [{ path: 'cart', component: CartComponent }];
+const routes: Routes = [{ path: '', component: CartComponent }];
 
 @NgModule({
   declarations: [CartComponent, CartDetailComponent, PurchaseOrderComponent],

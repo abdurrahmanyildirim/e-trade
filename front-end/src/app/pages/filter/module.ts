@@ -14,7 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-const routes: Routes = [{ path: 'filter', component: FilterComponent }];
+const routes: Routes = [{ path: '', component: FilterComponent }];
 
 @NgModule({
   declarations: [FilterComponent],

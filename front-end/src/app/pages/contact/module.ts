@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-const routes: Routes = [{ path: 'contact', component: ContactComponent }];
+const routes: Routes = [{ path: '', component: ContactComponent }];
 @NgModule({
   declarations: [ContactComponent],
   imports: [

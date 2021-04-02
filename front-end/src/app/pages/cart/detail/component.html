@@ -37,7 +37,7 @@
             </div>
             <div class="price-content">
               <div *ngIf="order.discountRate>0" class="normal-price">
-                {{order.price * order.quantity}} TL
+                {{order.price * order.quantity | number :'.2-2'}} TL
               </div>
               <div>
                 {{(order.price - order.price * order.discountRate) * order.quantity | number

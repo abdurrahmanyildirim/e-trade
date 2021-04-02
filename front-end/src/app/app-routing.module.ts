@@ -4,47 +4,46 @@ import { MainComponent } from './pages/main/component';
 import { AuthGuard } from './shared/guards/auth';
 import { AdminGuard } from './shared/guards/admin';
 
-
 const routes: Routes = [
   { path: 'main', component: MainComponent },
   {
-    path: '',
+    path: 'product-detail/:id',
     loadChildren: () => import('./pages/product-detail/module').then((m) => m.ProductDetailModule)
   },
   {
-    path: '',
+    path: 'orders',
     loadChildren: () => import('./pages/orders/module').then((m) => m.OrdersModule),
     canActivate: [AuthGuard]
   },
   {
-    path: '',
+    path: 'order-detail/:id',
     loadChildren: () => import('./pages/order-detail/module').then((m) => m.OrderDetailModule),
     canActivate: [AuthGuard]
   },
   {
-    path: '',
+    path: 'cart',
     loadChildren: () => import('./pages/cart/module').then((m) => m.CartModule),
     canActivate: [AuthGuard]
   },
   {
-    path: '',
+    path: 'user-info',
     loadChildren: () => import('./pages/user-info/module').then((m) => m.UserInfoModule),
     canActivate: [AuthGuard]
   },
   {
-    path: '',
+    path: 'contact',
     loadChildren: () => import('./pages/contact/module').then((m) => m.ContactModule)
   },
   {
-    path: '',
+    path: 'auth',
     loadChildren: () => import('./pages/auth/module').then((m) => m.AuthModule)
   },
   {
-    path: '',
+    path: 'filter',
     loadChildren: () => import('./pages/filter/module').then((m) => m.FilterModule)
   },
   {
-    path: '',
+    path: 'regulations',
     loadChildren: () => import('./pages/regulations/module').then((m) => m.RegulationsModule)
   },
   {
@@ -52,6 +51,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/management/module').then((m) => m.ManagementModule),
     canActivate: [AuthGuard, AdminGuard]
   },
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: '**', redirectTo: 'main', pathMatch: 'prefix' }
 ];
 

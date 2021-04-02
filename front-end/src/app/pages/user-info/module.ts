@@ -11,7 +11,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-const routes: Routes = [{ path: 'user-info', component: UserInfoComponent }];
+const routes: Routes = [{ path: '', component: UserInfoComponent }];
 @NgModule({
   declarations: [UserInfoComponent, GeneralComponent, PasswordUpdateComponent, ContactComponent],
   imports: [

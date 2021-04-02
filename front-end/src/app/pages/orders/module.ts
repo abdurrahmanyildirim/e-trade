@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-const routes: Routes = [{ path: 'orders', component: OrdersComponent }];
+const routes: Routes = [{ path: '', component: OrdersComponent }];
 @NgModule({
   declarations: [OrdersComponent],
   imports: [
