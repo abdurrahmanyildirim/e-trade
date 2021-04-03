@@ -37,6 +37,7 @@ export class CartService implements OnDestroy {
           sub.unsubscribe();
         });
       } else {
+        this.localStorage.removeItem(StorageKey.Cart);
         // const orders = this.localStorage.getObject<Order[]>(StorageKey.Cart) || [];
         this.cart.next([]);
         observer.next();

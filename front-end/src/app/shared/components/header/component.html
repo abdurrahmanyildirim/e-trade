@@ -43,12 +43,16 @@
             {{(this.cartService.cart | async).length}}
           </div>
         </button>
-        <button mat-button routerLink="login" *ngIf="(this.authService.isAuth | async) === false">
+        <button
+          mat-button
+          routerLink="auth/login"
+          *ngIf="(this.authService.isAuth | async) === false"
+        >
           <mat-icon>login</mat-icon> <span class="icon-text">Giriş Yap</span>
         </button>
         <button
           mat-button
-          routerLink="register"
+          routerLink="auth/register"
           *ngIf="(this.authService.isAuth | async) === false"
         >
           <mat-icon>person_add_alt_1</mat-icon> <span class="icon-text">Üye Ol</span>
@@ -97,14 +101,14 @@
           </button>
           <button
             mat-icon-button
-            routerLink="login"
+            routerLink="auth/login"
             *ngIf="(this.authService.isAuth | async) === false"
           >
             <mat-icon>login</mat-icon>
           </button>
           <button
             mat-icon-button
-            routerLink="register"
+            routerLink="auth/register"
             *ngIf="(this.authService.isAuth | async) === false"
           >
             <mat-icon>person_add_alt_1</mat-icon>

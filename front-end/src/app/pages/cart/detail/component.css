@@ -54,7 +54,7 @@
 }
 
 .numeric-container {
-  height: 35px;
+  height: 40px;
 }
 
 .normal-price {
@@ -122,8 +122,8 @@
   }
 
   .numeric-container {
-    height: 25px;
-    width: 55px;
+    height: 28px;
+    width: 70px;
   }
 
   .price-content {

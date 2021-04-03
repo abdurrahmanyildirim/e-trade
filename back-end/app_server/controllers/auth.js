@@ -61,6 +61,7 @@ module.exports.register = (req, res) => {
         lastName: userData.lastName,
         email: cryptoService.encrypt(userData.email),
         password: cryptoService.hashPassword(userData.password),
+        authType: 'normal',
         role: 'Client'
       });
       newUser.save((err) => {
@@ -71,6 +72,43 @@ module.exports.register = (req, res) => {
       });
     });
   }
+};
+
+module.exports.googleAuth = (req, res) => {
+  const { firstName, lastName, email } = req.body;
+  User.findOne({ email: cryptoService.encrypt(email) }, async (err, user) => {
+    if (err) {
+      return res.status(500).send({ message: 'Bir hata meydana geldi.' });
+    }
+    if (!user) {
+      const newUser = new User({
+        firstName: firstName,
+        lastName: lastName,
+        email: cryptoService.encrypt(email),
+        password: cryptoService.hashPassword('a'),
+        authType: 'google',
+        role: 'Client'
+      });
+      user = await newUser.save();
+    }
+    const token = jwt.sign(
+      {
+        _id: user._id,
+        email: email,
+        role: user.role
+      },
+      config.TOKEN_KEY,
+      {
+        expiresIn: '360d'
+      }
+    );
+    const info = {
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName
+    };
+    return res.status(200).send({ token, info });
+  });
 };
 
 module.exports.getUser = (req, res) => {

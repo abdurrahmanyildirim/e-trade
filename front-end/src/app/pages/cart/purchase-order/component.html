@@ -89,12 +89,12 @@
       [value]="'30'"
     >
     </mat-progress-spinner>
-    <p class="mat-body-2">Lütfen Bekleyiniz...</p>
+    <p class="mat-body-2">Siparişiniz veriliyor. Lütfen Bekleyiniz...</p>
   </section>
-  <section *ngIf="orderStatus === 1" class="section">
+  <!-- <section *ngIf="orderStatus === 1" class="section">
     <mat-icon aria-hidden="false" class="order-success">check_circle</mat-icon>
     <p class="mat-body-2">Siparişiniz alındı. En kısa sürede sizinle irtibata geçilecektir.</p>
-  </section>
+  </section> -->
   <section *ngIf="orderStatus === 2" class="section">
     <mat-icon aria-hidden="false" class="error-icon">error</mat-icon>
 

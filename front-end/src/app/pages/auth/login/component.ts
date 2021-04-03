@@ -1,13 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { StorageKey } from 'src/app/shared/models/storage';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
-import { CartService } from 'src/app/shared/services/rest/cart.service';
-import { LocalStorageService } from 'src/app/shared/services/site/local-storage.service';
 import { LoginUser } from './model';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
+import { SettingService } from 'src/app/shared/services/site/settings';
+import { SocialService } from 'src/app/shared/services/site/social-auth';
 
 @Component({
   selector: 'app-login',
@@ -22,10 +20,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private cartService: CartService,
-    private localStorage: LocalStorageService,
-    private location: Location,
-    private snackBar: SnackbarService
+    private snackBar: SnackbarService,
+    private settingService: SettingService,
+    private socialService: SocialService
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +30,18 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('main');
     }
     this.createForm();
+  }
+
+  authWithGoogle(): void {
+    this.socialService.signInWithGoogle().subscribe({
+      next: (res) => {
+        this.settingService.initUserSettingsAfterLogin(res);
+      },
+      error: (err) => {
+        console.log(err);
+        this.snackBar.showError('Beklenmeyen bir hata meydana geldi. Tekrar deneyiniz.');
+      }
+    });
   }
 
   createForm(): void {
@@ -47,15 +56,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.user = Object.assign({}, this.form.value);
       this.authService.login(this.user).subscribe(
         (loginResponse) => {
-          this.localStorage.setObject(StorageKey.User, loginResponse.info);
-          this.authService.saveToken(loginResponse.token);
-          this.authService.currentUser.next(loginResponse.info);
-          this.authService.isAuth.next(true);
-          this.cartService.init().subscribe(() => {
-            this.localStorage.removeItem(StorageKey.Cart);
-            this.authService.role.next(this.authService.getRole());
-            this.location.back();
-          });
+          this.settingService.initUserSettingsAfterLogin(loginResponse);
         },
         (err) => {
           console.error(err.error);

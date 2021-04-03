@@ -7,6 +7,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
+import { SocialAuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
+import { SocialService } from 'src/app/shared/services/site/social-auth';
+
+const googleLoginOptions = {
+  scope: 'profile email'
+};
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,6 +29,24 @@ const routes: Routes = [
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule
+  ],
+  providers: [
+    SocialService,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '399045451146-r6e03sbio9clb86ontnvrsk605fm623p.apps.googleusercontent.com',
+              googleLoginOptions
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig
+    }
   ],
   exports: [LoginComponent, RegisterComponent]
 })

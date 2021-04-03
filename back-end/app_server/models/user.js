@@ -8,6 +8,7 @@ const userSchema = new Schema({
   lastName: { type: String, required: true, trim: true },
   password: { type: String, required: true, trim: true },
   role: { type: String, required: true },
+  authType: String,
   cart: [
     {
       productId: { type: mongoose.SchemaTypes.ObjectId, required: true, ref: 'Product' },

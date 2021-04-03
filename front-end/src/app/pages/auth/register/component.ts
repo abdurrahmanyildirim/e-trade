@@ -10,7 +10,9 @@ import {
 import { Router } from '@angular/router';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
-import { isPresent, nullValidator } from 'src/app/shared/util/common';
+import { SettingService } from 'src/app/shared/services/site/settings';
+import { SocialService } from 'src/app/shared/services/site/social-auth';
+import { nullValidator } from 'src/app/shared/util/common';
 import { RegisterUser } from './model';
 
 @Component({
@@ -26,7 +28,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private snackBar: SnackbarService
+    private snackBar: SnackbarService,
+    private socialService: SocialService,
+    private settingService: SettingService
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +38,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('main');
     }
     this.createForm();
+  }
+
+  authWithGoogle(): void {
+    this.socialService.signInWithGoogle().subscribe({
+      next: (res) => {
+        this.settingService.initUserSettingsAfterLogin(res);
+      },
+      error: (err) => {
+        console.log(err);
+        this.snackBar.showError('Beklenmeyen bir hata meydana geldi. Tekrar deneyiniz.');
+      }
+    });
   }
 
   createForm(): void {

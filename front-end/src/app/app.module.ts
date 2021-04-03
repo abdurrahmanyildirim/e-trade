@@ -15,6 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SplashService } from './shared/services/site/splash.service';
 import { SnackbarComponent } from './shared/components/snackbar/component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SocialLoginModule } from 'angularx-social-login';
 
 registerLocaleData(localeTr);
 
@@ -27,6 +28,7 @@ registerLocaleData(localeTr);
     PagesModule,
     HeaderModule,
     MatSnackBarModule,
+    SocialLoginModule,
     FooterModule,
     HttpClientModule,
     MatProgressSpinnerModule

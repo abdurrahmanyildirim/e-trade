@@ -75,9 +75,10 @@ export class CartComponent implements OnInit, OnDestroy {
         );
         if (nonExistProducts.length > 0) {
           this.stepper.selectedIndex = 0;
+          this.cartStepActive = true;
           this.dialogService.cartWarning({
             acceptButton: 'Tamam',
-            desc: 'Aşağıdaki bilgilere göre sepetinizi düzenleyiniz...',
+            desc: 'Aşağıdaki ürünler tükendi!',
             dialog: DialogType.CartWarning,
             onClose: (result) => {
               // console.log(result);

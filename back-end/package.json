@@ -6,8 +6,7 @@
   "scripts": {
     "bundle": "webpack --config webpack.config.js --mode=production",
     "start": "nodemon main.js",
-    "startDev": "set NODE_ENV=development && nodemon main.js",
-    "herokuLogin" : "heroku login"
+    "startDev": "set NODE_ENV=development && nodemon main.js"
   },
   "devDependencies": {
     "webpack": "^5.27.0",
@@ -23,6 +22,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.8"
+    "mongoose": "^5.11.8",
+    "nodemailer": "^6.5.0"
   }
 }

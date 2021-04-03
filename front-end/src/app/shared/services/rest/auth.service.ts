@@ -10,6 +10,7 @@ import { LoginResponse, Roles, User } from '../../models/user';
 import { ConfigService } from '../site/config.service';
 import { CryptoService } from '../site/crypto';
 import { LocalStorageService } from '../site/local-storage.service';
+import { CartService } from './cart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,10 @@ export class AuthService {
     return this.http.post<LoginResponse>(this.configService.config.baseUrl + 'auth/login', user, {
       headers: this.headers
     });
+  }
+
+  authWithGoogle(user: RegisterUser): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.configService.config.baseUrl + 'auth/google', user);
   }
 
   logout(): void {

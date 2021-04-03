@@ -98,27 +98,23 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
         phone: this.form.value.phone.split(' ').join('')
       });
       const contactInfo = Object.assign({}, this.form.value);
-      timer(3000)
-        .pipe(first())
-        .subscribe({
-          next: () => {
-            this.cartService.purchaseOrder(contactInfo).subscribe({
-              next: (response) => {
-                this.orderStatus = 1;
-                timer(3000)
-                  .pipe(first())
-                  .subscribe(() => {
-                    this.snackbar.showSuccess('Siparişiniz Alındı.');
-                    this.cartService.init().pipe(first()).subscribe();
-                    this.router.navigateByUrl('main');
-                  });
-              },
-              error: (err) => {
-                this.orderStatus = 2;
-              }
-            });
-          }
-        });
+      timer(3000).subscribe({
+        next: () => {
+          this.cartService.purchaseOrder(contactInfo).subscribe({
+            next: (response) => {
+              this.orderStatus = 1;
+              this.snackbar.showSuccess(
+                'Siparişiniz Alındı. Siparişlerim ekranından siparişinizi kontrol edebilirsiniz.'
+              );
+              this.cartService.cart.next([]);
+              this.router.navigateByUrl('orders');
+            },
+            error: (err) => {
+              this.orderStatus = 2;
+            }
+          });
+        }
+      });
     }
   }
 

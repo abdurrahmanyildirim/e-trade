@@ -11,6 +11,11 @@
   min-width: 300px;
 }
 
+mat-card {
+  width: 320px;
+  margin: 20px 0;
+}
+
 mat-card-title,
 mat-card-content {
   display: flex;
@@ -23,6 +28,38 @@ mat-card-content {
 
 .login-button {
   width: 100%;
+}
+
+.or {
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  color: #505050;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.or::before {
+  content: ' ';
+  position: absolute;
+  height: 1px;
+  width: 42%;
+  left: 0;
+  background-color: #d8d8d8;
+  top: 8px;
+}
+
+.or::after {
+  content: ' ';
+  position: absolute;
+  height: 1px;
+  width: 42%;
+  right: 0;
+  background-color: #d8d8d8;
+  top: 8px;
 }
 
 @media only screen and (max-width: 650px) {

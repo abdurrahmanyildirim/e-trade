@@ -87,8 +87,10 @@ export class MainComponent implements OnInit, OnDestroy {
 
   initNewProducts(): void {
     this.newProducts = this.products
-      .sort((a: Product, b: Product) => b.rate - a.rate)
-      .reverse()
+      .sort(
+        (a: Product, b: Product) =>
+          new Date(a.addedDate).getTime() - new Date(b.addedDate).getTime()
+      )
       .slice(0, 15);
   }
 
