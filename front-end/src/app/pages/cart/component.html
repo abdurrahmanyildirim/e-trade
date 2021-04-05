@@ -8,9 +8,13 @@
           (orderListChange)="onOrderListChange($event)"
         ></app-cart-info>
       </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>İletişim Bilgileri</ng-template>
+        <app-contact-info></app-contact-info>
+      </mat-step>
       <mat-step [completed]="false">
         <ng-template matStepLabel>Sipariş Onay</ng-template>
-        <app-purchase-order></app-purchase-order>
+        <app-contracts></app-contracts>
       </mat-step>
     </mat-horizontal-stepper>
   </section>

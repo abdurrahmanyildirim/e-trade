@@ -1,22 +1,21 @@
 <mat-dialog-content class="mat-body-1 message"> {{data.desc}} </mat-dialog-content>
-<div class="product">
-  <div class="name mat-body-2">Ürün Adı</div>
-  <div class="status mat-body-2">Durum</div>
-  <div class="stock mat-body-2">Stok</div>
-</div>
-<div class="product" *ngFor="let prod of data.products">
-  <div class="name">{{prod.name}}</div>
-  <div class="status">
-    <span *ngIf="!prod.hasEnoughStock && prod.isActive && prod.availableQuantity>0">Mevcut</span>
-    <span *ngIf="(!prod.hasEnoughStock && prod.availableQuantity<=0) || !prod.isActive"
-      >Tükendi</span
-    >
-  </div>
-  <div class="stock">
-    <span *ngIf="prod.isActive">{{prod.availableQuantity}}</span>
-    <span *ngIf="!prod.isActive">0</span>
-  </div>
-</div>
+<table>
+  <thead>
+    <tr>
+      <th>Ürün Adı</th>
+      <th>Miktar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let prod of data.products">
+      <td>{{prod.name}}</td>
+      <td>
+        <span *ngIf="prod.isActive">{{prod.availableQuantity}}</span>
+        <span *ngIf="!prod.isActive">0</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
 <mat-dialog-actions align="end">
   <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
     {{data.acceptButton}}

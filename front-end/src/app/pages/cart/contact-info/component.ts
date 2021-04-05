@@ -9,25 +9,25 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
-import { first } from 'rxjs/operators';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
-import { nullValidator } from 'src/app/shared/util/common';
+import { isPresent, nullValidator } from 'src/app/shared/util/common';
+import { ObjectHelper } from 'src/app/shared/util/helper/object';
 import { Contact, UserInfo } from './model';
 
 @Component({
-  selector: 'app-purchase-order',
+  selector: 'app-contact-info',
   templateUrl: './component.html',
   styleUrls: ['./component.css']
 })
-export class PurchaseOrderComponent implements OnInit, OnDestroy {
+export class ContactInfoComponent implements OnInit, OnDestroy {
   orderStatus = -1;
   orders = [];
   totalCost = 0;
   form: FormGroup;
   contactInfo: Contact;
-  orderSub: Subscription;
+  subs = new Subscription();
   userInfo: UserInfo;
   inited = false;
 
@@ -98,7 +98,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
         phone: this.form.value.phone.split(' ').join('')
       });
       const contactInfo = Object.assign({}, this.form.value);
-      timer(3000).subscribe({
+      const subs = timer(3000).subscribe({
         next: () => {
           this.cartService.purchaseOrder(contactInfo).subscribe({
             next: (response) => {
@@ -110,13 +110,20 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
               this.router.navigateByUrl('orders');
             },
             error: (err) => {
+              console.error(err);
               this.orderStatus = 2;
             }
           });
         }
       });
+      this.subs.add(subs);
     }
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    if (isPresent(this.subs)) {
+      this.subs.unsubscribe();
+    }
+    ObjectHelper.removeReferances(this);
+  }
 }

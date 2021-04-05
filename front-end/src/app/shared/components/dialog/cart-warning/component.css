@@ -1,19 +1,12 @@
-.product {
-  display: flex;
-  margin-top: 10px;
+table {
+  min-width: 200px;
 }
 
-.name {
-  flex: 1;
-  margin-right: 5px;
+table th,
+table td {
+  text-align: start;
 }
 
-.status {
-  flex: 0.3;
-  margin-right: 5px;
-}
-
-.stock {
-  flex: 0.1;
-  text-align: center;
+table tbody tr td {
+  padding-right: 5px;
 }

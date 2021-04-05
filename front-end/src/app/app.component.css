@@ -24,6 +24,7 @@
 
 .screen-holder {
   display: none;
+  flex-direction: column;
   justify-content: center;
   position: fixed;
   align-items: center;
@@ -31,6 +32,14 @@
   width: 100%;
   height: 100%;
   z-index: 1001;
+}
+
+.splash-spinner {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media only screen and (max-width: 650px) {

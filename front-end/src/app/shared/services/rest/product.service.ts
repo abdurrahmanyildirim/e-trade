@@ -5,7 +5,9 @@ import { first } from 'rxjs/operators';
 import { CloudinaryPhoto, Product, ProductInfo } from '../../models/product';
 import { ConfigService } from '../site/config.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ProductService {
   products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
 

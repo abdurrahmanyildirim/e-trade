@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.contract-content {
+  width: 100%;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  overflow: auto;
+  height: 110px;
+  padding: 5px;
+  background-color: #fcfbfa;
+  font-size: 12px;
+}

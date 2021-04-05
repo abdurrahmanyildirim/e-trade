@@ -42,8 +42,7 @@ registerLocaleData(localeTr);
       deps: [SplashService],
       multi: true
     },
-    { provide: HTTP_INTERCEPTORS, useClass: RestInterceptor, multi: true },
-    ProductService
+    { provide: HTTP_INTERCEPTORS, useClass: RestInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

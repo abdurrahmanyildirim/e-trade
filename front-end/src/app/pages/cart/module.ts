@@ -11,12 +11,24 @@ import { NumericInputModule } from 'src/app/shared/components/numeric-input/modu
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { PurchaseOrderComponent } from './purchase-order/component';
+import { ContactInfoComponent } from './contact-info/component';
+import { ContractsComponent } from './contracts/component';
+import { WithdrawalComponent } from 'src/app/shared/components/contracts/withdrawal/component';
+import { InformationComponent } from 'src/app/shared/components/contracts/information/component';
+import { SalesComponent } from 'src/app/shared/components/contracts/sales/component';
 
 const routes: Routes = [{ path: '', component: CartComponent }];
 
 @NgModule({
-  declarations: [CartComponent, CartDetailComponent, PurchaseOrderComponent],
+  declarations: [
+    CartComponent,
+    CartDetailComponent,
+    ContactInfoComponent,
+    ContractsComponent,
+    WithdrawalComponent,
+    InformationComponent,
+    SalesComponent
+  ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,

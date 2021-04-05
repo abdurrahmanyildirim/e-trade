@@ -5,6 +5,10 @@
   align-items: flex-start;
 }
 
+.form {
+  max-width: 400px;
+}
+
 .field {
   width: 100%;
 }

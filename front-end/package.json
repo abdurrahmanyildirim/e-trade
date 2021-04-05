@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "bundleAnalyze": "ng build --prod --stats-json && webpack-bundle-analyzer ./dist/e-trade/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +37,7 @@
     "codelyzer": "^6.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.0.2"
+    "typescript": "~4.0.2",
+    "webpack-bundle-analyzer": "^4.4.0"
   }
 }

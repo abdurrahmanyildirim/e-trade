@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
@@ -16,7 +23,8 @@ import { ObjectHelper } from 'src/app/shared/util/helper/object';
 @Component({
   selector: 'app-cart-detail',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartComponent implements OnInit, OnDestroy {
   orders: Order[];
@@ -31,7 +39,8 @@ export class CartComponent implements OnInit, OnDestroy {
     private router: Router,
     private snackbar: SnackbarService,
     private productService: ProductService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +53,7 @@ export class CartComponent implements OnInit, OnDestroy {
       next: (orders) => {
         this.orders = orders;
         this.calculateTotalCost();
+        this.cd.detectChanges();
       }
     });
   }
@@ -78,7 +88,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.cartStepActive = true;
           this.dialogService.cartWarning({
             acceptButton: 'Tamam',
-            desc: 'Aşağıdaki ürünler tükendi!',
+            desc: 'Aşağıdaki ürünlerde maksimum alabileceğiniz miktar belirtilmiştir.',
             dialog: DialogType.CartWarning,
             onClose: (result) => {
               // console.log(result);

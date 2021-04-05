@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrderList, OrderListProduct } from 'src/app/shared/models/order';
@@ -10,7 +16,8 @@ import { isPresent } from 'src/app/shared/util/common';
 @Component({
   selector: 'app-orders',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OrdersComponent implements OnInit, OnDestroy {
   orderListType = [
@@ -59,6 +66,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
             order.totalPrice = this.calculateTotalPrice(order);
             return order;
           });
+        this.cd.detectChanges();
       },
       error: (err) => console.log(err)
     });
