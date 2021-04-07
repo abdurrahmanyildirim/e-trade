@@ -16,6 +16,7 @@ import { ContractsComponent } from './contracts/component';
 import { WithdrawalComponent } from 'src/app/shared/components/contracts/withdrawal/component';
 import { InformationComponent } from 'src/app/shared/components/contracts/information/component';
 import { SalesComponent } from 'src/app/shared/components/contracts/sales/component';
+import { StateService } from './service';
 
 const routes: Routes = [{ path: '', component: CartComponent }];
 
@@ -43,6 +44,7 @@ const routes: Routes = [{ path: '', component: CartComponent }];
     ReactiveFormsModule,
     MatCheckboxModule
   ],
+  providers: [StateService],
   exports: [CartComponent]
 })
 export class CartModule {}

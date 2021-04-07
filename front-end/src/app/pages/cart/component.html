@@ -8,7 +8,7 @@
           (orderListChange)="onOrderListChange($event)"
         ></app-cart-info>
       </mat-step>
-      <mat-step>
+      <mat-step [stepControl]="stateService.contactInfoForm">
         <ng-template matStepLabel>İletişim Bilgileri</ng-template>
         <app-contact-info></app-contact-info>
       </mat-step>

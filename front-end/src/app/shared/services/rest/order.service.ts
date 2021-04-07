@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { OrderDetail, OrderList, Status } from '../../models/order';
+import { OrderList, Status } from '../../models/order';
 import { ConfigService } from '../site/config.service';
 import { CryptoService } from '../site/crypto';
 
@@ -33,21 +33,20 @@ export class OrderService {
     );
   }
 
-  orderDetail(id: string): Observable<OrderDetail> {
-    return this.http
-      .get<OrderDetail>(this.configService.config.baseUrl + 'order/detail/' + id)
-      .pipe(
-        map((orderDetail) => {
-          const contactInfo = {
-            address: this.cryptoService.basicDecrypt(orderDetail.contactInfo.address),
-            city: this.cryptoService.basicDecrypt(orderDetail.contactInfo.city),
-            district: this.cryptoService.basicDecrypt(orderDetail.contactInfo.district),
-            phone: this.cryptoService.basicDecrypt(orderDetail.contactInfo.phone)
-          };
-          orderDetail.contactInfo = contactInfo;
-          return orderDetail;
-        })
-      );
+  orderDetail(id: string): Observable<OrderList> {
+    return this.http.get<OrderList>(this.configService.config.baseUrl + 'order/detail/' + id).pipe(
+      map((orderDetail) => {
+        const contactInfo = {
+          address: this.cryptoService.basicDecrypt(orderDetail.contactInfo.address),
+          city: this.cryptoService.basicDecrypt(orderDetail.contactInfo.city),
+          district: this.cryptoService.basicDecrypt(orderDetail.contactInfo.district),
+          phone: this.cryptoService.basicDecrypt(orderDetail.contactInfo.phone)
+        };
+        orderDetail.contactInfo = contactInfo;
+        orderDetail.email = this.cryptoService.basicDecrypt(orderDetail.email);
+        return orderDetail;
+      })
+    );
   }
 
   getAllOrders(): Observable<OrderList[]> {

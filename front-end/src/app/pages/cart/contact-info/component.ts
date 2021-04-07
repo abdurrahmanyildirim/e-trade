@@ -1,20 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription, timer } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
-import { isPresent, nullValidator } from 'src/app/shared/util/common';
+import { nullValidator } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
-import { Contact, UserInfo } from './model';
+import { StateService } from '../service';
+import { UserInfo } from './model';
 
 @Component({
   selector: 'app-contact-info',
@@ -22,12 +15,8 @@ import { Contact, UserInfo } from './model';
   styleUrls: ['./component.css']
 })
 export class ContactInfoComponent implements OnInit, OnDestroy {
-  orderStatus = -1;
   orders = [];
-  totalCost = 0;
   form: FormGroup;
-  contactInfo: Contact;
-  subs = new Subscription();
   userInfo: UserInfo;
   inited = false;
 
@@ -36,7 +25,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
-    private snackbar: SnackbarService
+    private stateService: StateService
   ) {
     if (this.cartService.cart.value.length <= 0) {
       this.router.navigateByUrl('cart');
@@ -57,12 +46,12 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
       ]),
       address: new FormControl(this.userInfo.address, [Validators.required, nullValidator()]),
       city: new FormControl(this.userInfo.city, [Validators.required, nullValidator()]),
-      district: new FormControl(this.userInfo.district, [Validators.required, nullValidator()]),
-      contractChecked: new FormControl(false, Validators.requiredTrue)
+      district: new FormControl(this.userInfo.district, [Validators.required, nullValidator()])
     });
     if (this.userInfo.phone) {
       this.onKeypress();
     }
+    this.stateService.contactInfoForm = this.form;
     this.inited = true;
   }
 
@@ -91,39 +80,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     });
   }
 
-  purchaseOrder(): void {
-    if (this.form.valid) {
-      this.orderStatus = 0;
-      this.form.patchValue({
-        phone: this.form.value.phone.split(' ').join('')
-      });
-      const contactInfo = Object.assign({}, this.form.value);
-      const subs = timer(3000).subscribe({
-        next: () => {
-          this.cartService.purchaseOrder(contactInfo).subscribe({
-            next: (response) => {
-              this.orderStatus = 1;
-              this.snackbar.showSuccess(
-                'Siparişiniz Alındı. Siparişlerim ekranından siparişinizi kontrol edebilirsiniz.'
-              );
-              this.cartService.cart.next([]);
-              this.router.navigateByUrl('orders');
-            },
-            error: (err) => {
-              console.error(err);
-              this.orderStatus = 2;
-            }
-          });
-        }
-      });
-      this.subs.add(subs);
-    }
-  }
-
   ngOnDestroy(): void {
-    if (isPresent(this.subs)) {
-      this.subs.unsubscribe();
-    }
     ObjectHelper.removeReferances(this);
   }
 }

@@ -19,6 +19,8 @@ import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
+import { ContactInfoComponent } from './contact-info/component';
+import { StateService } from './service';
 
 @Component({
   selector: 'app-cart-detail',
@@ -40,7 +42,8 @@ export class CartComponent implements OnInit, OnDestroy {
     private snackbar: SnackbarService,
     private productService: ProductService,
     private dialogService: DialogService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public stateService: StateService
   ) {}
 
   ngOnInit(): void {
@@ -69,9 +72,12 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   onSelectionChange(): void {
-    if (this.stepper.selectedIndex !== 0) {
-      return;
+    if (this.stepper.selectedIndex === 0) {
+      this.checkProducts();
     }
+  }
+
+  checkProducts(): void {
     const prods = this.orders.slice().map((order) => {
       return {
         id: order.productId,
@@ -131,11 +137,10 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   calculateTotalCost(): void {
-    let cost = 0;
-    this.orders.forEach((order) => {
-      cost += (order.price - order.price * order.discountRate) * order.quantity;
-    });
-    this.totalCost = cost;
+    this.totalCost = this.orders.reduce(
+      (p, c: Order) => p + (c.price - c.price * c.discountRate) * c.quantity,
+      0
+    );
   }
 
   ngOnDestroy(): void {

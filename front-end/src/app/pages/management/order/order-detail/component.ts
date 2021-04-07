@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { OrderDetail, Status } from 'src/app/shared/models/order';
+import { OrderList, Status } from 'src/app/shared/models/order';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { OrderService } from 'src/app/shared/services/rest/order.service';
@@ -13,7 +13,7 @@ import { isPresent } from 'src/app/shared/util/common';
   styleUrls: ['./component.css']
 })
 export class MnOrderDetailComponent implements OnInit, OnDestroy {
-  order: OrderDetail;
+  order: OrderList;
   currentUser: User;
   isInited = false;
   statuses: Status[];

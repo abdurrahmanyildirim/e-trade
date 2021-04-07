@@ -72,6 +72,8 @@ module.exports.purchaseOrder = (req, res) => {
           orderedProducts.push({
             productId: product._id,
             quantity: order.quantity,
+            name: product.name,
+            brand: product.brand,
             discountRate: product.discountRate,
             price: product.price,
             photoPath: product.photos[0].path
@@ -86,10 +88,13 @@ module.exports.purchaseOrder = (req, res) => {
       const phone = cryptoService.encrypt(req.body.phone);
       const newOrder = new Order({
         userId: req.id,
+        userName: user.firstName + ' ' + user.lastName,
+        email: cryptoService.encrypt(user.email),
         isActive: true,
         date: Date.now(),
         status: [{ key: 0, desc: 'Siparişiniz alındı.', date: Date.now() }],
         products: orderedProducts,
+        contractsChecked: req.body.contractsChecked,
         contactInfo: {
           city,
           district,
@@ -99,7 +104,7 @@ module.exports.purchaseOrder = (req, res) => {
       });
       newOrder.save((err) => {
         if (err) {
-          return res.status(404).send({ message: 'Beklenmeyen bir hata meydana geldi.' });
+          return res.status(500).send({ message: 'Beklenmeyen bir hata meydana geldi.' });
         }
         user.cart = [];
         user.phones[0] = {

@@ -4,11 +4,16 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
   userId: { type: mongoose.SchemaTypes.ObjectId, required: true, ref: 'User' },
+  userName: String,
+  email: String,
   date: { type: Date, default: Date.now() },
+  contractsChecked: Boolean,
   products: [
     {
       productId: { type: mongoose.SchemaTypes.ObjectId, required: true, ref: 'Product' },
+      name: String,
       quantity: Number,
+      brand: String,
       discountRate: Number,
       price: Number,
       photoPath: String,

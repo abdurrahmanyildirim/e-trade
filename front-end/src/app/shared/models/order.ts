@@ -1,5 +1,3 @@
-import { Category } from './product';
-
 export interface Order {
   productId: string;
   brand: string;
@@ -18,6 +16,8 @@ export interface OrderList {
   products: OrderListProduct[];
   isActive: boolean;
   status: Status[];
+  email: string;
+  userName: String;
   contactInfo: {
     city: string;
     district: string;
@@ -28,44 +28,20 @@ export interface OrderList {
 }
 
 export interface OrderListProduct {
-  productId: string;
-  quantity: number;
-  discountRate: number;
-  price: number;
-  photoPath: string;
-}
-
-export interface OrderDetail {
-  _id: string;
-  userId: string;
-  date: string;
-  products: OrderDetailProduct[];
-  isActive: boolean;
-  status: Status[];
-  contactInfo: {
-    city: string;
-    district: string;
-    address: string;
-    phone: string;
-  };
-  totalPrice: number;
-}
-
-export interface Status {
-  key: number;
-  desc: string;
-  date?: string;
-}
-
-export interface OrderDetailProduct {
+  name: string;
   productId: string;
   quantity: number;
   discountRate: number;
   price: number;
   photoPath: string;
   brand: string;
-  name: string;
   rate?: number;
+}
+
+export interface Status {
+  key: number;
+  desc: string;
+  date?: string;
 }
 
 export enum Statuses {

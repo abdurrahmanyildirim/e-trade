@@ -1,15 +1,53 @@
 <div class="container">
-  <div class="mat-title">Sözleşmeler ve Formlar</div>
-  <div class="mat-body-2">Cayma Hakkı</div>
-  <div class="contract-content">
-    <app-withdrawal></app-withdrawal>
-  </div>
-  <div class="mat-body-2">Ön Bilgilendirme Formu</div>
-  <div class="contract-content">
-    <app-information></app-information>
-  </div>
-  <div class="mat-body-2">Mesafeli Satış Sözleşmesi</div>
-  <div class="contract-content">
-    <app-sales></app-sales>
-  </div>
+  <section *ngIf="orderStatus === -1" class="section">
+    <div class="mat-title">Sözleşmeler ve Formlar</div>
+    <div class="mat-body-2">Cayma Hakkı</div>
+    <div class="contract-content">
+      <app-withdrawal></app-withdrawal>
+    </div>
+    <br />
+    <div class="mat-body-2">Ön Bilgilendirme Formu</div>
+    <div class="contract-content">
+      <app-information></app-information>
+    </div>
+    <br />
+    <div class="mat-body-2">Mesafeli Satış Sözleşmesi</div>
+    <div class="contract-content">
+      <app-sales></app-sales>
+    </div>
+    <br />
+    <mat-checkbox [(ngModel)]="contractsChecked" color="primary"
+      >Ön Bilgilendirme Koşulları'nı ve Mesafeli Satış Sözleşmesi'ni okudum,
+      onaylıyorum.</mat-checkbox
+    >
+    <br />
+    <div style="text-align: right; width: 100%">
+      <button
+        mat-flat-button
+        [disabled]="!contractsChecked"
+        color="primary"
+        (click)="purchaseOrder()"
+      >
+        Siparişi Tamamla
+      </button>
+    </div>
+  </section>
+
+  <section *ngIf="orderStatus === 0" class="section">
+    <mat-progress-spinner
+      class="example-margin"
+      [color]="'primary'"
+      [mode]="'indeterminate'"
+      [value]="'30'"
+    >
+    </mat-progress-spinner>
+    <p class="mat-body-2">Siparişiniz veriliyor. Lütfen Bekleyiniz...</p>
+  </section>
+  <section *ngIf="orderStatus === 1" class="section">
+    <mat-icon aria-hidden="false" class="error-icon">error</mat-icon>
+
+    <p class="mat-body-2">
+      İşlem sırasında bir hata meydana geldi. Sayfayı yenileyip tekrar deneyiniz.
+    </p>
+  </section>
 </div>

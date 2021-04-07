@@ -24,10 +24,6 @@ module.exports.getOrders = (req, res) => {
 
 module.exports.orderDetail = async (req, res) => {
   const id = req.params.id;
-  const products = await Product.find();
-  if (!products) {
-    return res.status(404).send({ message: 'Veri tabanında bir hata oldu.' });
-  }
   Order.findOne({ _id: id }, (err, order) => {
     if (err) {
       return res.status(404).send({ message: 'Siparişler bulunamadı' });
@@ -35,9 +31,6 @@ module.exports.orderDetail = async (req, res) => {
 
     const orderedProducts = [];
     order.products.map((product) => {
-      const dbProduct = products.find(
-        (prod) => prod.id.toString() === product.productId.toString()
-      );
       orderedProducts.push({
         _id: product._id,
         productId: product.productId,
@@ -45,9 +38,9 @@ module.exports.orderDetail = async (req, res) => {
         discountRate: product.discountRate,
         price: product.price,
         photoPath: product.photoPath,
-        brand: dbProduct.brand,
-        name: dbProduct.name,
-        rate: product.rate
+        brand: product.brand,
+        name: product.name,
+        rate: product.rate ? product.rate : 0
       });
     });
     const contactInfo = {
@@ -58,6 +51,8 @@ module.exports.orderDetail = async (req, res) => {
     };
     return res.status(200).send({
       userId: order.userId,
+      userName: order.userName,
+      email: cryptoService.basicEncrypt(cryptoService.decrypt(order.email)),
       date: order.date,
       products: orderedProducts,
       isActive: order.isActive,

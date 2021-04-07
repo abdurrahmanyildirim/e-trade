@@ -32,15 +32,7 @@
         </div>
         <div class="car-header-item">
           <span class="mat-body-2">Durum</span>
-          <div color="warn" *ngIf="order.status[order.status.length - 1].key === -1">
-            İptal Edildi
-          </div>
-          <div *ngIf="order.status[order.status.length - 1].key === 0">Siparişiniz Alındı</div>
-          <div *ngIf="order.status[order.status.length - 1].key === 1">
-            Siparişiniz Hazırlanıyor
-          </div>
-          <div *ngIf="order.status[order.status.length - 1].key === 2">Kargoya verildi</div>
-          <div *ngIf="order.status[order.status.length - 1].key === 3">Kargoya verildi</div>
+          <div>{{order.status[order.status.length -1 ].desc}}</div>
         </div>
         <div class="car-header-item">
           <span class="mat-body-2">Tutar</span>

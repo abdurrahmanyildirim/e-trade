@@ -13,51 +13,14 @@
   width: 100%;
 }
 
-.finish-order {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.order-success {
-  width: 60px;
-  height: 60px;
-  font-size: 60px;
-  display: block;
-  color: rgb(64, 235, 64);
-}
-
-.error-icon {
-  width: 60px;
-  height: 60px;
-  font-size: 60px;
-  display: block;
-  color: #721f27;
-}
-
-.section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 @media only screen and (max-width: 650px) {
   .container {
     margin-top: 0;
     width: 100%;
   }
 
-  .section {
-    width: 100%;
-    min-height: 300px;
-  }
-
   .form {
     width: 100%;
     padding: 0 5px;
-  }
-
-  .check-box {
-    white-space: normal;
   }
 }

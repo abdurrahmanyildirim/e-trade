@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
-import { OrderDetail, OrderDetailProduct, Statuses } from 'src/app/shared/models/order';
+import { OrderList, OrderListProduct, Statuses } from 'src/app/shared/models/order';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { OrderService } from 'src/app/shared/services/rest/order.service';
@@ -17,7 +17,7 @@ import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.
   providers: [OrderService]
 })
 export class OrderDetailComponent implements OnInit {
-  order: OrderDetail;
+  order: OrderList;
   orderId: string;
   currentUser: User;
   Statuses = Statuses;
@@ -50,7 +50,7 @@ export class OrderDetailComponent implements OnInit {
     });
   }
 
-  reviewDialog(product: OrderDetailProduct): void {
+  reviewDialog(product: OrderListProduct): void {
     this.dialogService.review({
       acceptButton: 'Tamamla',
       refuseButton: 'Vazgeç',
