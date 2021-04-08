@@ -1,10 +1,16 @@
 <div class="container">
+  <div class="top mat-small">
+    <span class="top-item" routerLink="/orders">
+      <mat-icon> chevron_left </mat-icon> Siparişlerim</span
+    >
+    <span class="top-item" (click)="showContracts()">Sözleşmeler</span>
+  </div>
   <div class="card" *ngIf="order">
     <div class="card-header mat-body-2">Sipariş Bilgileri</div>
     <div class="contact-body">
       <span>
         <span class="mat-body-2">Alıcı :</span>
-        {{currentUser.firstName + ' ' + currentUser.lastName}}
+        {{order.userName}}
       </span>
       <span>
         <span class="mat-body-2">Adres :</span> {{order.contactInfo.address}} -
@@ -55,7 +61,7 @@
   <div class="mobile-card" *ngIf="order">
     <span>
       <span class="mat-body-2">Alıcı :</span>
-      {{currentUser.firstName + ' ' + currentUser.lastName}}
+      {{order.userName}}
     </span>
     <span>
       <span class="mat-body-2">Adres :</span> {{order.contactInfo.address}} -

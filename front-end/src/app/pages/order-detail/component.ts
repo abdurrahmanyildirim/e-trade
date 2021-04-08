@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { OrderList, OrderListProduct, Statuses } from 'src/app/shared/models/order';
-import { User } from 'src/app/shared/models/user';
-import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { OrderService } from 'src/app/shared/services/rest/order.service';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
@@ -14,26 +12,25 @@ import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.
   selector: 'app-order-detail',
   templateUrl: './component.html',
   styleUrls: ['./component.css'],
-  providers: [OrderService]
+  providers: [OrderService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OrderDetailComponent implements OnInit {
   order: OrderList;
   orderId: string;
-  currentUser: User;
   Statuses = Statuses;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
-    private authService: AuthService,
     private productService: ProductService,
     private dialogService: DialogService,
     private screenHolder: ScreenHolderService,
-    private snackBar: SnackbarService
+    private snackBar: SnackbarService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.currentUser = this.authService.currentUser.value;
     this.activatedRoute.params.subscribe((params) => {
       // tslint:disable-next-line: no-string-literal
       this.orderId = params['id'];
@@ -45,8 +42,40 @@ export class OrderDetailComponent implements OnInit {
     this.orderService.orderDetail(this.orderId).subscribe({
       next: (data) => {
         this.order = data;
+        this.cd.detectChanges();
       },
       error: (err) => console.log(err)
+    });
+  }
+
+  showContracts(): void {
+    this.dialogService.contracts({
+      acceptButton: 'Tamam',
+      data: {
+        orderInfo: {
+          name: this.order.userName,
+          address:
+            this.order.contactInfo.address +
+            ' ' +
+            this.order.contactInfo.district +
+            '/' +
+            this.order.contactInfo.city,
+          date: new Date(),
+          email: this.order.email,
+          phone: this.order.contactInfo.phone
+        },
+        orders: this.order.products.map((order) => {
+          return {
+            productName: order.name,
+            price: order.price,
+            discountRate: order.discountRate,
+            quantity: order.quantity
+          };
+        })
+      },
+      desc: '',
+      onClose: () => {},
+      dialog: DialogType.Contracts
     });
   }
 

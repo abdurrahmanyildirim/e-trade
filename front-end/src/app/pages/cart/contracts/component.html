@@ -1,5 +1,5 @@
 <div class="container">
-  <section *ngIf="orderStatus === -1" class="section">
+  <section *ngIf="orderStatus === -1 && orderInfo" class="section">
     <div class="mat-title">Sözleşmeler ve Formlar</div>
     <div class="mat-body-2">Cayma Hakkı</div>
     <div class="contract-content">
@@ -8,12 +8,12 @@
     <br />
     <div class="mat-body-2">Ön Bilgilendirme Formu</div>
     <div class="contract-content">
-      <app-information></app-information>
+      <app-information [orderInfo]="orderInfo" [orders]="orders"></app-information>
     </div>
     <br />
     <div class="mat-body-2">Mesafeli Satış Sözleşmesi</div>
     <div class="contract-content">
-      <app-sales></app-sales>
+      <app-sales [orderInfo]="orderInfo" [orders]="orders"></app-sales>
     </div>
     <br />
     <mat-checkbox [(ngModel)]="contractsChecked" color="primary"

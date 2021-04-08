@@ -7,19 +7,15 @@ import {
   ViewChild
 } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
-import { Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
-import { throttleTime } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
-import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Order } from 'src/app/shared/models/order';
 import { ProductInfo } from 'src/app/shared/models/product';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
-import { ContactInfoComponent } from './contact-info/component';
 import { StateService } from './service';
 
 @Component({
@@ -31,15 +27,12 @@ import { StateService } from './service';
 export class CartComponent implements OnInit, OnDestroy {
   orders: Order[];
   subs = new Subscription();
-  quantityChange = new Subject<Order[]>();
   totalCost: number;
   cartStepActive = true;
   @ViewChild('stepper') stepper: MatStepper;
 
   constructor(
     private cartService: CartService,
-    private router: Router,
-    private snackbar: SnackbarService,
     private productService: ProductService,
     private dialogService: DialogService,
     private cd: ChangeDetectorRef,
@@ -48,17 +41,17 @@ export class CartComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initOrders();
-    this.initQuantityChange();
   }
 
   initOrders(): void {
-    this.cartService.cart.subscribe({
+    const subs = this.cartService.cart.subscribe({
       next: (orders) => {
         this.orders = orders;
         this.calculateTotalCost();
-        this.cd.detectChanges();
+        this.cd.markForCheck();
       }
     });
+    this.subs.add(subs);
   }
 
   toggleStepper(): void {
@@ -99,7 +92,7 @@ export class CartComponent implements OnInit, OnDestroy {
             onClose: (result) => {
               // console.log(result);
             },
-            products: nonExistProducts
+            data: nonExistProducts
           });
         }
       },
@@ -108,32 +101,6 @@ export class CartComponent implements OnInit, OnDestroy {
       }
     });
     this.subs.add(subs);
-  }
-
-  initQuantityChange(): void {
-    const sub = this.quantityChange.pipe(throttleTime(500)).subscribe({
-      next: (orders) => {
-        const subs2 = this.cartService.updateCart(this.orders).subscribe({
-          next: (result) => {
-            if (result) {
-              this.snackbar.showInfo('Sepetiniz güncellendi.');
-              this.calculateTotalCost();
-            }
-          },
-          error: (err) => {
-            console.error(err);
-            this.snackbar.showError('Güncelleme sırasında bir hata oldu');
-          }
-        });
-        this.subs.add(subs2);
-      },
-      error: (err) => console.log(err)
-    });
-    this.subs.add(sub);
-  }
-
-  onOrderListChange(orders: Order[]): void {
-    this.quantityChange.next(orders);
   }
 
   calculateTotalCost(): void {

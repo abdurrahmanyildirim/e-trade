@@ -3,10 +3,7 @@
     <mat-horizontal-stepper linear (selectionChange)="onSelectionChange()" #stepper>
       <mat-step>
         <ng-template matStepLabel>Sepeti Detayı</ng-template>
-        <app-cart-info
-          [orders]="orders"
-          (orderListChange)="onOrderListChange($event)"
-        ></app-cart-info>
+        <app-cart-info></app-cart-info>
       </mat-step>
       <mat-step [stepControl]="stateService.contactInfoForm">
         <ng-template matStepLabel>İletişim Bilgileri</ng-template>
@@ -14,7 +11,7 @@
       </mat-step>
       <mat-step [completed]="false">
         <ng-template matStepLabel>Sipariş Onay</ng-template>
-        <app-contracts></app-contracts>
+        <app-contracts *ngIf="stepper.selectedIndex === 2"></app-contracts>
       </mat-step>
     </mat-horizontal-stepper>
   </section>

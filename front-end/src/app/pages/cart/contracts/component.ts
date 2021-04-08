@@ -8,6 +8,8 @@ import {
 import { Router } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
+import { User } from 'src/app/shared/models/user';
+import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
@@ -22,19 +24,34 @@ import { Contact } from './model';
 })
 export class ContractsComponent implements OnInit, OnDestroy {
   subs = new Subscription();
-  orderStatus: number = -1;
-  contractsChecked: boolean = false;
+  orderStatus = -1;
+  contractsChecked = false;
+  user: User;
+  contactInfo: Contact;
+  orderInfo: any;
+  orders: any;
 
   constructor(
     private stateService: StateService,
-    private cartService: CartService,
+    public cartService: CartService,
     private snackbar: SnackbarService,
+    private authService: AuthService,
     private router: Router,
     private cd: ChangeDetectorRef
-  ) {}
+  ) {
+    this.contactInfo = this.stateService.contactInfoForm.value;
+    this.orders = this.cartService.cart.value.map((order) => {
+      return {
+        productName: order.name,
+        price: order.price,
+        discountRate: order.discountRate,
+        quantity: order.quantity
+      };
+    });
+  }
 
   ngOnInit(): void {
-    this.cd.detectChanges();
+    this.initUserInfo();
   }
 
   purchaseOrder(): void {
@@ -69,6 +86,30 @@ export class ContractsComponent implements OnInit, OnDestroy {
       });
       this.subs.add(subs1);
     }
+  }
+
+  initUserInfo(): void {
+    this.authService.getUser(this.authService.decodeToken()._id).subscribe({
+      next: (user) => {
+        this.user = user;
+        this.orderInfo = {
+          name: this.user.firstName + ' ' + this.user.lastName,
+          address:
+            this.contactInfo.address +
+            ' ' +
+            this.contactInfo.district +
+            '/' +
+            this.contactInfo.city,
+          date: new Date(),
+          email: this.user.email,
+          phone: this.contactInfo.phone
+        };
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 
   ngOnDestroy(): void {

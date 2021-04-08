@@ -19,7 +19,10 @@
     </mat-dialog-actions>
   </ng-container>
   <ng-container *ngSwitchCase="DialogType.CartWarning">
-    <app-cart-warning [data]="data"></app-cart-warning>
+    <app-cart-warning [dialog]="data"></app-cart-warning>
+  </ng-container>
+  <ng-container *ngSwitchCase="DialogType.Contracts">
+    <app-contracts-dialog [dialog]="data"></app-contracts-dialog>
   </ng-container>
   <ng-container *ngSwitchCase="DialogType.Review">
     <mat-dialog-content class="mat-body-1 review">

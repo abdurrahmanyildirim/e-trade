@@ -89,7 +89,7 @@ module.exports.purchaseOrder = (req, res) => {
       const newOrder = new Order({
         userId: req.id,
         userName: user.firstName + ' ' + user.lastName,
-        email: cryptoService.encrypt(user.email),
+        email: user.email,
         isActive: true,
         date: Date.now(),
         status: [{ key: 0, desc: 'Siparişiniz alındı.', date: Date.now() }],

@@ -1,0 +1,14 @@
+<div style="text-align: right">
+  <button mat-icon-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="container">
+  <app-sales [orderInfo]="dialog.data.orderInfo" [orders]="dialog.data.orders"></app-sales>
+  <br />
+  <app-information
+    [orderInfo]="dialog.data.orderInfo"
+    [orders]="dialog.data.orders"
+  ></app-information>
+</div>

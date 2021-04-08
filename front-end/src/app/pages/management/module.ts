@@ -14,12 +14,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PhotoUploadComponent } from './product/new-product/photo-upload/component';
-import { DialogModule } from 'src/app/shared/components/dialog/module';
 import { StarModule } from 'src/app/shared/components/star/module';
 import { MatRadioModule } from '@angular/material/radio';
 import { MnProductDetailComponent } from './product/product-detail/component';
 import { MnMessageBoxComponent } from './message-box/component';
 import { MnCategoryComponent } from './category/component';
+import { DialogModule } from 'src/app/shared/components/dialog/module';
 
 const routes: Routes = [
   {
@@ -62,8 +62,8 @@ const routes: Routes = [
     MatStepperModule,
     DragDropModule,
     MatRadioModule,
-    DialogModule,
-    StarModule
+    StarModule,
+    DialogModule
   ],
   exports: [ManagementComponent]
 })

@@ -72,6 +72,26 @@ export class DialogService {
       });
   }
 
+  contracts(data: DialogData): void {
+    this.dialog
+      .open(DialogComponent, {
+        width: '80%',
+        height: '70%',
+        data
+      })
+      .afterClosed()
+      .pipe(first())
+      .subscribe({
+        next: (result) => {
+          const res = isPresent(result) ? result : false;
+          data.onClose(res);
+        },
+        error: (err) => {
+          data.onError(err);
+        }
+      });
+  }
+
   review(data: DialogData): void {
     this.dialog
       .open(DialogComponent, {

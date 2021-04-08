@@ -1,4 +1,4 @@
-<mat-dialog-content class="mat-body-1 message"> {{data.desc}} </mat-dialog-content>
+<mat-dialog-content class="mat-body-1 message"> {{dialog.desc}} </mat-dialog-content>
 <table>
   <thead>
     <tr>
@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let prod of data.products">
+    <tr *ngFor="let prod of dialog.data">
       <td>{{prod.name}}</td>
       <td>
         <span *ngIf="prod.isActive">{{prod.availableQuantity}}</span>
@@ -18,6 +18,6 @@
 </table>
 <mat-dialog-actions align="end">
   <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
-    {{data.acceptButton}}
+    {{dialog.acceptButton}}
   </button>
 </mat-dialog-actions>

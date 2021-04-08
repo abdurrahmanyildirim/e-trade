@@ -4,6 +4,26 @@
   margin: 0 auto;
 }
 
+.top {
+  min-height: 30px;
+  display: flex;
+  padding: 0 5px 0 0;
+  cursor: pointer;
+  justify-content: space-between;
+  color: #999999;
+  margin-bottom: 10px;
+}
+
+.top-item {
+  display: flex;
+  align-items: center;
+  outline: none;
+}
+
+.top-item:hover {
+  color: #03a9f4 !important;
+}
+
 .card {
   border: 1px solid #ccc;
   border-radius: 5px;

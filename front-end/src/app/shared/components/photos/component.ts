@@ -8,8 +8,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { fromEvent } from 'rxjs/internal/observable/fromEvent';
+import { Subscription, fromEvent } from 'rxjs';
 import { CloudinaryPhoto } from 'src/app/shared/models/product';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 import { isPresent } from '../../util/common';

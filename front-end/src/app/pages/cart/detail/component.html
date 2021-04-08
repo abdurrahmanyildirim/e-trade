@@ -29,10 +29,7 @@
           </section>
           <section class="quantity-price">
             <div class="numeric-container">
-              <app-numeric-input
-                [(quantity)]="order.quantity"
-                (quantityChange)="emitChanges()"
-              ></app-numeric-input>
+              <app-numeric-input [(quantity)]="order.quantity" (quantityChange)="onQuantityChange()"></app-numeric-input>
             </div>
             <div class="price-content">
               <div *ngIf="order.discountRate>0" class="normal-price">
@@ -64,11 +61,7 @@
           </div>
         </section>
         <section class="section half-flex numeric-container">
-          <app-numeric-input
-            [width]="80"
-            [(quantity)]="order.quantity"
-            (quantityChange)="emitChanges()"
-          ></app-numeric-input>
+          <app-numeric-input [width]="80" [(quantity)]="order.quantity" (quantityChange)="onQuantityChange()"></app-numeric-input>
         </section>
         <section class="section half-flex">
           <div *ngIf="order.discountRate>0" class="normal-price">

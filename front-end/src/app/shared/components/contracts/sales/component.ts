@@ -7,33 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SalesComponent implements OnInit {
   totalCost: number;
-  @Input() orders = [
-    {
-      productName: 'Deneme',
-      price: 60,
-      discountRate: 0.5,
-      quantity: 5
-    },
-    {
-      productName: 'Deneme 2',
-      price: 20,
-      discountRate: 0,
-      quantity: 2
-    },
-    {
-      productName: 'Deneme 3',
-      price: 20,
-      discountRate: 0.8,
-      quantity: 1
-    }
-  ];
-  @Input() orderInfo = {
-    name: 'Abdurrahman Yıldırım',
-    address: 'Songül sokak no:19 daire 2 Sultanbeyli/İstanbul',
-    date: new Date(),
-    tel: 5315684309,
-    email: 'abdurrahman.yildrm@gmail.com'
-  };
+  @Input() orders;
+  @Input() orderInfo;
 
   ngOnInit(): void {
     this.calculateTotalCost();

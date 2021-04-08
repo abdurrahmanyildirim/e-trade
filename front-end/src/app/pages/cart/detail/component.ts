@@ -1,25 +1,55 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { Order } from 'src/app/shared/models/order';
+import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { UtilityService } from 'src/app/shared/services/site/utility.service';
+import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
 @Component({
   selector: 'app-cart-info',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartDetailComponent implements OnDestroy, OnInit {
-  @Input() orders: Order[];
-  @Output() orderListChange = new EventEmitter<Order[]>();
+  orders: Order[];
+  subs = new Subscription();
   isMobile = false;
 
-  constructor(private utilService: UtilityService, private dialogService: DialogService) {}
+  constructor(
+    private utilService: UtilityService,
+    private dialogService: DialogService,
+    private cartService: CartService,
+    private cd: ChangeDetectorRef
+  ) {}
+
   ngOnInit(): void {
     if (document.body.clientWidth <= 650) {
       this.isMobile = true;
     }
+    this.initOrders();
+  }
+
+  initOrders(): void {
+    const subs = this.cartService.cart.subscribe({
+      next: (orders) => {
+        this.orders = orders;
+        this.cd.detectChanges();
+      }
+    });
+    this.subs.add(subs);
   }
 
   onOrderRemove(removedOrder: Order): void {
@@ -31,15 +61,15 @@ export class CartDetailComponent implements OnDestroy, OnInit {
         if (result) {
           const indexRemovedOrder = this.orders.indexOf(removedOrder);
           this.orders.splice(indexRemovedOrder, 1);
-          this.emitChanges();
+          this.cartService.cart.next(this.orders);
         }
       },
       dialog: DialogType.Confirm
     });
   }
 
-  emitChanges(): void {
-    this.orderListChange.emit(this.orders);
+  onQuantityChange(): void {
+    this.cartService.cart.next(this.orders);
   }
 
   showPhotoBigger(path: string): void {
@@ -47,6 +77,9 @@ export class CartDetailComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
+    if (isPresent(this.subs)) {
+      this.subs.unsubscribe();
+    }
     ObjectHelper.removeReferances(this);
   }
 }

@@ -17,19 +17,12 @@ import { WithdrawalComponent } from 'src/app/shared/components/contracts/withdra
 import { InformationComponent } from 'src/app/shared/components/contracts/information/component';
 import { SalesComponent } from 'src/app/shared/components/contracts/sales/component';
 import { StateService } from './service';
+import { ContractsModule } from 'src/app/shared/components/contracts/module';
 
 const routes: Routes = [{ path: '', component: CartComponent }];
 
 @NgModule({
-  declarations: [
-    CartComponent,
-    CartDetailComponent,
-    ContactInfoComponent,
-    ContractsComponent,
-    WithdrawalComponent,
-    InformationComponent,
-    SalesComponent
-  ],
+  declarations: [CartComponent, CartDetailComponent, ContactInfoComponent, ContractsComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -38,6 +31,7 @@ const routes: Routes = [{ path: '', component: CartComponent }];
     MatIconModule,
     MatInputModule,
     RouterModule,
+    ContractsModule,
     NumericInputModule,
     MatStepperModule,
     MatProgressSpinnerModule,

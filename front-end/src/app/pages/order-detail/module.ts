@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { DialogModule } from 'src/app/shared/components/dialog/module';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
     MatSelectModule,
     CommonModule,
     FormsModule,
+    DialogModule,
     MatButtonModule,
     MatIconModule
   ],

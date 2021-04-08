@@ -24,9 +24,8 @@
 }
 
 .active {
-  background-color: #b0bec5 !important;
-  border-left: 6px solid #03a9f4;
-  /* transform: translateX(10px); */
+  background: linear-gradient(180deg, #ffffff 0%, #b0bec5 100%) !important;
+  border-left: 3px solid #03a9f4;
 }
 
 .btn {
@@ -36,12 +35,10 @@
   text-align: left;
   cursor: pointer;
   box-sizing: border-box;
-  transition: background-color 0.3s ease-in-out;
-  background-color: #cfd8dc;
-  /* transition: transform 0.25s ease-in; */
+  background: linear-gradient(180deg, #ffffff 0%, #eceff1 100%);
   border-radius: 0 20px 20px 0;
 }
 
 .btn:hover {
-  background-color: #b0bec5;
+  background: linear-gradient(180deg, #ffffff 0%, #b0bec5 100%);
 }
