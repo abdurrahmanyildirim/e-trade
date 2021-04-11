@@ -1,5 +1,5 @@
-<span [ngSwitch]="data.dialog">
-  <ng-container *ngSwitchCase="DialogType.Confirm">
+<span [ngSwitch]="true">
+  <ng-container *ngSwitchCase="DialogType.Confirm === data.dialog">
     <mat-dialog-content class="mat-body-2" style="text-align: center">
       {{data.desc}}
     </mat-dialog-content>
@@ -10,21 +10,21 @@
       </button>
     </mat-dialog-actions>
   </ng-container>
-  <ng-container *ngSwitchCase="DialogType.Message">
+  <ng-container *ngSwitchCase="DialogType.Message === data.dialog">
     <mat-dialog-content class="mat-body-1 message"> {{data.desc}} </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
-        {{data.acceptButton}}
-      </button>
+      <button mat-button color="primary" [mat-dialog-close]="true">{{data.acceptButton}}</button>
     </mat-dialog-actions>
   </ng-container>
-  <ng-container *ngSwitchCase="DialogType.CartWarning">
+  <ng-container *ngSwitchCase="DialogType.CartWarning === data.dialog">
     <app-cart-warning [dialog]="data"></app-cart-warning>
   </ng-container>
-  <ng-container *ngSwitchCase="DialogType.Contracts">
+  <ng-container
+    *ngSwitchCase="DialogType.SalesAndInformationContract === data.dialog || DialogType.RegisterContract === data.dialog"
+  >
     <app-contracts-dialog [dialog]="data"></app-contracts-dialog>
   </ng-container>
-  <ng-container *ngSwitchCase="DialogType.Review">
+  <ng-container *ngSwitchCase="DialogType.Review === data.dialog">
     <mat-dialog-content class="mat-body-1 review">
       <div>{{currentRate}}</div>
       <span

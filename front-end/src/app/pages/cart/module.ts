@@ -11,18 +11,12 @@ import { NumericInputModule } from 'src/app/shared/components/numeric-input/modu
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ContactInfoComponent } from './contact-info/component';
-import { ContractsComponent } from './contracts/component';
-import { WithdrawalComponent } from 'src/app/shared/components/contracts/withdrawal/component';
-import { InformationComponent } from 'src/app/shared/components/contracts/information/component';
-import { SalesComponent } from 'src/app/shared/components/contracts/sales/component';
-import { StateService } from './service';
-import { ContractsModule } from 'src/app/shared/components/contracts/module';
+import { PurchaseOrderComponent } from './purchase-order/component';
 
 const routes: Routes = [{ path: '', component: CartComponent }];
 
 @NgModule({
-  declarations: [CartComponent, CartDetailComponent, ContactInfoComponent, ContractsComponent],
+  declarations: [CartComponent, CartDetailComponent, PurchaseOrderComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -31,14 +25,12 @@ const routes: Routes = [{ path: '', component: CartComponent }];
     MatIconModule,
     MatInputModule,
     RouterModule,
-    ContractsModule,
     NumericInputModule,
     MatStepperModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MatCheckboxModule
   ],
-  providers: [StateService],
   exports: [CartComponent]
 })
 export class CartModule {}

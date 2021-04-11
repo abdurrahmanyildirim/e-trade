@@ -1,14 +1,19 @@
 <div style="text-align: right">
-  <button mat-icon-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>
+  <button mat-icon-button [mat-dialog-close]="true">
     <mat-icon>close</mat-icon>
   </button>
 </div>
 
 <div class="container">
-  <app-sales [orderInfo]="dialog.data.orderInfo" [orders]="dialog.data.orders"></app-sales>
-  <br />
-  <app-information
-    [orderInfo]="dialog.data.orderInfo"
-    [orders]="dialog.data.orders"
-  ></app-information>
+  <div *ngIf="dialog.dialog === DialogType.SalesAndInformationContract">
+    <app-sales-contract [orderInfo]="dialog.data.orderInfo" [orders]="dialog.data.orders"></app-sales-contract>
+    <br />
+    <app-information-contract
+      [orderInfo]="dialog.data.orderInfo"
+      [orders]="dialog.data.orders"
+    ></app-information-contract>
+  </div>
+  <div *ngIf="dialog.dialog === DialogType.RegisterContract">
+    <app-register-contract></app-register-contract>
+  </div>
 </div>

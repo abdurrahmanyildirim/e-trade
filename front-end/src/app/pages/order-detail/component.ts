@@ -75,7 +75,7 @@ export class OrderDetailComponent implements OnInit {
       },
       desc: '',
       onClose: () => {},
-      dialog: DialogType.Contracts
+      dialog: DialogType.SalesAndInformationContract
     });
   }
 

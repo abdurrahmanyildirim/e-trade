@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { DialogData } from '../component';
+import { Component, Input, OnInit } from '@angular/core';
+import { DialogData, DialogType } from '../component';
 
 @Component({
   selector: 'app-contracts-dialog',
@@ -8,4 +8,5 @@ import { DialogData } from '../component';
 })
 export class ContractsDiaologComponent {
   @Input() dialog: DialogData;
+  DialogType = DialogType;
 }

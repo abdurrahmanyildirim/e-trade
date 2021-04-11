@@ -29,14 +29,17 @@
           </section>
           <section class="quantity-price">
             <div class="numeric-container">
-              <app-numeric-input [(quantity)]="order.quantity" (quantityChange)="onQuantityChange()"></app-numeric-input>
+              <app-numeric-input
+                [(quantity)]="order.quantity"
+                (quantityChange)="onQuantityChange()"
+              ></app-numeric-input>
             </div>
             <div class="price-content">
               <div *ngIf="order.discountRate>0" class="normal-price">
-                {{order.price * order.quantity | number :'.2-2'}} TL
+                {{(order.price * order.quantity ) | number: '.2-2'}} TL
               </div>
               <div>
-                {{(order.price - order.price * order.discountRate) * order.quantity | number
+                {{((order.price - order.price * order.discountRate) * order.quantity) | number
                 :'.2-2'}} TL
               </div>
             </div>
@@ -61,11 +64,15 @@
           </div>
         </section>
         <section class="section half-flex numeric-container">
-          <app-numeric-input [width]="80" [(quantity)]="order.quantity" (quantityChange)="onQuantityChange()"></app-numeric-input>
+          <app-numeric-input
+            [width]="80"
+            [(quantity)]="order.quantity"
+            (quantityChange)="onQuantityChange()"
+          ></app-numeric-input>
         </section>
         <section class="section half-flex">
           <div *ngIf="order.discountRate>0" class="normal-price">
-            {{order.price * order.quantity}} TL
+            {{order.price * order.quantity | number: '.2-2'}} TL
           </div>
           <div>
             {{(order.price - order.price * order.discountRate) * order.quantity | number :'.2-2'}}

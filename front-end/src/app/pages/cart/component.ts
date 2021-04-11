@@ -16,7 +16,6 @@ import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
-import { StateService } from './service';
 
 @Component({
   selector: 'app-cart-detail',
@@ -35,8 +34,7 @@ export class CartComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private productService: ProductService,
     private dialogService: DialogService,
-    private cd: ChangeDetectorRef,
-    public stateService: StateService
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {

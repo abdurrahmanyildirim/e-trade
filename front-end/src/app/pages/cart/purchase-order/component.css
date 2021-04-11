@@ -1,0 +1,49 @@
+.container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  max-width: 550px;
+}
+
+.field {
+  width: 100%;
+}
+
+.link {
+  color: rgb(93, 93, 247);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.check-box {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+mat-checkbox {
+  margin-right: 10px;
+}
+
+@media only screen and (max-width: 650px) {
+  .container {
+    margin-top: 0;
+    width: 100%;
+  }
+
+  .form {
+    width: 100%;
+    padding: 0 5px;
+  }
+}

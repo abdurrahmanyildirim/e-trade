@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { InformationComponent } from './information/component';
-import { SalesComponent } from './sales/component';
 import { WithdrawalComponent } from './withdrawal/component';
 
 @NgModule({
-  declarations: [SalesComponent, InformationComponent, WithdrawalComponent],
+  declarations: [WithdrawalComponent],
   imports: [CommonModule],
-  exports: [SalesComponent, InformationComponent, WithdrawalComponent]
+  exports: [WithdrawalComponent]
 })
 export class ContractsModule {}

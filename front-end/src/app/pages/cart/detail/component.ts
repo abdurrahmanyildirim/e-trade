@@ -2,15 +2,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
-  Input,
   OnDestroy,
-  OnInit,
-  Output
+  OnInit
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
+import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Order } from 'src/app/shared/models/order';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
 import { UtilityService } from 'src/app/shared/services/site/utility.service';
@@ -25,13 +24,14 @@ import { ObjectHelper } from 'src/app/shared/util/helper/object';
 })
 export class CartDetailComponent implements OnDestroy, OnInit {
   orders: Order[];
-  subs = new Subscription();
+  ordersSubs: Subscription;
   isMobile = false;
 
   constructor(
     private utilService: UtilityService,
     private dialogService: DialogService,
     private cartService: CartService,
+    private snackbar: SnackbarService,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -43,13 +43,12 @@ export class CartDetailComponent implements OnDestroy, OnInit {
   }
 
   initOrders(): void {
-    const subs = this.cartService.cart.subscribe({
+    this.ordersSubs = this.cartService.cart.subscribe({
       next: (orders) => {
         this.orders = orders;
         this.cd.detectChanges();
       }
     });
-    this.subs.add(subs);
   }
 
   onOrderRemove(removedOrder: Order): void {
@@ -59,9 +58,21 @@ export class CartDetailComponent implements OnDestroy, OnInit {
       desc: 'Ürünü sepetinizden kaldırmak istediğinize emin misiniz?',
       onClose: (result) => {
         if (result) {
-          const indexRemovedOrder = this.orders.indexOf(removedOrder);
-          this.orders.splice(indexRemovedOrder, 1);
-          this.cartService.cart.next(this.orders);
+          const orders = this.orders.filter((prod) => prod.productId !== removedOrder.productId);
+          this.cartService
+            .updateCart(orders)
+            .pipe(first())
+            .subscribe({
+              next: (res) => {
+                if (res) {
+                  this.snackbar.showSuccess('Ürün kaldırıldı.');
+                }
+              },
+              error: (error) => {
+                console.error(error);
+                this.snackbar.showError('Ürün kaldırılamadı. Tekrar deneyiniz.');
+              }
+            });
         }
       },
       dialog: DialogType.Confirm
@@ -69,7 +80,18 @@ export class CartDetailComponent implements OnDestroy, OnInit {
   }
 
   onQuantityChange(): void {
-    this.cartService.cart.next(this.orders);
+    this.cartService
+      .updateCart(this.orders)
+      .pipe(first())
+      .subscribe({
+        next: (res) => {
+          this.snackbar.showSuccess('Sepet güncellendi.');
+        },
+        error: (error) => {
+          console.error(error);
+          this.snackbar.showError('Hata meydana geldi. Tekrar deneyiniz.');
+        }
+      });
   }
 
   showPhotoBigger(path: string): void {
@@ -77,8 +99,8 @@ export class CartDetailComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
-    if (isPresent(this.subs)) {
-      this.subs.unsubscribe();
+    if (isPresent(this.ordersSubs)) {
+      this.ordersSubs.unsubscribe();
     }
     ObjectHelper.removeReferances(this);
   }

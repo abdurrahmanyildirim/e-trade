@@ -8,6 +8,8 @@ import {
   Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DialogType } from 'src/app/shared/components/dialog/component';
+import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { SettingService } from 'src/app/shared/services/site/settings';
@@ -30,7 +32,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private router: Router,
     private snackBar: SnackbarService,
     private socialService: SocialService,
-    private settingService: SettingService
+    private settingService: SettingService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -104,6 +107,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  showContracts(): void {
+    this.dialogService.contracts({
+      acceptButton: 'Tamam',
+      desc: '',
+      dialog: DialogType.RegisterContract,
+      onClose: (result) => {}
+    });
   }
 
   ngOnDestroy(): void {}

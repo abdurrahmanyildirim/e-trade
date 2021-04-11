@@ -5,13 +5,9 @@
         <ng-template matStepLabel>Sepeti Detayı</ng-template>
         <app-cart-info></app-cart-info>
       </mat-step>
-      <mat-step [stepControl]="stateService.contactInfoForm">
-        <ng-template matStepLabel>İletişim Bilgileri</ng-template>
-        <app-contact-info></app-contact-info>
-      </mat-step>
       <mat-step [completed]="false">
         <ng-template matStepLabel>Sipariş Onay</ng-template>
-        <app-contracts *ngIf="stepper.selectedIndex === 2"></app-contracts>
+        <app-contact-info></app-contact-info>
       </mat-step>
     </mat-horizontal-stepper>
   </section>

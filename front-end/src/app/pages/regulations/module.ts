@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RegisterContractModule } from 'src/app/shared/components/contracts/register/module';
 import { AboutComponent } from './about/component';
 import { PrivacyPolicyComponent } from './privacy-policy/component';
-import { SalesContractComponent } from './sales-contract/component';
+import { RegisterContractPageComponent } from './register-contract/component';
 
 const routes: Routes = [
+  { path: 'about', component: AboutComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
-  { path: 'sales-contract', component: SalesContractComponent },
-  { path: 'about', component: AboutComponent }
+  { path: 'register-contract', component: RegisterContractPageComponent }
 ];
 
 @NgModule({
-  declarations: [PrivacyPolicyComponent, SalesContractComponent, AboutComponent],
-  imports: [RouterModule.forChild(routes)],
-  exports: [PrivacyPolicyComponent, SalesContractComponent, AboutComponent]
+  declarations: [PrivacyPolicyComponent, AboutComponent, RegisterContractPageComponent],
+  imports: [RouterModule.forChild(routes), RegisterContractModule],
+  exports: [PrivacyPolicyComponent, AboutComponent, RegisterContractPageComponent]
 })
 export class RegulationsModule {}

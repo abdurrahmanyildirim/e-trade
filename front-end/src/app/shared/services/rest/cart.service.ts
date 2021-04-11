@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
-import { Contact } from 'src/app/pages/cart/contracts/model';
+import { PurchaseInfo } from 'src/app/pages/cart/purchase-order/model';
 import { Order } from '../../models/order';
 import { StorageKey } from '../../models/storage';
 import { isPresent } from '../../util/common';
@@ -46,7 +46,7 @@ export class CartService implements OnDestroy {
     });
   }
 
-  purchaseOrder(contactInfo: Contact): Observable<any> {
+  purchaseOrder(contactInfo: PurchaseInfo): Observable<any> {
     return this.http.post(
       this.configService.config.baseUrl + 'operation/purchase-order',
       contactInfo
@@ -69,13 +69,13 @@ export class CartService implements OnDestroy {
         });
       } else {
         this.router.navigateByUrl('login');
-        observer.next(false);
+        observer.next();
         observer.complete();
       }
     });
   }
 
-  updateDbCart(orders: Order[]): Observable<Order[]> {
+  private updateDbCart(orders: Order[]): Observable<Order[]> {
     return this.http.post<Order[]>(
       this.configService.config.baseUrl + 'operation/update-cart',
       orders

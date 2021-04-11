@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-sales',
+  selector: 'app-sales-contract',
   templateUrl: './component.html',
   styleUrls: ['./component.css']
 })
-export class SalesComponent implements OnInit {
+export class SalesContractComponent implements OnInit {
   totalCost: number;
   @Input() orders;
   @Input() orderInfo;

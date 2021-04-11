@@ -1,0 +1,88 @@
+<main class="container">
+  <section *ngIf="orderStatus === -1 && inited" class="section">
+    <form [formGroup]="form" class="form">
+      <mat-form-field class="field">
+        <mat-label>Tel No</mat-label>
+        <span matPrefix>0 &nbsp;</span>
+        <input
+          type="tel"
+          matInput
+          maxlength="13"
+          minlength="13"
+          formControlName="phone"
+          (keypress)="onKeypress()"
+          required
+        />
+        <mat-icon matSuffix>mode_edit</mat-icon>
+        <mat-error
+          *ngIf="(form.get('phone').hasError('required') || form.get('phone').hasError('isNull') )&& form.get('phone').touched"
+        >
+          *Telefon zorunlu.
+        </mat-error>
+        <mat-error
+          *ngIf="form.get('phone').hasError('maxlength') || form.get('phone').hasError('minlength')"
+        >
+          *Telefon numarası 10 haneli olmalıdır.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <mat-label>Şehir</mat-label>
+        <input matInput formControlName="city" required />
+        <mat-error
+          *ngIf="(form.get('city').hasError('required') || form.get('city').hasError('isNull') )&& form.get('city').touched"
+        >
+          *Şehir zorunlu.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="field">
+        <mat-label>İlçe</mat-label>
+        <input matInput formControlName="district" required />
+        <mat-error
+          *ngIf="(form.get('district').hasError('required') || form.get('district').hasError('isNull') )&& form.get('district').touched"
+        >
+          *İlçe zorunlu.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <mat-label>Adres</mat-label>
+        <textarea matInput formControlName="address" required></textarea>
+        <mat-error
+          *ngIf="(form.get('address').hasError('required') || form.get('address').hasError('isNull') )&& form.get('address').touched"
+        >
+          *Adres zorunlu.
+        </mat-error>
+      </mat-form-field>
+      <div class="check-box">
+        <mat-checkbox color="primary" formControlName="contractsChecked" required> </mat-checkbox>
+        <span>
+          <span class="link" (click)="showContracts()"
+            >Mesafeli Satış Sözleşmesi'ni ve Ön Bilgilendirme Koşulları'nı </span
+          >okudum, onaylıyorum.
+        </span>
+      </div>
+      <div style="text-align: right; width: 100%; margin-top: 10px">
+        <button mat-flat-button [disabled]="form.invalid" (click)="purchaseOrder()" color="primary">
+          Siparişi Tamamla
+        </button>
+      </div>
+    </form>
+  </section>
+  <section *ngIf="orderStatus === 0" class="section">
+    <mat-progress-spinner
+      class="example-margin"
+      [color]="'primary'"
+      [mode]="'indeterminate'"
+      [value]="'30'"
+    >
+    </mat-progress-spinner>
+    <p class="mat-body-2">Siparişiniz veriliyor. Lütfen Bekleyiniz...</p>
+  </section>
+  <section *ngIf="orderStatus === 1" class="section">
+    <mat-icon aria-hidden="false" class="error-icon">error</mat-icon>
+    <p class="mat-body-2">
+      İşlem sırasında bir hata meydana geldi. Sayfayı yenileyip tekrar deneyiniz.
+    </p>
+  </section>
+</main>

@@ -8,7 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DialogComponent implements AfterViewInit {
   @ViewChildren('star') stars: ElementRef<HTMLElement>[];
-  currentRate;
+  currentRate: number;
   DialogType = DialogType;
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
@@ -67,5 +67,6 @@ export enum DialogType {
   Message = 'message',
   Review = 'review',
   CartWarning = 'cartWarning',
-  Contracts= 'contracts'
+  SalesAndInformationContract = 'SalesAndInformationContract',
+  RegisterContract = 'RegisterContract'
 }

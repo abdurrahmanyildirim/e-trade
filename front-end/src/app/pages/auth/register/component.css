@@ -30,6 +30,12 @@ mat-card-content {
   width: 100%;
 }
 
+.link {
+  color: rgb(93, 93, 247);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .or {
   display: block;
   margin-bottom: 10px;

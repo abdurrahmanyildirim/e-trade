@@ -62,8 +62,8 @@ html {
 }
 
 .success-snackbar {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: #33e25c;
+  color: white;
 }
 
 @media only screen and (max-width: 650px) {
