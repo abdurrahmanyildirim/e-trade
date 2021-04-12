@@ -4,11 +4,13 @@ const server = require('http').Server(app);
 require('./app_server/models/db');
 const cors = require('cors');
 const util = require('./app_server/services/util');
+const verify = require('./app_server/services/verify');
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(util.bodyDecrypter);
+app.use(verify.roleResolver);
 
 require('./app_server/routes/routeManager')(app);
 

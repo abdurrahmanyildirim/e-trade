@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/photo');
-const authController = require('../controllers/auth');
+const verify = require('../services/verify');
+const fileUpload = require('express-fileupload');
 
-router.use(authController.verifyAdmin);
+router.use(verify.isAdmin);
+router.use(fileUpload({ useTempFiles: true }));
 router.post('/upload', controller.photoUpload);
-// router.get('/get-photo', controller.getPhoto);
 
 module.exports = router;
