@@ -4,6 +4,7 @@ import { CartService } from '../rest/cart.service';
 import { CategoryService } from '../rest/category';
 import { ProductService } from '../rest/product.service';
 import { ConfigService } from './config.service';
+import { StateService } from './state';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +16,16 @@ export class SplashService {
     private configService: ConfigService,
     private cartService: CartService,
     private categoryService: CategoryService,
-    private productService: ProductService
+    private productService: ProductService,
+    private stateService: StateService
   ) {}
 
   init(): void {
     const obs = [
       this.cartService.init(),
       this.categoryService.init(),
-      this.productService.init()
+      this.productService.init(),
+      this.stateService.init()
     ];
     this.configService.initSiteConfig().subscribe({
       next: () => {

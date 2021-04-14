@@ -94,10 +94,8 @@
   align-items: center;
   justify-content: center;
   background-color: white;
-  /* transition: height 0.6s ease-in-out; */
   transform: translateY(0);
   transition: transform 0.35s ease-in-out;
-  /* border-top: 1px solid rgb(236, 236, 236); */
   z-index: 2;
   overflow-x: hidden;
 }
@@ -142,6 +140,7 @@
 
   .mobile-filter-button {
     display: flex;
+    border-top: 1px solid rgb(224, 224, 224);
     height: 50px;
   }
 

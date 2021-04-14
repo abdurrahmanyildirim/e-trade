@@ -6,7 +6,7 @@ const verify = require('../services/verify');
 router.post('/login', controller.login);
 router.post('/register', controller.register);
 router.post('/google', controller.googleAuth);
-router.use(verify.isClient);
+router.use(verify.isAuth);
 router.get('/contact-info', controller.contactInfo);
 router.get('/user/:id', controller.getUser);
 

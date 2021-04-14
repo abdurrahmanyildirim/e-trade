@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/user');
 const verify = require('../services/verify');
 
-router.use(verify.isClient);
+router.use(verify.isAuth);
 router.post('/update-contact', controller.updateContactInfo);
 router.post('/update-general', controller.updateGeneralInfo);
 router.post('/update-password', controller.updatePassword);

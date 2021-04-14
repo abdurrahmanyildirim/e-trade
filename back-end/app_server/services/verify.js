@@ -14,6 +14,14 @@ const isAdmin = (req, res, next) => {
   }
 };
 
+const isAuth = (req, res, next) => {
+  if (req.role !== roles.admin && req.role !== roles.client) {
+    return res.status(401).send({ message: 'Yetkisiz işlem' });
+  } else {
+    next();
+  }
+};
+
 const isClient = (req, res, next) => {
   if (req.role !== roles.client) {
     return res.status(401).send({ message: 'Yetkisiz işlem' });
@@ -45,5 +53,6 @@ const roleResolver = (req, res, next) => {
 module.exports = {
   roleResolver,
   isAdmin,
-  isClient
+  isClient,
+  isAuth
 };

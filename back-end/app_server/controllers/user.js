@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const cryptoService = require('../services/crypto');
+const { encrypt, basicEncrypt, comparePassword, hashPassword } = require('../services/crypto');
 
 module.exports.updateContactInfo = (req, res) => {
   const body = req.body;
@@ -9,23 +9,23 @@ module.exports.updateContactInfo = (req, res) => {
     }
     user.phones[0] = {
       title: 'phone' + Date.now(),
-      phone: cryptoService.encrypt(body.phone)
+      phone: encrypt(body.phone)
     };
     user.addresses[0] = {
       title: 'address' + Date.now(),
-      city: cryptoService.encrypt(body.city),
-      district: cryptoService.encrypt(body.district),
-      address: cryptoService.encrypt(body.address)
+      city: encrypt(body.city),
+      district: encrypt(body.district),
+      address: encrypt(body.address)
     };
     user.save((err) => {
       if (err) {
         return res.status(401).send({ message: 'Güncelleme sırasında bir hata oldu' });
       }
       return res.status(200).send({
-        phone: cryptoService.basicEncrypt(body.phone),
-        city: cryptoService.basicEncrypt(body.city),
-        district: cryptoService.basicEncrypt(body.district),
-        address: cryptoService.basicEncrypt(body.address)
+        phone: basicEncrypt(body.phone),
+        city: basicEncrypt(body.city),
+        district: basicEncrypt(body.district),
+        address: basicEncrypt(body.address)
       });
     });
   });
@@ -39,7 +39,7 @@ module.exports.updateGeneralInfo = (req, res) => {
     }
     user.firstName = body.firstName;
     user.lastName = body.lastName;
-    user.email = cryptoService.encrypt(body.email);
+    user.email = encrypt(body.email);
     User.find({ email: user.email }, (err, users) => {
       if (err) {
         return res.status(500).send({ message: 'Güncelleme sırasında bir hata oldu.' });
@@ -66,11 +66,11 @@ module.exports.updatePassword = (req, res) => {
     if (err) {
       return res.status(500).send({ message: 'Güncelleme sırasında bir hata oldu.' });
     }
-    const isCompared = cryptoService.comparePassword(body.password, user.password);
+    const isCompared = comparePassword(body.password, user.password);
     if (!isCompared) {
       return res.status(401).send({ message: 'Girilen şifre hatalı' });
     }
-    const newPassword = cryptoService.hashPassword(body.newPassword);
+    const newPassword = hashPassword(body.newPassword);
     user.password = newPassword;
     user.save((err) => {
       if (err) {

@@ -1,84 +1,94 @@
-<div
-  class="mat-body-2"
-  style="text-align: center; margin-top: 10px"
-  *ngIf="orderList && orderList.length<=0"
->
-  Henüz siparişiniz bulunmamaktadır.
-</div>
-
-<div class="container" *ngIf="orderList && orderList.length>0">
+<div class="container">
   <span *ngIf="!isMobile">
     <div class="header-content">
       <span class="header-text mat-body-2">Siparişlerim</span>
       <mat-form-field appearance="outline" class="order-type">
-        <mat-select [(value)]="currentList.key">
-          <mat-option *ngFor="let type of orderListType" [value]="type.key"
-            >{{type.text}}</mat-option
+        <mat-select [(value)]="state.filterKey" (selectionChange)="onSelectionChange($event)">
+          <mat-option *ngFor="let filter of filters" [value]="filter.key"
+            >{{filter.text}}</mat-option
           >
         </mat-select>
       </mat-form-field>
     </div>
   </span>
   <span *ngIf="!isMobile">
-    <div class="custom-card" *ngFor="let order of orderList">
-      <div class="card-header">
-        <div class="car-header-item">
-          <span class="mat-body-2">Sipariş Tarihi</span>
-          <div>{{order.date | date:'mediumDate'}}</div>
+    <div
+      class="mat-body-2"
+      style="text-align: center; margin-top: 10px"
+      *ngIf="orderList && orderList.length<=0"
+    >
+      Henüz siparişiniz bulunmamaktadır.
+    </div>
+    <div *ngIf="orderList && orderList.length>0">
+      <div class="custom-card" *ngFor="let order of orderList">
+        <div class="card-header">
+          <div class="car-header-item">
+            <span class="mat-body-2">Sipariş Tarihi</span>
+            <div>{{order.date | date:'mediumDate'}}</div>
+          </div>
+          <div class="car-header-item">
+            <span class="mat-body-2">Alıcı</span>
+            <div>{{order.userName}}</div>
+          </div>
+          <div class="car-header-item">
+            <span class="mat-body-2">Durum</span>
+            <div>{{order.status[order.status.length -1 ].desc}}</div>
+          </div>
+          <div class="car-header-item">
+            <span class="mat-body-2">Tutar</span>
+            <div>{{order.totalPrice | number:'0.2'}} TL</div>
+          </div>
+          <button mat-flat-button color="primary" (click)="navigateToDetail(order._id)">
+            Sipariş Detayı
+          </button>
         </div>
-        <div class="car-header-item">
-          <span class="mat-body-2">Alıcı</span>
-          <div>{{currentUser.firstName + ' '+ currentUser.lastName}}</div>
-        </div>
-        <div class="car-header-item">
-          <span class="mat-body-2">Durum</span>
-          <div>{{order.status[order.status.length -1 ].desc}}</div>
-        </div>
-        <div class="car-header-item">
-          <span class="mat-body-2">Tutar</span>
-          <div>{{order.totalPrice | number:'0.2'}} TL</div>
-        </div>
-        <button mat-flat-button color="primary" (click)="navigateToDetail(order._id)">
-          Sipariş Detayı
-        </button>
-      </div>
-      <div class="card-body">
-        <div class="card-body-item">
-          <img
-            *ngFor="let product of order.products"
-            class="photo"
-            [src]="product.photoPath"
-            alt="product"
-          />
+        <div class="card-body">
+          <div class="card-body-item">
+            <img
+              *ngFor="let product of order.products"
+              class="photo"
+              [src]="product.photoPath"
+              alt="product"
+            />
+          </div>
         </div>
       </div>
     </div>
   </span>
   <span *ngIf="isMobile">
-    <div class="mobile-card" *ngFor="let order of orderList">
-      <div class="mobile-card-header">
-        <div class="date-price">
-          <div class="car-header-item">
-            <div>{{order.date | date:'mediumDate'}}</div>
+    <div *ngIf="orderList && orderList.length>0">
+      <div class="mobile-card" *ngFor="let order of orderList">
+        <div class="mobile-card-header">
+          <div class="date-price">
+            <div class="car-header-item">
+              <div>{{order.date | date:'mediumDate'}}</div>
+            </div>
+            <div class="car-header-item">
+              <span>{{order.totalPrice | number:'0.2'}} TL</span>
+            </div>
           </div>
-          <div class="car-header-item">
-            <span>{{order.totalPrice | number:'0.2'}} TL</span>
+          <button mat-button color="primary" (click)="navigateToDetail(order._id)">
+            Detay <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="card-body-item">
+            <img
+              *ngFor="let product of order.products"
+              class="photo"
+              [src]="product.photoPath"
+              alt="Photo"
+            />
           </div>
         </div>
-        <button mat-button color="primary" (click)="navigateToDetail(order._id)">
-          Detay <mat-icon>chevron_right</mat-icon>
-        </button>
       </div>
-      <div class="card-body">
-        <div class="card-body-item">
-          <img
-            *ngFor="let product of order.products"
-            class="photo"
-            [src]="product.photoPath"
-            alt="Photo"
-          />
-        </div>
-      </div>
+    </div>
+    <div
+      class="mat-body-2"
+      style="text-align: center; margin-top: 10px"
+      *ngIf="orderList && orderList.length<=0"
+    >
+      Henüz siparişiniz bulunmamaktadır.
     </div>
   </span>
 </div>

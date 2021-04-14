@@ -6,6 +6,8 @@ import { LoginUser } from './model';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { SettingService } from 'src/app/shared/services/site/settings';
 import { SocialService } from 'src/app/shared/services/site/social-auth';
+import { Subscription } from 'rxjs';
+import { isPresent } from 'src/app/shared/util/common';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +17,7 @@ import { SocialService } from 'src/app/shared/services/site/social-auth';
 export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup;
   user: LoginUser;
+  subs = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -33,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   authWithGoogle(): void {
-    this.socialService.signInWithGoogle().subscribe({
+    const subs = this.socialService.signInWithGoogle().subscribe({
       next: (res) => {
         this.settingService.initUserSettingsAfterLogin(res);
       },
@@ -42,6 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.snackBar.showError('Beklenmeyen bir hata meydana geldi. Tekrar deneyiniz.');
       }
     });
+    this.subs.add(subs);
   }
 
   createForm(): void {
@@ -54,7 +58,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   login(): void {
     if (this.form.valid) {
       this.user = Object.assign({}, this.form.value);
-      this.authService.login(this.user).subscribe(
+      const subs = this.authService.login(this.user).subscribe(
         (loginResponse) => {
           this.settingService.initUserSettingsAfterLogin(loginResponse);
         },
@@ -66,8 +70,13 @@ export class LoginComponent implements OnInit, OnDestroy {
           });
         }
       );
+      this.subs.add(subs);
     }
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    if (isPresent(this.subs)) {
+      this.subs.unsubscribe();
+    }
+  }
 }

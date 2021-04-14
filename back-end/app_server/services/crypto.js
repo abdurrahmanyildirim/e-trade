@@ -49,13 +49,16 @@ const basicDecrypt = (source) => {
   return decryptedCode;
 };
 
+const encForResp = (data) => {
+  return basicEncrypt(decrypt(data));
+};
+
 module.exports = {
   encrypt,
   decrypt,
   hashPassword,
   comparePassword,
   basicEncrypt,
-  basicDecrypt
+  basicDecrypt,
+  encForResp
 };
-
-// assert.strictEqual(decrypted, text);

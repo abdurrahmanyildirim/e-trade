@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const Product = require('../models/product');
 const Order = require('../models/order');
-const cryptoService = require('../services/crypto');
+const { encrypt } = require('../services/crypto');
 
 module.exports.updateCart = async (req, res) => {
   const user = await User.findOne({ _id: req.id });
@@ -82,10 +82,10 @@ module.exports.purchaseOrder = (req, res) => {
           await product.save();
         }
       });
-      const city = cryptoService.encrypt(req.body.city);
-      const district = cryptoService.encrypt(req.body.district);
-      const address = cryptoService.encrypt(req.body.address);
-      const phone = cryptoService.encrypt(req.body.phone);
+      const city = encrypt(req.body.city);
+      const district = encrypt(req.body.district);
+      const address = encrypt(req.body.address);
+      const phone = encrypt(req.body.phone);
       const newOrder = new Order({
         userId: req.id,
         userName: user.firstName + ' ' + user.lastName,

@@ -6,7 +6,7 @@ const verify = require('../services/verify');
 router.get('/products', controller.getProducts);
 router.get('/get-by-category', controller.getByCategory);
 router.get('/get-by-id', controller.getProductById);
-router.use(verify.isClient);
+router.use(verify.isAuth);
 router.get('/rating', controller.addComment);
 router.post('/stock-control', controller.checkStock);
 router.use(verify.isAdmin);

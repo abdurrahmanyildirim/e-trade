@@ -8,7 +8,6 @@
   min-height: 30px;
   display: flex;
   padding: 0 5px 0 0;
-  cursor: pointer;
   justify-content: space-between;
   color: #999999;
   margin-bottom: 10px;
@@ -16,6 +15,7 @@
 
 .top-item {
   display: flex;
+  cursor: pointer;
   align-items: center;
   outline: none;
 }

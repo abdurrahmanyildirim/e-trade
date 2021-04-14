@@ -1,10 +1,10 @@
 const Contact = require('../models/contact');
-const cryptoService = require('../services/crypto');
+const { encrypt,encForResp } = require('../services/crypto');
 
 module.exports.sendContactRequest = (req, res) => {
   const contactReq = req.body;
-  contactReq.email = cryptoService.encrypt(contactReq.email);
-  contactReq.phone = cryptoService.encrypt(contactReq.phone);
+  contactReq.email = encrypt(contactReq.email);
+  contactReq.phone = encrypt(contactReq.phone);
   contactReq.isRead = false;
   contactReq.sendDate = Date.now();
   const contact = new Contact(contactReq);
@@ -23,8 +23,8 @@ module.exports.getMessages = (req, res) => {
     }
     if (messages && messages.length > 0) {
       messages.map((message) => {
-        message.email = cryptoService.basicEncrypt(cryptoService.decrypt(message.email));
-        message.phone = cryptoService.basicEncrypt(cryptoService.decrypt(message.phone));
+        message.email = encForResp(message.email);
+        message.phone = encForResp(message.phone);
         return message;
       });
     }

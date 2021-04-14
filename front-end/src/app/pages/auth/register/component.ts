@@ -8,13 +8,14 @@ import {
   Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { SettingService } from 'src/app/shared/services/site/settings';
 import { SocialService } from 'src/app/shared/services/site/social-auth';
-import { nullValidator } from 'src/app/shared/util/common';
+import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { RegisterUser } from './model';
 
 @Component({
@@ -25,6 +26,7 @@ import { RegisterUser } from './model';
 export class RegisterComponent implements OnInit, OnDestroy {
   form: FormGroup;
   user: RegisterUser;
+  subs = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -44,7 +46,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   authWithGoogle(): void {
-    this.socialService.signInWithGoogle().subscribe({
+    const subs = this.socialService.signInWithGoogle().subscribe({
       next: (res) => {
         this.settingService.initUserSettingsAfterLogin(res);
       },
@@ -53,6 +55,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.snackBar.showError('Beklenmeyen bir hata meydana geldi. Tekrar deneyiniz.');
       }
     });
+    this.subs.add(subs);
   }
 
   createForm(): void {
@@ -91,7 +94,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   register(): void {
     if (this.form.valid) {
       this.user = Object.assign({}, this.form.value);
-      this.authService.register(this.user).subscribe(
+      const subs = this.authService.register(this.user).subscribe(
         (data) => {
           this.snackBar.showSuccess('Üyelik işlemleri yapıldı.');
           this.router.navigateByUrl('login');
@@ -106,6 +109,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           });
         }
       );
+      this.subs.add(subs);
     }
   }
 
@@ -118,5 +122,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    if (isPresent(this.subs)) {
+      this.subs.unsubscribe();
+    }
+  }
 }

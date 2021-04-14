@@ -69,7 +69,7 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
     const filterPlace = document.getElementById('mobile-filter-button');
     if (document.body.scrollTop > this.previousScrollTop) {
       filterPlace.style.transition = 'transform 0.35s ease-in';
-      filterPlace.style.transform = 'translateY(50px)';
+      filterPlace.style.transform = 'translateY(51px)';
     } else {
       filterPlace.style.transition = 'transform 0.35s ease-out';
       filterPlace.style.transform = 'translateY(0)';

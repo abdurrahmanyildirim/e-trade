@@ -1,7 +1,6 @@
 const Order = require('../models/order');
-const Product = require('../models/product');
 const Status = require('../models/status');
-const cryptoService = require('../services/crypto');
+const { encForResp } = require('../services/crypto');
 
 module.exports.getOrders = (req, res) => {
   Order.find({ userId: req.id }, (err, orders) => {
@@ -10,10 +9,10 @@ module.exports.getOrders = (req, res) => {
     }
     orders.map((order) => {
       const contactInfo = {
-        city: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.city)),
-        district: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.district)),
-        address: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.address)),
-        phone: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.phone))
+        city: encForResp(order.contactInfo.city),
+        district: encForResp(order.contactInfo.district),
+        address: encForResp(order.contactInfo.address),
+        phone: encForResp(order.contactInfo.phone)
       };
       order.contactInfo = contactInfo;
       return order;
@@ -44,15 +43,15 @@ module.exports.orderDetail = async (req, res) => {
       });
     });
     const contactInfo = {
-      city: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.city)),
-      district: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.district)),
-      address: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.address)),
-      phone: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.phone))
+      city: encForResp(order.contactInfo.city),
+      district: encForResp(order.contactInfo.district),
+      address: encForResp(order.contactInfo.address),
+      phone: encForResp(order.contactInfo.phone)
     };
     return res.status(200).send({
       userId: order.userId,
       userName: order.userName,
-      email: cryptoService.basicEncrypt(cryptoService.decrypt(order.email)),
+      email: encForResp(order.email),
       date: order.date,
       products: orderedProducts,
       isActive: order.isActive,
@@ -69,10 +68,10 @@ module.exports.allOrders = (req, res) => {
     }
     orders.map((order) => {
       const contactInfo = {
-        city: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.city)),
-        district: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.district)),
-        address: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.address)),
-        phone: cryptoService.basicEncrypt(cryptoService.decrypt(order.contactInfo.phone))
+        city: encForResp(order.contactInfo.city),
+        district: encForResp(order.contactInfo.district),
+        address: encForResp(order.contactInfo.address),
+        phone: encForResp(order.contactInfo.phone)
       };
       order.contactInfo = contactInfo;
       return order;

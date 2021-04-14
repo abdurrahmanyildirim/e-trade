@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/order');
 const verify = require('../services/verify');
 
-router.use(verify.isClient);
+router.use(verify.isAuth);
 router.get('/get-orders', controller.getOrders);
 router.get('/detail/:id', controller.orderDetail);
 router.use(verify.isAdmin);
