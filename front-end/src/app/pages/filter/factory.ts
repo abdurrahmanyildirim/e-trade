@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Product } from 'src/app/shared/models/product';
+import { isPresent } from 'src/app/shared/util/common';
 import { Filter, SortType } from './model';
 
 @Injectable()
@@ -36,10 +37,11 @@ export class FilterFactory {
   }
 
   private filterByBrand(products: Product[], filter: Filter): Product[] {
-    if (filter.brands.size <= 0) {
+    if (filter.brands.length <= 0) {
       return products;
     } else {
-      return products.filter((product) => filter.brands.has(product.brand));
+      const brands = filter.brands.split('-');
+      return products.filter((product) => brands.includes(product.brand));
     }
   }
 
@@ -57,11 +59,11 @@ export class FilterFactory {
   }
 
   private filterBySearchKey(products: Product[], filter: Filter): Product[] {
-    if (filter.sKey.length <= 0) {
+    if (filter.searchKey.length <= 0) {
       return products;
     } else {
       return products.filter((product) => {
-        const reg = new RegExp(filter.sKey, 'gi');
+        const reg = new RegExp(filter.searchKey, 'gi');
         if (product.name.search(reg) >= 0) {
           return product;
         }

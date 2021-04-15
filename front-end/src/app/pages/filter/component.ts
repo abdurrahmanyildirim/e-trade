@@ -8,7 +8,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
 import { Category, Product } from 'src/app/shared/models/product';
 import { CategoryService } from 'src/app/shared/services/rest/category';
@@ -34,9 +34,9 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
   mainSplash = true;
   showSplash = true;
   filter: Filter = {
-    brands: new Map<string, string>(),
+    brands: '',
     category: '',
-    sKey: '',
+    searchKey: '',
     sortType: SortType.none
   };
   SortType = SortType;
@@ -52,6 +52,7 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
     public productService: ProductService,
     private filterFactory: FilterFactory,
     public categoryService: CategoryService,
+    private router: Router,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -59,7 +60,7 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.filterFactory.products = this.productService.products.value.slice();
-    this.initParams();
+    this.listenRoute();
     if (document.body.clientWidth <= 650) {
       document.body.addEventListener('scroll', this.listenBodyScroll);
     }
@@ -103,18 +104,15 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
     this.touchSubs.add(subs);
   }
 
-  initParams(): void {
+  listenRoute(): void {
     const sub = this.activatedRoute.queryParams.subscribe((params) => {
       this.mainSplash = true;
-      const key = 'category';
-      const category = params[key];
-      if (isPresent(category)) {
-        this.filter.category = category;
-      }
-      const sKey = 'searchKey';
-      const searchKey = params[sKey];
-      if (isPresent(searchKey)) {
-        this.filter.sKey = searchKey;
+      for (const key in this.filter) {
+        if (Object.prototype.hasOwnProperty.call(this.filter, key) && isPresent(params[key])) {
+          this.filter[key] = params[key];
+        } else {
+          this.filter[key] = '';
+        }
       }
       this.initProductsByFilter();
       this.mainSplash = false;
@@ -144,31 +142,55 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   removeSearchKey(): void {
-    this.filter.sKey = '';
-    this.initProductsByFilter();
+    this.filter.searchKey = '';
+    this.appendFiltersToRoute();
   }
 
   sortByType(sortType: SortType): void {
     this.showSplash = true;
     this.filter.sortType = sortType;
-    this.initProductsByFilter();
+    this.appendFiltersToRoute();
   }
 
   filterByBrand(brand: string): void {
     this.showSplash = true;
-    if (this.filter.brands.has(brand)) {
-      this.filter.brands.delete(brand);
-    } else {
-      this.filter.brands.set(brand, brand);
-    }
-    this.initProductsByFilter();
+    const hasBrand = this.filter.brands.includes(brand);
+    this.filter.brands = hasBrand
+      ? this.filter.brands
+          .split('-')
+          .filter((filterBrand) => filterBrand !== brand)
+          .join('-')
+      : this.filter.brands + '-' + brand;
+    this.appendFiltersToRoute();
   }
 
   filterByCategory(category: Category): void {
     this.showSplash = true;
     this.filter.category = category.name;
-    this.filter.brands = new Map([]);
-    this.initProductsByFilter();
+    this.filter.brands = '';
+    this.filter.sortType = SortType.none;
+    this.appendFiltersToRoute();
+  }
+
+  appendFiltersToRoute(): void {
+    this.router.navigateByUrl('filter?' + this.filterParams());
+  }
+
+  private filterParams(): string {
+    let params = '';
+    if (this.filter.category.length > 0) {
+      params += 'category=' + this.filter.category + '&';
+    }
+    if (this.filter.brands.length > 0) {
+      params += 'brands=' + this.filter.brands + '&';
+    }
+    if (this.filter.searchKey.length > 0) {
+      params += 'searchKey=' + this.filter.searchKey + '&';
+    }
+    if (this.filter.sortType.length > 0) {
+      params += 'sortType=' + this.filter.sortType;
+    }
+    return params;
   }
 
   initProductsByFilter(): void {

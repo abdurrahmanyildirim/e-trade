@@ -1,5 +1,11 @@
 {
   "app-orders": {
     "filterKey": "allOrders"
+  },
+  "app-mn-products": {
+    "category": "mutfak"
+  },
+  "app-mn-orders": {
+    "statusKey": 0
   }
 }

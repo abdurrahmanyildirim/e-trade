@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MainComponent } from './pages/main/component';
 import { AuthGuard } from './shared/guards/auth';
 import { AdminGuard } from './shared/guards/admin';
 
 const routes: Routes = [
-  { path: 'main', component: MainComponent },
+  {
+    path: 'main',
+    loadChildren: () => import('./pages/main/module').then((m) => m.MainModule)
+  },
   {
     path: 'product-detail/:id',
     loadChildren: () => import('./pages/product-detail/module').then((m) => m.ProductDetailModule)

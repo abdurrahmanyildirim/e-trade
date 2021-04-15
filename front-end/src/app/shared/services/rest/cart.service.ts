@@ -7,7 +7,7 @@ import { Order } from '../../models/order';
 import { StorageKey } from '../../models/storage';
 import { isPresent } from '../../util/common';
 import { ConfigService } from '../site/config.service';
-import { LocalStorageService } from '../site/local-storage.service';
+import { LocalStorageService } from '../site/storage/local';
 import { AuthService } from './auth.service';
 
 @Injectable({

@@ -4,12 +4,16 @@ import { PageSelector } from './model';
 import { PageState } from './state';
 
 @Directive()
-export abstract class BasePageComponent<T extends PageState> implements OnInit {
+export abstract class BasePageDirective<T extends PageState> implements OnInit {
   state: T;
   selector: PageSelector;
   constructor(protected stateService: StateService) {}
 
   ngOnInit(): void {
     this.state = this.stateService.getState(this.selector);
+  }
+
+  public saveState(): void {
+    this.stateService.setState(this.selector, this.state);
   }
 }

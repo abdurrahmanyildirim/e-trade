@@ -1,4 +1,4 @@
-import { StorageKey } from '../../models/storage';
+import { StorageKey } from '../../../models/storage';
 
 export abstract class BaseStorageService {
   constructor(private storage: Storage) {}

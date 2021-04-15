@@ -1,27 +1,37 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
-import { Category, Product } from 'src/app/shared/models/product';
+import { BasePageDirective } from 'src/app/pages/base-page.component';
+import { PageSelector } from 'src/app/pages/model';
+import { Product } from 'src/app/shared/models/product';
 import { CategoryService } from 'src/app/shared/services/rest/category';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { StateService } from 'src/app/shared/services/site/state';
+import { MnProductsState } from './state';
 
 @Component({
   selector: 'app-mn-products',
   templateUrl: './component.html',
   styleUrls: ['./component.css']
 })
-export class MnProductsComponent implements OnInit, OnDestroy {
+export class MnProductsComponent
+  extends BasePageDirective<MnProductsState>
+  implements OnInit, OnDestroy {
   products: Product[];
   currentList: Product[];
-  currentCategory: Category;
 
   constructor(
     private router: Router,
     public productService: ProductService,
-    public categoryService: CategoryService
-  ) {}
+    public categoryService: CategoryService,
+    protected stateService: StateService
+  ) {
+    super(stateService);
+    this.selector = PageSelector.AppMnProducts;
+  }
 
   ngOnInit(): void {
-    this.currentCategory = this.categoryService.categories.value[0];
+    super.ngOnInit();
     this.initProducts();
   }
 
@@ -29,14 +39,20 @@ export class MnProductsComponent implements OnInit, OnDestroy {
     this.productService.allProducts().subscribe({
       next: (products) => {
         this.products = products;
-        this.initCurrentList();
+        this.filterProducts();
       }
     });
   }
 
-  initCurrentList(): void {
+  onSelectionChange(category: MatSelectChange): void {
+    this.state.category = category.value;
+    this.saveState();
+    this.filterProducts();
+  }
+
+  filterProducts(): void {
     this.currentList = this.products
-      .filter((product) => product.category === this.currentCategory.name)
+      .filter((product) => product.category === this.state.category)
       .slice();
   }
 

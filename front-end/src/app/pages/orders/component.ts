@@ -13,7 +13,7 @@ import { OrderList, OrderListProduct } from 'src/app/shared/models/order';
 import { OrderService } from 'src/app/shared/services/rest/order.service';
 import { StateService } from 'src/app/shared/services/site/state';
 import { isPresent } from 'src/app/shared/util/common';
-import { BasePageComponent } from '../base-page.component';
+import { BasePageDirective } from '../base-page.component';
 import { PageSelector } from '../model';
 import { OrdersFactory } from './factory';
 import { OrderFilter } from './model';
@@ -26,7 +26,7 @@ import { OrdersState } from './state';
   viewProviders: [OrdersFactory],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OrdersComponent extends BasePageComponent<OrdersState> implements OnInit, OnDestroy {
+export class OrdersComponent extends BasePageDirective<OrdersState> implements OnInit, OnDestroy {
   filters: OrderFilter[];
   orderList: OrderList[];
   sub: Subscription;
@@ -87,9 +87,9 @@ export class OrdersComponent extends BasePageComponent<OrdersState> implements O
   }
 
   onSelectionChange(event: MatSelectChange): void {
-    this.orderList = this.ordersFactory.filterOrders(event.value);
     this.state.filterKey = event.value;
-    this.stateService.setState(this.selector, this.state);
+    this.saveState();
+    this.orderList = this.ordersFactory.filterOrders(this.state.filterKey);
   }
 
   navigateToDetail(id: string): void {

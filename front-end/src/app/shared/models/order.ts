@@ -17,7 +17,7 @@ export interface OrderList {
   isActive: boolean;
   status: Status[];
   email: string;
-  userName: String;
+  userName: string;
   contactInfo: {
     city: string;
     district: string;

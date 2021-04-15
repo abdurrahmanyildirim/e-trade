@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { OrderList, Status } from 'src/app/shared/models/order';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
@@ -24,7 +25,8 @@ export class MnOrderDetailComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackbar: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -82,14 +84,14 @@ export class MnOrderDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.order.status.push(this.currentStatus);
+          this.snackbar.showSuccess('Sipariş Düzenlendi.');
         },
-        error: (err) => console.log(err)
+        error: (err) => {
+          this.snackbar.showError('Düzenleme sırasında bir hata oldu.');
+          console.log(err);
+        }
       });
     this.subs.add(sub);
-  }
-
-  onStatusSelectionChange(status): void {
-    console.log(status);
   }
 
   ngOnDestroy(): void {

@@ -1,48 +1,44 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { OrderList, Status } from 'src/app/shared/models/order';
+import { BasePageDirective } from 'src/app/pages/base-page.component';
+import { PageSelector } from 'src/app/pages/model';
+import { OrderList } from 'src/app/shared/models/order';
 import { OrderService } from 'src/app/shared/services/rest/order.service';
+import { StateService } from 'src/app/shared/services/site/state';
 import { isPresent } from 'src/app/shared/util/common';
+import { MnOrdersFactory } from './factory';
+import { OrderStatus } from './model';
+import { MnOrdersState } from './state';
 
 @Component({
   selector: 'app-mn-orders',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  viewProviders: [MnOrdersFactory]
 })
-export class MnOrdersComponent implements OnInit, OnDestroy {
+export class MnOrdersComponent
+  extends BasePageDirective<MnOrdersState>
+  implements OnInit, OnDestroy {
   orders: OrderList[];
   currentList: OrderList[];
-  orderTypes = [
-    {
-      key: -1,
-      desc: 'İptal Edilenler'
-    },
-    {
-      key: 0,
-      desc: 'Yeni Siparişler'
-    },
-    {
-      key: 1,
-      desc: 'İşleme Alınanlar'
-    },
-    {
-      key: 2,
-      desc: 'Kargoya Verilenler'
-    },
-    {
-      key: 3,
-      desc: 'Teslim Edilenler'
-    }
-  ] as any;
-  currentType = Object.assign({}, this.orderTypes[1]);
-  statuses: Status[];
+  orderStatuses: OrderStatus[];
   subs = new Subscription();
 
-  constructor(private orderService: OrderService, private router: Router) {}
+  constructor(
+    private orderService: OrderService,
+    private router: Router,
+    protected stateService: StateService,
+    private mnOrdersFactory: MnOrdersFactory
+  ) {
+    super(stateService);
+    this.selector = PageSelector.AppMnOrders;
+  }
 
   ngOnInit(): void {
-    this.initStatuses();
+    super.ngOnInit();
+    this.orderStatuses = this.mnOrdersFactory.createOrderStatusesList();
     this.initOrders();
   }
 
@@ -52,28 +48,23 @@ export class MnOrdersComponent implements OnInit, OnDestroy {
         this.orders = orderList.sort(
           (a: OrderList, b: OrderList) => new Date(b.date).getTime() - new Date(a.date).getTime()
         );
-        this.initCurrentOrderList();
+        this.initOrdersByStatus();
       },
       error: (err) => console.log(err)
     });
     this.subs.add(sub);
   }
 
-  initCurrentOrderList(): void {
+  onSelectionChange(status: MatSelectChange): void {
+    this.state.statusKey = status.value;
+    this.saveState();
+    this.initOrdersByStatus();
+  }
+
+  initOrdersByStatus(): void {
     this.currentList = this.orders
-      .filter((order) => order.status[order.status.length - 1].key === this.currentType.key)
+      .filter((order) => order.status[order.status.length - 1].key === this.state.statusKey)
       .slice();
-  }
-
-  initStatuses(): void {
-    const sub = this.orderService.getStatuses().subscribe({
-      next: (statuses) => {
-        this.statuses = statuses;
-        // this.currentStatus = statuses.find((status) => status.key === 0);
-      },
-      error: (err) => console.log(err)
-    });
-    this.subs.add(sub);
   }
 
   navigateToDetail(id: string): void {

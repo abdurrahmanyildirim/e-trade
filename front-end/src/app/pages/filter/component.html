@@ -22,8 +22,8 @@
     </div>
   </div>
   <div class="products" *ngIf="products && !showSplash">
-    <div class="search-key" *ngIf="filter.sKey">
-      <span class="mat-body-2">"{{filter.sKey}}"</span> arama sonuçları
+    <div class="search-key" *ngIf="filter.searchKey">
+      <span class="mat-body-2">"{{filter.searchKey}}"</span> arama sonuçları
       <mat-icon class="remove-key" (click)="removeSearchKey()">close</mat-icon>
     </div>
     <div class="results" id="results">
@@ -60,7 +60,7 @@
         class="sort-item"
         *ngFor="let category of (categoryService.categories | async)"
         [value]="category.name"
-        [checked]="category.name === filter.category ? true : false"
+        [checked]="category.name === filter.category"
         (change)="filterByCategory(category)"
       >
         {{category.name | titlecase}}
@@ -69,7 +69,11 @@
   </div>
   <div class="filter-item" *ngIf="brands.length>0">
     <span class="title mat-body-2">Marka</span>
-    <mat-checkbox *ngFor="let brand of brands" (change)="filterByBrand(brand)">
+    <mat-checkbox
+      *ngFor="let brand of brands"
+      [checked]="filter.brands.includes(brand)"
+      (change)="filterByBrand(brand)"
+    >
       {{brand | titlecase}}
     </mat-checkbox>
   </div>
@@ -79,7 +83,7 @@
       <mat-radio-button
         class="sort-item"
         [value]="SortType.none"
-        [checked]="true"
+        [checked]="filter.sortType === SortType.none"
         (change)="sortByType(SortType.none)"
       >
         Hiçbiri
@@ -87,6 +91,7 @@
       <mat-radio-button
         class="sort-item"
         [value]="SortType.asc"
+        [checked]="filter.sortType === SortType.asc"
         (change)="sortByType(SortType.asc)"
       >
         Artan Fiyat
@@ -94,6 +99,7 @@
       <mat-radio-button
         class="sort-item"
         [value]="SortType.desc"
+        [checked]="filter.sortType === SortType.desc"
         (change)="sortByType(SortType.desc)"
       >
         Azalan Fiyat

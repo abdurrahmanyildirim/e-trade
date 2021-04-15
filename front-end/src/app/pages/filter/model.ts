@@ -1,12 +1,12 @@
 export enum SortType {
   asc = 'asc',
   desc = 'desc',
-  none = 'none'
+  none = ''
 }
 
 export interface Filter {
-  brands: any;
+  brands: string;
   sortType: SortType;
   category: string;
-  sKey: string;
+  searchKey: string;
 }

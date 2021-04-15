@@ -2,8 +2,10 @@
   <div class="top">
     <span class="title mat-body-2">Siparişler</span>
     <mat-form-field appearance="outline" class="order-type">
-      <mat-select [(value)]="currentType.key" (selectionChange)="initCurrentOrderList()">
-        <mat-option *ngFor="let type of orderTypes" [value]="type.key">{{type.desc}}</mat-option>
+      <mat-select [(value)]="state.statusKey" (selectionChange)="onSelectionChange($event)">
+        <mat-option *ngFor="let status of orderStatuses" [value]="status.key"
+          >{{status.desc}}</mat-option
+        >
       </mat-select>
     </mat-form-field>
   </div>

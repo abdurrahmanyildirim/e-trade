@@ -46,12 +46,12 @@ export class MnMessageBoxComponent implements OnInit, OnDestroy {
       dialog: DialogType.Message,
       onClose: (result) => {
         if (!message.isRead) {
-          this.contactService.toggleRead(message._id).subscribe((message) => {
+          this.contactService.toggleRead(message._id).subscribe((readedMessage) => {
             this.messages.map((msg) => {
-              if (msg._id === message._id) {
+              if (msg._id === readedMessage._id) {
                 msg.isRead = true;
               }
-              return message;
+              return readedMessage;
             });
           });
         }

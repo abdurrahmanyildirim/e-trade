@@ -1,6 +1,6 @@
 <main class="container">
   <section *ngIf="orderStatus === -1 && inited" class="section">
-    <form [formGroup]="form" class="form">
+    <form [formGroup]="form" (ngSubmit)="purchaseOrder()" class="form">
       <mat-form-field class="field">
         <mat-label>Tel No</mat-label>
         <span matPrefix>0 &nbsp;</span>
@@ -63,7 +63,7 @@
         </span>
       </div>
       <div style="text-align: right; width: 100%; margin-top: 10px">
-        <button mat-flat-button [disabled]="form.invalid" (click)="purchaseOrder()" color="primary">
+        <button mat-flat-button [disabled]="form.invalid" type="submit" color="primary">
           Siparişi Tamamla
         </button>
       </div>

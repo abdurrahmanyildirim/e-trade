@@ -2,8 +2,10 @@
   <div class="top">
     <span class="title mat-body-2">Ürünlerim</span>
     <mat-form-field appearance="outline" class="order-type">
-      <mat-select [(value)]="currentCategory" (valueChange)="initCurrentList()">
-        <mat-option *ngFor="let category of (categoryService.categories| async)" [value]="category"
+      <mat-select [(value)]="state.category" (selectionChange)="onSelectionChange($event)">
+        <mat-option
+          *ngFor="let category of (categoryService.categories| async)"
+          [value]="category.name"
           >{{category.name | uppercase}}</mat-option
         >
       </mat-select>

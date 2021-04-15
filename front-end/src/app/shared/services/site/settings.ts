@@ -3,7 +3,7 @@ import { StorageKey } from '../../models/storage';
 import { LoginResponse } from '../../models/user';
 import { AuthService } from '../rest/auth.service';
 import { CartService } from '../rest/cart.service';
-import { LocalStorageService } from './local-storage.service';
+import { LocalStorageService } from './storage/local';
 import { Location } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })

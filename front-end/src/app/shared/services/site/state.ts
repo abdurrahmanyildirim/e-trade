@@ -3,19 +3,19 @@ import { Injectable, isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageKey } from '../../models/storage';
 import { isPresent } from '../../util/common';
-import { LocalStorageService } from './local-storage.service';
+import { SessionStorageService } from './storage/session';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
   state: any;
-  constructor(private localStorage: LocalStorageService, private http: HttpClient) {}
+  constructor(private sessionStorage: SessionStorageService, private http: HttpClient) {}
 
   init(): Observable<void> {
     return new Observable((observer) => {
       try {
-        this.state = this.localStorage.getObject<any>(StorageKey.State);
+        this.state = this.sessionStorage.getObject<any>(StorageKey.State);
         if (isPresent(this.state)) {
           observer.next();
           observer.complete();
@@ -38,7 +38,7 @@ export class StateService {
 
   setState(selector: string, newState: any): void {
     this.state[selector] = newState;
-    this.localStorage.setObject(StorageKey.State, this.state);
+    this.sessionStorage.setObject(StorageKey.State, this.state);
   }
 
   private initDefaultState(): Observable<void> {

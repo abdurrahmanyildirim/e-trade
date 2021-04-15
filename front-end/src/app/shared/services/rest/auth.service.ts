@@ -9,8 +9,7 @@ import { StorageKey } from '../../models/storage';
 import { LoginResponse, Roles, User } from '../../models/user';
 import { ConfigService } from '../site/config.service';
 import { CryptoService } from '../site/crypto';
-import { LocalStorageService } from '../site/local-storage.service';
-import { CartService } from './cart.service';
+import { LocalStorageService } from '../site/storage/local';
 
 @Injectable({
   providedIn: 'root'
