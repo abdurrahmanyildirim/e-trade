@@ -37,7 +37,7 @@
 }
 
 .mobile-nav-menu {
-  width: 0;
+  width: 100%;
   top: 0;
   left: 0;
   position: fixed;
@@ -47,7 +47,8 @@
   justify-content: flex-start;
   background-color: white;
   height: 100%;
-  transition: width 0.5s ease-out;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease-out;
   overflow-x: hidden;
 }
 
@@ -150,7 +151,7 @@
 }
 
 .nav {
-  flex: 1;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

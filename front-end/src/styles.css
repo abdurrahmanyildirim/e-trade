@@ -8,6 +8,7 @@ html {
   margin: 0;
   overflow-x: hidden;
   color: #494949;
+  scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar-track,

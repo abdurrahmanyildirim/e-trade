@@ -10,7 +10,7 @@
 }
 
 .photo {
-  background-image: url(../../../assets/img/main.jpg);
+  background-image: url(/assets/img/main.jpg);
   width: 100%;
   max-width: 1200px;
   /* opacity: 0.9; */

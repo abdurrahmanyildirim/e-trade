@@ -1,5 +1,5 @@
 <main class="container" *ngIf="products">
-  <section class="top" #top>
+  <section class="top">
     <div class="items">
       <div class="brand">
         <div class="logo-content center" routerLink="main">
@@ -82,7 +82,7 @@
         </mat-menu>
       </div>
       <div class="mobile">
-        <button mat-icon-button (click)="onMobileNavMenuClick()">
+        <button mat-icon-button (click)="toggleMobileNav()">
           <mat-icon>menu</mat-icon>
         </button>
         <div class="mobile-brand" routerLink="main">
@@ -131,46 +131,31 @@
           </mat-menu>
         </div>
       </div>
-      <div class="mobile-nav-menu" #mobileNavMenu>
-        <button
-          mat-button
-          routerLink="main"
-          class="mobile-nav-item"
-          (click)="onMobileNavMenuClick()"
-        >
-          ANA SAYFA
-        </button>
-        <button
-          mat-button
-          class="mobile-nav-item"
-          *ngFor="let category of (categoryService.categories |async)"
-          (click)="navigateToFilteredPage(category.name)"
-        >
-          {{category.name | uppercase}}
-        </button>
-        <button
-          mat-button
-          routerLink="contact"
-          class="mobile-nav-item"
-          (click)="onMobileNavMenuClick()"
-        >
-          İLETİŞİM
-        </button>
+      <div class="mobile-nav-menu" style="transform: translateX(-100%)" #mobileNavMenu>
+        <ng-container *ngTemplateOutlet="navs"></ng-container>
       </div>
     </div>
   </section>
   <section class="navbar">
     <div class="navbar-container">
-      <div routerLink="main" routerLinkActive="active" class="nav" #nav>ANA SAYFA</div>
-      <div
-        class="nav"
-        *ngFor="let category of (categoryService.categories |async)"
-        (click)="navigateToFilteredPage(category.name)"
-        [class.active]="isLinkActive(category.name)"
-      >
-        {{category.name | uppercase}}
-      </div>
-      <div routerLink="contact" routerLinkActive="active" class="nav">İLETİŞİM</div>
+      <ng-container *ngTemplateOutlet="navs"></ng-container>
     </div>
   </section>
 </main>
+
+<ng-template #navs>
+  <div routerLink="main" routerLinkActive="active" class="nav" (click)="toggleMobileNav()">
+    ANA SAYFA
+  </div>
+  <div
+    class="nav"
+    *ngFor="let category of (categoryService.categories |async)"
+    (click)="navigateToFilteredPage(category.name)"
+    [class.active]="isLinkActive(category.name)"
+  >
+    {{category.name | uppercase}}
+  </div>
+  <div routerLink="contact" routerLinkActive="active" class="nav" (click)="toggleMobileNav()">
+    İLETİŞİM
+  </div>
+</ng-template>

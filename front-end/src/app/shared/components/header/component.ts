@@ -8,9 +8,8 @@ import {
   ViewChild,
   ViewChildren
 } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { Roles } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { CartService } from 'src/app/shared/services/rest/cart.service';
@@ -32,9 +31,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searchKey = '';
   products: SearchProduct[];
   filteredProducts: SearchProduct[] = [];
+  isMobile = document.body.clientWidth <= 650;
   @ViewChild('mobileNavMenu') mobileNavMenu: ElementRef<HTMLElement>;
-  @ViewChild('top') top: ElementRef<HTMLElement>;
-  @ViewChildren('nav') navs: ElementRef<HTMLElement>[];
 
   constructor(
     public cartService: CartService,
@@ -59,7 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateToFilteredPage(category: string): void {
     if (document.body.clientWidth <= 650) {
-      this.onMobileNavMenuClick();
+      this.toggleMobileNav();
     }
     this.router.navigateByUrl('filter?category=' + category);
   }
@@ -72,11 +70,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  onMobileNavMenuClick(): void {
-    if (this.mobileNavMenu.nativeElement.style.width) {
-      this.mobileNavMenu.nativeElement.style.width = null;
+  toggleMobileNav(): void {
+    if (!this.isMobile) {
+      return;
+    }
+    const isMobileActive = this.mobileNavMenu.nativeElement.style.transform === 'translateX(-100%)';
+    if (isMobileActive) {
+      this.mobileNavMenu.nativeElement.style.transform = 'translateX(0)';
     } else {
-      this.mobileNavMenu.nativeElement.style.width = 100 + '%';
+      this.mobileNavMenu.nativeElement.style.transform = 'translateX(-100%)';
     }
   }
 
