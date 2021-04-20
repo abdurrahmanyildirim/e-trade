@@ -14,69 +14,62 @@ module.exports.login = (req, res, next) => {
     return res.status(404).send({
       message: 'Email ve Şifre boş bırakılamaz.'
     });
-  } else {
-    let reqEmail = encrypt(req.body.email);
-    User.findOne({ email: reqEmail }, (err, user) => {
-      if (err) {
-        return res.status(404).send(err);
-      }
-      if (!user) {
-        return res.status(404).send('Böyle bir kullanıcı kaydı yoktur.');
-      }
-      const isCompared = comparePassword(req.body.password, user.password);
-      if (!isCompared) {
-        return res.status(404).send('Hatalı şifre veya email');
-      }
-
-      const token = jwt.sign(
-        {
-          _id: user._id,
-          email: decrypt(user.email),
-          role: user.role
-        },
-        config.TOKEN_KEY,
-        {
-          expiresIn: '360d'
-        }
-      );
-      const info = {
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName
-      };
-      return res.status(200).send({ token, info });
-    });
   }
+  let reqEmail = encrypt(req.body.email);
+  User.findOne({ email: reqEmail }, (err, user) => {
+    if (err) {
+      return res.status(404).send(err);
+    }
+    if (!user) {
+      return res.status(404).send('Böyle bir kullanıcı kaydı yoktur.');
+    }
+    const isCompared = comparePassword(req.body.password, user.password);
+    if (!isCompared) {
+      return res.status(404).send('Hatalı şifre veya email');
+    }
+
+    const token = jwt.sign(
+      {
+        _id: user._id,
+        email: decrypt(user.email),
+        role: user.role
+      },
+      config.TOKEN_KEY,
+      {
+        expiresIn: '360d'
+      }
+    );
+    const info = {
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName
+    };
+    return res.status(200).send({ token, info });
+  });
 };
 
-module.exports.register = (req, res) => {
-  if (!req.body) {
-    return res.sendStatus(404).send({ message: 'Boş nesne gönderilemez.' });
-  } else {
+module.exports.register = async (req, res) => {
+  try {
+    if (!req.body) {
+      return res.sendStatus(404).send({ message: 'Boş nesne gönderilemez.' });
+    }
     let userData = req.body;
-    User.findOne({ email: encrypt(userData.email) }, (err, user) => {
-      if (err) {
-        console.log(err);
-        return res.status(404).send(err);
-      }
-      if (user) {
-        return res.status(404).send({ message: 'Bu mail adresi daha önce kullanılmış.' });
-      }
-      const newUser = new User({
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        email: encrypt(userData.email),
-        password: hashPassword(userData.password),
-        authType: 'normal',
-        role: 'Client'
-      });
-      newUser.save((err) => {
-        if (err) {
-          return res.status(404).send(err);
-        }
-        return res.status(201).send({ message: 'Yeni kullanıcı oluşturuldu.' });
-      });
+    const user = await User.findOne({ email: encrypt(userData.email) });
+    if (user) {
+      return res.status(404).send({ message: 'Bu mail adresi daha önce kullanılmış.' });
+    }
+    const newUser = new User({
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: encrypt(userData.email),
+      password: hashPassword(userData.password),
+      authType: 'normal',
+      role: 'Client'
     });
+    await newUser.save();
+    return res.status(201).send({ message: 'Yeni kullanıcı oluşturuldu.' });
+  } catch (error) {
+    return res.status(500).send(error);
   }
 };
 

@@ -30,7 +30,13 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input type="text" matInput placeholder="E-Mail" formControlName="email" />
+          <input
+            type="text"
+            matInput
+            placeholder="E-Mail"
+            formControlName="email"
+            inputmode="email"
+          />
           <mat-error
             *ngIf="(form.get('email').hasError('required') || form.get('firstName').hasError('isNull'))&& form.get('email').touched"
           >

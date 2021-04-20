@@ -109,7 +109,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
         const subs2 = this.cartService.updateCart(this.orders).subscribe({
           next: (result) => {
             if (result) {
-              this.snackbar.showInfo('Sepete Eklendi.');
+              this.snackbar.showSuccess('Sepete Eklendi.');
             }
           },
           error: (err) => {

@@ -8,6 +8,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
 import { Category, Product } from 'src/app/shared/models/product';
@@ -42,6 +43,7 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
   SortType = SortType;
   @ViewChild('mobileFilters') mobileFilters: ElementRef<HTMLElement>;
   @ViewChild('mobileFiltersBody') mobileFiltersBody: ElementRef<HTMLElement>;
+  @ViewChild('pagination') paginationRef: MatPaginator;
   touchSubs = new Subscription();
   touchStart: number;
   touchEnd: number;
@@ -174,6 +176,9 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   appendFiltersToRoute(): void {
     this.router.navigateByUrl('filter?' + this.filterParams());
+    if (isPresent(this.paginationRef)) {
+      this.paginationRef.firstPage();
+    }
   }
 
   private filterParams(): string {
