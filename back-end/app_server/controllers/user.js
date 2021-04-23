@@ -1,5 +1,11 @@
 const User = require('../models/user');
-const { encrypt, basicEncrypt, comparePassword, hashPassword } = require('../services/crypto');
+const {
+  encrypt,
+  basicEncrypt,
+  comparePassword,
+  hashPassword,
+  encForResp
+} = require('../services/crypto');
 
 module.exports.updateContactInfo = (req, res) => {
   const body = req.body;
@@ -79,4 +85,44 @@ module.exports.updatePassword = (req, res) => {
       return res.status(200).send({ message: 'Şifreniz güncellendi.' });
     });
   });
+};
+
+module.exports.getUser = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const user = await User.findOne({ _id: id });
+    if (!user) {
+      return res.status(404).send({ message: 'Kullanıcı bulunamadı' });
+    }
+    const newUser = {
+      email: encForResp(user.email),
+      firstName: user.firstName,
+      lastName: user.lastName
+    };
+    return res.status(200).send(newUser);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
+module.exports.contactInfo = async (req, res) => {
+  try {
+    const id = req.id;
+    const user = await User.findOne({ _id: id });
+    if (!user) {
+      return res.status(404).send({ message: 'Kullanıcı bulunamadı' });
+    }
+    let newUser = {};
+    if (user.addresses.length > 0 && user.phones.length > 0) {
+      newUser = {
+        city: encForResp(user.addresses[0].city),
+        district: encForResp(user.addresses[0].district),
+        address: encForResp(user.addresses[0].address),
+        phone: encForResp(user.phones[0].phone)
+      };
+    }
+    return res.status(200).send(newUser);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 };

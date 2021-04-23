@@ -42,26 +42,30 @@ module.exports.getProductById = (req, res) => {
 };
 
 module.exports.checkStock = async (req, res) => {
-  const products = req.body;
-  const dbProducts = await Product.find();
-  const checkResults = await products.map((product) => {
-    const dbProduct = dbProducts.find((prod) => prod.id === product.id);
-    if (dbProduct) {
-      const hasEnoughStock =
-        product.quantity > 0 &&
-        dbProduct.stockQuantity > 0 &&
-        dbProduct.stockQuantity >= product.quantity;
-      return {
-        isActive: dbProduct.isActive,
-        hasEnoughStock,
-        availableQuantity: dbProduct.stockQuantity,
-        id: dbProduct._id,
-        quantity: product.quantity,
-        name: dbProduct.name
-      };
-    }
-  });
-  return res.status(200).send(checkResults);
+  try {
+    const products = req.body;
+    const dbProducts = await Product.find();
+    const checkResults = await products.map((product) => {
+      const dbProduct = dbProducts.find((prod) => prod.id === product.id);
+      if (dbProduct) {
+        const hasEnoughStock =
+          product.quantity > 0 &&
+          dbProduct.stockQuantity > 0 &&
+          dbProduct.stockQuantity >= product.quantity;
+        return {
+          isActive: dbProduct.isActive,
+          hasEnoughStock,
+          availableQuantity: dbProduct.stockQuantity,
+          id: dbProduct._id,
+          quantity: product.quantity,
+          name: dbProduct.name
+        };
+      }
+    });
+    return res.status(200).send(checkResults);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 };
 
 module.exports.addNewProduct = (req, res) => {

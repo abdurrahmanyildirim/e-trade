@@ -1,33 +1,24 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const config = require('../../config');
-const {
-  encrypt,
-  comparePassword,
-  hashPassword,
-  decrypt,
-  encForResp
-} = require('../services/crypto');
+const { encrypt, comparePassword, hashPassword, decrypt } = require('../services/crypto');
 
-module.exports.login = (req, res, next) => {
-  if (!req.body.email || !req.body.password) {
-    return res.status(404).send({
-      message: 'Email ve Şifre boş bırakılamaz.'
-    });
-  }
-  let reqEmail = encrypt(req.body.email);
-  User.findOne({ email: reqEmail }, (err, user) => {
-    if (err) {
-      return res.status(404).send(err);
+module.exports.login = async (req, res) => {
+  try {
+    if (!req.body.email || !req.body.password) {
+      return res.status(404).send({
+        message: 'Email ve Şifre boş bırakılamaz.'
+      });
     }
+    let reqEmail = encrypt(req.body.email);
+    const user = await User.findOne({ email: reqEmail });
     if (!user) {
       return res.status(404).send('Böyle bir kullanıcı kaydı yoktur.');
     }
-    const isCompared = comparePassword(req.body.password, user.password);
-    if (!isCompared) {
+    const isMatched = comparePassword(req.body.password, user.password);
+    if (!isMatched) {
       return res.status(404).send('Hatalı şifre veya email');
     }
-
     const token = jwt.sign(
       {
         _id: user._id,
@@ -45,7 +36,9 @@ module.exports.login = (req, res, next) => {
       lastName: user.lastName
     };
     return res.status(200).send({ token, info });
-  });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 };
 
 module.exports.register = async (req, res) => {
@@ -73,12 +66,10 @@ module.exports.register = async (req, res) => {
   }
 };
 
-module.exports.googleAuth = (req, res) => {
-  const { firstName, lastName, email } = req.body;
-  User.findOne({ email: encrypt(email) }, async (err, user) => {
-    if (err) {
-      return res.status(500).send({ message: 'Bir hata meydana geldi.' });
-    }
+module.exports.googleAuth = async (req, res) => {
+  try {
+    const { firstName, lastName, email } = req.body;
+    const user = await User.findOne({ email: encrypt(email) });
     if (!user) {
       const newUser = new User({
         firstName: firstName,
@@ -107,39 +98,7 @@ module.exports.googleAuth = (req, res) => {
       lastName: user.lastName
     };
     return res.status(200).send({ token, info });
-  });
-};
-
-module.exports.getUser = (req, res) => {
-  const id = req.params.id;
-  User.findOne({ _id: id }, (err, user) => {
-    if (err) {
-      return res.status(404).send({ message: 'Bağlantı hatası' });
-    }
-    const newUser = {
-      email: encForResp(user.email),
-      firstName: user.firstName,
-      lastName: user.lastName
-    };
-    return res.status(200).send(newUser);
-  });
-};
-
-module.exports.contactInfo = (req, res) => {
-  const id = req.id;
-  User.findOne({ _id: id }, (err, user) => {
-    if (err) {
-      return res.status(404).send({ message: 'Bağlantı hatası' });
-    }
-    let newUser = {};
-    if (user.addresses.length > 0 && user.phones.length > 0) {
-      newUser = {
-        city: encForResp(user.addresses[0].city),
-        district: encForResp(user.addresses[0].district),
-        address: encForResp(user.addresses[0].address),
-        phone: encForResp(user.phones[0].phone)
-      };
-    }
-    return res.status(200).send(newUser);
-  });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 };

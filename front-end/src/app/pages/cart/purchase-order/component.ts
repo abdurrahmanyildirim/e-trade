@@ -132,7 +132,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
         orders: this.orders
       },
       desc: '',
-      onClose: () => {},
+      onClose: () => { },
       dialog: DialogType.SalesAndInformationContract
     });
   }

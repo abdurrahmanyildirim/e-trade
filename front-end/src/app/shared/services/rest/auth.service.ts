@@ -26,7 +26,7 @@ export class AuthService {
     private http: HttpClient,
     private localStorage: LocalStorageService,
     private cryptoService: CryptoService
-  ) {}
+  ) { }
 
   login(user: LoginUser): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.configService.config.baseUrl + 'auth/login', user, {
@@ -61,7 +61,7 @@ export class AuthService {
   }
 
   getUser(id: string): Observable<User> {
-    return this.http.get<User>(this.configService.config.baseUrl + 'auth/user/' + id).pipe(
+    return this.http.get<User>(this.configService.config.baseUrl + 'user?id=' + id).pipe(
       map((user) => {
         user.email = this.cryptoService.basicDecrypt(user.email);
         return user;
@@ -78,7 +78,7 @@ export class AuthService {
   }
 
   getContactInfo(): Observable<any> {
-    return this.http.get<any>(this.configService.config.baseUrl + 'auth/contact-info').pipe(
+    return this.http.get<any>(this.configService.config.baseUrl + 'user/contact-info').pipe(
       map((info) => {
         info.city = this.cryptoService.basicDecrypt(info.city);
         info.district = this.cryptoService.basicDecrypt(info.district);

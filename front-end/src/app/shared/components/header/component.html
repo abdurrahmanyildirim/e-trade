@@ -144,18 +144,28 @@
 </main>
 
 <ng-template #navs>
-  <div routerLink="main" routerLinkActive="active" class="nav" (click)="toggleMobileNav()">
+  <div
+    routerLink="main"
+    [routerLinkActive]="isMobile ? '' : 'active'"
+    class="nav"
+    (click)="toggleMobileNav()"
+  >
     ANA SAYFA
   </div>
   <div
+    *ngFor="let category of (categoryService.categories | async)"
     class="nav"
-    *ngFor="let category of (categoryService.categories |async)"
     (click)="navigateToFilteredPage(category.name)"
-    [class.active]="isLinkActive(category.name)"
+    [class.active]="!isMobile ? isLinkActive(category.name) : ''"
   >
     {{category.name | uppercase}}
   </div>
-  <div routerLink="contact" routerLinkActive="active" class="nav" (click)="toggleMobileNav()">
+  <div
+    routerLink="contact"
+    [routerLinkActive]="isMobile ? '' : 'active'"
+    class="nav"
+    (click)="toggleMobileNav()"
+  >
     İLETİŞİM
   </div>
 </ng-template>

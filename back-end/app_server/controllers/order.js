@@ -22,12 +22,12 @@ module.exports.getOrders = (req, res) => {
 };
 
 module.exports.orderDetail = async (req, res) => {
-  const id = req.params.id;
-  Order.findOne({ _id: id }, (err, order) => {
-    if (err) {
+  try {
+    const id = req.params.id;
+    const order = await Order.findOne({ _id: id });
+    if (!order) {
       return res.status(404).send({ message: 'Siparişler bulunamadı' });
     }
-
     const orderedProducts = [];
     order.products.map((product) => {
       orderedProducts.push({
@@ -58,7 +58,9 @@ module.exports.orderDetail = async (req, res) => {
       status: order.status,
       contactInfo
     });
-  });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 };
 
 module.exports.allOrders = (req, res) => {
