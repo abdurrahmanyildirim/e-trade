@@ -26,6 +26,7 @@
     "@auth0/angular-jwt": "^5.0.2",
     "angularx-social-login": "^3.5.4",
     "ngx-owl-carousel-o": "^5.0.0",
+    "print-js": "^1.6.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

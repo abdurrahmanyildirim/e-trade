@@ -1,12 +1,19 @@
-<div style="text-align: right">
+<div class="top">
+  <button mat-button (click)="exportContracts()">
+    <mat-icon>file_download</mat-icon>PDF İndir
+  </button>
+
   <button mat-icon-button [mat-dialog-close]="true">
     <mat-icon>close</mat-icon>
   </button>
 </div>
 
-<div class="container">
+<div class="container" id="contracts">
   <div *ngIf="dialog.dialog === DialogType.SalesAndInformationContract">
-    <app-sales-contract [orderInfo]="dialog.data.orderInfo" [orders]="dialog.data.orders"></app-sales-contract>
+    <app-sales-contract
+      [orderInfo]="dialog.data.orderInfo"
+      [orders]="dialog.data.orders"
+    ></app-sales-contract>
     <br />
     <app-information-contract
       [orderInfo]="dialog.data.orderInfo"
