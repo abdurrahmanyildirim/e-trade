@@ -2,12 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PagesModule } from './pages/module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './shared/components/header/module';
 import { FooterModule } from './shared/components/footer/module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ProductService } from './shared/services/rest/product.service';
 import { RestInterceptor } from './shared/services/rest/rest-interceptor';
 import localeTr from '@angular/common/locales/tr';
 import { registerLocaleData } from '@angular/common';
@@ -25,7 +23,6 @@ registerLocaleData(localeTr);
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    PagesModule,
     HeaderModule,
     MatSnackBarModule,
     SocialLoginModule,
@@ -46,4 +43,4 @@ registerLocaleData(localeTr);
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
