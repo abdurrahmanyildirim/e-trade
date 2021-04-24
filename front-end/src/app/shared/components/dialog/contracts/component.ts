@@ -10,8 +10,13 @@ import * as printJS from 'print-js';
 export class ContractsDiaologComponent {
   @Input() dialog: DialogData;
   DialogType = DialogType;
+  hidden = false;
 
   exportContracts(): void {
-    printJS('contracts', 'html');
+    this.hidden = true;
+    setTimeout(() => {
+      printJS({ printable: 'pdf-content', type: 'html' });
+      this.hidden = false;
+    });
   }
 }

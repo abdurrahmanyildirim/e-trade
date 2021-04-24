@@ -5,7 +5,6 @@ import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { LoginUser } from './model';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { SettingService } from 'src/app/shared/services/site/settings';
-import { SocialService } from 'src/app/shared/services/site/social-auth';
 import { Subscription } from 'rxjs';
 import { isPresent } from 'src/app/shared/util/common';
 
@@ -24,8 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private snackBar: SnackbarService,
-    private settingService: SettingService,
-    private socialService: SocialService
+    private settingService: SettingService
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   authWithGoogle(): void {
-    const subs = this.socialService.signInWithGoogle().subscribe({
+    const subs = this.authService.signInWithGoogle().subscribe({
       next: (res) => {
         this.settingService.initUserSettingsAfterLogin(res);
       },

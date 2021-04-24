@@ -14,7 +14,6 @@ import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth.service';
 import { SettingService } from 'src/app/shared/services/site/settings';
-import { SocialService } from 'src/app/shared/services/site/social-auth';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { RegisterUser } from './model';
 
@@ -33,7 +32,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private snackBar: SnackbarService,
-    private socialService: SocialService,
     private settingService: SettingService,
     private dialogService: DialogService
   ) {}
@@ -46,7 +44,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   authWithGoogle(): void {
-    const subs = this.socialService.signInWithGoogle().subscribe({
+    const subs = this.authService.signInWithGoogle().subscribe({
       next: (res) => {
         this.settingService.initUserSettingsAfterLogin(res);
       },

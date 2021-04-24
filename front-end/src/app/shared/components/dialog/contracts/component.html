@@ -8,12 +8,13 @@
   </button>
 </div>
 
-<div class="container" id="contracts">
+<div class="container">
   <div *ngIf="dialog.dialog === DialogType.SalesAndInformationContract">
     <app-sales-contract
       [orderInfo]="dialog.data.orderInfo"
       [orders]="dialog.data.orders"
     ></app-sales-contract>
+    <br />
     <br />
     <app-information-contract
       [orderInfo]="dialog.data.orderInfo"
@@ -23,4 +24,17 @@
   <div *ngIf="dialog.dialog === DialogType.RegisterContract">
     <app-register-contract></app-register-contract>
   </div>
+</div>
+
+<div *ngIf="hidden" class="pdf-content" id="pdf-content">
+  <app-sales-contract
+    [orderInfo]="dialog.data.orderInfo"
+    [orders]="dialog.data.orders"
+  ></app-sales-contract>
+  <br />
+  <br />
+  <app-information-contract
+    [orderInfo]="dialog.data.orderInfo"
+    [orders]="dialog.data.orders"
+  ></app-information-contract>
 </div>

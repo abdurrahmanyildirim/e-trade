@@ -35,7 +35,6 @@ export class MnCategoryComponent implements OnInit, OnDestroy {
         this.screenHolder.hide();
         this.snackbar.showInfo(res.message);
         this.newCategory = '';
-        console.log(res);
         this.categoryService.categories.next(res.categories);
       },
       error: (err) => {

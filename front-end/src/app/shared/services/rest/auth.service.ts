@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LoginUser } from 'src/app/pages/auth/login/model';
@@ -25,12 +26,37 @@ export class AuthService {
     private configService: ConfigService,
     private http: HttpClient,
     private localStorage: LocalStorageService,
-    private cryptoService: CryptoService
+    private cryptoService: CryptoService,
+    private socialAuthService: SocialAuthService
   ) { }
 
   login(user: LoginUser): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.configService.config.baseUrl + 'auth/login', user, {
-      headers: this.headers
+    return this.http.post<LoginResponse>(this.configService.config.baseUrl + 'auth/login', user);
+  }
+
+  signInWithGoogle(): Observable<LoginResponse> {
+    return new Observable((observer) => {
+      this.socialAuthService
+        .signIn(GoogleLoginProvider.PROVIDER_ID)
+        .then((user: SocialUser) => {
+          const newUser = {
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName
+          } as RegisterUser;
+          this.authWithGoogle(newUser).subscribe({
+            next: (res) => {
+              observer.next(res);
+              observer.complete();
+            },
+            error: (err) => {
+              observer.error(err);
+            }
+          });
+        })
+        .catch((err) => {
+          observer.error(err);
+        });
     });
   }
 

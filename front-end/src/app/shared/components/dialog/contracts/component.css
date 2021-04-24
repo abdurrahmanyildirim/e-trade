@@ -7,3 +7,7 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+.pdf-content {
+  width: 750px;
+}

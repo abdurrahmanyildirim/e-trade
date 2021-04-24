@@ -14,6 +14,7 @@ import { SplashService } from './shared/services/site/splash.service';
 import { SnackbarComponent } from './shared/components/snackbar/component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SocialLoginModule } from 'angularx-social-login';
+import { CoreModule } from './core/module';
 
 registerLocaleData(localeTr);
 
@@ -23,9 +24,10 @@ registerLocaleData(localeTr);
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    SocialLoginModule,
+    CoreModule,
     HeaderModule,
     MatSnackBarModule,
-    SocialLoginModule,
     FooterModule,
     HttpClientModule,
     MatProgressSpinnerModule
@@ -43,4 +45,4 @@ registerLocaleData(localeTr);
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
