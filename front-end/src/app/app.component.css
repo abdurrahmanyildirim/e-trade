@@ -42,6 +42,14 @@
   align-items: center;
 }
 
+.nav-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+}
+
 @media only screen and (max-width: 650px) {
   .main {
     min-height: 200px;

@@ -15,6 +15,7 @@ import { SnackbarComponent } from './shared/components/snackbar/component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SocialLoginModule } from 'angularx-social-login';
 import { CoreModule } from './core/module';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 registerLocaleData(localeTr);
 
@@ -30,7 +31,8 @@ registerLocaleData(localeTr);
     MatSnackBarModule,
     FooterModule,
     HttpClientModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'tr' },
