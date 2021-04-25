@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatHorizontalStepper } from '@angular/material/stepper';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
-import { Category, Product } from 'src/app/shared/models/product';
+import { Product } from 'src/app/shared/models/product';
 import { CategoryService } from 'src/app/shared/services/rest/category';
 import { ProductService } from 'src/app/shared/services/rest/product.service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
@@ -24,9 +23,9 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
   subs = new Subscription();
   infoForm: FormGroup;
   photosForm: FormGroup;
+  description = '';
 
   constructor(
-    private router: Router,
     private fb: FormBuilder,
     private productService: ProductService,
     private snackBar: SnackbarService,
@@ -47,7 +46,6 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
         Validators.pattern(/^[0-9.]*$/),
         nullValidator()
       ]),
-      description: new FormControl(null, [Validators.required, nullValidator()]),
       discountRate: new FormControl(null, [
         Validators.required,
         Validators.max(100),
@@ -68,9 +66,8 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
   }
 
   onFilesChange(files: File[]): void {
-    this.photos = files;
     this.photosForm.patchValue({
-      photos: this.photos
+      photos: files
     });
   }
 
@@ -79,12 +76,14 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
       return;
     }
     this.screenHolder.show();
-    const sub = this.productService.uploadPhotos(this.photos).subscribe({
+    const uploadedPhotos = Object.assign({}, this.photosForm.value).photos;
+    const sub = this.productService.uploadPhotos(uploadedPhotos).subscribe({
       next: (photos) => {
         const product = Object.assign({}, this.infoForm.value) as Product;
         product.discountRate = product.discountRate / 100;
         product.photos = photos;
         product.comments = [];
+        product.description = this.description;
         product.rate = 0;
         this.productService
           .addNewProduct(product)
@@ -93,6 +92,7 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
             next: () => {
               this.screenHolder.hide();
               this.reset();
+              this.description = '';
               this.snackBar.showSuccess('Ürün Eklendi.');
             },
             error: (err) => {

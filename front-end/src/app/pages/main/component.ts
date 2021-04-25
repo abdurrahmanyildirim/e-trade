@@ -56,11 +56,7 @@ export class MainComponent implements OnInit, OnDestroy {
     nav: true
   };
 
-  constructor(
-    private productService: ProductService,
-    private authService: AuthService,
-    private cd: ChangeDetectorRef
-  ) {}
+  constructor(private productService: ProductService, private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.initProducts();
@@ -89,7 +85,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.newProducts = this.products
       .sort(
         (a: Product, b: Product) =>
-          new Date(a.addedDate).getTime() - new Date(b.addedDate).getTime()
+          new Date(b.addedDate).getTime() - new Date(a.addedDate).getTime()
       )
       .slice(0, 15);
   }

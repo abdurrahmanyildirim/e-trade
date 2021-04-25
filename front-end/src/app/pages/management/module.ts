@@ -20,6 +20,7 @@ import { MnProductDetailComponent } from './product/product-detail/component';
 import { MnMessageBoxComponent } from './message-box/component';
 import { MnCategoryComponent } from './category/component';
 import { DialogModule } from 'src/app/shared/components/dialog/module';
+import { EditorModule } from 'src/app/shared/components/editor/module';
 
 const routes: Routes = [
   {
@@ -63,7 +64,8 @@ const routes: Routes = [
     DragDropModule,
     MatRadioModule,
     StarModule,
-    DialogModule
+    DialogModule,
+    EditorModule
   ],
   exports: [ManagementComponent]
 })

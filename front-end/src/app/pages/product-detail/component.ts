@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit
 } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { fromEvent, Subject, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
@@ -40,7 +41,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
     private activatedRouter: ActivatedRoute,
     private productService: ProductService,
     private snackbar: SnackbarService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -80,6 +82,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
     const subs = this.productService.productById(this.productId).subscribe({
       next: (product) => {
         this.product = product;
+        this.product.description = this.sanitizer.bypassSecurityTrustHtml(this.product.description);
         this.cd.detectChanges();
       },
       error: (error) => console.log(error)

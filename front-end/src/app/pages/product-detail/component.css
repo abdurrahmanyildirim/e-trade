@@ -11,6 +11,7 @@
   flex-direction: column;
   margin: 0 auto;
   width: 900px;
+  box-sizing: border-box;
 }
 
 .top {
@@ -110,41 +111,22 @@
 
 .bottom {
   margin-top: 10px;
-  min-height: 300px;
-}
-
-.bottom-title {
-  font-size: 18px;
-}
-
-.comments {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-top: 5px;
-}
-
-.comment {
-  border-bottom: 1px solid #ccc;
-  padding: 10px;
-}
-
-.comment-name {
-  font-size: 18px;
-}
-
-.tab-container {
-  min-height: 300px;
 }
 
 @media only screen and (max-width: 650px) {
   .container {
     padding-top: 0;
+    padding: 0 5px;
     width: 100%;
   }
 
   .top {
     flex-direction: column;
-    padding: 0 5px;
+  }
+
+  .bottom {
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
   }
 
   .general {

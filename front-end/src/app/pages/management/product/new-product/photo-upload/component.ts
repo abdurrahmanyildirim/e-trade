@@ -17,7 +17,8 @@ export class PhotoUploadComponent {
   suppotedPhotos = new Map<string, string>([
     ['jpg', 'jpg'],
     ['jpeg', 'jpeg'],
-    ['png', 'png']
+    ['png', 'png'],
+    ['jfif','jfif']
   ]);
 
   constructor(private snackBar: SnackbarService) {}

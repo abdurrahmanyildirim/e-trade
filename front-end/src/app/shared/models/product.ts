@@ -4,7 +4,7 @@ export interface Product {
   category: string;
   price: number;
   addedDate?: Date;
-  description: string;
+  description: any;
   discountRate: number;
   stockQuantity: number;
   isActive?: boolean;

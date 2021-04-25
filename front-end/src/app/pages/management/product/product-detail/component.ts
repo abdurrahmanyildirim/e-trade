@@ -20,6 +20,7 @@ import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { UtilityService } from 'src/app/shared/services/site/utility.service';
 import { DialogType } from 'src/app/shared/components/dialog/component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-mn-product-detail',
@@ -33,7 +34,6 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
   subs = new Subscription();
 
   constructor(
-    private router: Router,
     public productService: ProductService,
     private activatedRoute: ActivatedRoute,
     private dialogService: DialogService,
@@ -136,6 +136,7 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
     const product = Object.assign({}, this.form.value);
     product.isActive = product.isActive === 'true';
     product.discountRate = parseFloat((product.discountRate / 100).toFixed(2));
+    product.description = this.product.description;
     this.dialogService.confirm({
       acceptButton: 'Onayla',
       refuseButton: 'Vazgeç',

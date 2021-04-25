@@ -4,15 +4,26 @@
       <form [formGroup]="infoForm">
         <ng-template matStepLabel>Ürün Bilgileri</ng-template>
         <div class="step-container">
-          <mat-form-field class="field" appearance="outline">
-            <mat-label>Ürün Adı</mat-label>
-            <input type="text" matInput placeholder="Ürün adı" formControlName="name" />
-            <mat-error
-              *ngIf="infoForm.get('name').hasError('required') || infoForm.get('name').hasError('isNull') || infoForm.get('name').touched"
-            >
-              *Ürün Adı boş bırakılamaz
-            </mat-error>
-          </mat-form-field>
+          <div class="field multiple-field">
+            <mat-form-field appearance="outline" style="width: 47.5%">
+              <mat-label>Ürün Adı</mat-label>
+              <input type="text" matInput placeholder="Ürün adı" formControlName="name" />
+              <mat-error
+                *ngIf="infoForm.get('name').hasError('required') || infoForm.get('name').hasError('isNull') || infoForm.get('name').touched"
+              >
+                *Ürün Adı boş bırakılamaz
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 47.5%">
+              <mat-label>Marka</mat-label>
+              <input type="text" matInput placeholder="Marka" formControlName="brand" />
+              <mat-error
+                *ngIf="infoForm.get('brand').hasError('required') || infoForm.get('brand').hasError('isNull')|| infoForm.get('brand').touched"
+              >
+                *Bir marka ismi giriniz.
+              </mat-error>
+            </mat-form-field>
+          </div>
           <mat-form-field class="field" appearance="outline">
             <mat-label>Kategori</mat-label>
             <mat-select formControlName="category">
@@ -24,48 +35,46 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="field" appearance="outline">
-            <mat-label>Fiyat</mat-label>
-            <input type="text" matInput placeholder="Fiyat" formControlName="price" />
-            <mat-error
-              *ngIf="infoForm.get('price').hasError('required') || infoForm.get('price').hasError('isNull')|| infoForm.get('price').touched"
-            >
-              *Fiyat bilgisi boş bırakılamaz
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field class="field" appearance="outline">
-            <mat-label>İndirim</mat-label>
-            <input
-              type="text"
-              matInput
-              placeholder="İndirim Oranı"
-              formControlName="discountRate"
-            />
-          </mat-form-field>
-          <mat-form-field class="field" appearance="outline">
-            <mat-label>Stok Miktarı</mat-label>
-            <input
-              type="text"
-              matInput
-              placeholder="Stok miktarı"
-              formControlName="stockQuantity"
-            />
-            <mat-error
-              *ngIf="infoForm.get('stockQuantity').hasError('required') || infoForm.get('stockQuantity').hasError('isNull')|| infoForm.get('stockQuantity').touched"
-            >
-              *Stok miktarı giriniz.
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field class="field" appearance="outline">
-            <mat-label>Marka</mat-label>
-            <input type="text" matInput placeholder="Marka" formControlName="brand" />
-            <mat-error
-              *ngIf="infoForm.get('brand').hasError('required') || infoForm.get('brand').hasError('isNull')|| infoForm.get('brand').touched"
-            >
-              *Bir marka ismi giriniz.
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field class="field" appearance="outline">
+          <div class="field multiple-field">
+            <mat-form-field class="sub-field" appearance="outline">
+              <mat-label>Fiyat</mat-label>
+              <input type="text" matInput placeholder="Fiyat" formControlName="price" />
+              <mat-error
+                *ngIf="infoForm.get('price').hasError('required') || infoForm.get('price').hasError('isNull')|| infoForm.get('price').touched"
+              >
+                *Zorunlu
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="sub-field" appearance="outline">
+              <mat-label>İndirim</mat-label>
+              <input
+                type="text"
+                matInput
+                placeholder="İndirim Oranı"
+                formControlName="discountRate"
+              />
+              <mat-error
+                *ngIf="infoForm.get('discountRate').hasError('required') || infoForm.get('discountRate').hasError('isNull')|| infoForm.get('discountRate').touched"
+              >
+                *Zorunlu
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="sub-field" appearance="outline">
+              <mat-label>Stok Miktarı</mat-label>
+              <input
+                type="text"
+                matInput
+                placeholder="Stok miktarı"
+                formControlName="stockQuantity"
+              />
+              <mat-error
+                *ngIf="infoForm.get('stockQuantity').hasError('required') || infoForm.get('stockQuantity').hasError('isNull')|| infoForm.get('stockQuantity').touched"
+              >
+                *Zorunlu
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!-- <mat-form-field class="field" appearance="outline">
             <mat-label>Ürün Açıklaması</mat-label>
             <textarea matInput formControlName="description"></textarea>
             <mat-error
@@ -73,8 +82,11 @@
             >
               *Ürün açıklama alana boş bırakılamaz
             </mat-error>
-          </mat-form-field>
-          <div style="width: 50%; display: flex; justify-content: flex-end">
+          </mat-form-field> -->
+          <div class="field">
+            <app-editor [(text)]="description"></app-editor>
+          </div>
+          <div class="next-button">
             <button mat-raised-button color="primary" matStepperNext>
               İleri <mat-icon>arrow_forward</mat-icon>
             </button>

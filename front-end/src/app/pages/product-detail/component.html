@@ -35,10 +35,10 @@
             ></app-star>
           </div>
         </div>
-        <div class="desc">
+        <!-- <div class="desc">
           <div class="mat-body-2">Ürün Hakkında</div>
           <div>{{product.description}}</div>
-        </div>
+        </div> -->
         <div class="stock-quantity">
           <div class="mat-body-2">Kalan</div>
           <div>{{product.stockQuantity}} Adet</div>
@@ -70,6 +70,10 @@
           </div>
         </div>
       </section>
+    </section>
+    <section class="bottom">
+      <span class="mat-h3">Ürün Hakkında</span>
+      <div class="bottom-desc" [innerHTML]="product.description"></div>
     </section>
   </div>
 </main>

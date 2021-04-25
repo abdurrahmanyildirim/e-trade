@@ -15,9 +15,25 @@
 }
 
 .field {
-  width: 50%;
+  width: 60%;
 }
 
 .submit-button {
   width: 80%;
+}
+
+.multiple-field {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sub-field {
+  width: 30%;
+}
+
+.next-button {
+  width: 60%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
 }

@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "~11.0.3",
     "@angular/router": "~11.0.3",
     "@auth0/angular-jwt": "^5.0.2",
+    "@kolkov/angular-editor": "^1.1.4",
     "angularx-social-login": "^3.5.4",
     "ngx-owl-carousel-o": "^5.0.0",
     "print-js": "^1.6.0",
