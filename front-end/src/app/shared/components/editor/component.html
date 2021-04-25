@@ -1,1 +1,7 @@
-<angular-editor [(ngModel)]="text" [config]="editorConfig" (keyup)="onKeyup()"></angular-editor>
+<angular-editor
+  [(ngModel)]="text"
+  [config]="editorConfig"
+  (keyup)="onChange()"
+  (mousedown)="onChange()"
+  (click)="onChange()"
+></angular-editor>

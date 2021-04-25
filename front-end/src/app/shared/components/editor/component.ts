@@ -74,7 +74,9 @@ export class EditorComponent {
     ]
   };
 
-  onKeyup(): void {
-    this.textChange.emit(this.text);
+  onChange(): void {
+    setTimeout(() => {
+      this.textChange.emit(this.text);
+    });
   }
 }
