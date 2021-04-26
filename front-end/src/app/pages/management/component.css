@@ -21,6 +21,7 @@
 .route {
   flex: 1;
   margin-left: 10px;
+  position: relative;
 }
 
 .active {

@@ -1,7 +1,7 @@
 <main class="container">
   <section *ngIf="orderStatus === -1 && inited" class="section">
     <form [formGroup]="form" (ngSubmit)="purchaseOrder()" class="form">
-      <mat-form-field class="field">
+      <mat-form-field class="field" appearance="outline">
         <mat-label>Tel No</mat-label>
         <span matPrefix>0 &nbsp;</span>
         <input
@@ -26,7 +26,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="field">
+      <mat-form-field class="field" appearance="outline">
         <mat-label>Şehir</mat-label>
         <input matInput formControlName="city" required />
         <mat-error
@@ -35,7 +35,7 @@
           *Şehir zorunlu.
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="field">
+      <mat-form-field class="field" appearance="outline">
         <mat-label>İlçe</mat-label>
         <input matInput formControlName="district" required />
         <mat-error
@@ -45,7 +45,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="field">
+      <mat-form-field class="field" appearance="outline">
         <mat-label>Adres</mat-label>
         <textarea matInput formControlName="address" required></textarea>
         <mat-error
