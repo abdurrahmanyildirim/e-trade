@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
@@ -11,11 +17,11 @@ import { isPresent } from 'src/app/shared/util/common';
 @Component({
   selector: 'app-mn-order-detail',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MnOrderDetailComponent implements OnInit, OnDestroy {
   order: OrderList;
-  currentUser: User;
   isInited = false;
   statuses: Status[];
   currentStatus: Status;
@@ -26,7 +32,8 @@ export class MnOrderDetailComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     private authService: AuthService,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -41,17 +48,6 @@ export class MnOrderDetailComponent implements OnInit, OnDestroy {
     const sub = this.orderService.orderDetail(id).subscribe({
       next: (orderDetail) => {
         this.order = orderDetail;
-        this.initUser(this.order.userId);
-      },
-      error: (error) => console.log(error)
-    });
-    this.subs.add(sub);
-  }
-
-  initUser(id: string): void {
-    const sub = this.authService.getUser(id).subscribe({
-      next: (user) => {
-        this.currentUser = user;
         this.initStatus();
       },
       error: (error) => console.log(error)
@@ -69,6 +65,7 @@ export class MnOrderDetailComponent implements OnInit, OnDestroy {
           key: orderStatus.key
         };
         this.isInited = true;
+        this.cd.detectChanges();
       },
       error: (err) => console.log(err)
     });

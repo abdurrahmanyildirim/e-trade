@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -16,7 +22,8 @@ import { MnOrdersState } from './state';
   selector: 'app-mn-orders',
   templateUrl: './component.html',
   styleUrls: ['./component.css'],
-  viewProviders: [MnOrdersFactory]
+  viewProviders: [MnOrdersFactory],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MnOrdersComponent
   extends BasePageDirective<MnOrdersState>
@@ -30,7 +37,8 @@ export class MnOrdersComponent
     private orderService: OrderService,
     private router: Router,
     protected stateService: StateService,
-    private mnOrdersFactory: MnOrdersFactory
+    private mnOrdersFactory: MnOrdersFactory,
+    private cd: ChangeDetectorRef
   ) {
     super(stateService);
     this.selector = PageSelector.AppMnOrders;
@@ -65,6 +73,7 @@ export class MnOrdersComponent
     this.currentList = this.orders
       .filter((order) => order.status[order.status.length - 1].key === this.state.statusKey)
       .slice();
+    this.cd.detectChanges();
   }
 
   navigateToDetail(id: string): void {

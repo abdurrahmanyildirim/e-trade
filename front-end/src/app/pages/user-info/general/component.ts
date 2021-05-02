@@ -48,7 +48,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   initUserInfo(): void {
-    this.authService.getUser(this.authService.decodeToken()._id).subscribe({
+    this.authService.getUser().subscribe({
       next: (user) => {
         this.user = user;
         this.initForm();

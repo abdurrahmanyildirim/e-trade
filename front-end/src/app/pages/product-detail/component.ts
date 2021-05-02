@@ -6,10 +6,10 @@ import {
   OnDestroy,
   OnInit
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { fromEvent, Subject, Subscription } from 'rxjs';
-import { throttleTime } from 'rxjs/operators';
+import { switchMap, throttleTime } from 'rxjs/operators';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Order } from 'src/app/shared/models/order';
 import { Product } from 'src/app/shared/models/product';
@@ -61,17 +61,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   listenResize(): void {
-    if (document.body.clientWidth <= 650) {
-      setTimeout(() => {
-        this.photos.width = this.photos.height = document.body.clientWidth - 12;
-        this.cd.detectChanges();
-      });
-    }
     const sub = fromEvent(window, 'resize').subscribe((event: any) => {
       if (document.body.clientWidth <= 650) {
         this.photos.width = this.photos.height = document.body.clientWidth - 12;
       } else {
-        this.photos.width = this.photos.height = 448;
+        this.photos.width = this.photos.height = 450;
       }
       this.cd.detectChanges();
     });
@@ -91,41 +85,40 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   initAddToCartStream(): void {
-    const sub = this.addTocartClick.pipe(throttleTime(200)).subscribe({
-      next: (product: Product) => {
-        let newOrder = this.orders.find((order) => order.productId === product._id);
-        if (isPresent(newOrder)) {
-          this.orders.find((order) => order.productId === product._id).quantity += this.quantity;
-        } else {
-          newOrder = {
-            productId: product._id,
-            discountRate: product.discountRate,
-            photo: product.photos[0].path,
-            name: product.name,
-            price: product.price,
-            quantity: this.quantity,
-            category: product.category,
-            brand: product.brand
-          } as Order;
-          this.orders.push(newOrder);
-        }
-        const subs2 = this.cartService.updateCart(this.orders).subscribe({
-          next: (result) => {
-            if (result) {
-              this.snackbar.showSuccess('Sepete Eklendi.');
-            }
-          },
-          error: (err) => {
-            console.error(err);
-            this.snackbar.showError('sepete ekleme sırasında hata meydana geldi');
+    const sub = this.addTocartClick
+      .pipe(
+        throttleTime(200),
+        switchMap((product: Product) => {
+          let newOrder = this.orders.find((order) => order.productId === product._id);
+          if (isPresent(newOrder)) {
+            this.orders.find((order) => order.productId === product._id).quantity += this.quantity;
+          } else {
+            newOrder = {
+              productId: product._id,
+              discountRate: product.discountRate,
+              photo: product.photos[0].path,
+              name: product.name,
+              price: product.price,
+              quantity: this.quantity,
+              category: product.category,
+              brand: product.brand
+            } as Order;
+            this.orders.push(newOrder);
           }
-        });
-        this.subs.add(subs2);
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
+          return this.cartService.updateCart(this.orders);
+        })
+      )
+      .subscribe({
+        next: (result) => {
+          if (result) {
+            this.snackbar.showSuccess('Sepete Eklendi.');
+          }
+        },
+        error: (err) => {
+          console.error(err);
+          this.snackbar.showError('sepete ekleme sırasında hata meydana geldi');
+        }
+      });
     this.subs.add(sub);
   }
 

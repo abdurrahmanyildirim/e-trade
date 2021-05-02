@@ -18,7 +18,7 @@ export class PhotoUploadComponent {
     ['jpg', 'jpg'],
     ['jpeg', 'jpeg'],
     ['png', 'png'],
-    ['jfif','jfif']
+    ['jfif', 'jfif']
   ]);
 
   constructor(private snackBar: SnackbarService) {}

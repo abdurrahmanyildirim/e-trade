@@ -71,7 +71,10 @@
         </div>
       </section>
     </section>
-    <section class="bottom">
+    <section
+      class="bottom"
+      *ngIf="product.description.changingThisBreaksApplicationSecurity.length>0"
+    >
       <span class="mat-h3">Ürün Hakkında</span>
       <div class="bottom-desc" [innerHTML]="product.description"></div>
     </section>

@@ -1,7 +1,8 @@
 const Product = require('../models/product');
 const Order = require('../models/order');
 const User = require('../models/user');
-const cloudinaryService = require('../services/cloudinary');
+// const cloudinaryService = require('../services/cloudinary');
+const { updateProducts } = require('../services/socket');
 
 module.exports.getProducts = (req, res) => {
   Product.find({ isActive: true }, (err, products) => {
@@ -68,45 +69,47 @@ module.exports.checkStock = async (req, res) => {
   }
 };
 
-module.exports.addNewProduct = (req, res) => {
-  const newProduct = {
-    name: req.body.name,
-    category: req.body.category,
-    price: req.body.price,
-    description: req.body.description,
-    discountRate: req.body.discountRate,
-    stockQuantity: req.body.stockQuantity,
-    brand: req.body.brand,
-    rate: 0,
-    isActive: true,
-    photos: req.body.photos,
-    comments: []
-  };
+module.exports.addNewProduct = async (req, res) => {
+  try {
+    const newProduct = {
+      name: req.body.name,
+      category: req.body.category,
+      price: req.body.price,
+      description: req.body.description,
+      discountRate: req.body.discountRate / 100,
+      stockQuantity: req.body.stockQuantity,
+      brand: req.body.brand,
+      rate: 0,
+      isActive: true,
+      photos: req.body.photos,
+      comments: []
+    };
 
-  const product = new Product(newProduct);
-  product.save((err) => {
-    if (err) {
-      return res.status(400).send({ message: 'Ekleme sırasında hata meydana geldi' });
-    }
-    return res.status(200).send({ message: 'Ürün eklendi.' });
-  });
+    const product = new Product(newProduct);
+    const savedProduct = await product.save();
+    // updateProducts();
+    return res.status(200).send(savedProduct);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 };
 
-module.exports.remove = async (req, res) => {
+module.exports.remove = (req, res) => {
   const id = req.query.id;
-  const product = await Product.findOne({ _id: id });
+  // const product = await Product.findOne({ _id: id });
   Product.findByIdAndRemove(id, async (err) => {
     if (err) {
       return res.status(404).send({ message: 'Ürün silinirken hata oldu.' });
     }
-    for (const photo of product.photos) {
-      try {
-        await cloudinaryService.remove(photo.publicId);
-      } catch (error) {
-        console.log(error);
-        console.log('Foto Silinemedi');
-      }
-    }
+    // for (const photo of product.photos) {
+    //   try {
+    //     await cloudinaryService.remove(photo.publicId);
+    //   } catch (error) {
+    //     console.log(error);
+    //     console.log('Foto Silinemedi');
+    //   }
+    // }
+    updateProducts();
     return res.status(200).send({ message: 'Ürün silindi' });
   });
 };
@@ -117,7 +120,8 @@ module.exports.update = (req, res) => {
     if (err) {
       return res.status(401).send({ message: 'Bir hata meydana geldi.' });
     }
-    res.status(200).send({ message: 'Güncelleme başarılı' });
+    updateProducts();
+    return res.status(200).send({ message: 'Güncelleme başarılı' });
   });
 };
 

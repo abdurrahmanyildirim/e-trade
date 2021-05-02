@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { BasePageDirective } from 'src/app/pages/base-page.component';
@@ -12,7 +18,8 @@ import { MnProductsState } from './state';
 @Component({
   selector: 'app-mn-products',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MnProductsComponent
   extends BasePageDirective<MnProductsState>
@@ -24,7 +31,8 @@ export class MnProductsComponent
     private router: Router,
     public productService: ProductService,
     public categoryService: CategoryService,
-    protected stateService: StateService
+    protected stateService: StateService,
+    private cd: ChangeDetectorRef
   ) {
     super(stateService);
     this.selector = PageSelector.AppMnProducts;
@@ -54,6 +62,7 @@ export class MnProductsComponent
     this.currentList = this.products
       .filter((product) => product.category === this.state.category)
       .slice();
+    this.cd.detectChanges();
   }
 
   navigateToDetail(id: string): void {

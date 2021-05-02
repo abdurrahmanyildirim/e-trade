@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { stepper } from './animation';
 
@@ -6,14 +6,17 @@ import { stepper } from './animation';
   selector: 'app-management',
   templateUrl: './component.html',
   styleUrls: ['./component.css'],
-  animations: [stepper]
+  animations: [stepper],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManagementComponent implements OnInit {
-  constructor() {}
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {}
 
   prepareRoute(outlet: RouterOutlet): any {
+    // debugger;
+    document.body.scrollTop = 0;
     return outlet && outlet.activatedRouteData;
   }
 }

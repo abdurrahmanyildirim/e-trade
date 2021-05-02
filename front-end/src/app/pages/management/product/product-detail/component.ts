@@ -1,15 +1,13 @@
 import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  AbstractControl,
-  Form,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  Validators
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
@@ -20,12 +18,12 @@ import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { UtilityService } from 'src/app/shared/services/site/utility.service';
 import { DialogType } from 'src/app/shared/components/dialog/component';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-mn-product-detail',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MnProductDetailComponent implements OnInit, OnDestroy {
   productId: string;
@@ -41,7 +39,8 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
     private snackBarService: SnackbarService,
     private location: Location,
     private screenHolder: ScreenHolderService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -69,10 +68,7 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
       _id: this.product._id,
       name: new FormControl(this.product.name, [Validators.required, nullValidator()]),
       category: new FormControl(this.product.category, [Validators.required, nullValidator()]),
-      description: new FormControl(this.product.description, [
-        Validators.required,
-        nullValidator()
-      ]),
+      description: new FormControl(this.product.description),
       discountRate: new FormControl((this.product.discountRate * 100).toFixed(0), [
         Validators.required,
         Validators.max(100),
@@ -97,6 +93,7 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
       comments: new FormControl(this.product.comments),
       brand: new FormControl(this.product.brand, [Validators.required, nullValidator()])
     });
+    this.cd.detectChanges();
   }
 
   remove(): void {
@@ -108,7 +105,7 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
       onClose: (result) => {
         if (result) {
           this.screenHolder.show();
-          this.productService.remove(this.productId).subscribe({
+          const subs = this.productService.remove(this.productId).subscribe({
             next: (res) => {
               this.screenHolder.hide();
               this.snackBarService.showSuccess('Ürün Silindi.');
@@ -120,6 +117,7 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
               console.log(error);
             }
           });
+          this.subs.add(subs);
         }
       },
       onError: (error) => {
@@ -145,7 +143,7 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
       onClose: (result) => {
         if (result) {
           this.screenHolder.show();
-          this.productService.update(product).subscribe({
+          const subs = this.productService.update(product).subscribe({
             next: (res) => {
               this.screenHolder.hide();
               this.snackBarService.showSuccess('Değişiklikler Kaydedildi.');
@@ -156,6 +154,7 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
               console.log(error);
             }
           });
+          this.subs.add(subs);
         }
       },
       onError: (error) => {

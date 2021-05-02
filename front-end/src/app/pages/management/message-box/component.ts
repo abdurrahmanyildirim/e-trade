@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { Contact } from 'src/app/shared/models/contact';
@@ -8,14 +14,19 @@ import { isPresent } from 'src/app/shared/util/common';
 @Component({
   selector: 'app-mn-message-box',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MnMessageBoxComponent implements OnInit, OnDestroy {
   messages: Contact[];
   allMessages: Contact[];
   onCloseIcon = false;
 
-  constructor(private contactService: ContactService, private dialogService: DialogService) {}
+  constructor(
+    private contactService: ContactService,
+    private dialogService: DialogService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.initMessages();
@@ -29,6 +40,7 @@ export class MnMessageBoxComponent implements OnInit, OnDestroy {
             new Date(b.sendDate).getTime() - new Date(a.sendDate).getTime()
         );
         this.messages = this.allMessages.slice();
+        this.cd.detectChanges();
       },
       error: (err) => {
         console.log(err);

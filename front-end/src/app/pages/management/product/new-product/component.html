@@ -87,7 +87,7 @@
             <app-editor [(text)]="description"></app-editor>
           </div>
           <div class="next-button">
-            <button mat-raised-button color="primary" matStepperNext>
+            <button [disabled]="infoForm.invalid" mat-raised-button color="primary" matStepperNext>
               İleri <mat-icon>arrow_forward</mat-icon>
             </button>
           </div>
@@ -105,7 +105,12 @@
             <button mat-raised-button color="primary" matStepperPrevious>
               <mat-icon>arrow_back</mat-icon> Geri
             </button>
-            <button mat-raised-button color="primary" matStepperNext>
+            <button
+              [disabled]="photosForm.invalid"
+              mat-raised-button
+              color="primary"
+              matStepperNext
+            >
               İleri <mat-icon>arrow_forward</mat-icon>
             </button>
           </div>

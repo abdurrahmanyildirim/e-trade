@@ -3,9 +3,7 @@
     <div class="card flex">
       <div class="card-header mat-body-2">Sipariş Bilgileri</div>
       <div class="contact-body">
-        <span class="mat-body-2">
-          Alıcı : {{currentUser.firstName + ' ' + currentUser.lastName}}</span
-        >
+        <span class="mat-body-2"> Alıcı : {{order.userName}}</span>
         <span class="mat-body-2">
           Adres : {{order.contactInfo.address}} - {{order.contactInfo.district + '/' +
           order.contactInfo.city}}

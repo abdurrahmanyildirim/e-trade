@@ -89,6 +89,24 @@ module.exports.updatePassword = (req, res) => {
 
 module.exports.getUser = async (req, res) => {
   try {
+    const id = req.id;
+    const user = await User.findOne({ _id: id });
+    if (!user) {
+      return res.status(404).send({ message: 'Kullanıcı bulunamadı' });
+    }
+    const newUser = {
+      email: encForResp(user.email),
+      firstName: user.firstName,
+      lastName: user.lastName
+    };
+    return res.status(200).send(newUser);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
+module.exports.getUserById = async (req, res) => {
+  try {
     const id = req.query.id;
     const user = await User.findOne({ _id: id });
     if (!user) {

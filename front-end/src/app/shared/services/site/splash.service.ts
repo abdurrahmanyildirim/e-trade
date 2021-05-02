@@ -3,6 +3,7 @@ import { forkJoin } from 'rxjs';
 import { CartService } from '../rest/cart.service';
 import { CategoryService } from '../rest/category';
 import { ProductService } from '../rest/product.service';
+import { SocketService } from '../rest/socket';
 import { ConfigService } from './config.service';
 import { StateService } from './state';
 
@@ -17,7 +18,8 @@ export class SplashService {
     private cartService: CartService,
     private categoryService: CategoryService,
     private productService: ProductService,
-    private stateService: StateService
+    private stateService: StateService,
+    private socketService: SocketService
   ) {}
 
   init(): void {
@@ -31,6 +33,7 @@ export class SplashService {
       next: () => {
         forkJoin(obs).subscribe({
           next: () => {
+            this.socketService.init();
             this.configInited = true;
           },
           error: (err) => console.log(err)

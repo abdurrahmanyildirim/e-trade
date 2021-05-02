@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID, isDevMode } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,9 +15,14 @@ import { SnackbarComponent } from './shared/components/snackbar/component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SocialLoginModule } from 'angularx-social-login';
 import { CoreModule } from './core/module';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 registerLocaleData(localeTr);
+
+const url = isDevMode() ? 'http://localhost:4205' : '';
+
+const config: SocketIoConfig = { url, options: {} };
 
 @NgModule({
   declarations: [AppComponent, SnackbarComponent],
@@ -27,6 +32,7 @@ registerLocaleData(localeTr);
     AppRoutingModule,
     SocialLoginModule,
     CoreModule,
+    SocketIoModule.forRoot(config),
     HeaderModule,
     MatSnackBarModule,
     FooterModule,

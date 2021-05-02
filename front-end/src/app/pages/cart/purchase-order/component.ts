@@ -87,7 +87,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
   }
 
   initPersonelInfo(): void {
-    this.authService.getUser(this.authService.decodeToken()._id).subscribe({
+    this.authService.getUser().subscribe({
       next: (user) => {
         this.orderInfo = {
           name: user.firstName + ' ' + user.lastName,
@@ -132,7 +132,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
         orders: this.orders
       },
       desc: '',
-      onClose: () => { },
+      onClose: () => {},
       dialog: DialogType.SalesAndInformationContract
     });
   }
