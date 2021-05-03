@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, LOCALE_ID, isDevMode } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,10 +17,11 @@ import { SocialLoginModule } from 'angularx-social-login';
 import { CoreModule } from './core/module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
 
 registerLocaleData(localeTr);
 
-const url = isDevMode() ? 'http://localhost:4205' : '';
+const url = environment.production ? '' : 'http://localhost:4205';
 
 const config: SocketIoConfig = { url, options: {} };
 
