@@ -47,8 +47,6 @@
   justify-content: flex-start;
   background-color: white;
   height: 100%;
-  transform: translateX(-100%);
-  transition: transform 0.5s ease-out;
   overflow-x: hidden;
 }
 

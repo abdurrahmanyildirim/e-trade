@@ -82,7 +82,7 @@
         </mat-menu>
       </div>
       <div class="mobile">
-        <button mat-icon-button (click)="toggleMobileNav()">
+        <button mat-icon-button (click)="isSidebarOpen= !isSidebarOpen">
           <mat-icon>menu</mat-icon>
         </button>
         <div class="mobile-brand" routerLink="main">
@@ -131,7 +131,7 @@
           </mat-menu>
         </div>
       </div>
-      <div class="mobile-nav-menu" style="transform: translateX(-100%)" #mobileNavMenu>
+      <div class="mobile-nav-menu" [@sidebar]="isSidebarOpen ? 'open' : 'closed'">
         <ng-container *ngTemplateOutlet="navs"></ng-container>
       </div>
     </div>
@@ -148,7 +148,7 @@
     routerLink="main"
     [routerLinkActive]="isMobile ? '' : 'active'"
     class="nav"
-    (click)="toggleMobileNav()"
+    (click)="isMobile ? isSidebarOpen=!isSidebarOpen :''"
   >
     ANA SAYFA
   </div>
@@ -164,7 +164,7 @@
     routerLink="contact"
     [routerLinkActive]="isMobile ? '' : 'active'"
     class="nav"
-    (click)="toggleMobileNav()"
+    (click)="isMobile ? isSidebarOpen=!isSidebarOpen :''"
   >
     İLETİŞİM
   </div>

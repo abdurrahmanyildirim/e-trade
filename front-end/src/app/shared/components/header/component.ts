@@ -5,8 +5,7 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
-  ViewChild,
-  ViewChildren
+  ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -18,16 +17,19 @@ import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 import { CategoryService } from '../../services/rest/category';
 import { SearchProduct } from './model';
+import { phoneSidebarOpenClose } from './animation';
 
 @Component({
   selector: 'app-header',
   templateUrl: './component.html',
   styleUrls: ['./component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [phoneSidebarOpenClose]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   roles = Roles;
   subs = new Subscription();
+  isSidebarOpen = false;
   searchKey = '';
   products: SearchProduct[];
   filteredProducts: SearchProduct[] = [];
@@ -42,7 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     public categoryService: CategoryService,
     private cd: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.initProducts();
@@ -57,7 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateToFilteredPage(category: string): void {
     if (document.body.clientWidth <= 650) {
-      this.toggleMobileNav();
+      this.isSidebarOpen = !this.isSidebarOpen;
     }
     this.router.navigateByUrl('filter?category=' + category);
   }
@@ -68,18 +70,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       return true;
     }
     return false;
-  }
-
-  toggleMobileNav(): void {
-    if (!this.isMobile) {
-      return;
-    }
-    const isMobileActive = this.mobileNavMenu.nativeElement.style.transform === 'translateX(-100%)';
-    if (isMobileActive) {
-      this.mobileNavMenu.nativeElement.style.transform = 'translateX(0)';
-    } else {
-      this.mobileNavMenu.nativeElement.style.transform = 'translateX(-100%)';
-    }
   }
 
   onKeyup(): void {
