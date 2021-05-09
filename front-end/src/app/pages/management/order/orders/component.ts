@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 import { BasePageDirective } from 'src/app/pages/base-page.component';
 import { PageSelector } from 'src/app/pages/model';
 import { OrderList } from 'src/app/shared/models/order';
-import { OrderService } from 'src/app/shared/services/rest/order.service';
+import { OrderService } from 'src/app/shared/services/rest/order/service';
 import { StateService } from 'src/app/shared/services/site/state';
 import { isPresent } from 'src/app/shared/util/common';
 import { MnOrdersFactory } from './factory';
@@ -51,7 +51,7 @@ export class MnOrdersComponent
   }
 
   initOrders(): void {
-    const sub = this.orderService.getAllOrders().subscribe({
+    const sub = this.orderService.getAll().subscribe({
       next: (orderList) => {
         this.orders = orderList.sort(
           (a: OrderList, b: OrderList) => new Date(b.date).getTime() - new Date(a.date).getTime()

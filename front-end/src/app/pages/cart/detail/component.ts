@@ -11,7 +11,7 @@ import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Order } from 'src/app/shared/models/order';
-import { CartService } from 'src/app/shared/services/rest/cart.service';
+import { CartService } from 'src/app/shared/services/rest/cart/service';
 import { UtilityService } from 'src/app/shared/services/site/utility.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
@@ -60,7 +60,7 @@ export class CartDetailComponent implements OnDestroy, OnInit {
         if (result) {
           const orders = this.orders.filter((prod) => prod.productId !== removedOrder.productId);
           this.cartService
-            .updateCart(orders)
+            .update(orders)
             .pipe(first())
             .subscribe({
               next: (res) => {
@@ -81,7 +81,7 @@ export class CartDetailComponent implements OnDestroy, OnInit {
 
   onQuantityChange(): void {
     this.cartService
-      .updateCart(this.orders)
+      .update(this.orders)
       .pipe(first())
       .subscribe({
         next: (res) => {

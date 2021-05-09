@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
-import { AuthService } from 'src/app/shared/services/rest/auth.service';
+import { AuthService } from 'src/app/shared/services/rest/auth/service';
 import { SettingService } from 'src/app/shared/services/site/settings';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { RegisterUser } from './model';

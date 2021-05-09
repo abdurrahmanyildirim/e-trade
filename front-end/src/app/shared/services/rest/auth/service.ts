@@ -1,37 +1,44 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
+import { Injectable, Injector } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { LoginUser } from 'src/app/pages/auth/login/model';
 import { RegisterUser } from 'src/app/pages/auth/register/model';
-import { StorageKey } from '../../models/storage';
-import { LoginResponse, Roles, User } from '../../models/user';
-import { ConfigService } from '../site/config.service';
-import { CryptoService } from '../site/crypto';
-import { LocalStorageService } from '../site/storage/local';
+import { BaseRestService } from '../base';
+import { RequestMethod, RequestOptions, RequestType } from '../model';
+import { ServiceMethod } from './model';
+import { LoginResponse, Roles } from 'src/app/shared/models/user';
+import { LocalStorageService } from '../../site/storage/local';
+import { CryptoService } from '../../site/crypto';
+import { StorageKey } from 'src/app/shared/models/storage';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService extends BaseRestService {
   headers = new HttpHeaders().append('Content-Type', 'application/json');
-  currentUser = new BehaviorSubject<User>(this.localStorage.getObject(StorageKey.User));
   isAuth = new BehaviorSubject<boolean>(this.loggedIn());
   role = new BehaviorSubject<Roles>(this.getRole());
   jwt: JwtHelperService = new JwtHelperService();
+  requestType = RequestType.auth;
 
   constructor(
-    private configService: ConfigService,
-    private http: HttpClient,
     private localStorage: LocalStorageService,
     private cryptoService: CryptoService,
-    private socialAuthService: SocialAuthService
-  ) {}
+    private socialAuthService: SocialAuthService,
+    protected injector: Injector
+  ) {
+    super(injector);
+  }
 
   login(user: LoginUser): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.configService.config.baseUrl + 'auth/login', user);
+    const options = {
+      method: RequestMethod.post,
+      body: user,
+      serviceMethod: ServiceMethod.login
+    } as RequestOptions;
+    return this.send<LoginResponse>(options);
   }
 
   signInWithGoogle(): Observable<LoginResponse> {
@@ -60,59 +67,34 @@ export class AuthService {
     });
   }
 
-  authWithGoogle(user: RegisterUser): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.configService.config.baseUrl + 'auth/google', user);
+  private authWithGoogle(user: RegisterUser): Observable<LoginResponse> {
+    const options = {
+      method: RequestMethod.post,
+      body: user,
+      serviceMethod: ServiceMethod.google
+    } as RequestOptions;
+    return this.send<LoginResponse>(options);
   }
 
   logout(): void {
     this.localStorage.removeItem(StorageKey.User);
     this.localStorage.removeItem(StorageKey.Token);
     this.localStorage.removeItem(StorageKey.Cart);
-    this.currentUser.next(null);
+    // this.currentUser.next(null);
     this.isAuth.next(false);
   }
 
   register(user: RegisterUser): Observable<RegisterUser> {
-    return this.http.post<RegisterUser>(this.configService.config.baseUrl + 'auth/register', user, {
-      headers: this.headers
-    });
-  }
-
-  updateContactInfo(info: any): Observable<any> {
-    return this.http.post<any>(this.configService.config.baseUrl + 'user/update-contact', info);
+    const options = {
+      method: RequestMethod.post,
+      body: user,
+      serviceMethod: ServiceMethod.register
+    } as RequestOptions;
+    return this.send<RegisterUser>(options);
   }
 
   loggedIn(): boolean {
     return !!this.token;
-  }
-
-  getUser(): Observable<User> {
-    return this.http.get<User>(this.configService.config.baseUrl + 'user').pipe(
-      map((user) => {
-        user.email = this.cryptoService.basicDecrypt(user.email);
-        return user;
-      })
-    );
-  }
-
-  updateGeneralInfo(info: User): Observable<any> {
-    return this.http.post<User>(this.configService.config.baseUrl + 'user/update-general', info);
-  }
-
-  updatePassword(info: any): Observable<any> {
-    return this.http.post<any>(this.configService.config.baseUrl + 'user/update-password', info);
-  }
-
-  getContactInfo(): Observable<any> {
-    return this.http.get<any>(this.configService.config.baseUrl + 'user/contact-info').pipe(
-      map((info) => {
-        info.city = this.cryptoService.basicDecrypt(info.city);
-        info.district = this.cryptoService.basicDecrypt(info.district);
-        info.address = this.cryptoService.basicDecrypt(info.address);
-        info.phone = this.cryptoService.basicDecrypt(info.phone);
-        return info;
-      })
-    );
   }
 
   get token(): string {

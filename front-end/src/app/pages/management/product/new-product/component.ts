@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { Subscription } from 'rxjs';
-import { first, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Product } from 'src/app/shared/models/product';
-import { CategoryService } from 'src/app/shared/services/rest/category';
-import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { CategoryService } from 'src/app/shared/services/rest/category/service';
+import { PhotoService } from 'src/app/shared/services/rest/photo/service';
+import { ProductService } from 'src/app/shared/services/rest/product/service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
@@ -31,7 +32,8 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private snackBar: SnackbarService,
     private screenHolder: ScreenHolderService,
-    public categoryService: CategoryService
+    public categoryService: CategoryService,
+    private photoService: PhotoService
   ) {}
 
   ngOnInit(): void {
@@ -78,14 +80,14 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
     }
     this.screenHolder.show();
     const uploadedPhotos = Object.assign({}, this.photosForm.value).photos;
-    const sub = this.productService
+    const sub = this.photoService
       .uploadPhotos(uploadedPhotos)
       .pipe(
         switchMap((photos) => {
           const product = Object.assign({}, this.infoForm.value) as Product;
           product.photos = photos;
           product.description = this.description;
-          return this.productService.addNewProduct(product);
+          return this.productService.insert(product);
         })
       )
       .subscribe({

@@ -12,8 +12,8 @@ import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { Order } from 'src/app/shared/models/order';
 import { ProductInfo } from 'src/app/shared/models/product';
-import { CartService } from 'src/app/shared/services/rest/cart.service';
-import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { CartService } from 'src/app/shared/services/rest/cart/service';
+import { ProductService } from 'src/app/shared/services/rest/product/service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 

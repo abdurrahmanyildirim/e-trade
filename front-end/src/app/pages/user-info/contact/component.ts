@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
-import { AuthService } from 'src/app/shared/services/rest/auth.service';
+import { UserService } from 'src/app/shared/services/rest/user/service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 import { nullValidator } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
@@ -17,9 +17,9 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
     private screenHolder: ScreenHolderService,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -64,7 +64,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   initUserContactInfo(): void {
-    this.authService.getContactInfo().subscribe({
+    this.userService.getContactInfo().subscribe({
       next: (contactInfo) => {
         this.userContactInfo = contactInfo;
         this.initForm();
@@ -79,7 +79,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.screenHolder.show();
     const info = Object.assign({}, this.form.value);
     info.phone = info.phone.split(' ').join('');
-    this.authService.updateContactInfo(info).subscribe({
+    this.userService.updateContactInfo(info).subscribe({
       next: (res) => {
         this.screenHolder.hide();
         this.snackbar.showSuccess('Bilgileriniz güncellendi.');

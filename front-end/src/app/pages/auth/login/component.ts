@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/services/rest/auth.service';
+import { AuthService } from 'src/app/shared/services/rest/auth/service';
 import { LoginUser } from './model';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { SettingService } from 'src/app/shared/services/site/settings';

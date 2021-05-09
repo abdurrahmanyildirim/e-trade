@@ -4,8 +4,8 @@ import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { OrderList, OrderListProduct, Statuses } from 'src/app/shared/models/order';
-import { OrderService } from 'src/app/shared/services/rest/order.service';
-import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { OrderService } from 'src/app/shared/services/rest/order/service';
+import { ProductService } from 'src/app/shared/services/rest/product/service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 
 @Component({
@@ -39,7 +39,7 @@ export class OrderDetailComponent implements OnInit {
   }
 
   initOrder(): void {
-    this.orderService.orderDetail(this.orderId).subscribe({
+    this.orderService.detail(this.orderId).subscribe({
       next: (data) => {
         this.order = data;
         this.cd.detectChanges();
@@ -90,7 +90,7 @@ export class OrderDetailComponent implements OnInit {
           return;
         }
         this.screenHolder.show();
-        this.productService.rateProduct(product.productId, this.orderId, rate).subscribe({
+        this.productService.rate(product.productId, this.orderId, rate).subscribe({
           next: () => {
             this.screenHolder.hide();
             this.snackBar.showInfo('Geri bildiriminiz için teşekkürler');

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { forkJoin } from 'rxjs';
-import { CartService } from '../rest/cart.service';
-import { CategoryService } from '../rest/category';
-import { ProductService } from '../rest/product.service';
-import { SocketService } from '../rest/socket';
+import { CartService } from '../rest/cart/service';
+import { CategoryService } from '../rest/category/service';
+import { ProductService } from '../rest/product/service';
+import { SocketService } from '../socket/socket';
 import { ConfigService } from './config.service';
 import { StateService } from './state';
 

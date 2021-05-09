@@ -23,7 +23,7 @@ module.exports.getOrders = (req, res) => {
 
 module.exports.orderDetail = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.query.id;
     const order = await Order.findOne({ _id: id });
     if (!order) {
       return res.status(404).send({ message: 'Siparişler bulunamadı' });
@@ -92,7 +92,7 @@ module.exports.getStatuses = (req, res) => {
 };
 
 module.exports.updateStatus = (req, res) => {
-  const id = req.params.id;
+  const id = req.query.id;
   const status = req.body.status;
   if (!id || !status) {
     return res.status(404).send({ message: 'Hatalı api isteği' });

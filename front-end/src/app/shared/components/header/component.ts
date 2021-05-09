@@ -10,14 +10,14 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Roles } from 'src/app/shared/models/user';
-import { AuthService } from 'src/app/shared/services/rest/auth.service';
-import { CartService } from 'src/app/shared/services/rest/cart.service';
-import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { AuthService } from 'src/app/shared/services/rest/auth/service';
+import { CartService } from 'src/app/shared/services/rest/cart/service';
+import { ProductService } from 'src/app/shared/services/rest/product/service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
-import { CategoryService } from '../../services/rest/category';
 import { SearchProduct } from './model';
 import { phoneSidebarOpenClose } from './animation';
+import { CategoryService } from '../../services/rest/category/service';
 
 @Component({
   selector: 'app-header',

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Contact } from 'src/app/shared/models/contact';
-import { ContactService } from 'src/app/shared/services/rest/contact.service';
+import { ContactService } from 'src/app/shared/services/rest/contact/service';
 import { nullValidator } from 'src/app/shared/util/common';
 
 @Component({

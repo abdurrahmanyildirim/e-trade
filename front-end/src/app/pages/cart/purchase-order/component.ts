@@ -5,8 +5,8 @@ import { Subscription, timer } from 'rxjs';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
-import { AuthService } from 'src/app/shared/services/rest/auth.service';
-import { CartService } from 'src/app/shared/services/rest/cart.service';
+import { CartService } from 'src/app/shared/services/rest/cart/service';
+import { UserService } from 'src/app/shared/services/rest/user/service';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 import { UserInfo } from './model';
@@ -29,9 +29,9 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService,
     private dialogService: DialogService,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private userService: UserService
   ) {
     this.orders = this.cartService.cart.value.map((order) => {
       return {
@@ -70,7 +70,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
   }
 
   initContactInfo(): void {
-    this.authService.getContactInfo().subscribe({
+    this.userService.getContactInfo().subscribe({
       next: (info) => {
         this.contactInfo = info;
         this.initPersonelInfo();
@@ -87,7 +87,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
   }
 
   initPersonelInfo(): void {
-    this.authService.getUser().subscribe({
+    this.userService.getUser().subscribe({
       next: (user) => {
         this.orderInfo = {
           name: user.firstName + ' ' + user.lastName,

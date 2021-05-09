@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 import { BasePageDirective } from 'src/app/pages/base-page.component';
 import { PageSelector } from 'src/app/pages/model';
 import { Product } from 'src/app/shared/models/product';
-import { CategoryService } from 'src/app/shared/services/rest/category';
-import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { CategoryService } from 'src/app/shared/services/rest/category/service';
+import { ProductService } from 'src/app/shared/services/rest/product/service';
 import { StateService } from 'src/app/shared/services/site/state';
 import { MnProductsState } from './state';
 
@@ -44,7 +44,7 @@ export class MnProductsComponent
   }
 
   initProducts(): void {
-    this.productService.allProducts().subscribe({
+    this.productService.getAll().subscribe({
       next: (products) => {
         this.products = products;
         this.filterProducts();

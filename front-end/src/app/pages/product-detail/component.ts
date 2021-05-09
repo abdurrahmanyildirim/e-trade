@@ -13,8 +13,8 @@ import { switchMap, throttleTime } from 'rxjs/operators';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Order } from 'src/app/shared/models/order';
 import { Product } from 'src/app/shared/models/product';
-import { CartService } from 'src/app/shared/services/rest/cart.service';
-import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { CartService } from 'src/app/shared/services/rest/cart/service';
+import { ProductService } from 'src/app/shared/services/rest/product/service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
@@ -73,7 +73,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   getProductById(): void {
-    const subs = this.productService.productById(this.productId).subscribe({
+    const subs = this.productService.getById(this.productId).subscribe({
       next: (product) => {
         this.product = product;
         this.product.description = this.sanitizer.bypassSecurityTrustHtml(this.product.description);
@@ -105,7 +105,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
             } as Order;
             this.orders.push(newOrder);
           }
-          return this.cartService.updateCart(this.orders);
+          return this.cartService.update(this.orders);
         })
       )
       .subscribe({

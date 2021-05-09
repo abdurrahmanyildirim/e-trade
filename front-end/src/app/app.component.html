@@ -11,7 +11,11 @@
     <p class="mat-body-2">Sayfa yükleniyor. Lütfen bekleyiniz...</p>
   </div>
 
-  <mat-progress-bar *ngIf="navigationProgress" class="nav-progress" mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar
+    *ngIf="navigationProgress"
+    class="nav-progress"
+    mode="indeterminate"
+  ></mat-progress-bar>
 
   <app-header class="header" *ngIf="splashService.configInited"></app-header>
   <div class="main" *ngIf="splashService.configInited">

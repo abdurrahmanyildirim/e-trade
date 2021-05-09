@@ -8,7 +8,7 @@ import {
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { Contact } from 'src/app/shared/models/contact';
-import { ContactService } from 'src/app/shared/services/rest/contact.service';
+import { ContactService } from 'src/app/shared/services/rest/contact/service';
 import { isPresent } from 'src/app/shared/util/common';
 
 @Component({

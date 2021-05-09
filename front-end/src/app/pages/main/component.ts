@@ -9,7 +9,7 @@ import {
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
-import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { ProductService } from 'src/app/shared/services/rest/product/service';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
 @Component({

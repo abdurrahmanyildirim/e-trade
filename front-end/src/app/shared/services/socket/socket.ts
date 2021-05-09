@@ -3,7 +3,7 @@ import { Socket } from 'ngx-socket-io';
 import { Subscription } from 'rxjs';
 import { Product } from '../../models/product';
 import { isPresent } from '../../util/common';
-import { ProductService } from './product.service';
+import { ProductService } from '../rest/product/service';
 
 @Injectable({ providedIn: 'root' })
 export class SocketService implements OnDestroy {

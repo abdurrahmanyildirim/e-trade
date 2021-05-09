@@ -9,9 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { OrderList, Status } from 'src/app/shared/models/order';
-import { User } from 'src/app/shared/models/user';
-import { AuthService } from 'src/app/shared/services/rest/auth.service';
-import { OrderService } from 'src/app/shared/services/rest/order.service';
+import { AuthService } from 'src/app/shared/services/rest/auth/service';
+import { OrderService } from 'src/app/shared/services/rest/order/service';
 import { isPresent } from 'src/app/shared/util/common';
 
 @Component({
@@ -45,7 +44,7 @@ export class MnOrderDetailComponent implements OnInit, OnDestroy {
   }
 
   initOrderDetail(id: string): void {
-    const sub = this.orderService.orderDetail(id).subscribe({
+    const sub = this.orderService.detail(id).subscribe({
       next: (orderDetail) => {
         this.order = orderDetail;
         this.initStatus();
@@ -81,6 +80,7 @@ export class MnOrderDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.order.status.push(this.currentStatus);
+          this.cd.detectChanges();
           this.snackbar.showSuccess('Sipariş Düzenlendi.');
         },
         error: (err) => {

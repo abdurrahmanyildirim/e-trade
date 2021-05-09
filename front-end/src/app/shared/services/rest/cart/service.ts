@@ -1,36 +1,35 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { PurchaseInfo } from 'src/app/pages/cart/purchase-order/model';
-import { Order } from '../../models/order';
-import { StorageKey } from '../../models/storage';
-import { isPresent } from '../../util/common';
-import { ConfigService } from '../site/config.service';
-import { LocalStorageService } from '../site/storage/local';
-import { AuthService } from './auth.service';
+import { Order } from 'src/app/shared/models/order';
+import { StorageKey } from 'src/app/shared/models/storage';
+import { LocalStorageService } from '../../site/storage/local';
+import { AuthService } from '../auth/service';
+import { BaseRestService } from '../base';
+import { RequestMethod, RequestOptions, RequestType } from '../model';
+import { ServiceMethod } from './model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CartService implements OnDestroy {
-  subs = new Subscription();
+export class CartService extends BaseRestService {
   public cart = new BehaviorSubject<Order[]>([]);
+  requestType = RequestType.cart;
 
   constructor(
     private authService: AuthService,
-    private http: HttpClient,
-    private configService: ConfigService,
     private localStorage: LocalStorageService,
-    private router: Router
+    private router: Router,
+    protected injector: Injector
   ) {
-    this.init();
+    super(injector);
   }
 
   init(): Observable<void> {
     return new Observable((observer) => {
       if (this.authService.loggedIn()) {
-        const sub = this.getCartFromDb().subscribe((cart) => {
+        const sub = this.getFromDb().subscribe((cart) => {
           this.cart.next(cart);
           observer.next();
           observer.complete();
@@ -47,16 +46,18 @@ export class CartService implements OnDestroy {
   }
 
   purchaseOrder(contactInfo: PurchaseInfo): Observable<any> {
-    return this.http.post(
-      this.configService.config.baseUrl + 'operation/purchase-order',
-      contactInfo
-    );
+    const options = {
+      method: RequestMethod.post,
+      body: contactInfo,
+      serviceMethod: ServiceMethod.purchaseOrder
+    } as RequestOptions;
+    return this.send<any>(options);
   }
 
-  updateCart(orders: Order[]): Observable<boolean> {
+  update(orders: Order[]): Observable<boolean> {
     return new Observable((observer) => {
       if (this.authService.loggedIn()) {
-        this.updateDbCart(orders).subscribe({
+        this.updateDb(orders).subscribe({
           next: (data) => {
             this.cart.next(orders);
             observer.next(true);
@@ -75,24 +76,24 @@ export class CartService implements OnDestroy {
     });
   }
 
-  private updateDbCart(orders: Order[]): Observable<Order[]> {
-    return this.http.post<Order[]>(
-      this.configService.config.baseUrl + 'operation/update-cart',
-      orders
-    );
+  private updateDb(orders: Order[]): Observable<Order[]> {
+    const options = {
+      method: RequestMethod.post,
+      body: orders,
+      serviceMethod: ServiceMethod.update
+    } as RequestOptions;
+    return this.send<Order[]>(options);
   }
 
-  getCartFromDb(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.configService.config.baseUrl + 'operation/cart');
+  private getFromDb(): Observable<Order[]> {
+    const options = {
+      method: RequestMethod.get,
+      serviceMethod: ServiceMethod.empty
+    } as RequestOptions;
+    return this.send<Order[]>(options);
   }
 
   updateLocaleStorage(orders: Order[]): void {
     this.localStorage.setObject(StorageKey.Cart, orders);
-  }
-
-  ngOnDestroy(): void {
-    if (isPresent(this.subs)) {
-      this.subs.unsubscribe();
-    }
   }
 }

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { OrderList, OrderListProduct } from 'src/app/shared/models/order';
-import { OrderService } from 'src/app/shared/services/rest/order.service';
+import { OrderService } from 'src/app/shared/services/rest/order/service';
 import { StateService } from 'src/app/shared/services/site/state';
 import { isPresent } from 'src/app/shared/util/common';
 import { BasePageDirective } from '../base-page.component';

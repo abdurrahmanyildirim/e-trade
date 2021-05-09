@@ -1,23 +1,27 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { OrderList, Status } from '../../models/order';
-import { ConfigService } from '../site/config.service';
-import { CryptoService } from '../site/crypto';
+import { OrderList, Status } from 'src/app/shared/models/order';
+import { CryptoService } from '../../site/crypto';
+import { BaseRestService } from '../base';
+import { RequestMethod, RequestOptions, RequestType } from '../model';
+import { ServiceMethod } from './model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class OrderService {
-  constructor(
-    private http: HttpClient,
-    private configService: ConfigService,
-    private cryptoService: CryptoService
-  ) {}
+export class OrderService extends BaseRestService {
+  requestType = RequestType.order;
+  constructor(private cryptoService: CryptoService, protected injector: Injector) {
+    super(injector);
+  }
 
   getOrders(): Observable<OrderList[]> {
-    return this.http.get<OrderList[]>(this.configService.config.baseUrl + 'order/get-orders').pipe(
+    const options = {
+      method: RequestMethod.get,
+      serviceMethod: ServiceMethod.empty
+    } as RequestOptions;
+    return this.send<OrderList[]>(options).pipe(
       map((orderDetails) => {
         return orderDetails.map((orderDetail) => {
           const contactInfo = {
@@ -33,8 +37,13 @@ export class OrderService {
     );
   }
 
-  orderDetail(id: string): Observable<OrderList> {
-    return this.http.get<OrderList>(this.configService.config.baseUrl + 'order/detail/' + id).pipe(
+  detail(id: string): Observable<OrderList> {
+    const options = {
+      method: RequestMethod.get,
+      serviceMethod: ServiceMethod.detail,
+      params: { id }
+    } as RequestOptions;
+    return this.send<OrderList>(options).pipe(
       map((orderDetail) => {
         const contactInfo = {
           address: this.cryptoService.basicDecrypt(orderDetail.contactInfo.address),
@@ -49,8 +58,12 @@ export class OrderService {
     );
   }
 
-  getAllOrders(): Observable<OrderList[]> {
-    return this.http.get<OrderList[]>(this.configService.config.baseUrl + 'order/all-orders').pipe(
+  getAll(): Observable<OrderList[]> {
+    const options = {
+      method: RequestMethod.get,
+      serviceMethod: ServiceMethod.all
+    } as RequestOptions;
+    return this.send<OrderList[]>(options).pipe(
       map((orderDetails) => {
         return orderDetails.map((orderDetail) => {
           const contactInfo = {
@@ -67,12 +80,20 @@ export class OrderService {
   }
 
   getStatuses(): Observable<Status[]> {
-    return this.http.get<Status[]>(this.configService.config.baseUrl + 'order/statuses');
+    const options = {
+      method: RequestMethod.get,
+      serviceMethod: ServiceMethod.statuses
+    } as RequestOptions;
+    return this.send<Status[]>(options);
   }
 
   updateOrderStatus(id: string, status: Status): Observable<void> {
-    return this.http.post<void>(this.configService.config.baseUrl + 'order/update-status/' + id, {
-      status
-    });
+    const options = {
+      method: RequestMethod.post,
+      serviceMethod: ServiceMethod.updateStatus,
+      params: { id },
+      body: status
+    } as RequestOptions;
+    return this.send<void>(options);
   }
 }

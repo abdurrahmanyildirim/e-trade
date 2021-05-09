@@ -8,7 +8,7 @@ import {
   Validators
 } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
-import { AuthService } from 'src/app/shared/services/rest/auth.service';
+import { UserService } from 'src/app/shared/services/rest/user/service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 import { nullValidator } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
@@ -23,9 +23,9 @@ export class PasswordUpdateComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
     private screenHolder: ScreenHolderService,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -65,7 +65,7 @@ export class PasswordUpdateComponent implements OnInit, OnDestroy {
     }
     this.screenHolder.show();
     const info = Object.assign({}, this.form.value);
-    this.authService.updatePassword(info).subscribe({
+    this.userService.updatePassword(info).subscribe({
       next: (res) => {
         this.screenHolder.hide();
         this.snackbar.showSuccess('Şifreniz güncellendi.');

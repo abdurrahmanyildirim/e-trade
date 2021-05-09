@@ -4,8 +4,8 @@ import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Category } from 'src/app/shared/models/product';
-import { CategoryService } from 'src/app/shared/services/rest/category';
-import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { CategoryService } from 'src/app/shared/services/rest/category/service';
+import { ProductService } from 'src/app/shared/services/rest/product/service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class MnCategoryComponent implements OnInit, OnDestroy {
 
   insert(): void {
     this.screenHolder.show();
-    this.categoryService.insertCategory(this.newCategory.toLocaleLowerCase().trim()).subscribe({
+    this.categoryService.insert(this.newCategory.toLocaleLowerCase().trim()).subscribe({
       next: (res) => {
         this.screenHolder.hide();
         this.snackbar.showInfo(res.message);
@@ -56,7 +56,7 @@ export class MnCategoryComponent implements OnInit, OnDestroy {
           return;
         }
         this.screenHolder.show();
-        this.categoryService.removeCategory(category.toLocaleLowerCase().trim()).subscribe({
+        this.categoryService.remove(category.toLocaleLowerCase().trim()).subscribe({
           next: (res) => {
             this.screenHolder.hide();
             this.snackbar.showInfo(res.message);

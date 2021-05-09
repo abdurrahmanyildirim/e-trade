@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Product } from 'src/app/shared/models/product';
-import { ProductService } from 'src/app/shared/services/rest/product.service';
+import { ProductService } from 'src/app/shared/services/rest/product/service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -52,7 +52,7 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
   }
 
   initProduct(): void {
-    this.productService.productById(this.productId).subscribe({
+    this.productService.getById(this.productId).subscribe({
       next: (product) => {
         this.product = product;
         this.initProductForm();

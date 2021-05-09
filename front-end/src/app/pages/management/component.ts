@@ -15,7 +15,6 @@ export class ManagementComponent implements OnInit {
   ngOnInit(): void {}
 
   prepareRoute(outlet: RouterOutlet): any {
-    // debugger;
     document.body.scrollTop = 0;
     return outlet && outlet.activatedRouteData;
   }

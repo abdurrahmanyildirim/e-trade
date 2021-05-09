@@ -43,7 +43,6 @@ const config: SocketIoConfig = { url, options: {} };
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'tr' },
-    SplashService,
     {
       provide: APP_INITIALIZER,
       useFactory: (cs: SplashService) => () => cs.init(),

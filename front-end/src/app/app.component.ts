@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Roles } from './shared/models/user';
-import { AuthService } from './shared/services/rest/auth.service';
 import { SplashService } from './shared/services/site/splash.service';
 import {
   Router,
@@ -24,7 +23,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     public splashService: SplashService,
-    public authService: AuthService,
     private router: Router
   ) {}
 
