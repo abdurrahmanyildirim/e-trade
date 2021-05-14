@@ -1,0 +1,11 @@
+.container {
+  text-align: center;
+  overflow: hidden;
+}
+
+.star {
+  display: inline-block;
+  width: 21px;
+  height: 20px;
+  cursor: pointer;
+}

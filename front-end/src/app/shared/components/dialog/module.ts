@@ -11,9 +11,17 @@ import { ContractsModule } from '../contracts/module';
 import { RegisterContractModule } from '../contracts/register/module';
 import { SalesContractModule } from '../contracts/sales/module';
 import { InformationContractModule } from '../contracts/information/module';
+import { RatingDiaologComponent } from './rating/component';
+import { ConfirmDialogComponent } from './confirm/component';
 
 @NgModule({
-  declarations: [DialogComponent, CartWarningComponent, ContractsDiaologComponent],
+  declarations: [
+    DialogComponent,
+    CartWarningComponent,
+    ContractsDiaologComponent,
+    RatingDiaologComponent,
+    ConfirmDialogComponent
+  ],
   imports: [
     MatDialogModule,
     MatButtonModule,

@@ -1,0 +1,7 @@
+<mat-dialog-content class="mat-body-2" style="text-align: center">
+  {{dialog.desc}}
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-flat-button color="warn" [mat-dialog-close]="false">{{dialog.refuseButton}}</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">{{dialog.acceptButton}}</button>
+</mat-dialog-actions>

@@ -115,7 +115,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.dialogService.contracts({
       acceptButton: 'Tamam',
       desc: '',
-      dialog: DialogType.RegisterContract,
+      type: DialogType.RegisterContract,
       onClose: (result) => {}
     });
   }

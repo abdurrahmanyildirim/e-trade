@@ -1,67 +1,22 @@
 <span [ngSwitch]="true">
-  <ng-container *ngSwitchCase="DialogType.Confirm === data.dialog">
-    <mat-dialog-content class="mat-body-2" style="text-align: center">
-      {{data.desc}}
-    </mat-dialog-content>
-    <mat-dialog-actions align="center">
-      <button mat-flat-button color="warn" [mat-dialog-close]="false">{{data.refuseButton}}</button>
-      <button mat-flat-button color="primary" [mat-dialog-close]="true">
-        {{data.acceptButton}}
-      </button>
-    </mat-dialog-actions>
+  <ng-container *ngSwitchCase="DialogType.Confirm === data.type">
+    <app-confirm-dialog [dialog]="data"></app-confirm-dialog>
   </ng-container>
-  <ng-container *ngSwitchCase="DialogType.Message === data.dialog">
+  <ng-container *ngSwitchCase="DialogType.Message === data.type">
     <mat-dialog-content class="mat-body-1 message"> {{data.desc}} </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button mat-button color="primary" [mat-dialog-close]="true">{{data.acceptButton}}</button>
     </mat-dialog-actions>
   </ng-container>
-  <ng-container *ngSwitchCase="DialogType.CartWarning === data.dialog">
+  <ng-container *ngSwitchCase="DialogType.CartWarning === data.type">
     <app-cart-warning [dialog]="data"></app-cart-warning>
   </ng-container>
   <ng-container
-    *ngSwitchCase="DialogType.SalesAndInformationContract === data.dialog || DialogType.RegisterContract === data.dialog"
+    *ngSwitchCase="DialogType.SalesAndInformationContract === data.type || DialogType.RegisterContract === data.type"
   >
     <app-contracts-dialog [dialog]="data"></app-contracts-dialog>
   </ng-container>
-  <ng-container *ngSwitchCase="DialogType.Review === data.dialog">
-    <mat-dialog-content class="mat-body-1 review">
-      <div>{{currentRate}}</div>
-      <span
-        class="star empty-star-icon"
-        (mouseover)="onMouseOverStar(0)"
-        (mouseleave)="onMouseLeaveStar()"
-        [mat-dialog-close]="1"
-        #star
-      ></span>
-      <span
-        class="star empty-star-icon"
-        (mouseover)="onMouseOverStar(1)"
-        (mouseleave)="onMouseLeaveStar()"
-        [mat-dialog-close]="2"
-        #star
-      ></span>
-      <span
-        class="star empty-star-icon"
-        (mouseover)="onMouseOverStar(2)"
-        (mouseleave)="onMouseLeaveStar()"
-        [mat-dialog-close]="3"
-        #star
-      ></span>
-      <span
-        class="star empty-star-icon"
-        (mouseover)="onMouseOverStar(3)"
-        (mouseleave)="onMouseLeaveStar()"
-        [mat-dialog-close]="4"
-        #star
-      ></span>
-      <span
-        class="star empty-star-icon"
-        (mouseover)="onMouseOverStar(4)"
-        (mouseleave)="onMouseLeaveStar()"
-        [mat-dialog-close]="5"
-        #star
-      ></span>
-    </mat-dialog-content>
+  <ng-container *ngSwitchCase="DialogType.Rating === data.type">
+    <app-rating-dialog [dialog]="data"></app-rating-dialog>
   </ng-container>
 </span>

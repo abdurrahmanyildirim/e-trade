@@ -50,7 +50,7 @@ export class MnCategoryComponent implements OnInit, OnDestroy {
       refuseButton: 'Vazgeç',
       desc:
         'Bu kategoriye bağlı bütün ürünler müşteri tarafından görüntülenemeyecek. Silmek istediğinize emin misiniz?',
-      dialog: DialogType.Confirm,
+      type: DialogType.Confirm,
       onClose: (result) => {
         if (!result) {
           return;

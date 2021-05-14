@@ -1,0 +1,12 @@
+table {
+  min-width: 200px;
+}
+
+table th,
+table td {
+  text-align: start;
+}
+
+table tbody tr td {
+  padding-right: 5px;
+}

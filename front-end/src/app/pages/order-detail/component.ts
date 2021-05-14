@@ -75,7 +75,7 @@ export class OrderDetailComponent implements OnInit {
       },
       desc: '',
       onClose: () => {},
-      dialog: DialogType.SalesAndInformationContract
+      type: DialogType.SalesAndInformationContract
     });
   }
 
@@ -84,7 +84,7 @@ export class OrderDetailComponent implements OnInit {
       acceptButton: 'Tamamla',
       refuseButton: 'Vazgeç',
       desc: product.rate + '',
-      dialog: DialogType.Review,
+      type: DialogType.Rating,
       onClose: (rate) => {
         if (!rate) {
           return;

@@ -55,7 +55,7 @@ export class MnMessageBoxComponent implements OnInit, OnDestroy {
     this.dialogService.message({
       acceptButton: 'Kapat',
       desc: message.desc,
-      dialog: DialogType.Message,
+      type: DialogType.Message,
       onClose: (result) => {
         if (!message.isRead) {
           this.contactService.toggleRead(message._id).subscribe((readedMessage) => {
@@ -76,7 +76,7 @@ export class MnMessageBoxComponent implements OnInit, OnDestroy {
       acceptButton: 'Evet',
       refuseButton: 'İptal Et',
       desc: 'Bu mesajı silmek istediğinize emin misiniz?',
-      dialog: DialogType.Confirm,
+      type: DialogType.Confirm,
       onClose: (result) => {
         if (result) {
           this.contactService.removeMessage(message._id).subscribe({

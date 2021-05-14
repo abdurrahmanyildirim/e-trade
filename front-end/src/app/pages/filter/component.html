@@ -27,7 +27,11 @@
       <mat-icon class="remove-key" (click)="removeSearchKey()">close</mat-icon>
     </div>
     <div class="results" id="results">
-      <app-card *ngFor="let product of products" [product]="product" class="product"></app-card>
+      <app-card
+        *ngFor="let product of products; trackBy : trackByFn"
+        [product]="product"
+        class="product"
+      ></app-card>
       <div
         *ngIf="products.length<=0"
         class="mat-body-2"

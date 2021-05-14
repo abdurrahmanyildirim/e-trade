@@ -75,7 +75,7 @@ export class CartDetailComponent implements OnDestroy, OnInit {
             });
         }
       },
-      dialog: DialogType.Confirm
+      type: DialogType.Confirm
     });
   }
 

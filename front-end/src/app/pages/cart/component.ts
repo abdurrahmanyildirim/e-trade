@@ -86,7 +86,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.dialogService.cartWarning({
             acceptButton: 'Tamam',
             desc: 'Aşağıdaki ürünlerde maksimum alabileceğiniz miktar belirtilmiştir.',
-            dialog: DialogType.CartWarning,
+            type: DialogType.CartWarning,
             onClose: (result) => {
               // console.log(result);
             },

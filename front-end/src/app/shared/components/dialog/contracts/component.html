@@ -9,7 +9,7 @@
 </div>
 
 <div class="container">
-  <div *ngIf="dialog.dialog === DialogType.SalesAndInformationContract">
+  <div *ngIf="dialog.type === DialogType.SalesAndInformationContract">
     <app-sales-contract
       [orderInfo]="dialog.data.orderInfo"
       [orders]="dialog.data.orders"
@@ -21,7 +21,7 @@
       [orders]="dialog.data.orders"
     ></app-information-contract>
   </div>
-  <div *ngIf="dialog.dialog === DialogType.RegisterContract">
+  <div *ngIf="dialog.type === DialogType.RegisterContract">
     <app-register-contract></app-register-contract>
   </div>
 </div>

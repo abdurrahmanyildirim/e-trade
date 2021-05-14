@@ -101,7 +101,7 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
       acceptButton: 'Onayla',
       refuseButton: 'Vazgeç',
       desc: 'Bu ürünü kaldırmak istediğinize emin misiniz?',
-      dialog: DialogType.Confirm,
+      type: DialogType.Confirm,
       onClose: (result) => {
         if (result) {
           this.screenHolder.show();
@@ -138,7 +138,7 @@ export class MnProductDetailComponent implements OnInit, OnDestroy {
     this.dialogService.confirm({
       acceptButton: 'Onayla',
       refuseButton: 'Vazgeç',
-      dialog: DialogType.Confirm,
+      type: DialogType.Confirm,
       desc: 'Yaptığınız değişiklikleri kaydetmek istediğinize emin misiniz?',
       onClose: (result) => {
         if (result) {

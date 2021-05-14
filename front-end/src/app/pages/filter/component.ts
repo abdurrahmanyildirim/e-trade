@@ -68,6 +68,10 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  trackByFn(index: number, product: Product): string {
+    return product._id;
+  }
+
   listenBodyScroll(e: any): void {
     const filterPlace = document.getElementById('mobile-filter-button');
     if (document.body.scrollTop > this.previousScrollTop) {
