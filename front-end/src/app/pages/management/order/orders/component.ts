@@ -27,7 +27,8 @@ import { MnOrdersState } from './state';
 })
 export class MnOrdersComponent
   extends BasePageDirective<MnOrdersState>
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   orders: OrderList[];
   currentList: OrderList[];
   orderStatuses: OrderStatus[];
@@ -84,5 +85,6 @@ export class MnOrdersComponent
     if (isPresent(this.subs)) {
       this.subs.unsubscribe();
     }
+    super.ngOnDestroy();
   }
 }

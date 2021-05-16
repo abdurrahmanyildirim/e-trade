@@ -20,10 +20,11 @@ export class SettingService {
     this.authService.saveToken(loginResponse.token);
     // this.authService.currentUser.next(loginResponse.info);
     this.authService.isAuth.next(true);
-    this.cartService.init().subscribe(() => {
+    const subs = this.cartService.init().subscribe(() => {
       this.localStorage.removeItem(StorageKey.Cart);
       this.authService.role.next(this.authService.getRole());
       this.location.back();
+      subs.unsubscribe();
     });
   }
 }

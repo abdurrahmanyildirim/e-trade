@@ -25,7 +25,7 @@ import { Filter, SortType } from './model';
   viewProviders: [FilterFactory],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
+export class FilterComponent implements OnInit, OnDestroy {
   subs = new Subscription();
   products: Product[];
   brands: string[];
@@ -57,8 +57,6 @@ export class FilterComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private cd: ChangeDetectorRef
   ) {}
-
-  ngAfterViewInit(): void {}
 
   ngOnInit(): void {
     this.filterFactory.products = this.productService.products.value.slice();

@@ -1,38 +1,12 @@
 <mat-dialog-content class="mat-body-1 container">
   <div>{{currentRate}}</div>
   <span
-    class="star empty-star-icon"
-    (mouseover)="onMouseOverStar(0)"
+    *ngFor="let rate of [1,2,3,4,5]"
+    class="star"
+    [ngClass]="rate > currentRate ? 'empty-star-icon':'star-icon'"
+    (mouseover)="onMouseOverStar(rate - 1)"
     (mouseleave)="onMouseLeaveStar()"
-    [mat-dialog-close]="1"
-    #star
-  ></span>
-  <span
-    class="star empty-star-icon"
-    (mouseover)="onMouseOverStar(1)"
-    (mouseleave)="onMouseLeaveStar()"
-    [mat-dialog-close]="2"
-    #star
-  ></span>
-  <span
-    class="star empty-star-icon"
-    (mouseover)="onMouseOverStar(2)"
-    (mouseleave)="onMouseLeaveStar()"
-    [mat-dialog-close]="3"
-    #star
-  ></span>
-  <span
-    class="star empty-star-icon"
-    (mouseover)="onMouseOverStar(3)"
-    (mouseleave)="onMouseLeaveStar()"
-    [mat-dialog-close]="4"
-    #star
-  ></span>
-  <span
-    class="star empty-star-icon"
-    (mouseover)="onMouseOverStar(4)"
-    (mouseleave)="onMouseLeaveStar()"
-    [mat-dialog-close]="5"
+    [mat-dialog-close]="rate"
     #star
   ></span>
 </mat-dialog-content>

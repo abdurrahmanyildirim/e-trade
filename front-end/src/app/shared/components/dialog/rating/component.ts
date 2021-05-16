@@ -1,18 +1,28 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChildren } from '@angular/core';
-import { DialogData, DialogType } from '../component';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChildren
+} from '@angular/core';
+import { ObjectHelper } from 'src/app/shared/util/helper/object';
+import { DialogData } from '../component';
 
 @Component({
   selector: 'app-rating-dialog',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RatingDiaologComponent implements AfterViewInit {
+export class RatingDiaologComponent implements OnInit, OnDestroy {
   @Input() dialog: DialogData;
   @ViewChildren('star') stars: ElementRef<HTMLElement>[];
   currentRate: number;
 
-  ngAfterViewInit(): void {
-    this.onMouseLeaveStar();
+  ngOnInit(): void {
+    this.currentRate = Number.parseFloat(this.dialog.desc);
   }
 
   onMouseOverStar(order: number): void {
@@ -39,5 +49,9 @@ export class RatingDiaologComponent implements AfterViewInit {
         star.nativeElement.classList.remove('star-icon');
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    ObjectHelper.removeReferances(this);
   }
 }

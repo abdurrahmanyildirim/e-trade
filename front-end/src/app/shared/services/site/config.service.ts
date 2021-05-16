@@ -17,8 +17,8 @@ export class ConfigService {
       this.httpClient.get<SiteConfig>(`assets/config/${dir}/site.json`).subscribe((siteConfig) => {
         this.config = siteConfig;
         observer.next();
+        observer.complete();
       });
     });
   }
-
 }

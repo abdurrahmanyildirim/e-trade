@@ -13,17 +13,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SplashService } from './shared/services/site/splash.service';
 import { SnackbarComponent } from './shared/components/snackbar/component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { SocialLoginModule } from 'angularx-social-login';
 import { CoreModule } from './core/module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { environment } from 'src/environments/environment';
 
 registerLocaleData(localeTr);
-
-const url = environment.production ? '' : 'http://localhost:4205';
-
-const config: SocketIoConfig = { url, options: {} };
 
 @NgModule({
   declarations: [AppComponent, SnackbarComponent],
@@ -31,9 +24,7 @@ const config: SocketIoConfig = { url, options: {} };
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    SocialLoginModule,
     CoreModule,
-    SocketIoModule.forRoot(config),
     HeaderModule,
     MatSnackBarModule,
     FooterModule,

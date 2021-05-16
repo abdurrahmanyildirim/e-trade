@@ -23,7 +23,8 @@ import { MnProductsState } from './state';
 })
 export class MnProductsComponent
   extends BasePageDirective<MnProductsState>
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   products: Product[];
   currentList: Product[];
 
@@ -69,5 +70,7 @@ export class MnProductsComponent
     this.router.navigateByUrl('management/product-detail/' + id);
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    super.ngOnDestroy();
+  }
 }

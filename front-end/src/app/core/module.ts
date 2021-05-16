@@ -1,13 +1,23 @@
 import { NgModule } from '@angular/core';
-import { GoogleLoginProvider, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  SocialAuthServiceConfig,
+  SocialLoginModule
+} from 'angularx-social-login';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
 import { DialogModule } from '../shared/components/dialog/module';
 
 const googleLoginOptions = {
   scope: 'profile email'
 };
 
+const url = environment.production ? '' : 'http://localhost:4205';
+
+const config: SocketIoConfig = { url, options: {} };
+
 @NgModule({
-  imports: [DialogModule],
+  imports: [SocketIoModule.forRoot(config), SocialLoginModule, DialogModule],
   providers: [
     {
       provide: 'SocialAuthServiceConfig',

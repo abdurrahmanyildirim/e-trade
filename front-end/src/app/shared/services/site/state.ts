@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageKey } from '../../models/storage';
 import { isPresent } from '../../util/common';
@@ -46,6 +46,7 @@ export class StateService {
       this.http.get<any>(`assets/config/pages.json`).subscribe((state) => {
         this.state = state;
         observer.next();
+        observer.complete();
       });
     });
   }

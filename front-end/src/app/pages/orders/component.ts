@@ -100,5 +100,6 @@ export class OrdersComponent extends BasePageDirective<OrdersState> implements O
     if (isPresent(this.sub)) {
       this.sub.unsubscribe();
     }
+    super.ngOnDestroy();
   }
 }

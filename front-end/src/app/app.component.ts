@@ -21,10 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
   sub: Subscription;
   navigationProgress = false;
 
-  constructor(
-    public splashService: SplashService,
-    private router: Router
-  ) {}
+  constructor(public splashService: SplashService, private router: Router) {}
 
   ngOnInit(): void {
     this.listenNavigations();
@@ -46,12 +43,14 @@ export class AppComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (event) => {
-          if (event instanceof NavigationStart) {
-            this.navigationProgress = true;
-          }
-          if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
-            this.navigationProgress = false;
-          }
+          setTimeout(() => {
+            if (event instanceof NavigationStart) {
+              this.navigationProgress = true;
+            }
+            if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
+              this.navigationProgress = false;
+            }
+          });
         }
       });
   }
