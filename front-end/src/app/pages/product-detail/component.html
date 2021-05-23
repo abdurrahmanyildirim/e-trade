@@ -20,7 +20,7 @@
               <div class="normal-price" *ngIf="product.discountRate>0">
                 {{product.price | number : '.2'}} TL
               </div>
-              {{(product.price - product.price *product.discountRate) | number : '.2-2'}} TL
+              {{(product.price - product.price * product.discountRate) | number : '.2-2'}} TL
             </span>
           </div>
           <div class="rate">
@@ -75,7 +75,7 @@
       class="bottom"
       *ngIf="product.description.changingThisBreaksApplicationSecurity.length>0"
     >
-      <span class="mat-h3">Ürün Hakkında</span>
+      <!-- <span class="mat-h3">Ürün Hakkında</span> -->
       <div class="bottom-desc" [innerHTML]="product.description"></div>
     </section>
   </div>

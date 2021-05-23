@@ -57,19 +57,24 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngAfterViewInit(): void {
     this.listenResize();
+    this.editPhotoSizes();
     document.body.scrollTop = 0;
   }
 
   listenResize(): void {
     const sub = fromEvent(window, 'resize').subscribe((event: any) => {
-      if (document.body.clientWidth <= 650) {
-        this.photos.width = this.photos.height = document.body.clientWidth - 12;
-      } else {
-        this.photos.width = this.photos.height = 450;
-      }
+      this.editPhotoSizes();
       this.cd.detectChanges();
     });
     this.subs.add(sub);
+  }
+
+  editPhotoSizes(): void {
+    if (document.body.clientWidth <= 650) {
+      this.photos.width = this.photos.height = document.body.clientWidth - 12;
+    } else {
+      this.photos.width = this.photos.height = 450;
+    }
   }
 
   getProductById(): void {

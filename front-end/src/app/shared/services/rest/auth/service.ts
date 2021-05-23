@@ -10,7 +10,6 @@ import { RequestMethod, RequestOptions, RequestType } from '../model';
 import { ServiceMethod } from './model';
 import { LoginResponse, Roles } from 'src/app/shared/models/user';
 import { LocalStorageService } from '../../site/storage/local';
-import { CryptoService } from '../../site/crypto';
 import { StorageKey } from 'src/app/shared/models/storage';
 
 @Injectable({
@@ -25,7 +24,6 @@ export class AuthService extends BaseRestService {
 
   constructor(
     private localStorage: LocalStorageService,
-    private cryptoService: CryptoService,
     private socialAuthService: SocialAuthService,
     protected injector: Injector
   ) {
