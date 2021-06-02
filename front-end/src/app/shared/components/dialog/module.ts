@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { CartWarningComponent } from './cart-warning/component';
 import { ContractsDiaologComponent } from './contracts/component';
-import { ContractsModule } from '../contracts/module';
 import { RegisterContractModule } from '../contracts/register/module';
 import { SalesContractModule } from '../contracts/sales/module';
 import { InformationContractModule } from '../contracts/information/module';
@@ -27,7 +26,6 @@ import { ConfirmDialogComponent } from './confirm/component';
     MatButtonModule,
     CommonModule,
     MatIconModule,
-    ContractsModule,
     RegisterContractModule,
     SalesContractModule,
     InformationContractModule
