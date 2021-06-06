@@ -1,9 +1,9 @@
 <div class="container">
   <div class="top mat-small">
     <span class="top-item" routerLink="/orders">
-      <mat-icon> chevron_left </mat-icon> Siparişlerim</span
-    >
-    <span class="top-item" (click)="showContracts()">Sözleşmeler</span>
+      <mat-icon> chevron_left </mat-icon> Siparişlerim
+    </span>
+    <span class="top-item" (click)="showContracts()">Sözleşme</span>
   </div>
   <div class="card" *ngIf="order">
     <div class="card-header mat-body-2">Sipariş Bilgileri</div>
@@ -17,6 +17,7 @@
         {{order.contactInfo.district + '/' + order.contactInfo.city}}
       </span>
       <span><span class="mat-body-2">Tel No :</span> 0{{order.contactInfo.phone}}</span>
+      <span><span class="mat-body-2">Sipariş No :</span> {{orderId}}</span>
       <span> <span class="mat-body-2">Tarih :</span> {{order.date | date:'medium'}}</span>
       <span>
         <span class="mat-body-2">Durum :</span> {{order.status[order.status.length -1 ].desc}}
@@ -38,19 +39,12 @@
           </div>
           <div class="price mat-body-2">
             <span *ngIf="product.discountRate > 0" class="normal-price">
-              {{product.price*product.quantity | number : '.2-2'}} TL</span
-            >
-            <span
-              >{{(product.price - product.discountRate * product.price) * product.quantity | number
-              : '.2-2'}} TL</span
-            >
+              {{product.price*product.quantity | number : '.2-2'}} TL</span>
+            <span>{{(product.price - product.discountRate * product.price) * product.quantity | number
+              : '.2-2'}} TL</span>
           </div>
-          <button
-            *ngIf="order.status[order.status.length-1].key === Statuses.Delivered"
-            (click)="reviewDialog(product)"
-            mat-flat-button
-            color="primary"
-          >
+          <button *ngIf="order.status[order.status.length-1].key === Statuses.Delivered" (click)="reviewDialog(product)"
+            mat-flat-button color="primary">
             Puanla
           </button>
         </div>
@@ -68,6 +62,7 @@
       {{order.contactInfo.district + '/' + order.contactInfo.city}}
     </span>
     <span><span class="mat-body-2">Tel No :</span> 0{{order.contactInfo.phone}}</span>
+    <span><span class="mat-body-2">Sipariş No :</span> {{orderId}}</span>
     <span> <span class="mat-body-2">Tarih :</span> {{order.date | date:'medium'}}</span>
     <span>
       <span class="mat-body-2">Durum :</span> {{order.status[order.status.length -1 ].desc}}
@@ -86,17 +81,11 @@
         </div>
         <div class="price mat-body-1">
           <span *ngIf="product.discountRate > 0" class="normal-price">
-            {{product.price*product.quantity | number : '.2-2'}} TL</span
-          >
-          <span
-            >{{(product.price - product.discountRate * product.price) * product.quantity | number :
-            '.2-2'}} TL</span
-          >
+            {{product.price*product.quantity | number : '.2-2'}} TL</span>
+          <span>{{(product.price - product.discountRate * product.price) * product.quantity | number :
+            '.2-2'}} TL</span>
         </div>
-        <div
-          style="text-align: right"
-          *ngIf="order.status[order.status.length-1].key === Statuses.Delivered"
-        >
+        <div style="text-align: right" *ngIf="order.status[order.status.length-1].key === Statuses.Delivered">
           <button (click)="reviewDialog(product)" mat-flat-button color="primary">Puanla</button>
         </div>
       </div>

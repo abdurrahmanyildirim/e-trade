@@ -30,7 +30,6 @@ export class MnOrderDetailComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
-    private authService: AuthService,
     private snackbar: SnackbarService,
     private cd: ChangeDetectorRef
   ) {}

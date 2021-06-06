@@ -8,10 +8,10 @@ import { CommonModule } from '@angular/common';
 import { CartWarningComponent } from './cart-warning/component';
 import { ContractsDiaologComponent } from './contracts/component';
 import { RegisterContractModule } from '../contracts/register/module';
-import { SalesContractModule } from '../contracts/sales/module';
 import { InformationContractModule } from '../contracts/information/module';
 import { RatingDiaologComponent } from './rating/component';
 import { ConfirmDialogComponent } from './confirm/component';
+import { SalesContractV2Module } from '../contracts/sales-v2/module';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { ConfirmDialogComponent } from './confirm/component';
     CommonModule,
     MatIconModule,
     RegisterContractModule,
-    SalesContractModule,
+    SalesContractV2Module,
     InformationContractModule
   ],
   providers: [DialogService],

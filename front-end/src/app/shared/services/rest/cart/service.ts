@@ -69,7 +69,7 @@ export class CartService extends BaseRestService {
           }
         });
       } else {
-        this.router.navigateByUrl('login');
+        this.router.navigateByUrl('auth/login');
         observer.next(false);
         observer.complete();
       }

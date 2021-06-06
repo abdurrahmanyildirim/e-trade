@@ -9,6 +9,7 @@
           order.contactInfo.city}}
         </span>
         <span class="mat-body-2"> Tel No : 0{{order.contactInfo.phone}}</span>
+        <span class="mat-body-2"> Sipariş No : {{orderDetailId}}</span>
         <span class="mat-body-2"> Tarih : {{order.date | date:'medium'}}</span>
         <span class="mat-body-2"> Durum : {{order.status[order.status.length -1 ].desc}}</span>
       </div>
@@ -44,12 +45,9 @@
           </div>
           <div class="price mat-body-2">
             <span *ngIf="product.discountRate > 0" class="normal-price">
-              {{product.price*product.quantity | number : '.2-2'}} TL</span
-            >
-            <span
-              >{{(product.price - product.discountRate * product.price) * product.quantity | number
-              : '.2-2'}} TL</span
-            >
+              {{product.price*product.quantity | number : '.2-2'}} TL</span>
+            <span>{{(product.price - product.discountRate * product.price) * product.quantity | number
+              : '.2-2'}} TL</span>
           </div>
         </div>
       </div>

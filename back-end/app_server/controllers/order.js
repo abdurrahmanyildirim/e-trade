@@ -1,6 +1,8 @@
 const Order = require('../models/order');
 const Status = require('../models/status');
-const { encForResp } = require('../services/crypto');
+const { encForResp, decrypt } = require('../services/crypto');
+const email = require('../services/email/index');
+const config = require('../../config');
 
 module.exports.getOrders = (req, res) => {
   Order.find({ userId: req.id }, (err, orders) => {
@@ -82,24 +84,49 @@ module.exports.allOrders = (req, res) => {
   });
 };
 
+const statusesDb = [
+  {
+    key: -1,
+    desc: 'İptal Edildi'
+  },
+  {
+    key: 0,
+    desc: 'Siparişiniz Alındı'
+  },
+  {
+    key: 1,
+    desc: 'Siparişiniz Hazırlanıyor'
+  },
+  {
+    key: 2,
+    desc: 'Kargoya Verildi'
+  },
+  {
+    key: 3,
+    desc: 'Teslim Edildi'
+  }
+];
+
 module.exports.getStatuses = (req, res) => {
-  Status.find((err, statuses) => {
-    if (err) {
-      return res.status(400).send({ message: 'Veritabanı hatasi' });
-    }
-    return res.status(200).send(statuses);
-  });
+  // Status.find((err, statuses) => {
+  //   if (err) {
+  //     return res.status(400).send({ message: 'Veritabanı hatasi' });
+  //   }
+  //   return res.status(200).send(statuses);
+  // });
+  return res.status(200).send(statusesDb);
 };
 
-module.exports.updateStatus = (req, res) => {
-  const id = req.query.id;
-  const status = req.body.status;
-  if (!id || !status) {
-    return res.status(404).send({ message: 'Hatalı api isteği' });
-  }
-  Order.findOne({ _id: id }, (err, order) => {
-    if (err) {
-      return res.status(400).send({ message: 'Veri tabanı hatası' });
+module.exports.updateStatus = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const status = req.body;
+    if (!id || !status) {
+      return res.status(404).send({ message: 'Hatalı api isteği' });
+    }
+    const order = await Order.findOne({ _id: id });
+    if (!order) {
+      return res.status(500).send({ message: 'Veri tabanı hatası' });
     }
     order.status.push({
       key: status.key,
@@ -107,11 +134,31 @@ module.exports.updateStatus = (req, res) => {
       date: Date.now()
     });
     const newOrder = new Order(order);
-    newOrder.save((err) => {
+    newOrder.save(async (err) => {
       if (err) {
         return res.status(500).send({ message: 'Veri tabanı hatası' });
       }
+      await sendEmail(newOrder, status);
       return res.status(200).send();
     });
-  });
+  } catch (error) {
+    return res.status(500).send({ message: err });
+  }
+};
+
+const sendEmail = async (order, status) => {
+  await email.sendEmail(
+    decrypt(order.email),
+    config.company_name,
+    'Sipariş Bilgilendirme',
+    order._id + statuses[status.key] + ''
+  );
+};
+
+const statuses = {
+  '-1': ' numaralı siparişiniz iptal Edildi',
+  0: ' numaralı iparişiniz Alındı. En kısa sürede işleme alınacaktır.',
+  1: ' numaralı siparişiniz Hazırlanıyor',
+  2: ' numaralı siparişiniz Kargoya Verildi',
+  3: ' numaralı siparişiniz Teslim Edildi'
 };
