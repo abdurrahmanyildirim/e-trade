@@ -99,7 +99,7 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onMouseEnter(event: MouseEvent): void {
     const image = document.getElementById('curr-' + this.currentPhoto._id);
-    image.style.backgroundSize = 1.4 * 100 + '%';
+    image.style.backgroundSize = 2 * 100 + '%';
   }
 
   onMouseMove(event: MouseEvent): void {

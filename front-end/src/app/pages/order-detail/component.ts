@@ -83,24 +83,27 @@ export class OrderDetailComponent implements OnInit {
     this.dialogService.review({
       acceptButton: 'Tamamla',
       refuseButton: 'Vazgeç',
-      desc: product.rate + '',
+      desc: product.comment.desc + '',
+      rate: product.comment.rate,
       type: DialogType.Rating,
-      onClose: (rate) => {
-        if (!rate) {
+      onClose: (comment) => {
+        if (!comment) {
           return;
         }
-        this.screenHolder.show();
-        this.productService.rate(product.productId, this.orderId, rate).subscribe({
-          next: () => {
-            this.screenHolder.hide();
-            this.snackBar.showInfo('Geri bildiriminiz için teşekkürler');
-            this.initOrder();
-          },
-          error: (err) => {
-            this.screenHolder.hide();
-            this.snackBar.showError(err.error.message);
-          }
-        });
+        this.productService
+          .rate(product.productId, this.orderId, comment.currentRate, comment.desc)
+          .subscribe({
+            next: () => {
+              this.screenHolder.show();
+              this.screenHolder.hide();
+              this.snackBar.showInfo('Geri bildiriminiz için teşekkürler');
+              this.initOrder();
+            },
+            error: (err) => {
+              this.screenHolder.hide();
+              this.snackBar.showError(err.error.message);
+            }
+          });
       }
     });
   }

@@ -1,12 +1,26 @@
 <mat-dialog-content class="mat-body-1 container">
-  <div>{{currentRate}}</div>
+  <div>{{commentInfo.currentRate}}</div>
   <span
     *ngFor="let rate of [1,2,3,4,5]"
     class="star"
-    [ngClass]="rate > currentRate ? 'empty-star-icon':'star-icon'"
+    [ngClass]="rate > commentInfo.currentRate ? 'empty-star-icon':'star-icon'"
     (mouseover)="onMouseOverStar(rate - 1)"
     (mouseleave)="onMouseLeaveStar()"
-    [mat-dialog-close]="rate"
+    (click)="onRateClick(rate)"
     #star
   ></span>
+  <div>
+    <mat-form-field class="comment" appearance="outline">
+      <textarea
+        class="text-area"
+        [(ngModel)]="commentInfo.desc"
+        matInput
+        placeholder="Yorumunuz..."
+      ></textarea>
+    </mat-form-field>
+  </div>
+  <!-- [mat-dialog-close]="rate" -->
+  <button color="primary" [mat-dialog-close]="commentInfo" class="button" mat-flat-button>
+    Gönder
+  </button>
 </mat-dialog-content>

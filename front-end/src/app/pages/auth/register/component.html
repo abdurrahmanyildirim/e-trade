@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="register()">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <input type="text" matInput placeholder="İsim" formControlName="firstName" />
           <mat-error
             *ngIf="(form.get('firstName').hasError('required') || form.get('firstName').hasError('isNull'))&& form.get('firstName').touched"
@@ -15,7 +15,7 @@
             *50 karakterden fazla olamaz.
           </mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <input type="text" matInput placeholder="soyisim" formControlName="lastName" />
           <mat-error
             *ngIf="(form.get('lastName').hasError('required') || form.get('firstName').hasError('isNull'))&& form.get('lastName').touched"
@@ -27,9 +27,9 @@
           >
             *50 karakterden fazla olamaz.
           </mat-error>
-        </mat-form-field>
+        </mat-form-field >
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <input
             type="text"
             matInput
@@ -44,7 +44,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <input type="password" matInput placeholder="Şifre" formControlName="password" />
           <mat-error
             *ngIf="(form.get('password').hasError('required') || form.get('firstName').hasError('isNull')) && form.get('password').touched"
@@ -55,20 +55,6 @@
             *ngIf="form.get('password').hasError('minlength') && form.get('password').touched"
           >
             *Şifreniz en az 6 karakter uzunluğunda olmalıdır.
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input
-            type="password"
-            matInput
-            placeholder="Şifre Tekrar"
-            formControlName="confirmPassword"
-          />
-          <mat-error
-            *ngIf="form.get('confirmPassword').hasError('isMatching') && form.get('confirmPassword').touched"
-          >
-            *Lütfen şifrenizi doğrulayın.
           </mat-error>
         </mat-form-field>
         <p>
@@ -95,6 +81,8 @@
         </div>
       </form>
     </mat-card-content>
-    <p>Giriş yapmak için <a routerLink="/auth/login">tıklayınız.</a></p>
+  </mat-card>
+  <mat-card style="margin-top: 10px">
+    <p class="center">Hesabın var mı? <a class="link" routerLink="/auth/login">Giriş Yap</a></p>
   </mat-card>
 </div>

@@ -18,6 +18,7 @@ export interface DialogData {
   acceptButton: string;
   refuseButton?: string;
   desc: string;
+  rate?: number;
   onClose: (result: any) => void;
   onError?: (error: any) => void;
   type: DialogType;

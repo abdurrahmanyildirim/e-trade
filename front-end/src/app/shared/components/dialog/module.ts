@@ -12,6 +12,8 @@ import { InformationContractModule } from '../contracts/information/module';
 import { RatingDiaologComponent } from './rating/component';
 import { ConfirmDialogComponent } from './confirm/component';
 import { SalesContractV2Module } from '../contracts/sales-v2/module';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { SalesContractV2Module } from '../contracts/sales-v2/module';
     MatIconModule,
     RegisterContractModule,
     SalesContractV2Module,
-    InformationContractModule
+    InformationContractModule,
+    MatInputModule,
+    FormsModule
   ],
   providers: [DialogService],
   exports: [DialogComponent]

@@ -19,10 +19,14 @@ import { DialogData } from '../component';
 export class RatingDiaologComponent implements OnInit, OnDestroy {
   @Input() dialog: DialogData;
   @ViewChildren('star') stars: ElementRef<HTMLElement>[];
-  currentRate: number;
+  commentInfo = {
+    currentRate: 0,
+    desc: ''
+  };
 
   ngOnInit(): void {
-    this.currentRate = Number.parseFloat(this.dialog.desc);
+    this.commentInfo.currentRate = this.dialog.rate;
+    this.commentInfo.desc = this.dialog.desc;
   }
 
   onMouseOverStar(order: number): void {
@@ -35,13 +39,24 @@ export class RatingDiaologComponent implements OnInit, OnDestroy {
         star.nativeElement.classList.remove('star-icon');
       }
     });
-    this.currentRate = order + 1;
   }
 
   onMouseLeaveStar(): void {
-    this.currentRate = Number.parseFloat(this.dialog.desc);
     this.stars.forEach((star, index) => {
-      if (this.currentRate > index) {
+      if (this.commentInfo.currentRate > index) {
+        star.nativeElement.classList.remove('empty-star-icon');
+        star.nativeElement.classList.add('star-icon');
+      } else {
+        star.nativeElement.classList.add('empty-star-icon');
+        star.nativeElement.classList.remove('star-icon');
+      }
+    });
+  }
+
+  onRateClick(rate: number): void {
+    this.commentInfo.currentRate = rate;
+    this.stars.forEach((star, index) => {
+      if (this.commentInfo.currentRate > index) {
         star.nativeElement.classList.remove('empty-star-icon');
         star.nativeElement.classList.add('star-icon');
       } else {

@@ -73,8 +73,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.minLength(6),
         nullValidator()
-      ]),
-      confirmPassword: new FormControl(null, [this.matchingFields()])
+      ])
     });
   }
 
@@ -102,8 +101,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.snackBar.showError('Bir hata meydana geldi. Lütfen bilgilerinizi kontrol ediniz!');
           this.form.reset();
           this.form.patchValue({
-            password: '',
-            confirmPassword: ''
+            password: ''
           });
         }
       );

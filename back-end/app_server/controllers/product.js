@@ -129,6 +129,7 @@ module.exports.addComment = async (req, res) => {
   try {
     const orderId = req.query.orderId.toString();
     const rate = req.query.rate;
+    const desc = req.query.desc;
     const productId = req.query.productId.toString();
     const order = await Order.findOne({ _id: orderId });
     if (!order) {
@@ -153,17 +154,21 @@ module.exports.addComment = async (req, res) => {
         comment.userId.toString() === user._id.toString() && comment.orderId.toString() === orderId
     );
     if (comment) {
-      product.comments.find(
-        (comment) =>
+      product.comments.map((comment) => {
+        if (
           comment.userId.toString() === user._id.toString() &&
           comment.orderId.toString() === orderId
-      ).rate = rate;
+        ) {
+          comment.rate = rate;
+          comment.description = desc;
+        }
+      });
     } else {
       product.comments.push({
         orderId,
         userId: user.id,
         name: user.firstName + ' ' + user.lastName,
-        description: '',
+        description: desc,
         rate
       });
     }
@@ -176,6 +181,12 @@ module.exports.addComment = async (req, res) => {
       order.products.find(
         (orderedProduct) => orderedProduct.productId.toString() === productId
       ).rate = rate;
+      order.products.map((orderedProduct) => {
+        if (orderedProduct.productId.toString() === productId) {
+          orderedProduct.comment.rate = rate;
+          orderedProduct.comment.desc = desc;
+        }
+      });
       order.save((err) => {
         if (err) {
           return res.status(500).send({ message: 'Beklenmeyen bir hata oldu.' });

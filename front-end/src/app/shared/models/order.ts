@@ -35,7 +35,10 @@ export interface OrderListProduct {
   price: number;
   photoPath: string;
   brand: string;
-  rate?: number;
+  comment: {
+    rate?: number;
+    desc?: string;
+  };
 }
 
 export interface Status {

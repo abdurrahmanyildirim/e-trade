@@ -5,7 +5,7 @@ let io = null;
 module.exports.init = (instance) => {
   io = instance;
   io.on('connection', () => {
-    // console.log('Bağlantı Kuruldu');
+    console.log('Socket bağlantısı kuruldu');
   });
 };
 

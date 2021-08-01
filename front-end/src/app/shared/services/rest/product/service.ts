@@ -93,13 +93,14 @@ export class ProductService extends BaseRestService {
     return this.send<Product>(options);
   }
 
-  rate(productId: string, orderId: string, rate: number): Observable<any> {
+  rate(productId: string, orderId: string, rate: number, desc: string): Observable<any> {
     const options = {
       method: RequestMethod.get,
       params: {
         productId,
         orderId,
-        rate
+        rate,
+        desc
       },
       serviceMethod: ServiceMethod.rating
     } as RequestOptions;

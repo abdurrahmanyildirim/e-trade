@@ -41,7 +41,10 @@ module.exports.orderDetail = async (req, res) => {
         photoPath: product.photoPath,
         brand: product.brand,
         name: product.name,
-        rate: product.rate ? product.rate : 0
+        comment: {
+          rate: product.comment.rate ? product.comment.rate : 0,
+          desc: product.comment.desc ? product.comment.desc : ''
+        }
       });
     });
     const contactInfo = {

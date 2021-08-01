@@ -3,15 +3,21 @@
     <!-- <mat-card-title>Giriş Yap</mat-card-title> -->
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="login()">
-        <mat-form-field>
-          <input type="text" matInput placeholder="E-Mail" formControlName="email" inputmode="email" />
+        <mat-form-field appearance="outline">
+          <input
+            type="text"
+            matInput
+            placeholder="E-Mail"
+            formControlName="email"
+            inputmode="email"
+          />
           <mat-error *ngIf="form.get('email').hasError('required')&& form.get('email').touched">
             *Email alanı zorunlu.
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
-          <input type="password" matInput placeholder="Şifre" formControlName="password"  />
+        <mat-form-field appearance="outline">
+          <input type="password" matInput placeholder="Şifre" formControlName="password" />
           <mat-error *ngIf="form.get('password').hasError('required')&& form.get('email').touched">
             *Şifre alanı zorunlu.
           </mat-error>
@@ -36,6 +42,9 @@
         </div>
       </form>
     </mat-card-content>
-    <p>Üye olmak için <a routerLink="/auth/register">tıklayınız.</a></p>
+    <!-- <p class="center"><a class="link" routerLink="/auth/reset-request">Şifreni mi unuttun?</a></p> -->
+  </mat-card>
+  <mat-card style="margin-top: 10px">
+    <p class="center">Hesabın yok mu? <a class="link" routerLink="/auth/register">Kaydol</a></p>
   </mat-card>
 </div>
