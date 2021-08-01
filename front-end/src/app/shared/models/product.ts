@@ -17,8 +17,11 @@ export interface Product {
 export interface Comment {
   _id: string;
   name: string;
+  orderId: string;
+  userId: string;
   description: string;
   rate: number;
+  date?: Date;
 }
 
 export interface CloudinaryPhoto {

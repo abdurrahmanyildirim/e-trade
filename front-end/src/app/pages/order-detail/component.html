@@ -39,13 +39,20 @@
           </div>
           <div class="price mat-body-2">
             <span *ngIf="product.discountRate > 0" class="normal-price">
-              {{product.price*product.quantity | number : '.2-2'}} TL</span>
-            <span>{{(product.price - product.discountRate * product.price) * product.quantity | number
-              : '.2-2'}} TL</span>
+              {{product.price*product.quantity | number : '.2-2'}} TL</span
+            >
+            <span
+              >{{(product.price - product.discountRate * product.price) * product.quantity | number
+              : '.2-2'}} TL</span
+            >
           </div>
-          <button *ngIf="order.status[order.status.length-1].key === Statuses.Delivered" (click)="reviewDialog(product)"
-            mat-flat-button color="primary">
-            Puanla
+          <button
+            *ngIf="order.status[order.status.length-1].key === Statuses.Delivered"
+            (click)="reviewDialog(product)"
+            mat-flat-button
+            color="primary"
+          >
+          Değerlendir
           </button>
         </div>
       </div>
@@ -81,12 +88,20 @@
         </div>
         <div class="price mat-body-1">
           <span *ngIf="product.discountRate > 0" class="normal-price">
-            {{product.price*product.quantity | number : '.2-2'}} TL</span>
-          <span>{{(product.price - product.discountRate * product.price) * product.quantity | number :
-            '.2-2'}} TL</span>
+            {{product.price*product.quantity | number : '.2-2'}} TL</span
+          >
+          <span
+            >{{(product.price - product.discountRate * product.price) * product.quantity | number :
+            '.2-2'}} TL</span
+          >
         </div>
-        <div style="text-align: right" *ngIf="order.status[order.status.length-1].key === Statuses.Delivered">
-          <button (click)="reviewDialog(product)" mat-flat-button color="primary">Puanla</button>
+        <div
+          style="text-align: right"
+          *ngIf="order.status[order.status.length-1].key === Statuses.Delivered"
+        >
+          <button (click)="reviewDialog(product)" mat-flat-button color="primary">
+            Değerlendir
+          </button>
         </div>
       </div>
     </div>

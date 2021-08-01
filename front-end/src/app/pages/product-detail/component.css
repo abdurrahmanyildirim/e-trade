@@ -110,7 +110,16 @@
 }
 
 .bottom {
-  margin-top: 10px;
+  margin-top: 5px;
+}
+
+.tabs {
+  margin-top: 5px;
+}
+
+.no-comment {
+  text-align: center;
+  margin-top: 5px;
 }
 
 @media only screen and (max-width: 650px) {
@@ -122,11 +131,6 @@
 
   .top {
     flex-direction: column;
-  }
-
-  .bottom {
-    padding-top: 10px;
-    border-top: 1px solid #ccc;
   }
 
   .general {

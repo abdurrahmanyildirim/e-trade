@@ -7,12 +7,13 @@ import { Comment } from 'src/app/shared/models/product';
   styleUrls: ['./component.css']
 })
 export class CommentsComponent implements OnInit {
-  @Input() comments: Comment;
+  @Input() comments: Comment[];
   @Input() rate: number;
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.comments.map((comment) => {
+      const timestamp = comment._id.toString().substring(0, 8);
+      comment.date = new Date(parseInt(timestamp, 16) * 1000);
+    });
   }
-
-  seperateComments(): void {}
 }

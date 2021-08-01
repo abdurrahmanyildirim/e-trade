@@ -71,12 +71,23 @@
         </div>
       </section>
     </section>
-    <section
-      class="bottom"
-      *ngIf="product.description.changingThisBreaksApplicationSecurity.length>0"
-    >
-      <!-- <span class="mat-h3">Ürün Hakkında</span> -->
-      <div class="bottom-desc" [innerHTML]="product.description"></div>
-    </section>
+    <mat-tab-group class="tabs" mat-align-tabs="start">
+      <mat-tab label="Ürün Özellikleri" class="tab">
+        <section
+          class="bottom"
+          *ngIf="product.description.changingThisBreaksApplicationSecurity.length>0"
+        >
+          <div class="bottom-desc" [innerHTML]="product.description"></div>
+        </section>
+      </mat-tab>
+      <mat-tab label="Yorumlar" class="tab">
+        <app-comments
+          [comments]="product.comments"
+          [rate]="product.rate"
+          *ngIf="product.comments.length>0"
+        ></app-comments>
+        <div *ngIf="product.comments.length<=0" class="no-comment">Henüz değerlendirme yapılmadı.</div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </main>
