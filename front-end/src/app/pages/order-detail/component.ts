@@ -91,7 +91,7 @@ export class OrderDetailComponent implements OnInit {
           return;
         }
         this.productService
-          .rate(product.productId, this.orderId, comment.currentRate, comment.desc)
+          .rate(product.productId, this.orderId, comment.currentRate, comment.desc.trim())
           .subscribe({
             next: () => {
               this.screenHolder.show();

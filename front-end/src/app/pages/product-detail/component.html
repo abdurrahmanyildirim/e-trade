@@ -86,8 +86,11 @@
           [rate]="product.rate"
           *ngIf="product.comments.length>0"
         ></app-comments>
-        <div *ngIf="product.comments.length<=0" class="no-comment">Henüz değerlendirme yapılmadı.</div>
+        <div *ngIf="product.comments.length<=0" class="no-comment">
+          Henüz değerlendirme yapılmadı.
+        </div>
       </mat-tab>
     </mat-tab-group>
+    <!-- <h2>Benzer Ürünler</h2> -->
   </div>
 </main>

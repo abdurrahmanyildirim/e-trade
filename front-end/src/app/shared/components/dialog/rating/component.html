@@ -19,8 +19,13 @@
       ></textarea>
     </mat-form-field>
   </div>
-  <!-- [mat-dialog-close]="rate" -->
-  <button color="primary" [mat-dialog-close]="commentInfo" class="button" mat-flat-button>
+  <button
+    color="primary"
+    [mat-dialog-close]="commentInfo"
+    [disabled]="commentInfo.currentRate <= 0 || commentInfo.desc.trim().length <=0"
+    class="button"
+    mat-flat-button
+  >
     Gönder
   </button>
 </mat-dialog-content>

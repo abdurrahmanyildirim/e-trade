@@ -91,11 +91,13 @@
         <app-editor [(text)]="product.description"></app-editor>
       </div>
     </form>
-    <button style="margin-top: 10px" mat-flat-button color="primary" (click)="saveChanges()">
-      <mat-icon>save</mat-icon> Değişiklikleri Kaydet
-    </button>
-    <!-- <button mat-flat-button color="primary" (click)="remove()">
-      <mat-icon>save</mat-icon> Sil
-    </button> -->
+    <div class="buttons">
+      <button class="save-button" mat-flat-button color="primary" (click)="saveChanges()">
+        <mat-icon>save</mat-icon> Kaydet
+      </button>
+      <button class="remove-button" mat-flat-button color="warn" (click)="remove()">
+        <mat-icon>delete_forever</mat-icon> Sil
+      </button>
+    </div>
   </div>
 </main>

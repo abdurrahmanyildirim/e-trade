@@ -1,7 +1,7 @@
 const Product = require('../models/product');
 const Order = require('../models/order');
 const User = require('../models/user');
-// const cloudinaryService = require('../services/cloudinary');
+const { remove } = require('../services/cloudinary');
 const { updateProducts } = require('../services/socket');
 
 module.exports.getProducts = (req, res) => {
@@ -94,21 +94,22 @@ module.exports.addNewProduct = async (req, res) => {
   }
 };
 
-module.exports.remove = (req, res) => {
+module.exports.remove = async (req, res) => {
   const id = req.query.id;
-  // const product = await Product.findOne({ _id: id });
+  const product = await Product.findOne({ _id: id });
   Product.findByIdAndRemove(id, async (err) => {
     if (err) {
       return res.status(404).send({ message: 'Ürün silinirken hata oldu.' });
     }
-    // for (const photo of product.photos) {
-    //   try {
-    //     await cloudinaryService.remove(photo.publicId);
-    //   } catch (error) {
-    //     console.log(error);
-    //     console.log('Foto Silinemedi');
-    //   }
-    // }
+    const photos = await product.photos.filter((photo, i) => i !== 0);
+    for (const photo of photos) {
+      try {
+        await remove(photo.publicId);
+      } catch (error) {
+        console.log(error);
+        console.log('Foto Silinemedi');
+      }
+    }
     updateProducts();
     return res.status(200).send({ message: 'Ürün silindi' });
   });

@@ -93,3 +93,14 @@
 .photos-container.cdk-drop-list-dragging .photo:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.save-button,
+.remove-button {
+  width: 48%;
+}
