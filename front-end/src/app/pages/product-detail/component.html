@@ -91,6 +91,17 @@
         </div>
       </mat-tab>
     </mat-tab-group>
-    <!-- <h2>Benzer Ürünler</h2> -->
+    <div class="similar-prods" *ngIf="similarProds.length >0">
+      <h2>Benzer Ürünler</h2>
+      <owl-carousel-o [options]="owlOptions">
+        <ng-container *ngFor="let prod of similarProds">
+          <ng-template carouselSlide>
+            <div class="section-item">
+              <app-card [product]="prod"></app-card>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
   </div>
 </main>

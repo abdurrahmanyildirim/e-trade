@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import { fromEvent, Subject, Subscription } from 'rxjs';
 import { switchMap, throttleTime } from 'rxjs/operators';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
@@ -31,6 +32,35 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   subs = new Subscription();
   addTocartClick = new Subject<Product>();
   product: Product;
+  similarProds: Product[];
+  owlOptions: OwlOptions = {
+    loop: true,
+    autoplay: true,
+    navText: ['<', '>'],
+    lazyLoad: true,
+    dots: false,
+    responsive: {
+      0: {
+        items: 1
+      },
+      320: {
+        items: 2
+      },
+      470: {
+        items: 3
+      },
+      760: {
+        items: 3
+      },
+      830: {
+        items: 3
+      },
+      950: {
+        items: 4
+      }
+    },
+    nav: true
+  };
   photos = {
     width: 450,
     height: 450
@@ -82,11 +112,25 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
       next: (product) => {
         this.product = product;
         this.product.description = this.sanitizer.bypassSecurityTrustHtml(this.product.description);
+        this.initSimilarProds();
         this.cd.detectChanges();
       },
       error: (error) => console.log(error)
     });
     this.subs.add(subs);
+  }
+
+  initSimilarProds(): void {
+    this.similarProds = this.productService.products.value
+      .filter((prod) => prod._id !== this.productId && prod.category === this.product.category)
+      .sort((a: Product, b: Product) => {
+        if (a.brand === this.product.brand) {
+          return -1;
+        } else {
+          return 1;
+        }
+      })
+      .slice(0, 15);
   }
 
   initAddToCartStream(): void {

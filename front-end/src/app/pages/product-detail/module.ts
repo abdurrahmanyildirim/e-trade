@@ -13,6 +13,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { RouterModule, Routes } from '@angular/router';
 import { PhotosModule } from 'src/app/shared/components/photos/module';
+import { CardModule } from 'src/app/shared/components/card/module';
 
 const routes: Routes = [{ path: '', component: ProductDetailComponent }];
 @NgModule({
@@ -29,6 +30,7 @@ const routes: Routes = [{ path: '', component: ProductDetailComponent }];
     NumericInputModule,
     MatTabsModule,
     MatProgressBarModule,
+    CardModule,
     CarouselModule
   ],
   exports: [ProductDetailComponent]

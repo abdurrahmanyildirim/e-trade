@@ -7,10 +7,11 @@
 
 .container {
   display: flex;
-  padding-top: 10px;
+  padding: 10px 10px 0 10px;
   flex-direction: column;
   margin: 0 auto;
-  width: 900px;
+  width: 100%;
+  max-width: 970px;
   box-sizing: border-box;
 }
 
@@ -19,9 +20,9 @@
   padding-bottom: 5px;
 }
 
-.carousel {
-  width: 460px;
-  height: 460px;
+.section-item {
+  margin: 10px auto;
+  width: fit-content;
 }
 
 .general {
@@ -120,6 +121,10 @@
 .no-comment {
   text-align: center;
   margin-top: 5px;
+}
+
+.similar-prods {
+  margin-top: 10px;
 }
 
 @media only screen and (max-width: 650px) {
