@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-const config = require('../../config');
 
-const connectionString = config.connection_strings.mongo_cloud;
-// const connectionString = config.connection_strings.mongo_local;
+// const connectionString = process.env.MONGO_CLOUD;
+const connectionString = process.env.MONGO_LOCAL;
 
 mongoose.connect(
   connectionString,

@@ -2,9 +2,9 @@ const cloudinary = require('cloudinary').v2;
 const config = require('../../config');
 
 cloudinary.config({
-  cloud_name: config.cloudinary_settings.cloud_name,
-  api_key: config.cloudinary_settings.api_key,
-  api_secret: config.cloudinary_settings.api_secret
+  cloud_name: process.env.CLOUDİNARY_CLOUD_NAME,
+  api_key: process.env.CLOUDİNARY_API_KEY,
+  api_secret: process.env.CLOUDİNARY_API_SECRET
 });
 
 module.exports.upload = async (tempFilePath, folder) => {

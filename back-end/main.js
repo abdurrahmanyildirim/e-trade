@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
+require('dotenv').config();
 require('./app_server/models/db');
 const cors = require('cors');
 const util = require('./app_server/services/util');
@@ -13,8 +14,13 @@ const io = require('socket.io')(server, {
   }
 });
 
-app.use(helmet());
+// var corsOptions = {
+//   origin: 'https://taserzuccaciye.com/',
+//   optionsSuccessStatus: 200 // For legacy browser support
+// }
+
 app.use(cors());
+app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(util.bodyDecrypter);
