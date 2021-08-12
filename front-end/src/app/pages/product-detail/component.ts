@@ -113,6 +113,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
         this.product = product;
         this.product.description = this.sanitizer.bypassSecurityTrustHtml(this.product.description);
         this.initSimilarProds();
+        document.body.scrollTop = 0;
         this.cd.detectChanges();
       },
       error: (error) => console.log(error)

@@ -4,8 +4,10 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { Subscription, fromEvent } from 'rxjs';
@@ -19,7 +21,7 @@ import { isPresent } from '../../util/common';
   styleUrls: ['./component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @Input() photos: CloudinaryPhoto[];
   @Input() width: number;
   @Input() height: number;
@@ -42,6 +44,17 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activeCurrentPhoto();
     if (this.isMobile) {
       this.listenTouchEvents();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.currentIndex = 0;
+    this.currentPhoto = this.photos[0];
+    if (isPresent(this.cover)) {
+      this.cover.nativeElement.style.transform = 'translateX(0px)';
+      setTimeout(() => {
+        this.activeCurrentPhoto();
+      }, 10);
     }
   }
 
