@@ -30,16 +30,6 @@ export abstract class BaseRestService {
     }
   }
 
-  private params(params: any): string {
-    let httpParams = new HttpParams();
-    for (const key in params) {
-      if (Object.prototype.hasOwnProperty.call(params, key)) {
-        httpParams = httpParams.set(key, params[key]);
-      }
-    }
-    return httpParams.toString();
-  }
-
   private prepareAddress(requestOptions: RequestOptions): string {
     let address = this.configService.config.baseUrl + this.requestType;
     if (isPresent(requestOptions.serviceMethod)) {
@@ -49,5 +39,15 @@ export abstract class BaseRestService {
       address += '?' + this.params(requestOptions.params);
     }
     return address;
+  }
+
+  private params(params: any): string {
+    let httpParams = new HttpParams();
+    for (const key in params) {
+      if (Object.prototype.hasOwnProperty.call(params, key)) {
+        httpParams = httpParams.set(key, params[key]);
+      }
+    }
+    return httpParams.toString();
   }
 }

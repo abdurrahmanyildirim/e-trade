@@ -1,0 +1,27 @@
+<div class="container">
+  <mat-card>
+    <mat-card-content class="content">
+      <mat-form-field appearance="outline">
+        <input type="password" matInput placeholder="Yeni Şifre" [(ngModel)]="password" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <input
+          type="password"
+          (keyup)="onKeyup()"
+          matInput
+          [(ngModel)]="rePassword"
+          placeholder="Yeni Şifre Tekrar"
+        />
+      </mat-form-field>
+      <button
+        class="button"
+        [disabled]="!isMatched"
+        color="primary"
+        (click)="onButtonClick()"
+        mat-flat-button
+      >
+        Şifreyi Değiştir
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

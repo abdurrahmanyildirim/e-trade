@@ -95,6 +95,28 @@ export class AuthService extends BaseRestService {
     return !!this.token;
   }
 
+  changePasswordRequest(email: string): Observable<any> {
+    const options = {
+      method: RequestMethod.get,
+      serviceMethod: ServiceMethod.changePasswordRequest,
+      params: { email }
+    } as RequestOptions;
+    return this.send<any>(options);
+  }
+
+  changePassword(token: string, id: string, password: string): Observable<any> {
+    const options = {
+      method: RequestMethod.post,
+      serviceMethod: ServiceMethod.changePassword,
+      body: {
+        token,
+        id,
+        password
+      }
+    } as RequestOptions;
+    return this.send<any>(options);
+  }
+
   get token(): string {
     return this.localStorage.getItem(StorageKey.Token);
   }

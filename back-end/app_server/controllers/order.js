@@ -152,7 +152,6 @@ module.exports.updateStatus = async (req, res) => {
 const sendEmail = async (order, status) => {
   await email.sendEmail(
     decrypt(order.email),
-    config.company_name,
     'Sipariş Bilgilendirme',
     order._id + statuses[status.key] + ''
   );

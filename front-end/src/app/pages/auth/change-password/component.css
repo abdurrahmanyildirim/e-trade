@@ -10,12 +10,17 @@
 
 .mat-form-field {
   width: 100%;
-  min-width: 300px;
+  min-width: 150px;
 }
 
 .button {
   width: 100%;
 }
+
+/* .content {
+  display: flex;
+  flex-direction: column;
+} */
 
 @media only screen and (max-width: 650px) {
   .container {
@@ -35,3 +40,4 @@
     width: 100%;
   }
 }
+

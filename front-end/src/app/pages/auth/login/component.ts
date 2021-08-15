@@ -21,15 +21,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router,
     private snackBar: SnackbarService,
     private settingService: SettingService
   ) {}
 
   ngOnInit(): void {
-    if (this.authService.loggedIn()) {
-      this.router.navigateByUrl('main');
-    }
     this.createForm();
   }
 

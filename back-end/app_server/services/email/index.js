@@ -32,11 +32,11 @@ const attachments = [
   }
 ];
 
-module.exports.sendEmail = async (to, name, subject, desc) => {
+module.exports.sendEmail = async (to, subject, desc) => {
   try {
     const options = {
       from: {
-        name,
+        name: config.company_name,
         address: config.mail.transporter.from
       },
       sender: config.mail.transporter.from,
@@ -44,6 +44,24 @@ module.exports.sendEmail = async (to, name, subject, desc) => {
       subject,
       attachments,
       html: headerContent + desc + footerContent
+    };
+    await transporter.sendMail(options);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.sendCustomEmail = async (to, subject, desc) => {
+  try {
+    const options = {
+      from: {
+        name: config.company_name,
+        address: config.mail.transporter.from
+      },
+      sender: config.mail.transporter.from,
+      to,
+      subject,
+      html: desc
     };
     await transporter.sendMail(options);
   } catch (error) {

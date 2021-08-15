@@ -1,11 +1,18 @@
 <div class="container">
-  <mat-card>
+  <mat-card *ngIf="!isSendedRequest">
     <mat-card-title style="text-align: center"> Şifre Yenileme </mat-card-title>
     <mat-card-content class="content">
       <mat-form-field appearance="outline">
-        <input type="text" matInput placeholder="E-Mail adresinizi giriniz." inputmode="email" />
+        <input type="text" matInput placeholder="E-Mail adresinizi giriniz." [(ngModel)]="email" />
       </mat-form-field>
-      <button type="submit" class="button" color="primary" mat-flat-button>Şifremi Yenile</button>
+      <button class="button" color="primary" (click)="onButtonClick()" mat-flat-button>
+        Şifremi Yenile
+      </button>
     </mat-card-content>
   </mat-card>
+  <div *ngIf="isSendedRequest" style="text-align: center" class="mat-body-2">
+    Şifre değiştirme isteği mail adresinize gönderildi.
+    <br />
+    Lütfen mail adresinizi kontrol ediniz.
+  </div>
 </div>

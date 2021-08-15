@@ -6,6 +6,8 @@ const controller = require('../controllers/auth');
 router.post('/login', controller.login);
 router.post('/register', controller.register);
 router.post('/google', controller.googleAuth);
+router.get('/change-password-request', controller.changePasswordRequest);
+router.post('/change-password', controller.changePassword);
 // router.use(verify.isAuth);
 
 module.exports = router;

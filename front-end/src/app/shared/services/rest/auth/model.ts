@@ -6,5 +6,7 @@ export enum ServiceMethod {
   updateContact = 'update-contact',
   updateGeneral = 'update-general',
   updatePassword = 'update-password',
-  contactInfo = 'contact-info'
+  contactInfo = 'contact-info',
+  changePasswordRequest = 'change-password-request',
+  changePassword = 'change-password'
 }

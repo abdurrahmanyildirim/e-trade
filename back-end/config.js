@@ -1,5 +1,5 @@
 module.exports = {
-  company_name: 'Taşer Trade',
+  company_name: 'Taşer Züccaciye',
   TOKEN_KEY: process.env.TOKEN_KEY,
   crypto: {
     key: process.env.CRYPTO_KEY,
@@ -16,5 +16,6 @@ module.exports = {
       },
       from: 'info@ayildirim.site'
     }
-  }
+  },
+  domain: 'http://localhost:4200'
 };

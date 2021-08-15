@@ -126,7 +126,6 @@ module.exports.purchaseOrder = async (req, res) => {
       }
       await sendEmail(
         decrypt(user.email),
-        config.company_name,
         'Sipariş Bilgilendirme',
         givenOrder._id + ' numaralı siparişiniz Alındı. En kısa sürede işleme alınacaktır.'
       );

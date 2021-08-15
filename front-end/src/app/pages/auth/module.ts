@@ -8,15 +8,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
 import { ResetRequestComponent } from './reset-request/component';
+import { ChangePasswordComponent } from './change-password/component';
+import { UnAuthGuard } from './guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'reset-request', component: ResetRequestComponent },
-  { path: 'reset-password', component: RegisterComponent }
+  { path: 'login', component: LoginComponent, canActivate: [UnAuthGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [UnAuthGuard] },
+  { path: 'reset-request', component: ResetRequestComponent, canActivate: [UnAuthGuard] },
+  { path: 'change-password', component: ChangePasswordComponent, canActivate: [UnAuthGuard] }
 ];
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, ResetRequestComponent],
+  declarations: [LoginComponent, RegisterComponent, ResetRequestComponent, ChangePasswordComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -26,6 +28,7 @@ const routes: Routes = [
     MatButtonModule,
     ReactiveFormsModule
   ],
+  providers: [UnAuthGuard],
   exports: [LoginComponent, RegisterComponent]
 })
 export class AuthModule {}

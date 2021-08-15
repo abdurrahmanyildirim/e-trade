@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const config = require('../../config');
 const { encrypt, comparePassword, hashPassword, decrypt } = require('../services/crypto');
+const emailService = require('../services/email/index');
 
 module.exports.login = async (req, res) => {
   try {
@@ -98,6 +99,61 @@ module.exports.googleAuth = async (req, res) => {
       lastName: user.lastName
     };
     return res.status(200).send({ token, info });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
+module.exports.changePasswordRequest = async (req, res) => {
+  const email = req.query.email;
+
+  const user = await User.findOne({ email: encrypt(email) });
+  if (!user) {
+    return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
+  }
+  const token = jwt.sign(
+    {
+      _id: user._id
+    },
+    config.TOKEN_KEY + user.password,
+    {
+      expiresIn: '1h'
+    }
+  );
+  emailService.sendCustomEmail(
+    email,
+    'Şifre Sıfırlama',
+    `
+    <p> Merhaba ${user.firstName} ${user.lastName}</p>
+    <p>İsteğiniz üzerine, şifre değiştirme linki gönderilmiştir.</p>
+    <p>Şifrenizi değiştirmek için <a href="${config.domain}/#/auth/change-password?v1=${token}&id=${user._id}" target="_blank" >tıklayınız.</a></p>
+    <br>
+    <p>${config.company_name}</p>
+    `
+  );
+  return res.status(200).send();
+};
+
+module.exports.changePassword = async (req, res) => {
+  try {
+    let { id, password, token } = req.body;
+    const user = await User.findOne({ _id: id });
+    if (!user) {
+      return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
+    }
+
+    jwt.verify(token, config.TOKEN_KEY + user.password, (err, decoded) => {
+      if (err) {
+        return res.status(400).send({ message: 'Geçersiz anahtar!' });
+      }
+      password = hashPassword(password);
+      User.updateOne({ _id: id }, { password }, (err) => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+        return res.status(200).send({ message: 'Şifre değiştirildi.' });
+      });
+    });
   } catch (error) {
     return res.status(500).send(error);
   }
