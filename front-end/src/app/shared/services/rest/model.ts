@@ -12,7 +12,8 @@ export enum RequestType {
   contact = 'contact',
   auth = 'auth',
   photo = 'photo',
-  cart = 'cart'
+  cart = 'cart',
+  db = 'db'
 }
 
 export interface RequestOptions {

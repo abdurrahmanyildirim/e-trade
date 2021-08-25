@@ -3,7 +3,6 @@ const Product = require('../models/product');
 const Order = require('../models/order');
 const { encrypt, decrypt } = require('../services/crypto');
 const { sendEmail } = require('../services/email/index');
-const config = require('../../config');
 
 module.exports.updateCart = async (req, res) => {
   const user = await User.findOne({ _id: req.id });

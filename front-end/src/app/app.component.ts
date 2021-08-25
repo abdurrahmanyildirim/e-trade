@@ -21,7 +21,10 @@ export class AppComponent implements OnInit, OnDestroy {
   sub: Subscription;
   navigationProgress = false;
 
-  constructor(public splashService: SplashService, private router: Router) {}
+  constructor(
+    public splashService: SplashService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.listenNavigations();

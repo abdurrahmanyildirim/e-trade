@@ -21,6 +21,7 @@ import { MnMessageBoxComponent } from './message-box/component';
 import { MnCategoryComponent } from './category/component';
 import { DialogModule } from 'src/app/shared/components/dialog/module';
 import { EditorModule } from 'src/app/shared/components/editor/module';
+import { MnOtherComponent } from './other/component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
       { path: 'product-detail/:id', component: MnProductDetailComponent },
       { path: 'message-box', component: MnMessageBoxComponent },
       { path: 'category', component: MnCategoryComponent },
+      { path: 'other', component: MnOtherComponent },
       { path: '', redirectTo: 'orders', pathMatch: 'full' }
     ]
   }
@@ -49,7 +51,8 @@ const routes: Routes = [
     PhotoUploadComponent,
     MnProductDetailComponent,
     MnMessageBoxComponent,
-    MnCategoryComponent
+    MnCategoryComponent,
+    MnOtherComponent
   ],
   imports: [
     RouterModule.forChild(routes),

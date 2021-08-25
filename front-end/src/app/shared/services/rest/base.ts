@@ -6,8 +6,8 @@ import { ConfigService } from '../site/config.service';
 import { RequestType, RequestOptions } from './model';
 
 export abstract class BaseRestService {
-  private configService: ConfigService;
-  private http: HttpClient;
+  protected configService: ConfigService;
+  protected http: HttpClient;
 
   protected requestType: RequestType;
 

@@ -19,6 +19,7 @@
     "express-fileupload": "^1.2.0",
     "helmet": "^4.5.0",
     "jsonwebtoken": "^8.5.1",
+    "jszip": "^3.7.1",
     "mongoose": "^5.11.8",
     "nodemailer": "^6.5.0",
     "socket.io": "^4.0.1"

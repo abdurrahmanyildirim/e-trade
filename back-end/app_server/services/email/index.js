@@ -11,19 +11,9 @@ const attachments = [
     cid: 'logo' //same cid value as in the html img src
   },
   {
-    filename: 'tw.png',
-    path: `${__dirname}/images/tw.png`,
-    cid: 'tw' //same cid value as in the html img src
-  },
-  {
     filename: 'insta.png',
     path: `${__dirname}/images/insta.png`,
     cid: 'insta' //same cid value as in the html img src
-  },
-  {
-    filename: 'link.png',
-    path: `${__dirname}/images/link.png`,
-    cid: 'link' //same cid value as in the html img src
   },
   {
     filename: 'facebook.png',

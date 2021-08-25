@@ -6,6 +6,7 @@ const order = require('./order');
 const category = require('./category');
 const contact = require('./contact');
 const user = require('./user');
+const db = require('./db');
 
 module.exports = (app) => {
   app.use('/auth', auth);
@@ -16,4 +17,5 @@ module.exports = (app) => {
   app.use('/user', user);
   app.use('/order', order);
   app.use('/photo', account);
+  app.use('/db', db);
 };
