@@ -3,13 +3,12 @@ const path = require('path');
 const JSZip = require('jszip');
 const fs = require('fs');
 
+// C:/Program Files/MongoDB/Server/4.4/bin/mongodump.exe
+
 module.exports.createBackUp = async (req, res) => {
   const DB_NAME = 'e-trade';
   const ARCHIVE_PATH = path.join(__dirname);
-  const child = spawn('C:/Program Files/MongoDB/Server/4.4/bin/mongodump.exe', [
-    `--db=${DB_NAME}`,
-    `--out=${ARCHIVE_PATH}`
-  ]);
+  const child = spawn('mongodump', [`--db=${DB_NAME}`, `--out=${ARCHIVE_PATH}`]);
   child.on('error', (error) => {
     console.log('error:\n', error);
   });
@@ -25,7 +24,7 @@ module.exports.createBackUp = async (req, res) => {
         const data = fs.readFileSync(`${__dirname}/e-trade/${file}`);
         zip.file(file, data);
       });
-      zip.generateAsync({ type: 'nodebuffer' }).then(function (content) {
+      zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' }).then(function (content) {
         res.status(200).send(content);
         fs.rmdirSync(`${__dirname}/e-trade`, { force: true, recursive: true });
       });

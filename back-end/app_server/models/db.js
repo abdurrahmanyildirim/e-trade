@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const connectionString = process.env.MONGO_CLOUD;
-// const connectionString = process.env.MONGO_LOCAL;
+// const connectionString = process.env.MONGO_CLOUD;
+const connectionString = process.env.MONGO_LOCAL;
 
 mongoose.connect(
   connectionString,

@@ -5,8 +5,8 @@ import { isPresent } from '../../util/common';
   providedIn: 'root'
 })
 export class CryptoService {
-  private v1prod = 'd0SeF'; // dev
-  // private v1prod = 'd0SFe'; // prod
+  // private v1prod = 'd0SeF'; // dev
+  private v1prod = 'd0SFe'; // prod
 
   basicEncrypt(source: string): string {
     if (!isPresent(source)) {
