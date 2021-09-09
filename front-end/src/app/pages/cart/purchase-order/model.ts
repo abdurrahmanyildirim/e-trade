@@ -12,3 +12,9 @@ export interface PurchaseInfo {
   address: string;
   contractsChecked: boolean;
 }
+
+export interface City {
+  city: string;
+  code: number;
+  districts: string[];
+}

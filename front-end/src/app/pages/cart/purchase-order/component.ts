@@ -1,7 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
-import { Subscription, timer } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
@@ -9,7 +12,7 @@ import { CartService } from 'src/app/shared/services/rest/cart/service';
 import { UserService } from 'src/app/shared/services/rest/user/service';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
-import { UserInfo } from './model';
+import { City, UserInfo } from './model';
 
 @Component({
   selector: 'app-contact-info',
@@ -24,6 +27,8 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
   orderInfo: any;
   orderStatus = -1;
   subs = new Subscription();
+  cities: City[];
+  selectedCity: City;
 
   constructor(
     private cartService: CartService,
@@ -31,7 +36,8 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private dialogService: DialogService,
     private snackbar: SnackbarService,
-    private userService: UserService
+    private userService: UserService,
+    private http: HttpClient
   ) {
     this.orders = this.cartService.cart.value.map((order) => {
       return {
@@ -73,8 +79,8 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
     this.userService.getContactInfo().subscribe({
       next: (info) => {
         this.contactInfo = info;
+        this.initCities();
         this.initPersonelInfo();
-        this.createForm();
       }
     });
   }
@@ -143,29 +149,45 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
     }
     this.orderStatus = 0;
     const purchaseInfo = Object.assign({}, this.form.value);
-    const subs1 = timer(3000).subscribe({
-      next: () => {
-        const subs2 = this.cartService.purchaseOrder(purchaseInfo).subscribe({
-          next: (response) => {
-            this.snackbar.showSuccess(
-              'Siparişiniz Alındı. Siparişlerim ekranından siparişinizi kontrol edebilirsiniz.'
-            );
-            this.router.navigateByUrl('orders');
-            this.cartService.cart.next([]);
-          },
-          error: (err) => {
-            console.error(err);
-            this.orderStatus = 1;
-            // this.cd.detectChanges();
-          }
-        });
-        this.subs.add(subs2);
+    const subs = this.cartService
+      .purchaseOrder(purchaseInfo)
+      .pipe(delay(2500))
+      .subscribe({
+        next: (response) => {
+          this.snackbar.showSuccess(
+            'Siparişiniz Alındı. Siparişlerim ekranından siparişinizi kontrol edebilirsiniz.'
+          );
+          this.router.navigateByUrl('orders');
+          this.cartService.cart.next([]);
+        },
+        error: (err) => {
+          console.error(err);
+          this.orderStatus = 1;
+        }
+      });
+    this.subs.add(subs);
+  }
+
+  initCities(): void {
+    const sub = this.http.get<City[]>('assets/mock/cities.json').subscribe({
+      next: (cities) => {
+        this.cities = cities.sort((a, b) => a.city.localeCompare(b.city));
+        this.contactInfo.city ? '' : (this.contactInfo.city = 'İstanbul');
+        this.selectedCity = cities.find((c) => c.city === this.contactInfo.city);
+        this.selectedCity.districts.sort((a, b) => a.localeCompare(b));
+        this.createForm();
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     });
-    this.subs.add(subs1);
+    this.subs.add(sub);
+  }
+
+  onCityChange(city: MatSelectChange): void {
+    this.selectedCity = this.cities.slice().find((c) => c.city === city.value);
+    this.selectedCity.districts.sort((a, b) => a.localeCompare(b));
+    this.form.patchValue({ district: '' });
   }
 
   ngOnDestroy(): void {

@@ -47,7 +47,7 @@
       "Dazkırı",
       "Dinar",
       "Emirdağ",
-      "Evccityer",
+      "Evciler",
       "Hocalar",
       "İhsaniye",
       "İscehisar",
@@ -152,7 +152,7 @@
       "Koçarlı",
       "Kuşadası",
       "Kuyucak",
-      "Nazcityli",
+      "Nazilli",
       "Söke",
       "Sultanhisar",
       "Yenipazar",
@@ -191,7 +191,7 @@
     ]
   },
   {
-    "city": "Bcityecik",
+    "city": "Bilecik",
     "code": 11,
     "districts": [
       "Merkez",
@@ -212,7 +212,7 @@
   {
     "city": "Bitlis",
     "code": 13,
-    "districts": ["Adcitycevaz", "Ahlat", "Merkez", "Hizan", "Mutki", "Tatvan", "Güroymak"]
+    "districts": ["Adilcevaz", "Ahlat", "Merkez", "Hizan", "Mutki", "Tatvan", "Güroymak"]
   },
   {
     "city": "Bolu",
@@ -238,7 +238,7 @@
       "Merkez",
       "Gölhisar",
       "Tefenni",
-      "Yeşcityova",
+      "Yeşilova",
       "Karamanlı",
       "Kemer",
       "Altınyayla",
@@ -262,7 +262,7 @@
       "Yenişehir",
       "Büyükorhan",
       "Harmancık",
-      "Ncityüfer",
+      "Nilüfer",
       "Osmangazi",
       "Yıldırım",
       "Gürsu",
@@ -294,7 +294,7 @@
       "Merkez",
       "Çerkeş",
       "Eldivan",
-      "citygaz",
+      "Ilgaz",
       "Kurşunlu",
       "Orta",
       "Şabanözü",
@@ -312,7 +312,7 @@
       "Alaca",
       "Bayat",
       "Merkez",
-      "İskcityip",
+      "İskilip",
       "Kargı",
       "Mecitözü",
       "Ortaköy",
@@ -334,7 +334,7 @@
       "Çal",
       "Çameli",
       "Çardak",
-      "Çivrcity",
+      "Çivril",
       "Merkez",
       "Merkezefendi",
       "Pamukkale",
@@ -343,7 +343,7 @@
       "Sarayköy",
       "Tavas",
       "Babadağ",
-      "Bekcityli",
+      "Bekilli",
       "Honaz",
       "Serinhisar",
       "Baklan",
@@ -365,13 +365,13 @@
       "Hazro",
       "Kulp",
       "Lice",
-      "Scityvan",
-      "Eğcity",
+      "Silvan",
+      "Eğil",
       "Bağlar",
       "Kayapınar",
       "Sur",
       "Yenişehir",
-      "Bismcity"
+      "Bismil"
     ]
   },
   {
@@ -394,7 +394,7 @@
     "code": 23,
     "districts": [
       "Ağın",
-      "Baskcity",
+      "Baskil",
       "Merkez",
       "Karakoçan",
       "Keban",
@@ -477,7 +477,7 @@
       "Oğuzeli",
       "Yavuzeli",
       "Şahinbey",
-      "Şehitkamcity",
+      "Şehitkamil",
       "Karkamış",
       "Nurdağı"
     ]
@@ -490,7 +490,7 @@
       "Bulancak",
       "Dereli",
       "Espiye",
-      "Eynescity",
+      "Eynesil",
       "Merkez",
       "Görele",
       "Keşap",
@@ -562,7 +562,7 @@
       "Erdemli",
       "Gülnar",
       "Mut",
-      "Scityifke",
+      "Silifke",
       "Tarsus",
       "Aydıncık",
       "Bozyazı",
@@ -589,8 +589,8 @@
       "Kadıköy",
       "Kartal",
       "Sarıyer",
-      "Scityivri",
-      "Şcitye",
+      "Silivri",
+      "Şile",
       "Şişli",
       "Üsküdar",
       "Zeytinburnu",
@@ -627,7 +627,7 @@
       "Bergama",
       "Bornova",
       "Çeşme",
-      "Dikcityi",
+      "Dikili",
       "Foça",
       "Karaburun",
       "Karşıyaka",
@@ -682,7 +682,7 @@
       "Ağlı",
       "Doğanyurt",
       "Hanönü",
-      "Seydcityer"
+      "Seydiler"
     ]
   },
   {
@@ -698,7 +698,7 @@
       "Sarız",
       "Tomarza",
       "Yahyalı",
-      "Yeşcityhisar",
+      "Yeşilhisar",
       "Akkışla",
       "Talas",
       "Kocasinan",
@@ -739,7 +739,7 @@
       "Başiskele",
       "Çayırova",
       "Darıca",
-      "Dcityovası",
+      "Dilovası",
       "İzmit",
       "Kartepe"
     ]
@@ -756,7 +756,7 @@
       "Doğanhisar",
       "Ereğli",
       "Hadim",
-      "citygın",
+      "Ilgın",
       "Kadınhanı",
       "Karapınar",
       "Kulu",
@@ -812,7 +812,7 @@
       "Hekimhan",
       "Merkez",
       "Pütürge",
-      "Yeşcityyurt",
+      "Yeşilyurt",
       "Battalgazi",
       "Doğanyol",
       "Kale",
@@ -876,7 +876,7 @@
       "Ömerli",
       "Savur",
       "Dargeçit",
-      "Yeşcityli"
+      "Yeşilli"
     ]
   },
   {
@@ -889,7 +889,7 @@
       "Köyceğiz",
       "Marmaris",
       "Menteşe",
-      "Mcityas",
+      "Milas",
       "Ula",
       "Yatağan",
       "Dalaman",
@@ -1013,7 +1013,7 @@
   {
     "city": "Siirt",
     "code": 56,
-    "districts": ["Baykan", "Eruh", "Kurtalan", "Pervari", "Merkez", "Şirvan", "Tcitylo"]
+    "districts": ["Baykan", "Eruh", "Kurtalan", "Pervari", "Merkez", "Şirvan", "Tillo"]
   },
   {
     "city": "Sinop",
@@ -1081,9 +1081,9 @@
       "Reşadiye",
       "Merkez",
       "Turhal",
-      "Zcitye",
+      "Zile",
       "Pazar",
-      "Yeşcityyurt",
+      "Yeşilyurt",
       "Başçiftlik",
       "Sulusaray"
     ]
@@ -1136,8 +1136,8 @@
       "Ceylanpınar",
       "Eyyübiye",
       "Halfeti",
-      "Halcityiye",
-      "Hcityvan",
+      "Haliliye",
+      "Hilvan",
       "Karaköprü",
       "Siverek",
       "Suruç",
@@ -1197,7 +1197,7 @@
   {
     "city": "Aksaray",
     "code": 68,
-    "districts": ["Ağaçören", "Eskcity", "Gülağaç", "Güzelyurt", "Merkez", "Ortaköy", "Sarıyahşi"]
+    "districts": ["Ağaçören", "Eskil", "Gülağaç", "Güzelyurt", "Merkez", "Ortaköy", "Sarıyahşi"]
   },
   {
     "city": "Bayburt",
@@ -1207,7 +1207,7 @@
   {
     "city": "Karaman",
     "code": 70,
-    "districts": ["Ermenek", "Merkez", "Ayrancı", "Kazımkarabekir", "Başyayla", "Sarıvelcityer"]
+    "districts": ["Ermenek", "Merkez", "Ayrancı", "Kazımkarabekir", "Başyayla", "Sarıveliler"]
   },
   {
     "city": "Kırıkkale",
@@ -1217,10 +1217,10 @@
       "Keskin",
       "Merkez",
       "Sulakyurt",
-      "Bahşcityi",
+      "Bahşili",
       "Balışeyh",
       "Çelebi",
-      "Karakeçcityi",
+      "Karakeçili",
       "Yahşihan"
     ]
   },
@@ -1232,12 +1232,12 @@
   {
     "city": "Şırnak",
     "code": 73,
-    "districts": ["Beytüşşebap", "Cizre", "İdcity", "Scityopi", "Merkez", "Uludere", "Güçlükonak"]
+    "districts": ["Beytüşşebap", "Cizre", "İdil", "Silopi", "Merkez", "Uludere", "Güçlükonak"]
   },
   {
     "city": "Bartın",
     "code": 74,
-    "districts": ["Merkez", "Kurucaşcitye", "Ulus", "Amasra"]
+    "districts": ["Merkez", "Kurucaşile", "Ulus", "Amasra"]
   },
   {
     "city": "Ardahan",
@@ -1260,7 +1260,7 @@
     "districts": ["Eflani", "Eskipazar", "Merkez", "Ovacık", "Safranbolu", "Yenice"]
   },
   {
-    "city": "Kcityis",
+    "city": "Kilis",
     "code": 79,
     "districts": ["Merkez", "Elbeyli", "Musabeyli", "Polateli"]
   },
@@ -1278,7 +1278,7 @@
       "Yığılca",
       "Cumayeri",
       "Gölyaka",
-      "Çcityimli",
+      "Çilimli",
       "Gümüşova",
       "Kaynaşlı"
     ]

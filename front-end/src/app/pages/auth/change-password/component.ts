@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { timer } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth/service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
@@ -34,8 +34,10 @@ export class ChangePasswordComponent implements OnInit {
 
   onButtonClick(): void {
     this.screenHolderService.show();
-    timer(1000).subscribe(() => {
-      this.authService.changePassword(this.token, this.id, this.password).subscribe({
+    this.authService
+      .changePassword(this.token, this.id, this.password)
+      .pipe(delay(1000))
+      .subscribe({
         next: () => {
           this.screenHolderService.hide();
           this.snackBarservice.showSuccess(
@@ -49,7 +51,6 @@ export class ChangePasswordComponent implements OnInit {
           console.error(error);
         }
       });
-    });
   }
 
   onKeyup(): void {

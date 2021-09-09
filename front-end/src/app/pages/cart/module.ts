@@ -11,6 +11,7 @@ import { NumericInputModule } from 'src/app/shared/components/numeric-input/modu
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 import { PurchaseOrderComponent } from './purchase-order/component';
 
 const routes: Routes = [{ path: '', component: CartComponent }];
@@ -29,7 +30,8 @@ const routes: Routes = [{ path: '', component: CartComponent }];
     MatStepperModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule
   ],
   exports: [CartComponent]
 })

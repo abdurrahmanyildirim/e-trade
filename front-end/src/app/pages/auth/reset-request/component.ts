@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { timer } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth/service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
@@ -21,8 +21,10 @@ export class ResetRequestComponent {
 
   onButtonClick(): void {
     this.screenHolderService.show();
-    timer(1000).subscribe(() => {
-      this.authService.changePasswordRequest(this.email).subscribe({
+    this.authService
+      .changePasswordRequest(this.email)
+      .pipe(delay(1000))
+      .subscribe({
         next: () => {
           this.email = '';
           this.isSendedRequest = true;
@@ -35,6 +37,5 @@ export class ResetRequestComponent {
           console.error(error);
         }
       });
-    });
   }
 }
