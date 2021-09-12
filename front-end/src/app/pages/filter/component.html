@@ -3,24 +3,24 @@
   </mat-progress-spinner>
 </div>
 <main class="container" *ngIf="!mainSplash">
-  <div class="filters">
+  <div *ngIf="!isMobile" class="filters">
     <div class="filters-body">
       <ng-container *ngTemplateOutlet="filters"></ng-container>
     </div>
   </div>
-  <div class="mobile-filter-button" id="mobile-filter-button">
+  <div *ngIf="isMobile" class="mobile-filter-button" id="mobile-filter-button">
     <button mat-flat-button color="primary" (click)="toggleMobileFilters()">
       <mat-icon>filter_alt</mat-icon> Filtrele
     </button>
   </div>
-  <div class="mobile-filter-body" #mobileFiltersBody>
-    <div class="mobile-filters" #mobileFilters>
-      <div>
-        <mat-icon (click)="toggleMobileFilters()">close</mat-icon>
-      </div>
-      <ng-container *ngTemplateOutlet="filters"></ng-container>
+  <div *ngIf="isMobile" class="overlay" (click)="hideMobileFilter()" #overlay></div>
+  <div *ngIf="isMobile" class="mobile-filters" #mobileFilters>
+    <div>
+      <mat-icon (click)="toggleMobileFilters()">close</mat-icon>
     </div>
+    <ng-container *ngTemplateOutlet="filters"></ng-container>
   </div>
+
   <div class="products" *ngIf="products && !showSplash">
     <div class="search-key" *ngIf="filter.searchKey">
       <span class="mat-body-2">"{{filter.searchKey}}"</span> arama sonuçları

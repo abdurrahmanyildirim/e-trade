@@ -101,25 +101,27 @@
   overflow-x: hidden;
 }
 
-.mobile-filter-body {
-  width: 0;
+.mobile-filters {
   position: fixed;
-  overflow-x: hidden;
   right: 0;
   top: 0;
-  height: 100%;
   z-index: 20;
-  display: flex;
-  justify-content: flex-end;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.mobile-filters {
-  width: 0;
+  width: 60%;
   background-color: white;
   height: 100%;
+  transform: translateX(100%);
   padding: 0 5px;
-  transition: width 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+}
+
+.overlay {
+  position: fixed;
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  z-index: 15;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 @media only screen and (max-width: 650px) {

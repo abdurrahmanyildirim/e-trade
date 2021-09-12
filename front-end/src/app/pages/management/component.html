@@ -1,11 +1,8 @@
 <main class="container">
   <section class="nav">
-    <div class="btn" routerLink="orders" routerLinkActive="active">Siparişler</div>
-    <div class="btn" routerLink="products" routerLinkActive="active">Ürünler</div>
-    <div class="btn" routerLink="new-product" routerLinkActive="active">Ürün Ekle</div>
-    <div class="btn" routerLink="message-box" routerLinkActive="active">Mesaj Kutusu</div>
-    <div class="btn" routerLink="category" routerLinkActive="active">Kategoriler</div>
-    <div class="btn" routerLink="other" routerLinkActive="active">Diğer</div>
+    <div class="btn" *ngFor="let tab of tabs" routerLink="{{tab.route}}" routerLinkActive="active">
+      {{tab.name}}
+    </div>
   </section>
   <section class="route" [@routeAnimations]="prepareRoute(outlet)">
     <router-outlet #outlet="outlet"></router-outlet>

@@ -41,13 +41,12 @@ export class FilterComponent implements OnInit, OnDestroy {
     sortType: SortType.none
   };
   SortType = SortType;
-  @ViewChild('mobileFilters') mobileFilters: ElementRef<HTMLElement>;
-  @ViewChild('mobileFiltersBody') mobileFiltersBody: ElementRef<HTMLElement>;
-  @ViewChild('pagination') paginationRef: MatPaginator;
-  touchSubs = new Subscription();
-  touchStart: number;
-  touchEnd: number;
   previousScrollTop = 0;
+  isMobileFilterActive = false;
+  isMobile = false;
+  @ViewChild('mobileFilters') mobileFilters: ElementRef<HTMLElement>;
+  @ViewChild('overlay') overlay: ElementRef<HTMLElement>;
+  @ViewChild('pagination') paginationRef: MatPaginator;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -56,14 +55,16 @@ export class FilterComponent implements OnInit, OnDestroy {
     public categoryService: CategoryService,
     private router: Router,
     private cd: ChangeDetectorRef
-  ) {}
+  ) {
+    if (document.body.clientWidth <= 650) {
+      this.isMobile = true;
+      document.body.addEventListener('scroll', this.listenBodyScroll);
+    }
+  }
 
   ngOnInit(): void {
     this.filterFactory.products = this.productService.products.value.slice();
     this.listenRoute();
-    if (document.body.clientWidth <= 650) {
-      document.body.addEventListener('scroll', this.listenBodyScroll);
-    }
   }
 
   trackByFn(index: number, product: Product): string {
@@ -73,39 +74,11 @@ export class FilterComponent implements OnInit, OnDestroy {
   listenBodyScroll(e: any): void {
     const filterPlace = document.getElementById('mobile-filter-button');
     if (document.body.scrollTop > this.previousScrollTop) {
-      filterPlace.style.transition = 'transform 0.35s ease-in';
       filterPlace.style.transform = 'translateY(51px)';
     } else {
-      filterPlace.style.transition = 'transform 0.35s ease-out';
       filterPlace.style.transform = 'translateY(0)';
     }
     this.previousScrollTop = document.body.scrollTop;
-  }
-
-  handleTouchAndClickEvents(): void {
-    let subs = fromEvent(this.mobileFiltersBody.nativeElement, 'touchstart').subscribe(
-      (event: TouchEvent) => {
-        this.touchStart = event.changedTouches[0].screenX;
-      }
-    );
-    this.touchSubs.add(subs);
-    subs = fromEvent(this.mobileFiltersBody.nativeElement, 'touchend').subscribe(
-      (event: TouchEvent) => {
-        this.touchEnd = event.changedTouches[0].screenX;
-        if (this.touchStart < this.touchEnd) {
-          this.toggleMobileFilters();
-        }
-      }
-    );
-    this.touchSubs.add(subs);
-    subs = fromEvent(this.mobileFiltersBody.nativeElement, 'click').subscribe(
-      (event: MouseEvent) => {
-        if (event.target === this.mobileFiltersBody.nativeElement) {
-          this.toggleMobileFilters();
-        }
-      }
-    );
-    this.touchSubs.add(subs);
   }
 
   listenRoute(): void {
@@ -126,23 +99,20 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   toggleMobileFilters(): void {
-    if (this.mobileFilters.nativeElement.style.width) {
-      this.mobileFilters.nativeElement.style.width = null;
-      this.mobileFilters.nativeElement.style.padding = '0';
-      if (isPresent(this.touchSubs)) {
-        this.touchSubs.unsubscribe();
-        this.touchSubs = new Subscription();
-      }
-      setTimeout(() => {
-        this.mobileFiltersBody.nativeElement.style.width = null;
-        document.body.scrollTop = 0;
-      }, 350);
+    if (this.isMobileFilterActive) {
+      this.hideMobileFilter();
     } else {
-      this.mobileFiltersBody.nativeElement.style.width = 100 + '%';
-      this.mobileFilters.nativeElement.style.width = 60 + '%';
-      this.mobileFilters.nativeElement.style.padding = '0 5px';
-      this.handleTouchAndClickEvents();
+      this.overlay.nativeElement.style.display = 'block';
+      this.mobileFilters.nativeElement.style.transform = 'translateX(0)';
     }
+    this.isMobileFilterActive = !this.isMobileFilterActive;
+  }
+
+  hideMobileFilter(): void {
+    this.isMobileFilterActive = false;
+    this.mobileFilters.nativeElement.style.transform = 'translateX(100%)';
+    this.overlay.nativeElement.style.display = 'none';
+    document.body.scrollTop = 0;
   }
 
   removeSearchKey(): void {
