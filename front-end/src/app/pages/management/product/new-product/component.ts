@@ -101,8 +101,7 @@ export class MnNewProductComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           this.screenHolder.hide();
-          this.stepper.previous();
-          this.stepper.previous();
+          this.stepper.reset();
           this.snackBar.showError('Ürün ekleme sırasında hata oldu.');
           console.log(err);
         }

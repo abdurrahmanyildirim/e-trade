@@ -21,16 +21,6 @@ const bodyDecrypter = (req, res, next) => {
   next();
 };
 
-const isDevMode = () => {
-  return isPresent(process.env.NODE_ENV) && process.env.NODE_ENV.trim() === 'development';
-};
-
-const isPresent = (obj) => {
-  return obj !== undefined && typeof obj !== 'undefined' && obj !== null;
-};
-
 module.exports = {
-  bodyDecrypter,
-  isDevMode,
-  isPresent
+  bodyDecrypter
 };

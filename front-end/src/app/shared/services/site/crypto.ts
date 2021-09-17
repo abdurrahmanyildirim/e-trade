@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { isPresent } from '../../util/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CryptoService {
-  private v1prod = 'd0SeF'; // dev
-  // private v1prod = 'd0SFe'; // prod
+  private v1 = isDevMode() ? 'd0SeF' : 'd0SFe';
 
   basicEncrypt(source: string): string {
     if (!isPresent(source)) {
@@ -14,8 +13,8 @@ export class CryptoService {
     }
     let encryptedString = '';
     for (let i = 0; i < source.length; i++) {
-      const passOffset = i % this.v1prod.length;
-      const calAscii = source.charCodeAt(i) + this.v1prod.charCodeAt(passOffset);
+      const passOffset = i % this.v1.length;
+      const calAscii = source.charCodeAt(i) + this.v1.charCodeAt(passOffset);
       encryptedString += String.fromCharCode(calAscii);
     }
     return encryptedString;
@@ -27,8 +26,8 @@ export class CryptoService {
     }
     let decryptedCode = '';
     for (let i = 0; i < source.length; i++) {
-      const passOffset = i % this.v1prod.length;
-      const calAscii = source.charCodeAt(i) - this.v1prod.charCodeAt(passOffset);
+      const passOffset = i % this.v1.length;
+      const calAscii = source.charCodeAt(i) - this.v1.charCodeAt(passOffset);
       decryptedCode += String.fromCharCode(calAscii);
     }
     return decryptedCode;

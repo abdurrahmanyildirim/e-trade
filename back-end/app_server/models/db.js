@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
+const { isDevMode } = require('../../common');
 
-const connectionString = process.env.MONGO_CLOUD;
-// const connectionString = process.env.MONGO_LOCAL;
+const connectionString = isDevMode() ? process.env.MONGO_CLOUD : process.env.MONGO_LOCAL;
 
 mongoose.connect(
   connectionString,
@@ -15,7 +15,9 @@ mongoose.connect(
     if (err) {
       console.log(err);
     } else {
-      console.log('Db connection activeted');
+      if (isDevMode()) {
+        console.log('Db connection activeted');
+      }
     }
   }
 );

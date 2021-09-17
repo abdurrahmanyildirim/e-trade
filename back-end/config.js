@@ -1,5 +1,5 @@
 module.exports = {
-  company_name: 'Taşer Züccaciye',
+  company_name: process.env.COMPANY,
   TOKEN_KEY: process.env.TOKEN_KEY,
   crypto: {
     key: process.env.CRYPTO_KEY,
@@ -8,14 +8,16 @@ module.exports = {
   },
   mail: {
     transporter: {
-      service: 'Yandex',
-      host: 'ayildirim.site',
+      service: process.env.MAIL_SERVİCE,
+      host: process.env.MAIL_HOST,
+      port: 465,
+      secure: true,
       auth: {
-        user: 'info@ayildirim.site',
+        user: process.env.MAIL,
         pass: process.env.MAIL_PASSWORD
       },
-      from: 'info@ayildirim.site'
+      from: process.env.MAIL
     }
   },
-  domain: 'http://localhost:4200'
+  domain: process.env.ORIGIN
 };

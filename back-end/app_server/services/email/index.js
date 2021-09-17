@@ -1,13 +1,13 @@
 const nodemailer = require('nodemailer');
-const config = require('../../../config');
+const { mail, company_name } = require('../../../config');
 const { headerContent, footerContent } = require('./template');
 
-const transporter = nodemailer.createTransport(config.mail.transporter);
+const transporter = nodemailer.createTransport(mail.transporter);
 
 const attachments = [
   {
     filename: 'logo.png',
-    path: `${__dirname}/images/logo.png`,
+    path: `${__dirname}/${company_name}/logo.png`,
     cid: 'logo' //same cid value as in the html img src
   },
   {
@@ -26,10 +26,10 @@ module.exports.sendEmail = async (to, subject, desc) => {
   try {
     const options = {
       from: {
-        name: config.company_name,
-        address: config.mail.transporter.from
+        name: company_name,
+        address: mail.transporter.from
       },
-      sender: config.mail.transporter.from,
+      sender: mail.transporter.from,
       to,
       subject,
       attachments,
@@ -45,10 +45,10 @@ module.exports.sendCustomEmail = async (to, subject, desc) => {
   try {
     const options = {
       from: {
-        name: config.company_name,
-        address: config.mail.transporter.from
+        name: company_name,
+        address: mail.transporter.from
       },
-      sender: config.mail.transporter.from,
+      sender: mail.transporter.from,
       to,
       subject,
       html: desc

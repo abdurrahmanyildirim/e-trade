@@ -1,11 +1,14 @@
 const Product = require('../models/product');
+const { isDevMode } = require('../../common');
 
 let io = null;
 
 module.exports.init = (instance) => {
   io = instance;
   io.on('connection', () => {
-    console.log('Socket bağlantısı kuruldu');
+    if (isDevMode()) {
+      console.log('Socket bağlantısı kuruldu');
+    }
   });
 };
 

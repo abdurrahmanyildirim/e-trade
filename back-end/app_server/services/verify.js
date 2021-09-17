@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const config = require('../../config');
+const { TOKEN_KEY } = require('../../config');
 const roles = {
   admin: 'Admin',
   client: 'Client',
@@ -38,7 +38,7 @@ const roleResolver = (req, res, next) => {
     return;
   }
   const token = authorization.split(' ')[1];
-  jwt.verify(token, config.TOKEN_KEY, (err, decoded) => {
+  jwt.verify(token, TOKEN_KEY, (err, decoded) => {
     if (err) {
       req.role = roles.unauth;
       next();

@@ -74,15 +74,6 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <!-- <mat-form-field class="field" appearance="outline">
-            <mat-label>Ürün Açıklaması</mat-label>
-            <textarea matInput formControlName="description"></textarea>
-            <mat-error
-              *ngIf="infoForm.get('description').hasError('required') || infoForm.get('description').hasError('isNull')|| infoForm.get('description').touched"
-            >
-              *Ürün açıklama alana boş bırakılamaz
-            </mat-error>
-          </mat-form-field> -->
           <div class="field">
             <app-editor [(text)]="description"></app-editor>
           </div>
