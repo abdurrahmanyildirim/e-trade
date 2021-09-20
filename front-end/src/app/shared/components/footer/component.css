@@ -49,6 +49,21 @@
   margin-right: 10px;
 }
 
+.payment-ways {
+  margin-top: 20px;
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+.license-text {
+  margin: 10px 0;
+}
+
+.none {
+  text-decoration: none;
+  color: white;
+}
+
 @media only screen and (max-width: 650px) {
   .container {
     height: auto;
