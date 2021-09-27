@@ -70,7 +70,7 @@
       </div>
       <div style="text-align: right; width: 100%; margin-top: 10px">
         <button mat-flat-button [disabled]="form.invalid" type="submit" color="primary">
-          Siparişi Tamamla
+          Ödeme Yap
         </button>
       </div>
     </form>
@@ -83,7 +83,10 @@
       [value]="'30'"
     >
     </mat-progress-spinner>
-    <p class="mat-body-2">Siparişiniz veriliyor. Lütfen Bekleyiniz...</p>
+    <br />
+    <p class="mat-body-2" style="text-align: center">
+      Ödeme sayfasına yönlendiriliyorsunuz. Lütfen Bekleyiniz...
+    </p>
   </section>
   <section *ngIf="orderStatus === 1" class="section">
     <mat-icon aria-hidden="false" class="error-icon">error</mat-icon>

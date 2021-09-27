@@ -3,10 +3,7 @@
 }
 
 .top {
-  /* background-color: #cfd8dc; */
-  /* background-color: #eceff1; */
   background-color: whitesmoke;
-  /* background-color: #eceff1; */
   padding: 20px 0;
   transition: padding 0.35s ease-in-out;
 }

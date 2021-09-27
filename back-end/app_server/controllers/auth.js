@@ -126,7 +126,7 @@ module.exports.changePasswordRequest = async (req, res) => {
     `
     <p> Merhaba ${user.firstName} ${user.lastName}</p>
     <p>İsteğiniz üzerine, şifre değiştirme linki gönderilmiştir.</p>
-    <p>Şifrenizi değiştirmek için <a href="${config.domain}/#/auth/change-password?v1=${token}&id=${user._id}" target="_blank" >tıklayınız.</a></p>
+    <p>Şifrenizi değiştirmek için <a href="${config.origin}/#/auth/change-password?v1=${token}&id=${user._id}" target="_blank" >tıklayınız.</a></p>
     <br>
     <p>${config.company_name}</p>
     `

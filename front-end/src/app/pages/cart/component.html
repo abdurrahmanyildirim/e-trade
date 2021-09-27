@@ -1,12 +1,12 @@
-<main class="container" *ngIf="orders.length>0">
+<main *ngIf="!showPaymentResult && orders.length>0" class="container">
   <section class="operations">
     <mat-horizontal-stepper linear (selectionChange)="onSelectionChange()" #stepper>
       <mat-step>
-        <ng-template matStepLabel>Sepeti Detayı</ng-template>
+        <ng-template matStepLabel>Sepet</ng-template>
         <app-cart-info></app-cart-info>
       </mat-step>
       <mat-step [completed]="false">
-        <ng-template matStepLabel>Sipariş Onay</ng-template>
+        <ng-template matStepLabel>Sipariş Bilgileri</ng-template>
         <app-contact-info></app-contact-info>
       </mat-step>
     </mat-horizontal-stepper>
@@ -19,13 +19,17 @@
   <div class="navigate-place">
     <span class="mat-body-2">Toplam : {{totalCost | number:'.2-2'}} TL </span>
     <button mat-flat-button color="primary" (click)="this.toggleStepper()">
-      <span *ngIf="cartStepActive">Ödeme Yap</span>
+      <span *ngIf="cartStepActive">Siparişi Tamamla</span>
       <span *ngIf="!cartStepActive">Sepeti Göster</span>
     </button>
   </div>
 </main>
 
-<div *ngIf="orders.length<=0" class="empty-text">
+<div class="payment-result" *ngIf="showPaymentResult">
+  <app-payment-result [result]="paymentResult" [errorMsg]="this.errMsg"></app-payment-result>
+</div>
+
+<div *ngIf="!showPaymentResult && orders.length<=0" class="empty-text">
   <h3>Sepetiniz Boş</h3>
   <p>Ürünlerimize göz atarak alışverişe başlayabilirsiniz.</p>
 </div>

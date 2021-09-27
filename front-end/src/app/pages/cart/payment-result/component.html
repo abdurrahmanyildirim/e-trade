@@ -1,0 +1,13 @@
+<main class="container">
+  <section class="success" *ngIf="result === 'true'">
+    <mat-icon class="icon success-color">check_circle_outline</mat-icon>
+    <h3>Siparişiniz Verildi!</h3>
+    <p>Siparişlerim ekranından sipariş durumunu takip edebilirsiniz.</p>
+  </section>
+  <section class="error" *ngIf="result === 'false'">
+    <mat-icon class="icon error-color">error_outline</mat-icon>
+    <h3>Bir Hata Meydana Geldi!</h3>
+    <p>{{errorMsg}}</p>
+    <p>Lütfen daha sonra tekrar deneyiniz</p>
+  </section>
+</main>

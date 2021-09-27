@@ -40,6 +40,7 @@ if (!isDevMode()) {
   };
 }
 
+app.set('trust proxy', true);
 app.use(cors(corsOpts));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -54,6 +55,7 @@ require('./app_server/routes/routeManager')(app);
 require('./app_server/services/socket').init(io);
 
 const PORT = process.env.PORT;
+// '0.0.0.0'
 server.listen(PORT, function () {
   if (isDevMode()) {
     console.log('Listening to : ' + PORT);

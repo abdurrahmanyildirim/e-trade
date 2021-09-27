@@ -19,5 +19,10 @@ module.exports = {
       from: process.env.MAIL
     }
   },
-  domain: process.env.ORIGIN
+  origin: process.env.ORIGIN,
+  iyzipayConfig: {
+    apiKey: process.env.API_KEY,
+    secretKey: process.env.SECRET_KEY,
+    uri: process.env.IYZIPAY_URI
+  }
 };

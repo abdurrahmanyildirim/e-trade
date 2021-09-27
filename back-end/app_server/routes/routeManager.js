@@ -7,6 +7,7 @@ const category = require('./category');
 const contact = require('./contact');
 const user = require('./user');
 const db = require('./db');
+const iyzipay = require('./iyzipay');
 
 module.exports = (app) => {
   app.use('/auth', auth);
@@ -18,4 +19,5 @@ module.exports = (app) => {
   app.use('/order', order);
   app.use('/photo', account);
   app.use('/db', db);
+  app.use('/iyzipay', iyzipay);
 };

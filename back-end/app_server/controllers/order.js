@@ -1,14 +1,10 @@
 const Order = require('../models/order');
-const Status = require('../models/status');
 const { encForResp, decrypt } = require('../services/crypto');
 const email = require('../services/email/index');
-const config = require('../../config');
 
-module.exports.getOrders = (req, res) => {
-  Order.find({ userId: req.id }, (err, orders) => {
-    if (err) {
-      return res.status(404).send({ message: 'Siparişler bulunamadı' });
-    }
+module.exports.getOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.id });
     orders.map((order) => {
       const contactInfo = {
         city: encForResp(order.contactInfo.city),
@@ -20,7 +16,9 @@ module.exports.getOrders = (req, res) => {
       return order;
     });
     return res.status(200).send(orders);
-  });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 };
 
 module.exports.orderDetail = async (req, res) => {
@@ -68,11 +66,9 @@ module.exports.orderDetail = async (req, res) => {
   }
 };
 
-module.exports.allOrders = (req, res) => {
-  Order.find((err, orders) => {
-    if (err) {
-      return res.status(400).send({ message: 'Veri tabanı hatası' });
-    }
+module.exports.allOrders = async (req, res) => {
+  try {
+    const orders = await Order.find();
     orders.map((order) => {
       const contactInfo = {
         city: encForResp(order.contactInfo.city),
@@ -84,7 +80,9 @@ module.exports.allOrders = (req, res) => {
       return order;
     });
     return res.status(200).send(orders);
-  });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 };
 
 const statusesDb = [
@@ -137,13 +135,9 @@ module.exports.updateStatus = async (req, res) => {
       date: Date.now()
     });
     const newOrder = new Order(order);
-    newOrder.save(async (err) => {
-      if (err) {
-        return res.status(500).send({ message: 'Veri tabanı hatası' });
-      }
-      await sendEmail(newOrder, status);
-      return res.status(200).send();
-    });
+    await newOrder.save();
+    await sendEmail(newOrder, status);
+    return res.status(200).send();
   } catch (error) {
     return res.status(500).send({ message: err });
   }

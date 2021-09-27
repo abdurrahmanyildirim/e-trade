@@ -12,7 +12,7 @@ import { CartService } from 'src/app/shared/services/rest/cart/service';
 import { UserService } from 'src/app/shared/services/rest/user/service';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
-import { City, UserInfo } from './model';
+import { City, PaymentReqResponse, UserInfo } from './model';
 
 @Component({
   selector: 'app-contact-info',
@@ -32,10 +32,8 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
 
   constructor(
     private cartService: CartService,
-    private router: Router,
     private fb: FormBuilder,
     private dialogService: DialogService,
-    private snackbar: SnackbarService,
     private userService: UserService,
     private http: HttpClient
   ) {
@@ -153,12 +151,21 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
       .purchaseOrder(purchaseInfo)
       .pipe(delay(2500))
       .subscribe({
-        next: (response) => {
-          this.snackbar.showSuccess(
-            'Siparişiniz Alındı. Siparişlerim ekranından siparişinizi kontrol edebilirsiniz.'
-          );
-          this.router.navigateByUrl('orders');
-          this.cartService.cart.next([]);
+        next: (response: PaymentReqResponse) => {
+          // this.cartService.cart.next([]);
+          if (response.status !== 'failure') {
+            window.open(response.payWithIyzicoPageUrl, '_self', 'noopener,noreferrer');
+          } else {
+            this.orderStatus = 1;
+          }
+          // checkoutFormContent: "<script type=\"text/javascript\">if (typeof iyziInit == 'undefined') {var iyziInit = {currency:\"TRY\",token:\"a78bf50b-a98c-4720-9270-a554d97e2af7\",price:330.00,locale:\"tr\",baseUrl:\"https://api.iyzipay.com\", merchantGatewayBaseUrl:\"https://merchant-gateway.iyzipay.com\", registerCardEnabled:false,bkmEnabled:false,bankTransferEnabled:false,bankTransferRedirectUrl:\"http://localhost:4200/iyzipay/callback\",bankTransferCustomUIProps:{},campaignEnabled:false,creditCardEnabled:true,bankTransferAccounts:[],userCards:[],fundEnabled:true,memberCheckoutOtpData:{},force3Ds:true,isSandbox:false,storeNewCardEnabled:true,paymentWithNewCardEnabled:true,enabledApmTypes:[],payWithIyzicoUsed:false,payWithIyzicoEnabled:true,payWithIyzicoCustomUI:{},buyerName:\"Ayşe\",buyerSurname:\"Fatma\",merchantInfo:\"https://taserzuccaciye.com/\",cancelUrl:\"\",buyerProtectionEnabled:false,hide3DS:false,gsmNumber:\"\",email:\"ayse@fatma.com\",checkConsumerDetail:{},subscriptionPaymentEnabled:false,ucsEnabled:false,fingerprintEnabled:false,payWithIyzicoFirstTab:false,metadata : {},createTag:function(){var iyziJSTag = document.createElement('script');iyziJSTag.setAttribute('src','https://static.iyzipay.com/checkoutform/v2/bundle.js?v=1632427382509');document.head.appendChild(iyziJSTag);}};iyziInit.createTag();}</script>"
+          // locale: "tr"
+          // payWithIyzicoPageUrl: "https://consumer.iyzico.com/checkout?token=a78bf50b-a98c-4720-9270-a554d97e2af7&lang=tr"
+          // paymentPageUrl: "https://cpp.iyzipay.com?token=a78bf50b-a98c-4720-9270-a554d97e2af7&lang=tr"
+          // status: "success"
+          // systemTime: 1632427382510
+          // token: "a78bf50b-a98c-4720-9270-a554d97e2af7"
+          // tokenExpireTime: 1800
         },
         error: (err) => {
           console.error(err);

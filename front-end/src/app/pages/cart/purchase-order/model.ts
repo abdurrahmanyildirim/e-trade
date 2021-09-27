@@ -18,3 +18,17 @@ export interface City {
   code: number;
   districts: string[];
 }
+
+export interface PaymentReqResponse {
+  checkoutFormContent?: string;
+  locale?: string;
+  payWithIyzicoPageUrl?: string;
+  paymentPageUrl?: string;
+  status?: string;
+  systemTime?: number;
+  token?: string;
+  tokenExpireTime?: number;
+  errorCode?: string;
+  errorMessage?: string;
+  errorGroup?: string;
+}

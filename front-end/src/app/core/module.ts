@@ -1,4 +1,4 @@
-import { isDevMode, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import {
   GoogleLoginProvider,
   SocialAuthServiceConfig,
@@ -16,7 +16,7 @@ const url = environment.production ? '' : 'http://localhost:4205';
 
 const config: SocketIoConfig = { url, options: {} };
 let key = '';
-if (isDevMode()) {
+if (environment.production) {
   key = '399045451146-r6e03sbio9clb86ontnvrsk605fm623p.apps.googleusercontent.com';
 } else {
   key = '539238066533-cmar8fngup5h8uj3rjd7481vkrcj5c4g.apps.googleusercontent.com';

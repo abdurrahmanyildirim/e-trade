@@ -10,8 +10,8 @@ export class UtilityService {
     img.src = path;
     const foo =
       document.body.clientWidth >= document.body.clientHeight
-        ? document.body.clientHeight * 0.6
-        : document.body.clientWidth * 0.6;
+        ? document.body.clientHeight * 0.8
+        : document.body.clientWidth * 0.8;
     img.style.width = foo + 'px';
     img.style.height = foo + 'px';
     const imgContainer = document.createElement('div');

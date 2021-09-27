@@ -1,8 +1,9 @@
 const User = require('../models/user');
 const Product = require('../models/product');
-const Order = require('../models/order');
 const { encrypt, decrypt } = require('../services/crypto');
-const { sendEmail } = require('../services/email/index');
+const { isDevMode } = require('../../common');
+const { sendFormRequest } = require('../services/iyzipay');
+var Iyzipay = require('iyzipay');
 
 module.exports.updateCart = async (req, res) => {
   const user = await User.findOne({ _id: req.id });
@@ -81,34 +82,15 @@ module.exports.purchaseOrder = async (req, res) => {
           brand: product.brand,
           discountRate: product.discountRate,
           price: product.price,
-          photoPath: product.photos[0].path
+          photoPath: product.photos[0].path,
+          category: product.category
         });
-        product.stockQuantity = product.stockQuantity - order.quantity;
-        await product.save();
       }
     });
     const city = encrypt(req.body.city);
     const district = encrypt(req.body.district);
     const address = encrypt(req.body.address);
     const phone = encrypt(req.body.phone);
-    const newOrder = new Order({
-      userId: req.id,
-      userName: user.firstName + ' ' + user.lastName,
-      email: user.email,
-      isActive: true,
-      date: Date.now(),
-      status: [{ key: 0, desc: 'Siparişiniz alındı.', date: Date.now() }],
-      products: orderedProducts,
-      contractsChecked: req.body.contractsChecked,
-      contactInfo: {
-        city,
-        district,
-        address,
-        phone
-      }
-    });
-    let givenOrder = await newOrder.save();
-    user.cart = [];
     user.phones[0] = {
       title: 'phone' + Date.now(),
       phone
@@ -119,19 +101,63 @@ module.exports.purchaseOrder = async (req, res) => {
       district,
       address
     };
-    user.save(async (err) => {
-      if (err) {
-        console.log(err);
-      }
-      await sendEmail(
-        decrypt(user.email),
-        'Sipariş Bilgilendirme',
-        givenOrder._id + ' numaralı siparişiniz Alındı. En kısa sürede işleme alınacaktır.'
-      );
-      return res.status(200).send({ message: 'Sipariş verildi.' });
-    });
+    await user.save();
+    const reqData = initIyzipayReqData(orderedProducts, user, req);
+    const result = await sendFormRequest(reqData);
+    return res.status(200).send(result);
   } catch (error) {
-    console.log(error);
-    return res.status(500).send({ message: 'Beklenmedik bir hata oldu' });
+    console.error(error);
+    return res.status(500).send(error);
   }
+};
+
+const initIyzipayReqData = (orderedProducts, user, req) => {
+  const totalPrice = orderedProducts.reduce(
+    (sum, cur) => sum + (cur.price - cur.price * cur.discountRate) * cur.quantity,
+    0
+  );
+  const basketItems = orderedProducts.map((prod) => {
+    return {
+      id: prod.productId + '',
+      name: prod.name,
+      category1: prod.category,
+      itemType: Iyzipay.BASKET_ITEM_TYPE.PHYSICAL,
+      price: (prod.price - prod.price * prod.discountRate) * prod.quantity + ''
+    };
+  });
+  const callbackUrl = isDevMode()
+    ? 'http://localhost:4205/iyzipay/callback?id=' + req.id
+    : process.env.ORIGIN + '/iyzipay/callback?id=' + req.id;
+  return {
+    price: totalPrice + '',
+    paidPrice: totalPrice + '',
+    currency: Iyzipay.CURRENCY.TRY,
+    callbackUrl,
+    enabledInstallments: [1, 2, 3, 6], // Taksit Seçenekleri
+    buyer: {
+      id: user._id + '',
+      name: user.firstName,
+      surname: user.lastName,
+      gsmNumber: '+90' + req.body.phone.split(' ').join(''), // Zorunlu değil
+      email: decrypt(user.email), // Üye işyeri tarafındaki alıcıya ait e-posta bilgisi. E-posta adresi alıcıya ait geçerli ve erişilebilir bir adres olmalıdır.
+      identityNumber: '74300864791', // Üye işyeri tarafındaki alıcıya ait kimlik (TCKN) numarası.
+      registrationAddress: `${req.body.address} - ${req.body.district}/${req.body.city}`,
+      ip: req.ip, // Üye işyeri tarafındaki alıcıya ait IP adresi.
+      city: req.body.city,
+      country: 'Turkey'
+    },
+    shippingAddress: {
+      contactName: `${user.firstName} ${user.lastName}`, // Üye işyeri tarafındaki teslimat adresi ad soyad bilgisi. Sepetteki ürünlerden en az 1 tanesi fiziksel ürün (itemType=PHYSICAL) ise zorunludur.
+      city: req.body.city, // 	Üye işyeri tarafındaki teslimat adresi şehir bilgisi. Sepetteki ürünlerden en az 1 tanesi fiziksel ürün (itemType=PHYSICAL) ise zorunludur.
+      country: 'Turkey',
+      address: `${req.body.address} - ${req.body.district}/${req.body.city}`
+    },
+    billingAddress: {
+      contactName: `${user.firstName} ${user.lastName}`,
+      city: req.body.city,
+      country: 'Turkey',
+      address: `${req.body.address} - ${req.body.district}/${req.body.city}`
+    },
+    basketItems
+  };
 };

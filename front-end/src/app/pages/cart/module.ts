@@ -13,11 +13,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { PurchaseOrderComponent } from './purchase-order/component';
+import { PaymentResulComponent } from './payment-result/component';
 
 const routes: Routes = [{ path: '', component: CartComponent }];
 
 @NgModule({
-  declarations: [CartComponent, CartDetailComponent, PurchaseOrderComponent],
+  declarations: [CartComponent, CartDetailComponent, PurchaseOrderComponent, PaymentResulComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,

@@ -7,6 +7,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
@@ -29,16 +30,36 @@ export class CartComponent implements OnInit, OnDestroy {
   totalCost: number;
   cartStepActive = true;
   @ViewChild('stepper') stepper: MatStepper;
+  showPaymentResult = true;
+  paymentResult: string;
+  errMsg: string;
 
   constructor(
     private cartService: CartService,
     private productService: ProductService,
     private dialogService: DialogService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.initOrders();
+    this.activatedRoute.queryParams.subscribe({
+      next: (params) => {
+        // tslint:disable-next-line: no-string-literal
+        this.paymentResult = params['status'];
+        if (isPresent(this.paymentResult)) {
+          this.showPaymentResult = true;
+          // tslint:disable-next-line: no-string-literal
+          this.errMsg = params['message'];
+        } else {
+          this.showPaymentResult = false;
+          this.initOrders();
+        }
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
   }
 
   initOrders(): void {
