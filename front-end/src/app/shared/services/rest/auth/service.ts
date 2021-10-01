@@ -104,6 +104,15 @@ export class AuthService extends BaseRestService {
     return this.send<any>(options);
   }
 
+  activateEmail(token:string):Observable<any>{
+    const options = {
+      method: RequestMethod.get,
+      serviceMethod: ServiceMethod.activateEmail,
+      params: { token }
+    } as RequestOptions;
+    return this.send<any>(options);
+  }
+
   changePassword(token: string, id: string, password: string): Observable<any> {
     const options = {
       method: RequestMethod.post,

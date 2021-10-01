@@ -1,0 +1,13 @@
+<main class="container">
+  <section class="success" *ngIf="isActivated === true">
+    <mat-icon class="icon success-color">check_circle_outline</mat-icon>
+    <p>Hesabınız Aktifleştirildi!</p>
+    <p>Keyifli alışverişler dileriz.</p>
+  </section>
+  <section class="error" *ngIf="isActivated === false">
+    <mat-icon class="icon error-color">error_outline</mat-icon>
+    <h3>Bir Hata Meydana Geldi!</h3>
+    <p>{{errorMsg}}</p>
+    <p>Sistem kaynaklı bir hata olduğunu düşünüyorsanız lütfen bizimle iletişime geçiniz</p>
+  </section>
+</main>

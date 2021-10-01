@@ -1,5 +1,12 @@
 <div class="container">
-  <mat-card>
+  <div class="after-register text-center" *ngIf="isRegistered">
+    <mat-icon class="icon success-color">check_circle_outline</mat-icon>
+    <p class="mat-body-2">Kayıt işlemi başarılı!</p>
+    <p class="mat-body-2">
+      Lütfen mail adresinize gönderilen aktivasyon linkine tıklayarak hesabınızı aktifleştiriniz.
+    </p>
+  </div>
+  <mat-card *ngIf="!isRegistered">
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="register()">
         <mat-form-field appearance="outline">
@@ -27,7 +34,7 @@
           >
             *50 karakterden fazla olamaz.
           </mat-error>
-        </mat-form-field >
+        </mat-form-field>
 
         <mat-form-field appearance="outline">
           <input
@@ -82,7 +89,7 @@
       </form>
     </mat-card-content>
   </mat-card>
-  <mat-card style="margin-top: 10px">
+  <mat-card style="margin-top: 10px" *ngIf="!isRegistered">
     <p class="center">Hesabın var mı? <a class="link" routerLink="/auth/login">Giriş Yap</a></p>
   </mat-card>
 </div>

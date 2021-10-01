@@ -7,7 +7,8 @@ const userSchema = new Schema({
   firstName: { type: String, required: true, trim: true },
   lastName: { type: String, required: true, trim: true },
   password: { type: String, required: true, trim: true },
-  role: { type: String, required: true },
+  role: { type: String, required: true, default: 'Client' },
+  isActivated: { type: Boolean, default: false }, // Hesabın aktif edilmesi kontrolü
   authType: String,
   cart: [
     {
@@ -16,7 +17,7 @@ const userSchema = new Schema({
     }
   ],
   createdDate: { type: Date, default: Date.now() },
-  isActive: Boolean,
+  isActive: { type: Boolean, default: true },
   favorites: [
     {
       productId: { type: mongoose.SchemaTypes.ObjectId, required: true, ref: 'Product' }

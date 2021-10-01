@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
@@ -26,6 +27,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   form: FormGroup;
   user: RegisterUser;
   subs = new Subscription();
+  isRegistered = false;
 
   constructor(
     private fb: FormBuilder,
@@ -41,15 +43,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   authWithGoogle(): void {
-    const subs = this.authService.signInWithGoogle().subscribe({
-      next: (res) => {
-        this.settingService.initUserSettingsAfterLogin(res);
-      },
-      error: (err) => {
-        console.log(err);
-        this.snackBar.showError('Beklenmeyen bir hata meydana geldi. Tekrar deneyiniz.');
-      }
-    });
+    const subs = this.authService
+      .signInWithGoogle()
+      .pipe(switchMap((res) => this.settingService.initUserSettingsAfterLogin(res)))
+      .subscribe({
+        next: (res) => {
+          this.router.navigateByUrl('main');
+        },
+        error: (err) => {
+          console.log(err);
+          this.snackBar.showError('Beklenmeyen bir hata meydana geldi. Tekrar deneyiniz.');
+        }
+      });
     this.subs.add(subs);
   }
 
@@ -66,11 +71,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         nullValidator()
       ]),
       email: new FormControl('', [Validators.required, Validators.email, nullValidator()]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-        nullValidator()
-      ])
+      password: new FormControl('', [Validators.required, Validators.minLength(6), nullValidator()])
     });
   }
 
@@ -90,8 +91,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.user = Object.assign({}, this.form.value);
       const subs = this.authService.register(this.user).subscribe(
         (data) => {
-          this.snackBar.showSuccess('Üyelik işlemleri yapıldı.');
-          this.router.navigateByUrl('login');
+          this.isRegistered = true;
+          // this.snackBar.showSuccess('Üyelik işlemleri yapıldı.');
+          // this.router.navigateByUrl('login');
         },
         (err) => {
           console.log(err);

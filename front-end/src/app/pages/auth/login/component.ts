@@ -7,6 +7,7 @@ import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { SettingService } from 'src/app/shared/services/site/settings';
 import { Subscription } from 'rxjs';
 import { isPresent } from 'src/app/shared/util/common';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private snackBar: SnackbarService,
-    private settingService: SettingService
+    private settingService: SettingService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -30,15 +32,21 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   authWithGoogle(): void {
-    const subs = this.authService.signInWithGoogle().subscribe({
-      next: (res) => {
-        this.settingService.initUserSettingsAfterLogin(res);
-      },
-      error: (err) => {
-        console.log(err);
-        this.snackBar.showError('Beklenmeyen bir hata meydana geldi. Tekrar deneyiniz.');
-      }
-    });
+    const subs = this.authService
+      .signInWithGoogle()
+      .pipe(switchMap((resp) => this.settingService.initUserSettingsAfterLogin(resp)))
+      .subscribe({
+        next: () => {
+          this.router.navigateByUrl('main');
+        },
+        error: (err) => {
+          console.error(err.error);
+          this.snackBar.showError('Beklenmeyen bir hata meydana geldi!');
+          this.form.patchValue({
+            password: ''
+          });
+        }
+      });
     this.subs.add(subs);
   }
 
@@ -52,18 +60,21 @@ export class LoginComponent implements OnInit, OnDestroy {
   login(): void {
     if (this.form.valid) {
       this.user = Object.assign({}, this.form.value);
-      const subs = this.authService.login(this.user).subscribe(
-        (loginResponse) => {
-          this.settingService.initUserSettingsAfterLogin(loginResponse);
-        },
-        (err) => {
-          console.error(err.error);
-          this.snackBar.showError('Girilen isim veya şifre hatalı!');
-          this.form.patchValue({
-            password: ''
-          });
-        }
-      );
+      const subs = this.authService
+        .login(this.user)
+        .pipe(switchMap((resp) => this.settingService.initUserSettingsAfterLogin(resp)))
+        .subscribe({
+          next: () => {
+            this.router.navigateByUrl('main');
+          },
+          error: (err) => {
+            console.error(err.error);
+            this.snackBar.showError('Girilen isim veya şifre hatalı!');
+            this.form.patchValue({
+              password: ''
+            });
+          }
+        });
       this.subs.add(subs);
     }
   }
