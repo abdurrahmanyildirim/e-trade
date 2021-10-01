@@ -14,7 +14,7 @@ const util = require('./app_server/services/util');
 const verify = require('./app_server/services/verify');
 const helmet = require('helmet');
 
-const ioCors = {};
+let ioCors = {};
 if (!isDevMode()) {
   ioCors = {
     origin: process.env.ORIGIN
@@ -31,7 +31,7 @@ app.use(
   })
 );
 
-const corsOpts = {};
+let corsOpts = {};
 
 if (!isDevMode()) {
   corsOptions = {

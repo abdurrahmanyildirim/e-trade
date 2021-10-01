@@ -7,10 +7,11 @@ const {
   encForResp
 } = require('../services/crypto');
 
-module.exports.updateContactInfo = (req, res) => {
-  const body = req.body;
-  User.findOne({ _id: req.id }, (err, user) => {
-    if (err) {
+module.exports.updateContactInfo = async (req, res) => {
+  try {
+    const body = req.body;
+    const user = await User.findOne({ _id: req.id });
+    if (!user) {
       return res.status(401).send({ message: 'Kullanıcı bulunamadı' });
     }
     user.phones[0] = {
@@ -23,18 +24,16 @@ module.exports.updateContactInfo = (req, res) => {
       district: encrypt(body.district),
       address: encrypt(body.address)
     };
-    user.save((err) => {
-      if (err) {
-        return res.status(401).send({ message: 'Güncelleme sırasında bir hata oldu' });
-      }
-      return res.status(200).send({
-        phone: basicEncrypt(body.phone),
-        city: basicEncrypt(body.city),
-        district: basicEncrypt(body.district),
-        address: basicEncrypt(body.address)
-      });
+    await user.save();
+    return res.status(200).send({
+      phone: basicEncrypt(body.phone),
+      city: basicEncrypt(body.city),
+      district: basicEncrypt(body.district),
+      address: basicEncrypt(body.address)
     });
-  });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 };
 
 module.exports.updateGeneralInfo = (req, res) => {

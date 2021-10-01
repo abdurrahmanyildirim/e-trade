@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport(mail.transporter);
 const attachments = [
   {
     filename: 'logo.png',
-    path: `${__dirname}/${company_name}/logo.png`,
+    path: `${__dirname}/${process.env.NODE_ENV}/logo.png`,
     cid: 'logo' //same cid value as in the html img src
   },
   {

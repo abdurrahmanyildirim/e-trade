@@ -140,7 +140,7 @@ const initIyzipayReqData = (orderedProducts, user, req) => {
       surname: user.lastName,
       gsmNumber: '+90' + req.body.phone.split(' ').join(''), // Zorunlu değil
       email: decrypt(user.email), // Üye işyeri tarafındaki alıcıya ait e-posta bilgisi. E-posta adresi alıcıya ait geçerli ve erişilebilir bir adres olmalıdır.
-      identityNumber: '74300864791', // Üye işyeri tarafındaki alıcıya ait kimlik (TCKN) numarası.
+      identityNumber: '11111111111', // Üye işyeri tarafındaki alıcıya ait kimlik (TCKN) numarası.
       registrationAddress: `${req.body.address} - ${req.body.district}/${req.body.city}`,
       ip: req.ip, // Üye işyeri tarafındaki alıcıya ait IP adresi.
       city: req.body.city,
