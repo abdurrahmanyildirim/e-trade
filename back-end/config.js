@@ -14,7 +14,7 @@ module.exports = {
         user: process.env.MAIL_ADDRESS,
         pass: process.env.MAIL_PASSWORD
       },
-      from: process.env.MAIL
+      from: process.env.MAIL_ADDRESS
     }
   },
   origin: process.env.ORIGIN,
