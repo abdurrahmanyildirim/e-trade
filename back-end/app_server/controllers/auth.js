@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const { TOKEN_KEY, company_name, origin } = require('../../config');
+const { company_name, origin } = require('../../config');
 const { encrypt, comparePassword, hashPassword, decrypt } = require('../services/crypto');
 const { sendCustomEmail } = require('../services/email/index');
+const { sign, verify } = require('../services/jwt');
 
 module.exports.login = async (req, res) => {
   try {
@@ -55,7 +55,7 @@ module.exports.register = async (req, res) => {
 module.exports.activateEmail = async (req, res) => {
   try {
     const token = req.query.token;
-    const decoded = jwt.verify(token, TOKEN_KEY);
+    const decoded = verify(token, '');
     const email = decoded.email;
     const user = await User.findOne({ email: encrypt(email) });
     if (!user) {
@@ -98,15 +98,7 @@ module.exports.changePasswordRequest = async (req, res) => {
   if (!user) {
     return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
   }
-  const token = jwt.sign(
-    {
-      _id: user._id
-    },
-    TOKEN_KEY + user.password,
-    {
-      expiresIn: '1h'
-    }
-  );
+  const token = sign({ _id: user._id }, '1h', user.password);
   sendCustomEmail(
     email,
     'Şifre Sıfırlama',
@@ -128,19 +120,10 @@ module.exports.changePassword = async (req, res) => {
     if (!user) {
       return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
     }
-
-    jwt.verify(token, TOKEN_KEY + user.password, (err, decoded) => {
-      if (err) {
-        return res.status(400).send({ message: 'Geçersiz anahtar!' });
-      }
-      password = hashPassword(password);
-      User.updateOne({ _id: id }, { password }, (err) => {
-        if (err) {
-          return res.status(500).send(err);
-        }
-        return res.status(200).send({ message: 'Şifre değiştirildi.' });
-      });
-    });
+    verify(token, user.password);
+    password = hashPassword(password);
+    await User.updateOne({ _id: id }, { password });
+    return res.status(200).send({ message: 'Şifre değiştirildi.' });
   } catch (error) {
     return res.status(500).send(error);
   }
@@ -179,17 +162,7 @@ const activationMail = (user, token) => {
 };
 
 const createLogin = (user) => {
-  const token = jwt.sign(
-    {
-      _id: user._id,
-      email: decrypt(user.email),
-      role: user.role
-    },
-    TOKEN_KEY,
-    {
-      expiresIn: '360d'
-    }
-  );
+  const token = sign({ _id: user._id, email: decrypt(user.email), role: user.role }, '360d', '');
   const info = {
     email: user.email,
     firstName: user.firstName,
