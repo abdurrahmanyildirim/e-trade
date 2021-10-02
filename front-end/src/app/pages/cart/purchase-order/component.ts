@@ -1,13 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
-import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { CartService } from 'src/app/shared/services/rest/cart/service';
 import { UserService } from 'src/app/shared/services/rest/user/service';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
@@ -29,13 +27,15 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
   subs = new Subscription();
   cities: City[];
   selectedCity: City;
+  errMsg: any;
 
   constructor(
     private cartService: CartService,
     private fb: FormBuilder,
     private dialogService: DialogService,
     private userService: UserService,
-    private http: HttpClient
+    private http: HttpClient,
+    private cd: ChangeDetectorRef
   ) {
     this.orders = this.cartService.cart.value.map((order) => {
       return {
@@ -152,24 +152,18 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
       .pipe(delay(2500))
       .subscribe({
         next: (response: PaymentReqResponse) => {
-          // this.cartService.cart.next([]);
           if (response.status !== 'failure') {
             window.open(response.payWithIyzicoPageUrl, '_self', 'noopener,noreferrer');
           } else {
             this.orderStatus = 1;
+            this.cd.detectChanges();
           }
-          // checkoutFormContent: "<script type=\"text/javascript\">if (typeof iyziInit == 'undefined') {var iyziInit = {currency:\"TRY\",token:\"a78bf50b-a98c-4720-9270-a554d97e2af7\",price:330.00,locale:\"tr\",baseUrl:\"https://api.iyzipay.com\", merchantGatewayBaseUrl:\"https://merchant-gateway.iyzipay.com\", registerCardEnabled:false,bkmEnabled:false,bankTransferEnabled:false,bankTransferRedirectUrl:\"http://localhost:4200/iyzipay/callback\",bankTransferCustomUIProps:{},campaignEnabled:false,creditCardEnabled:true,bankTransferAccounts:[],userCards:[],fundEnabled:true,memberCheckoutOtpData:{},force3Ds:true,isSandbox:false,storeNewCardEnabled:true,paymentWithNewCardEnabled:true,enabledApmTypes:[],payWithIyzicoUsed:false,payWithIyzicoEnabled:true,payWithIyzicoCustomUI:{},buyerName:\"Ayşe\",buyerSurname:\"Fatma\",merchantInfo:\"https://taserzuccaciye.com/\",cancelUrl:\"\",buyerProtectionEnabled:false,hide3DS:false,gsmNumber:\"\",email:\"ayse@fatma.com\",checkConsumerDetail:{},subscriptionPaymentEnabled:false,ucsEnabled:false,fingerprintEnabled:false,payWithIyzicoFirstTab:false,metadata : {},createTag:function(){var iyziJSTag = document.createElement('script');iyziJSTag.setAttribute('src','https://static.iyzipay.com/checkoutform/v2/bundle.js?v=1632427382509');document.head.appendChild(iyziJSTag);}};iyziInit.createTag();}</script>"
-          // locale: "tr"
-          // payWithIyzicoPageUrl: "https://consumer.iyzico.com/checkout?token=a78bf50b-a98c-4720-9270-a554d97e2af7&lang=tr"
-          // paymentPageUrl: "https://cpp.iyzipay.com?token=a78bf50b-a98c-4720-9270-a554d97e2af7&lang=tr"
-          // status: "success"
-          // systemTime: 1632427382510
-          // token: "a78bf50b-a98c-4720-9270-a554d97e2af7"
-          // tokenExpireTime: 1800
         },
         error: (err) => {
           console.error(err);
+          this.errMsg = err.error;
           this.orderStatus = 1;
+          this.cd.detectChanges();
         }
       });
     this.subs.add(subs);

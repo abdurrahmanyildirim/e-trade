@@ -82,13 +82,13 @@ export class AuthService extends BaseRestService {
     this.isAuth.next(false);
   }
 
-  register(user: RegisterUser): Observable<RegisterUser> {
+  register(user: RegisterUser): Observable<LoginResponse> {
     const options = {
       method: RequestMethod.post,
       body: user,
       serviceMethod: ServiceMethod.register
     } as RequestOptions;
-    return this.send<RegisterUser>(options);
+    return this.send<LoginResponse>(options);
   }
 
   loggedIn(): boolean {

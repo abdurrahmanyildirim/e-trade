@@ -43,7 +43,7 @@ export class CartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe({
+    const subs = this.activatedRoute.queryParams.subscribe({
       next: (params) => {
         // tslint:disable-next-line: no-string-literal
         this.paymentResult = params['status'];
@@ -60,6 +60,7 @@ export class CartComponent implements OnInit, OnDestroy {
         console.error(err);
       }
     });
+    this.subs.add(subs);
   }
 
   initOrders(): void {

@@ -3,7 +3,6 @@ const User = require('../models/user');
 const { TOKEN_KEY, company_name, origin } = require('../../config');
 const { encrypt, comparePassword, hashPassword, decrypt } = require('../services/crypto');
 const emailService = require('../services/email/index');
-const { isDevMode } = require('../../common');
 
 module.exports.login = async (req, res) => {
   try {
@@ -60,27 +59,19 @@ module.exports.register = async (req, res) => {
       password: hashPassword(userData.password),
       authType: 'normal'
     });
-    await newUser.save();
-    const token = jwt.sign(
-      {
-        email: userData.email
-      },
-      TOKEN_KEY,
-      {
-        expiresIn: '360d'
-      }
-    );
+    const createdUser = await newUser.save();
+    const authData = createLogin(createdUser);
     emailService.sendCustomEmail(
       userData.email,
       'Hesap Aktivasyonu',
       `
       <p> Merhaba ${userData.firstName} ${userData.lastName}</p>
-      <p>Taşer züccaciye hesabınızı aktif hale getirmek için <a href="${origin}/#/auth/activate-email?v1=${token}" target="_blank" >tıklayınız.</a></p>
+      <p>Taşer züccaciye hesabınızı aktif hale getirmek için <a href="${origin}/#/auth/activate-email?v1=${authData.token}" target="_blank" >tıklayınız.</a></p>
       <br>
       <p>${company_name}</p>
       `
     );
-    return res.status(201).send({ message: 'Yeni kullanıcı oluşturuldu.' });
+    return res.status(201).send(authData);
   } catch (error) {
     return res.status(500).send(error);
   }

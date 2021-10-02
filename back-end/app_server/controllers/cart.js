@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const Product = require('../models/product');
 const { encrypt, decrypt } = require('../services/crypto');
-const { isDevMode } = require('../../common');
+const { isDevMode, isPresent } = require('../../common');
 const { sendFormRequest } = require('../services/iyzipay');
 var Iyzipay = require('iyzipay');
 
@@ -65,6 +65,9 @@ module.exports.purchaseOrder = async (req, res) => {
     const user = await User.findOne({ _id: req.id });
     if (!user) {
       return res.status(500).send({ message: 'Kullanıcı bulunamadı' });
+    }
+    if (!isPresent(user.isActivated) || user.isActivated === false) {
+      return res.status(400).send({ message: 'Mail adresi aktif değil', issue: 'mail' });
     }
     const productIds = await user.cart.map((order) => order.productId);
     const products = await Product.find({ _id: { $in: productIds } });

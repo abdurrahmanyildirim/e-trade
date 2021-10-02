@@ -36,6 +36,17 @@ mat-checkbox {
   margin-right: 10px;
 }
 
+.error-color {
+  color: rgba(217, 92, 92, 0.95);
+}
+
+.icon {
+  font-size: 60px;
+  width: 60px;
+  height: 60px;
+}
+
+
 @media only screen and (max-width: 650px) {
   .container {
     margin-top: 0;

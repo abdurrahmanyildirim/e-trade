@@ -88,10 +88,14 @@
       Ödeme sayfasına yönlendiriliyorsunuz. Lütfen Bekleyiniz...
     </p>
   </section>
-  <section *ngIf="orderStatus === 1" class="section">
-    <mat-icon aria-hidden="false" class="error-icon">error</mat-icon>
+  <section *ngIf="orderStatus === 1 && !errMsg.issue" class="section">
+    <mat-icon aria-hidden="false" class="icon error-color">error</mat-icon>
     <p class="mat-body-2">
       İşlem sırasında bir hata meydana geldi. Sayfayı yenileyip tekrar deneyiniz.
     </p>
+  </section>
+  <section *ngIf="orderStatus === 1 && errMsg.issue === 'mail'" class="section">
+    <mat-icon aria-hidden="false" class="icon error-color">error</mat-icon>
+    <p class="mat-body-2">Mail adresinizi aktif hale getirmeniz gerekmektedir.</p>
   </section>
 </main>

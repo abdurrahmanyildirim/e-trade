@@ -89,21 +89,24 @@ export class RegisterComponent implements OnInit, OnDestroy {
   register(): void {
     if (this.form.valid) {
       this.user = Object.assign({}, this.form.value);
-      const subs = this.authService.register(this.user).subscribe(
-        (data) => {
-          this.isRegistered = true;
-          // this.snackBar.showSuccess('Üyelik işlemleri yapıldı.');
-          // this.router.navigateByUrl('login');
-        },
-        (err) => {
-          console.log(err);
-          this.snackBar.showError('Bir hata meydana geldi. Lütfen bilgilerinizi kontrol ediniz!');
-          this.form.reset();
-          this.form.patchValue({
-            password: ''
-          });
-        }
-      );
+      const subs = this.authService
+        .register(this.user)
+        .pipe(switchMap((res) => this.settingService.initUserSettingsAfterLogin(res)))
+        .subscribe(
+          (data) => {
+            this.isRegistered = true;
+            // this.snackBar.showSuccess('Üyelik işlemleri yapıldı.');
+            // this.router.navigateByUrl('login');
+          },
+          (err) => {
+            console.log(err);
+            this.snackBar.showError('Bir hata meydana geldi. Lütfen bilgilerinizi kontrol ediniz!');
+            this.form.reset();
+            this.form.patchValue({
+              password: ''
+            });
+          }
+        );
       this.subs.add(subs);
     }
   }
