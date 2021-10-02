@@ -11,7 +11,7 @@ module.exports = {
       service: process.env.MAIL_SERVİCE,
       host: process.env.MAIL_HOST,
       auth: {
-        user: process.env.MAIL,
+        user: process.env.MAIL_ADDRESS,
         pass: process.env.MAIL_PASSWORD
       },
       from: process.env.MAIL
