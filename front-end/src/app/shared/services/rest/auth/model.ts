@@ -9,5 +9,6 @@ export enum ServiceMethod {
   contactInfo = 'contact-info',
   changePasswordRequest = 'change-password-request',
   changePassword = 'change-password',
-  activateEmail = 'activate-email'
+  activateEmail = 'activate-email',
+  sendActivationMail = 'send-activation-mail'
 }

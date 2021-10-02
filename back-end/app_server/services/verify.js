@@ -44,6 +44,7 @@ const roleResolver = (req, res, next) => {
       next();
       return;
     }
+    req.auth_token = token;
     req.id = decoded._id;
     req.role = decoded.role;
     next();

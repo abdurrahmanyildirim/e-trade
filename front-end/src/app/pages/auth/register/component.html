@@ -5,6 +5,10 @@
     <p class="mat-body-2">
       Lütfen mail adresinize gönderilen aktivasyon linkine tıklayarak hesabınızı aktifleştiriniz.
     </p>
+    <p class="mat-body-2">
+      Mail gelmediyse tekrar almak
+      <span class="link" (click)="sendEmailActivationRequest()">tıklayınız</span>
+    </p>
   </div>
   <mat-card *ngIf="!isRegistered">
     <mat-card-content>

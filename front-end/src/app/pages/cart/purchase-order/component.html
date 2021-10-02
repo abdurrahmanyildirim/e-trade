@@ -97,5 +97,6 @@
   <section *ngIf="orderStatus === 1 && errMsg.issue === 'mail'" class="section">
     <mat-icon aria-hidden="false" class="icon error-color">error</mat-icon>
     <p class="mat-body-2">Mail adresinizi aktif hale getirmeniz gerekmektedir.</p>
+    <p class="mat-body-2">Aktivasyon mailini tekrar almak için <span class="link" (click)="sendEmailActivationRequest()">tıklayınız</span></p>
   </section>
 </main>

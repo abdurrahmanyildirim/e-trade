@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
+import { SnackbarService } from 'src/app/shared/components/snackbar/service';
+import { AuthService } from 'src/app/shared/services/rest/auth/service';
 import { CartService } from 'src/app/shared/services/rest/cart/service';
 import { UserService } from 'src/app/shared/services/rest/user/service';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
@@ -35,7 +37,9 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     private userService: UserService,
     private http: HttpClient,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private authService: AuthService,
+    private snackBarService: SnackbarService
   ) {
     this.orders = this.cartService.cart.value.map((order) => {
       return {
@@ -166,6 +170,19 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
           this.cd.detectChanges();
         }
       });
+    this.subs.add(subs);
+  }
+
+  sendEmailActivationRequest(): void {
+    const subs = this.authService.sendActivationMail().subscribe({
+      next: () => {
+        this.snackBarService.showSuccess('Aktivasyon maili tekrar gönderildi.');
+      },
+      error: (error) => {
+        console.error(error);
+        this.snackBarService.showError('Mail Gönderilemedi.');
+      }
+    });
     this.subs.add(subs);
   }
 

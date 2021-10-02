@@ -95,8 +95,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         .subscribe(
           (data) => {
             this.isRegistered = true;
-            // this.snackBar.showSuccess('Üyelik işlemleri yapıldı.');
-            // this.router.navigateByUrl('login');
           },
           (err) => {
             console.log(err);
@@ -109,6 +107,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
         );
       this.subs.add(subs);
     }
+  }
+
+  sendEmailActivationRequest(): void {
+    const subs = this.authService.sendActivationMail().subscribe({
+      next: () => {
+        this.snackBar.showSuccess('Aktivasyon maili gönderildi.');
+      },
+      error: (error) => {
+        console.error(error);
+        this.snackBar.showError('Mail Gönderilemedi.');
+      }
+    });
+    this.subs.add(subs);
   }
 
   showContracts(): void {
