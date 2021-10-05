@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DialogData, DialogType } from '../component';
+import { DialogProps, DialogType } from '../component';
 import * as printJS from 'print-js';
 
 @Component({
@@ -8,7 +8,7 @@ import * as printJS from 'print-js';
   styleUrls: ['./component.css']
 })
 export class ContractsDiaologComponent {
-  @Input() dialog: DialogData;
+  @Input() dialog: DialogProps;
   DialogType = DialogType;
   hidden = false;
 

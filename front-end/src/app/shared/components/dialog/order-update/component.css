@@ -1,0 +1,29 @@
+.container {
+  text-align: center;
+  overflow: hidden;
+}
+
+.star {
+  display: inline-block;
+  width: 21px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.comment {
+  width: 100%;
+  min-width: 250px;
+  height: 180px;
+}
+
+.text-area {
+  height: 130px;
+}
+
+.button {
+  width: 100%;
+}
+
+.check-box {
+  padding-bottom: 10px;
+}

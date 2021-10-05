@@ -25,6 +25,7 @@ export interface OrderList {
     phone: string;
   };
   totalPrice: number;
+  cargo: Cargo;
 }
 
 export interface OrderListProduct {
@@ -39,12 +40,18 @@ export interface OrderListProduct {
     rate?: number;
     desc?: string;
   };
+  cargo: Cargo;
 }
 
 export interface Status {
   key: number;
   desc: string;
   date?: string;
+}
+
+export interface Cargo {
+  no: string;
+  company: string;
 }
 
 export enum Statuses {

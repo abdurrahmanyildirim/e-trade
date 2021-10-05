@@ -8,6 +8,10 @@ const orderSchema = new Schema({
   email: String,
   date: { type: Date, default: Date.now() },
   contractsChecked: Boolean,
+  cargo: {
+    no: { type: String, default: '' },
+    company: { type: String, default: '' }
+  },
   products: [
     {
       productId: { type: mongoose.SchemaTypes.ObjectId, required: true, ref: 'Product' },

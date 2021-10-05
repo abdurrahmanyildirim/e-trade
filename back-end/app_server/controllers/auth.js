@@ -93,7 +93,6 @@ module.exports.googleAuth = async (req, res) => {
 
 module.exports.changePasswordRequest = async (req, res) => {
   const email = req.query.email;
-
   const user = await User.findOne({ email: encrypt(email) });
   if (!user) {
     return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });

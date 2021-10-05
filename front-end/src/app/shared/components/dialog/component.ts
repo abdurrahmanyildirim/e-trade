@@ -10,11 +10,11 @@ export class DialogComponent {
   DialogType = DialogType;
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogProps
   ) {}
 }
 
-export interface DialogData {
+export interface DialogProps {
   acceptButton: string;
   refuseButton?: string;
   desc: string;
@@ -31,5 +31,6 @@ export enum DialogType {
   Rating = 'rating',
   CartWarning = 'cartWarning',
   SalesAndInformationContract = 'SalesAndInformationContract',
-  RegisterContract = 'RegisterContract'
+  RegisterContract = 'RegisterContract',
+  OrderUpdate = 'OrderUpdate'
 }

@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { OrderList, Status } from 'src/app/shared/models/order';
+import { Cargo, OrderList, Status } from 'src/app/shared/models/order';
 import { CryptoService } from '../../site/crypto';
 import { BaseRestService } from '../base';
 import { RequestMethod, RequestOptions, RequestType } from '../model';
@@ -87,12 +87,11 @@ export class OrderService extends BaseRestService {
     return this.send<Status[]>(options);
   }
 
-  updateOrderStatus(id: string, status: Status): Observable<void> {
+  updateOrderStatus(id: string, status: Status, inform: boolean, cargo?: Cargo): Observable<void> {
     const options = {
       method: RequestMethod.post,
       serviceMethod: ServiceMethod.updateStatus,
-      params: { id },
-      body: status
+      body: { status, id, cargo, inform }
     } as RequestOptions;
     return this.send<void>(options);
   }

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DialogData } from '../component';
+import { DialogProps } from '../component';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -7,5 +7,5 @@ import { DialogData } from '../component';
   styleUrls: ['./component.css']
 })
 export class ConfirmDialogComponent {
-  @Input() dialog: DialogData;
+  @Input() dialog: DialogProps;
 }

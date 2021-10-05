@@ -1,3 +1,4 @@
+const { isPresent } = require('../../common');
 const Order = require('../models/order');
 const { encForResp, decrypt } = require('../services/crypto');
 const email = require('../services/email/index');
@@ -59,7 +60,8 @@ module.exports.orderDetail = async (req, res) => {
       products: orderedProducts,
       isActive: order.isActive,
       status: order.status,
-      contactInfo
+      contactInfo,
+      cargo: order.cargo
     });
   } catch (error) {
     return res.status(500).send(error);
@@ -109,46 +111,53 @@ const statusesDb = [
 ];
 
 module.exports.getStatuses = (req, res) => {
-  // Status.find((err, statuses) => {
-  //   if (err) {
-  //     return res.status(400).send({ message: 'Veritabanı hatasi' });
-  //   }
-  //   return res.status(200).send(statuses);
-  // });
   return res.status(200).send(statusesDb);
 };
 
 module.exports.updateStatus = async (req, res) => {
   try {
-    const id = req.query.id;
-    const status = req.body;
+    const { status, id, cargo, inform } = req.body;
     if (!id || !status) {
       return res.status(404).send({ message: 'Hatalı api isteği' });
     }
     const order = await Order.findOne({ _id: id });
     if (!order) {
-      return res.status(500).send({ message: 'Veri tabanı hatası' });
+      return res.status(500).send({ message: 'Sipariş bulunamadı.' });
     }
     order.status.push({
       key: status.key,
       desc: status.desc,
       date: Date.now()
     });
+    if (isPresent(cargo)) {
+      order.cargo = cargo;
+    }
     const newOrder = new Order(order);
     await newOrder.save();
-    await sendEmail(newOrder, status);
+    if (inform) {
+      await sendEmail(newOrder, status, order.cargo);
+    }
     return res.status(200).send();
   } catch (error) {
     return res.status(500).send({ message: err });
   }
 };
 
-const sendEmail = async (order, status) => {
-  await email.sendEmail(
-    decrypt(order.email),
-    'Sipariş Bilgilendirme',
-    order._id + statuses[status.key] + ''
-  );
+const sendEmail = async (order, status, cargo) => {
+  let desc = '';
+  if (status.key === 2) {
+    desc =
+      order._id +
+      statuses[status.key] +
+      '<p> Kargo Şirketi : ' +
+      cargo.company +
+      '</p>Kargo Numarası : ' +
+      cargo.no +
+      '</p>';
+  } else {
+    desc = order._id + statuses[status.key] + '';
+  }
+  await email.sendEmail(decrypt(order.email), 'Sipariş Bilgilendirme', desc);
 };
 
 const statuses = {

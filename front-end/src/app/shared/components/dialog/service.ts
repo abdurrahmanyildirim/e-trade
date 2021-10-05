@@ -1,105 +1,47 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { first } from 'rxjs/operators';
 import { isPresent } from '../../util/common';
-import { DialogComponent, DialogData } from './component';
+import { DialogComponent, DialogProps } from './component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DialogService {
-  constructor(public dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {}
 
-  confirm(data: DialogData): void {
-    this.dialog
-      .open(DialogComponent, {
-        width: 'fit-content',
-        maxWidth: '90%',
-        data
-      })
-      .afterClosed()
-      .pipe(first())
-      .subscribe({
-        next: (result) => {
-          const res = isPresent(result) ? result : false;
-          data.onClose(res);
-        },
-        error: (err) => {
-          data.onError(err);
-        }
-      });
+  confirm(data: DialogProps): void {
+    const opts = { width: 'fit-content', maxWidth: '90%' } as MatDialogConfig;
+    this.openDialog(data, opts);
   }
 
-  message(data: DialogData): void {
-    this.dialog
-      .open(DialogComponent, {
-        width: '500px',
-        maxWidth: '90%',
-        maxHeight: '60%',
-        data
-      })
-      .afterClosed()
-      .pipe(first())
-      .subscribe({
-        next: (result) => {
-          const res = isPresent(result) ? result : false;
-          data.onClose(res);
-        },
-        error: (err) => {
-          data.onError(err);
-        }
-      });
+  message(data: DialogProps): void {
+    const opts = { width: '500px', maxWidth: '90%', maxHeight: '60%' } as MatDialogConfig;
+    this.openDialog(data, opts);
   }
 
-  cartWarning(data: DialogData): void {
-    this.dialog
-      .open(DialogComponent, {
-        width: 'auto',
-        maxWidth: '90%',
-        maxHeight: '60%',
-        data
-      })
-      .afterClosed()
-      .pipe(first())
-      .subscribe({
-        next: (result) => {
-          const res = isPresent(result) ? result : false;
-          data.onClose(res);
-        },
-        error: (err) => {
-          data.onError(err);
-        }
-      });
+  cartWarning(data: DialogProps): void {
+    const opts = { width: 'auto', maxWidth: '90%', maxHeight: '60%' } as MatDialogConfig;
+    this.openDialog(data, opts);
   }
 
-  contracts(data: DialogData): void {
-    this.dialog
-      .open(DialogComponent, {
-        width: '80%',
-        height: '70%',
-        data
-      })
-      .afterClosed()
-      .pipe(first())
-      .subscribe({
-        next: (result) => {
-          const res = isPresent(result) ? result : false;
-          data.onClose(res);
-        },
-        error: (err) => {
-          data.onError(err);
-        }
-      });
+  contracts(data: DialogProps): void {
+    const opts = { width: '80%', height: '70%' } as MatDialogConfig;
+    this.openDialog(data, opts);
   }
 
-  review(data: DialogData): void {
+  review(data: DialogProps): void {
+    const opts = { width: 'auto', maxWidth: '90%', maxHeight: '60%' } as MatDialogConfig;
+    this.openDialog(data, opts);
+  }
+
+  orderUpdate(data: DialogProps): void {
+    this.openDialog(data);
+  }
+
+  private openDialog(data: DialogProps, opts?: MatDialogConfig): void {
     this.dialog
-      .open(DialogComponent, {
-        width: 'auto',
-        maxWidth: '90%',
-        maxHeight: '60%',
-        data
-      })
+      .open(DialogComponent, { data, ...opts })
       .afterClosed()
       .pipe(first())
       .subscribe({

@@ -8,7 +8,7 @@ import {
   ViewChildren
 } from '@angular/core';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
-import { DialogData } from '../component';
+import { DialogProps } from '../component';
 
 @Component({
   selector: 'app-rating-dialog',
@@ -17,7 +17,7 @@ import { DialogData } from '../component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RatingDiaologComponent implements OnInit, OnDestroy {
-  @Input() dialog: DialogData;
+  @Input() dialog: DialogProps;
   @ViewChildren('star') stars: ElementRef<HTMLElement>[];
   commentInfo = {
     currentRate: 0,

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterContractModule } from 'src/app/shared/components/contracts/register/module';
-import { SalesContractV2Module } from 'src/app/shared/components/contracts/sales-v2/module';
+import { SalesContractModule } from 'src/app/shared/components/contracts/sales/module';
 import { WithdrawalModule } from 'src/app/shared/components/contracts/withdrawal/module';
 import { AboutComponent } from './about/component';
 import { RegisterContractPageComponent } from './register-contract/component';
@@ -26,7 +26,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     RegisterContractModule,
     WithdrawalModule,
-    SalesContractV2Module
+    SalesContractModule
   ],
   exports: [AboutComponent, RegisterContractPageComponent]
 })

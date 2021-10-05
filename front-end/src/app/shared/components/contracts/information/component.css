@@ -1,9 +1,0 @@
-.price-table {
-  width: 100%;
-}
-
-.normal-table td:not(td:nth-child(2)) {
-  padding: 5px;
-  min-width: 100px;
-  vertical-align: top;
-}

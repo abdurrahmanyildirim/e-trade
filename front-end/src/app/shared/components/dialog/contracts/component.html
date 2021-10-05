@@ -10,17 +10,7 @@
 
 <div class="container">
   <div *ngIf="dialog.type === DialogType.SalesAndInformationContract">
-    <!-- <app-sales-contract
-      [orderInfo]="dialog.data.orderInfo"
-      [orders]="dialog.data.orders"
-    ></app-sales-contract>
-    <br />
-    <br />
-    <app-information-contract
-      [orderInfo]="dialog.data.orderInfo"
-      [orders]="dialog.data.orders"
-    ></app-information-contract> -->
-    <app-sales-contractv2></app-sales-contractv2>
+    <app-sales-contract></app-sales-contract>
   </div>
   <div *ngIf="dialog.type === DialogType.RegisterContract">
     <app-register-contract></app-register-contract>
@@ -28,10 +18,5 @@
 </div>
 
 <div *ngIf="hidden" class="pdf-content" id="pdf-content">
-  <!-- <app-sales-contract [orderInfo]="dialog.data.orderInfo" [orders]="dialog.data.orders"></app-sales-contract>
-  <br />
-  <br />
-  <app-information-contract [orderInfo]="dialog.data.orderInfo" [orders]="dialog.data.orders">
-  </app-information-contract> -->
-  <app-sales-contractv2></app-sales-contractv2>
+  <app-sales-contract></app-sales-contract>
 </div>

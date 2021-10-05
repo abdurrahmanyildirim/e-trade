@@ -12,20 +12,13 @@
         <span class="mat-body-2"> Sipariş No : {{orderDetailId}}</span>
         <span class="mat-body-2"> Tarih : {{order.date | date:'medium'}}</span>
         <span class="mat-body-2"> Durum : {{order.status[order.status.length -1 ].desc}}</span>
-      </div>
-    </div>
-    <div class="card status-card">
-      <div class="card-header mat-body-2">Sipariş Düzenleme</div>
-      <div class="order-setting">
-        <mat-form-field appearance="outline" class="order-type">
-          <mat-select [(value)]="currentStatus.key">
-            <mat-option *ngFor="let status of statuses" [value]="status.key">
-              {{status.desc}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <button mat-flat-button color="primary" class="update-button" (click)="updateOrderStatus()">
-          Güncelle
+        <span class="mat-body-2" *ngIf="order.cargo.company">
+          Kargo Şirketi : {{order.cargo.company}}</span
+        >
+        <span class="mat-body-2" *ngIf="order.cargo.no"> Kargo Numarası : {{order.cargo.no}}</span>
+        <button mat-flat-button color="primary" (click)="updateOrderStatus()">
+          Düzenle
+          <mat-icon>edit</mat-icon>
         </button>
       </div>
     </div>
@@ -45,9 +38,12 @@
           </div>
           <div class="price mat-body-2">
             <span *ngIf="product.discountRate > 0" class="normal-price">
-              {{product.price*product.quantity | number : '.2-2'}} TL</span>
-            <span>{{(product.price - product.discountRate * product.price) * product.quantity | number
-              : '.2-2'}} TL</span>
+              {{product.price*product.quantity | number : '.2-2'}} TL</span
+            >
+            <span
+              >{{(product.price - product.discountRate * product.price) * product.quantity | number
+              : '.2-2'}} TL</span
+            >
           </div>
         </div>
       </div>

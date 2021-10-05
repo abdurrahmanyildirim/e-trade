@@ -19,4 +19,7 @@
   <ng-container *ngSwitchCase="DialogType.Rating === data.type">
     <app-rating-dialog [dialog]="data"></app-rating-dialog>
   </ng-container>
+  <ng-container *ngSwitchCase="DialogType.OrderUpdate === data.type">
+    <app-order-update [dialog]="data"></app-order-update>
+  </ng-container>
 </span>

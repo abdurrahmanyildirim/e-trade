@@ -55,6 +55,12 @@
   text-align: center;
 }
 
+.payment-logos {
+  width: 256px;
+  height: 30px;
+  background-color: transparent;
+}
+
 .license-text {
   margin: 10px 0;
 }
