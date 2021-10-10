@@ -70,7 +70,7 @@
           </button>
           <button
             mat-menu-item
-            routerLink="management"
+            routerLink="admin"
             *ngIf="(this.authService.isAuth | async) && (this.authService.role | async) === roles.admin"
           >
             <mat-icon>admin_panel_settings</mat-icon>

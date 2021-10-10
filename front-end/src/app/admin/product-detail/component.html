@@ -1,0 +1,93 @@
+<main class="container" *ngIf="product">
+  <div class="info">
+    <form [formGroup]="form" class="form">
+      <div class="field multiple-field">
+        <mat-form-field appearance="outline" style="width: 47.5%">
+          <mat-label>Ürün Adı</mat-label>
+          <input type="text" matInput placeholder="Ürün adı" formControlName="name" />
+          <mat-error
+            *ngIf="form.get('name').hasError('required') || form.get('name').hasError('isNull') || form.get('name').touched"
+          >
+            *Zorunlu
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="width: 47.5%">
+          <mat-label>Marka</mat-label>
+          <input type="text" matInput placeholder="Marka" formControlName="brand" />
+          <mat-error
+            *ngIf="form.get('brand').hasError('required') || form.get('brand').hasError('isNull') || form.get('brand').touched"
+          >
+            *Zorunlu
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="field multiple-field">
+        <mat-form-field style="width: 30%" appearance="outline">
+          <mat-label>Fiyat</mat-label>
+          <input type="text" matInput placeholder="Fiyat" formControlName="price" />
+          <div matSuffix>₺</div>
+          <mat-error
+            *ngIf="(form.get('price').hasError('required') || form.get('price').hasError('isNull')) && form.get('price').touched"
+          >
+            *Fiyat boş bırakılamaz
+          </mat-error>
+          <mat-error *ngIf="form.get('price').hasError('pattern') && form.get('price').touched">
+            *Fiyat hatalı
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field style="width: 30%" appearance="outline">
+          <span matPrefix>% &nbsp;</span>
+          <mat-label>İndirim Oranı</mat-label>
+          <input type="text" matInput formControlName="discountRate" />
+          <mat-error
+            *ngIf="form.get('discountRate').hasError('required') || form.get('discountRate').hasError('isNull') || form.get('discountRate').touched"
+          >
+            *Boş bırakılamaz
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field style="width: 30%" appearance="outline">
+          <mat-label>Stok Miktarı</mat-label>
+          <input type="text" matInput placeholder="Stok Adedi" formControlName="stockQuantity" />
+          <mat-error
+            *ngIf="form.get('stockQuantity').hasError('required') || form.get('stockQuantity').hasError('isNull') || form.get('stockQuantity').touched"
+          >
+            *Boş bırakılamaz
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-radio-group formControlName="isActive" class="rate">
+        <mat-radio-button value="true">Aktif</mat-radio-button>&nbsp;
+        <mat-radio-button style="margin-left: 10px" value="false">Pasif</mat-radio-button>
+      </mat-radio-group>
+      <div
+        class="photos-container"
+        *ngIf="product.photos.length>0"
+        cdkDropList
+        cdkDropListOrientation="horizontal"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <img
+          *ngFor="let photo of product.photos"
+          cdkDrag
+          [src]="photo.path"
+          alt="photo"
+          class="photo"
+          (click)="showPhoto(photo.path)"
+        />
+      </div>
+      <div class="field">
+        <app-editor [(text)]="product.description"></app-editor>
+      </div>
+    </form>
+    <div class="buttons">
+      <button class="save-button" mat-flat-button color="primary" (click)="saveChanges()">
+        <mat-icon>save</mat-icon> Kaydet
+      </button>
+      <button class="remove-button" mat-flat-button color="warn" (click)="remove()">
+        <mat-icon>delete_forever</mat-icon> Sil
+      </button>
+    </div>
+  </div>
+</main>

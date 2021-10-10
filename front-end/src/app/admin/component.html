@@ -1,0 +1,34 @@
+<main class="container">
+  <section class="left">
+    <div class="logo-content" routerLink="/main">
+      <img src="assets/img/logo.png" alt="Taşer Züccaciye" class="logo" />
+      <span class="logo-text">TAŞER</span>
+    </div>
+    <div class="navs mat-body-2">
+      <div
+        class="nav"
+        *ngFor="let route of routes"
+        routerLink="{{route.route}}"
+        routerLinkActive="active"
+      >
+        {{route.name}}
+      </div>
+    </div>
+  </section>
+  <section class="right">
+    <div class="categories mat-body-2" *ngIf="categories">
+      <div
+        class="category"
+        *ngFor="let category of categories"
+        [ngClass]="category.isActive === true ? 'active-category' : ''"
+        [id]="category.key"
+        (click)="changeRouteKey(category.key)"
+      >
+        {{category.title | titlecase}}
+      </div>
+    </div>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </section>
+</main>

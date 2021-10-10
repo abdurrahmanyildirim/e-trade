@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -10,7 +9,7 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import { fromEvent, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Category, Product } from 'src/app/shared/models/product';
 import { CategoryService } from 'src/app/shared/services/rest/category/service';
 import { ProductService } from 'src/app/shared/services/rest/product/service';

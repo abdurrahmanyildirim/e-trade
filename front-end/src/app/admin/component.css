@@ -1,0 +1,99 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.left {
+  width: 200px;
+}
+
+.right {
+  flex: 1;
+}
+
+.logo-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  height: 8%;
+  box-sizing: border-box;
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  outline: none;
+}
+
+.logo-text {
+  font-size: 30px;
+  line-height: 50px;
+  font-weight: 600;
+  font-style: italic;
+  user-select: none;
+}
+
+.navs {
+  background-color: #4fc3f7;
+  height: 92%;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  width: 100%;
+  padding: 10px;
+  color: #01579b;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.nav:hover {
+  background-color: #fff;
+  color: #01579b;
+}
+
+.active {
+  background-color: #fff;
+  color: #01579b;
+}
+
+.categories {
+  width: 100%;
+  height: 8%;
+  padding-left: 20px;
+  background-color: #81d4fa;
+  display: flex;
+  align-items: flex-end;
+}
+
+.category {
+  padding: 10px 15px 5px 15px;
+  margin: 0 10px 10px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #fff;
+  border-bottom: 3px solid transparent;
+  user-select: none;
+}
+
+.category:hover {
+  color: #fff;
+  border-bottom: 3px solid white;
+}
+
+.active-category {
+  color: #fff;
+  border-bottom: 3px solid white;
+}
+
+.content {
+  overflow: auto;
+  height: 92%;
+  padding: 20px;
+  box-sizing: border-box;
+}

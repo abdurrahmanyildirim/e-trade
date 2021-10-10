@@ -10,6 +10,7 @@ import {
   NavigationError
 } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { isPresent } from './shared/util/common';
 
 @Component({
   selector: 'app-root',
@@ -17,14 +18,10 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  roles = Roles;
   sub: Subscription;
   navigationProgress = false;
 
-  constructor(
-    public splashService: SplashService,
-    private router: Router
-  ) {}
+  constructor(public splashService: SplashService, private router: Router) {}
 
   ngOnInit(): void {
     this.listenNavigations();
@@ -35,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   listenNavigations(): void {
-    this.router.events
+    this.sub = this.router.events
       .pipe(
         filter(
           (e) =>
@@ -58,5 +55,9 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    if (isPresent(this.sub)) {
+      this.sub.unsubscribe();
+    }
+  }
 }

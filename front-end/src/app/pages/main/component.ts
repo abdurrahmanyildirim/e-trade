@@ -3,8 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   OnDestroy,
-  OnInit,
-  ViewChild
+  OnInit
 } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Subscription } from 'rxjs';
@@ -22,7 +21,6 @@ export class MainComponent implements OnInit, OnDestroy {
   sub: Subscription;
   products: Product[];
   discounted: Product[];
-  @ViewChild('photo') photo: HTMLElement;
   mostLiked: Product[];
   newProducts: Product[];
   owlOptions: OwlOptions = {
@@ -72,7 +70,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.discounted = this.products
       .filter((product) => product.discountRate > 0)
       .sort((a: Product, b: Product) => b.discountRate - a.discountRate)
-      .slice();
+      .slice(0, 15);
   }
 
   initMostLiked(): void {

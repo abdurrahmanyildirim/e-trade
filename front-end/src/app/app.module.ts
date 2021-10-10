@@ -1,10 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderModule } from './shared/components/header/module';
-import { FooterModule } from './shared/components/footer/module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RestInterceptor } from './shared/services/rest/rest-interceptor';
 import localeTr from '@angular/common/locales/tr';
@@ -15,19 +12,33 @@ import { SnackbarComponent } from './shared/components/snackbar/component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CoreModule } from './core/module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './shared/guards/auth';
+import { AdminGuard } from './shared/guards/admin';
 
 registerLocaleData(localeTr);
+
+const routes: Routes = [
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/module').then((m) => m.AdminModule),
+    canActivate: [AuthGuard, AdminGuard]
+  },
+  {
+    path: '',
+    loadChildren: () => import('./pages/module').then((m) => m.PageModule)
+  },
+  { path: '**', redirectTo: '', pathMatch: 'prefix' }
+];
 
 @NgModule({
   declarations: [AppComponent, SnackbarComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
+    RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' }),
     CoreModule,
-    HeaderModule,
     MatSnackBarModule,
-    FooterModule,
     HttpClientModule,
     MatProgressSpinnerModule,
     MatProgressBarModule
