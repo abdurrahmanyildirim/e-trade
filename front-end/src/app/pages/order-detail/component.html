@@ -29,7 +29,11 @@
     <div class="card-header mat-body-2">Ürün Bilgileri</div>
     <div class="products">
       <div class="product" *ngFor="let product of order.products">
-        <img [src]="product.photoPath" [alt]="product.brand" class="photo" />
+        <img
+          [src]="product.photoPath"
+          [alt]="'Taşer Züccaciye' + product.name + ' ' + product.brand "
+          class="photo"
+        />
         <div class="info">
           <div class="brand">{{product.brand | uppercase}}</div>
           <div class="name mat-body-1">{{product.name}}</div>
@@ -52,7 +56,7 @@
             mat-flat-button
             color="primary"
           >
-          Değerlendir
+            Değerlendir
           </button>
         </div>
       </div>
@@ -78,7 +82,11 @@
 
   <div class="mobile-card" *ngIf="order">
     <div class="mobile-product" *ngFor="let product of order.products">
-      <img [src]="product.photoPath" [alt]="product.brand" class="photo" />
+      <img
+        [src]="product.photoPath"
+        [alt]="'Taşer Züccaciye' + product.name + ' ' + product.brand "
+        class="photo"
+      />
       <div class="info">
         <div class="brand">{{product.brand | uppercase}}</div>
         <div class="name mat-body-1">{{product.name}}</div>

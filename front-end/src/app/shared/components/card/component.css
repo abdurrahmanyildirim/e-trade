@@ -33,12 +33,17 @@
   white-space: nowrap;
 }
 
-.img {
+.img-cover {
   height: 210px;
   width: 210px;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+}
+
+.img {
+  width: 100%;
+  height: auto;
 }
 
 .discount-badge {

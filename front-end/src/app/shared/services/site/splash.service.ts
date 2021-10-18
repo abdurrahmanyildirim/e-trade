@@ -5,6 +5,7 @@ import { CategoryService } from '../rest/category/service';
 import { ProductService } from '../rest/product/service';
 import { SocketService } from '../socket/socket';
 import { ConfigService } from './config.service';
+import { GTAGService } from './gtag';
 import { StateService } from './state';
 
 @Injectable({
@@ -19,7 +20,8 @@ export class SplashService {
     private categoryService: CategoryService,
     private productService: ProductService,
     private stateService: StateService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private gtagService: GTAGService
   ) {}
 
   init(): void {
@@ -34,6 +36,7 @@ export class SplashService {
         forkJoin(obs).subscribe({
           next: () => {
             this.socketService.init();
+            this.gtagService.init();
             this.configInited = true;
             subs.unsubscribe();
           },

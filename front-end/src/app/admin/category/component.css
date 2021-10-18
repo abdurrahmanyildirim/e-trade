@@ -1,15 +1,14 @@
 .container {
-  margin: 0 auto;
-  width: 80%;
-  /* max-width: 900px; */
+  width: 100%;
   display: flex;
+  justify-content: center;
 }
 
 .categories {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 400px;
 }
 
 .category {
@@ -24,21 +23,12 @@
   box-sizing: border-box;
 }
 
-.close-icon {
-  cursor: pointer;
-}
-
-.add-category {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex: 1;
-}
-
 .input {
   height: 26px;
   border-radius: 5px;
+  width: 100%;
   margin-right: 5px;
+  margin-bottom: 10px;
   border: 1px solid rgb(238, 238, 238);
   padding: 5px 10px;
   outline: none;

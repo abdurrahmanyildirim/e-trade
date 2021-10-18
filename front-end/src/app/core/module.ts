@@ -7,6 +7,7 @@ import {
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
 import { DialogModule } from '../shared/components/dialog/module';
+import { GTAGService } from '../shared/services/site/gtag';
 
 const googleLoginOptions = {
   scope: 'profile email'
@@ -36,7 +37,8 @@ if (environment.production) {
           }
         ]
       } as SocialAuthServiceConfig
-    }
+    },
+    GTAGService
   ]
 })
 export class CoreModule {}

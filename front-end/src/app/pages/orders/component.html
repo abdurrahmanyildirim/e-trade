@@ -48,7 +48,7 @@
               *ngFor="let product of order.products"
               class="photo"
               [src]="product.photoPath"
-              alt="product"
+              [alt]="'Taşer Züccaciye' + product.name + ' ' + product.brand "
             />
           </div>
         </div>
@@ -77,7 +77,7 @@
               *ngFor="let product of order.products"
               class="photo"
               [src]="product.photoPath"
-              alt="Photo"
+              [alt]="'Taşer Züccaciye' + product.name + ' ' + product.brand "
             />
           </div>
         </div>

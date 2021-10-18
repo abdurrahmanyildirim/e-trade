@@ -4,7 +4,7 @@
       <div class="order" *ngFor="let order of orders">
         <img
           [src]="order.photo"
-          alt="Züccaciye"
+          [alt]="'Taşer Züccaciye ' + order.name + ' ' + order.brand"
           class="photo"
           (click)="showPhotoBigger(order.photo)"
         />
@@ -52,7 +52,7 @@
         <section class="photo-info flex">
           <img
             [src]="order.photo"
-            alt="Züccaciye"
+            [alt]="'Taşer Züccaciye' + order.name + ' ' + order.brand"
             class="photo"
             (click)="showPhotoBigger(order.photo)"
           />
