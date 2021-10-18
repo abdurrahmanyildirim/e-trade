@@ -1,5 +1,4 @@
 User-agent: *
-Allow: /
-Disallow: /#/admin/
+Disallow: 
 
 Sitemap: https://https://taserzuccaciye.com/#/assets/config/sitemap.xml
