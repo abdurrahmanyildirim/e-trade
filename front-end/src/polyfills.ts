@@ -55,12 +55,13 @@ import '@angular/localize/init';
  *  (window as any).__Zone_enable_cross_context_check = true;
  *
  */
+// tslint:disable-next-line: no-string-literal
+(window as any)['__zone_symbol__PASSIVE_EVENTS'] = ['scroll'];
 
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js/dist/zone';  // Included with Angular CLI.
-
+import 'zone.js/dist/zone'; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
