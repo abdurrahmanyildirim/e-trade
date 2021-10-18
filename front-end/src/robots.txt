@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: https://https://taserzuccaciye.com/#/assets/config/sitemap.xml
+Sitemap: https://taserzuccaciye.com/assets/config/sitemap.xml

@@ -42,14 +42,13 @@
 }
 
 .img {
-  width: 100%;
-  height: auto;
+  width: 210px;
+  height: 210px;
 }
 
 .discount-badge {
   width: 160px;
   height: 30px;
-  /* background-color: #ff0800; */
   background-color: #ff2400;
   position: absolute;
   top: 20px;
@@ -117,7 +116,12 @@
 @media only screen and (max-width: 650px) {
   .container {
     width: 150px;
-    height: fit-content;
+    height: auto;
+  }
+
+  .img-cover {
+    width: 150px;
+    height: 150px;
   }
 
   .img {
