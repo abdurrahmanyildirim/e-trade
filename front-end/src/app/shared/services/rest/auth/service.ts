@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginUser } from 'src/app/pages/auth/login/model';
 import { RegisterUser } from 'src/app/pages/auth/register/model';
 import { BaseRestService } from '../base';
-import { RequestMethod, RequestOptions, RequestType } from '../model';
+import { RequestMethod, RequestOptions, RequestRoute } from '../model';
 import { ServiceMethod } from './model';
 import { LoginResponse, Roles } from 'src/app/shared/models/user';
 import { LocalStorageService } from '../../site/storage/local';
@@ -20,7 +20,7 @@ export class AuthService extends BaseRestService {
   isAuth = new BehaviorSubject<boolean>(this.loggedIn());
   role = new BehaviorSubject<Roles>(this.getRole());
   jwt: JwtHelperService = new JwtHelperService();
-  requestType = RequestType.auth;
+  route = RequestRoute.auth;
 
   constructor(
     private localStorage: LocalStorageService,

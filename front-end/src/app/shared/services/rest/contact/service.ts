@@ -4,14 +4,14 @@ import { map } from 'rxjs/operators';
 import { Contact } from 'src/app/shared/models/contact';
 import { CryptoService } from '../../site/crypto';
 import { BaseRestService } from '../base';
-import { RequestMethod, RequestOptions, RequestType } from '../model';
+import { RequestMethod, RequestOptions, RequestRoute } from '../model';
 import { ServiceMethod } from './model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService extends BaseRestService {
-  requestType = RequestType.contact;
+  route = RequestRoute.contact;
 
   constructor(private cryptoService: CryptoService, protected injector: Injector) {
     super(injector);

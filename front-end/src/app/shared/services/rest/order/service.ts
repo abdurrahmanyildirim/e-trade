@@ -4,14 +4,14 @@ import { map } from 'rxjs/operators';
 import { Cargo, OrderList, Status } from 'src/app/shared/models/order';
 import { CryptoService } from '../../site/crypto';
 import { BaseRestService } from '../base';
-import { RequestMethod, RequestOptions, RequestType } from '../model';
+import { RequestMethod, RequestOptions, RequestRoute } from '../model';
 import { ServiceMethod } from './model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService extends BaseRestService {
-  requestType = RequestType.order;
+  route = RequestRoute.order;
   constructor(private cryptoService: CryptoService, protected injector: Injector) {
     super(injector);
   }

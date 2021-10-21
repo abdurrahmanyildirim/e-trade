@@ -7,7 +7,7 @@ import { StorageKey } from 'src/app/shared/models/storage';
 import { LocalStorageService } from '../../site/storage/local';
 import { AuthService } from '../auth/service';
 import { BaseRestService } from '../base';
-import { RequestMethod, RequestOptions, RequestType } from '../model';
+import { RequestMethod, RequestOptions, RequestRoute } from '../model';
 import { ServiceMethod } from './model';
 
 @Injectable({
@@ -15,7 +15,7 @@ import { ServiceMethod } from './model';
 })
 export class CartService extends BaseRestService {
   public cart = new BehaviorSubject<Order[]>([]);
-  requestType = RequestType.cart;
+  route = RequestRoute.cart;
 
   constructor(
     private authService: AuthService,

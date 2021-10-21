@@ -1,14 +1,14 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseRestService } from '../base';
-import { RequestMethod, RequestOptions, RequestType } from '../model';
+import { RequestMethod, RequestOptions, RequestRoute } from '../model';
 import { ServiceMethod } from './model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DbService extends BaseRestService {
-  requestType = RequestType.db;
+  route = RequestRoute.db;
 
   constructor(protected injector: Injector) {
     super(injector);
@@ -16,7 +16,7 @@ export class DbService extends BaseRestService {
 
   createBackUp(): Observable<any> {
     const address =
-      this.configService.config.baseUrl + this.requestType + '/' + ServiceMethod.createBackup;
+      this.configService.config.baseUrl + this.route + '/' + ServiceMethod.createBackup;
     return this.http.get(address, { responseType: 'blob' });
   }
 }

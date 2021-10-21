@@ -104,7 +104,7 @@ module.exports.changePasswordRequest = async (req, res) => {
     `
     <p> Merhaba ${user.firstName} ${user.lastName}</p>
     <p>İsteğiniz üzerine, şifre değiştirme linki gönderilmiştir.</p>
-    <p>Şifrenizi değiştirmek için <a href="${origin}/#/auth/change-password?v1=${token}&id=${user._id}" target="_blank" >tıklayınız.</a></p>
+    <p>Şifrenizi değiştirmek için <a href="${origin}/auth/change-password?v1=${token}&id=${user._id}" target="_blank" >tıklayınız.</a></p>
     <br>
     <p>${company_name}</p>
     `
@@ -153,7 +153,7 @@ const activationMail = (user, token) => {
     'Hesap Aktivasyonu',
     `
     <p> Merhaba ${user.firstName} ${user.lastName}</p>
-    <p>Taşer züccaciye hesabınızı aktif hale getirmek için <a href="${origin}/#/auth/activate-email?v1=${token}" target="_blank" >tıklayınız.</a></p>
+    <p>Taşer züccaciye hesabınızı aktif hale getirmek için <a href="${origin}/auth/activate-email?v1=${token}" target="_blank" >tıklayınız.</a></p>
     <br>
     <p>${company_name}</p>
     `

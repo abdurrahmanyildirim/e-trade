@@ -1,16 +1,15 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
 import { CloudinaryPhoto } from 'src/app/shared/models/product';
 import { BaseRestService } from '../base';
-import { RequestMethod, RequestOptions, RequestType } from '../model';
+import { RequestMethod, RequestOptions, RequestRoute } from '../model';
 import { ServiceMethod } from './model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PhotoService extends BaseRestService {
-  requestType = RequestType.photo;
+  route = RequestRoute.photo;
 
   constructor(protected injector: Injector) {
     super(injector);

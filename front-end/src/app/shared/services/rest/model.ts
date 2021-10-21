@@ -4,7 +4,7 @@ export enum RequestMethod {
   delete = 'delete'
 }
 
-export enum RequestType {
+export enum RequestRoute {
   category = 'category',
   product = 'product',
   user = 'user',

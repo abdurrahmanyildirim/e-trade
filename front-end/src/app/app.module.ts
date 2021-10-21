@@ -36,7 +36,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
     CoreModule,
     MatSnackBarModule,
     HttpClientModule,

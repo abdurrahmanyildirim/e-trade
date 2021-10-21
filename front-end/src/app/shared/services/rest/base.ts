@@ -3,13 +3,13 @@ import { Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { isPresent } from '../../util/common';
 import { ConfigService } from '../site/config.service';
-import { RequestType, RequestOptions } from './model';
+import { RequestRoute, RequestOptions } from './model';
 
 export abstract class BaseRestService {
   protected configService: ConfigService;
   protected http: HttpClient;
 
-  protected requestType: RequestType;
+  protected route: RequestRoute;
 
   constructor(protected injector: Injector) {
     this.configService = this.injector.get(ConfigService);
@@ -31,7 +31,7 @@ export abstract class BaseRestService {
   }
 
   private prepareAddress(requestOptions: RequestOptions): string {
-    let address = this.configService.config.baseUrl + this.requestType;
+    let address = this.configService.config.baseUrl + 'api/' + this.route;
     if (isPresent(requestOptions.serviceMethod)) {
       address += '/' + requestOptions.serviceMethod;
     }

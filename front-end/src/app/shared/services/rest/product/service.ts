@@ -1,9 +1,8 @@
 import { Injectable, Injector } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
-import { CloudinaryPhoto, Product, ProductInfo } from 'src/app/shared/models/product';
+import { Product, ProductInfo } from 'src/app/shared/models/product';
 import { BaseRestService } from '../base';
-import { RequestMethod, RequestOptions, RequestType } from '../model';
+import { RequestMethod, RequestOptions, RequestRoute } from '../model';
 import { ServiceMethod } from './model';
 
 @Injectable({
@@ -11,7 +10,7 @@ import { ServiceMethod } from './model';
 })
 export class ProductService extends BaseRestService {
   products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
-  requestType = RequestType.product;
+  route = RequestRoute.product;
 
   constructor(protected injector: Injector) {
     super(injector);

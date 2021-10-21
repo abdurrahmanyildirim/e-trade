@@ -2,7 +2,7 @@ import { Injectable, Injector } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Category } from 'src/app/shared/models/product';
 import { BaseRestService } from '../base';
-import { RequestMethod, RequestType, RequestOptions } from '../model';
+import { RequestMethod, RequestRoute, RequestOptions } from '../model';
 import { ServiceMethod } from './model';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { ServiceMethod } from './model';
 })
 export class CategoryService extends BaseRestService {
   categories: BehaviorSubject<Category[]> = new BehaviorSubject([]);
-  requestType = RequestType.category;
+  route = RequestRoute.category;
 
   constructor(protected injector: Injector) {
     super(injector);

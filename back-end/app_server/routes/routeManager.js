@@ -8,16 +8,27 @@ const contact = require('./contact');
 const user = require('./user');
 const db = require('./db');
 const iyzipay = require('./iyzipay');
+const path = require('path');
+const { isDevMode } = require('../../common');
+const { Router } = require('express');
+const router = Router();
 
-module.exports = (app) => {
-  app.use('/auth', auth);
-  app.use('/product', product);
-  app.use('/category', category);
-  app.use('/contact', contact);
-  app.use('/cart', cart);
-  app.use('/user', user);
-  app.use('/order', order);
-  app.use('/photo', account);
-  app.use('/db', db);
-  app.use('/iyzipay', iyzipay);
+router.use('/auth', auth);
+router.use('/product', product);
+router.use('/category', category);
+router.use('/contact', contact);
+router.use('/cart', cart);
+router.use('/user', user);
+router.use('/order', order);
+router.use('/photo', account);
+router.use('/db', db);
+router.use('/iyzipay', iyzipay);
+if (!isDevMode()) {
+  router.use('/*', indexHtml);
+}
+
+const indexHtml = (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../../dist/index.html'));
 };
+
+module.exports = router;

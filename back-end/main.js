@@ -13,6 +13,7 @@ const cors = require('cors');
 const util = require('./app_server/services/util');
 const verify = require('./app_server/services/verify');
 const helmet = require('helmet');
+const routes = require('./app_server/routes/routeManager');
 
 let ioCors = {};
 if (!isDevMode()) {
@@ -51,7 +52,7 @@ if (!isDevMode()) {
   app.use(express.static(__dirname + '/dist'));
 }
 
-require('./app_server/routes/routeManager')(app);
+app.use('/api/', routes);
 require('./app_server/services/socket').init(io);
 
 const PORT = process.env.PORT;

@@ -15,7 +15,7 @@ module.exports.iyzipayCallBack = async (req, res) => {
     if (status === true) {
       await giveOrder(req.query.id);
     }
-    return res.redirect(`${process.env.ORIGIN}/#/cart?${params}`);
+    return res.redirect(`${process.env.ORIGIN}/cart?${params}`);
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
