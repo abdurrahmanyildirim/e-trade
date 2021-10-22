@@ -52,7 +52,13 @@ if (!isDevMode()) {
   app.use(express.static(__dirname + '/dist'));
 }
 
-app.use('/api/', routes);
+app.use('/api', routes);
+if (!isDevMode()) {
+  app.use('/*', (req, res) => {
+    res.status(200).sendFile(path.join(__dirname, '/dist/index.html'));
+  });
+}
+
 require('./app_server/services/socket').init(io);
 
 const PORT = process.env.PORT;

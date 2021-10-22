@@ -23,12 +23,5 @@ router.use('/order', order);
 router.use('/photo', account);
 router.use('/db', db);
 router.use('/iyzipay', iyzipay);
-if (!isDevMode()) {
-  router.use('/*', indexHtml);
-}
-
-const indexHtml = (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '../../dist/index.html'));
-};
 
 module.exports = router;
