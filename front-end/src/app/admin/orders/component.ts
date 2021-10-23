@@ -7,13 +7,12 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { PageSelector } from 'src/app/pages/model';
 import { OrderList } from 'src/app/shared/models/order';
 import { OrderService } from 'src/app/shared/services/rest/order/service';
 import { StateService } from 'src/app/shared/services/site/state';
 import { isPresent } from 'src/app/shared/util/common';
 import { BaseAdminDirective } from '../base-admin.directive';
-import { RouteCategory } from '../model';
+import { PageSelector, RouteCategory } from '../model';
 import { AdminService } from '../service';
 import { OrdersFactory } from './factory';
 import { OrdersState } from './state';
@@ -40,7 +39,7 @@ export class OrdersComponent extends BaseAdminDirective<OrdersState> implements 
     private activatedRoute: ActivatedRoute
   ) {
     super(stateService);
-    this.selector = PageSelector.AppMnOrders;
+    this.selector = PageSelector.AppAdminOrders;
   }
 
   ngOnInit(): void {

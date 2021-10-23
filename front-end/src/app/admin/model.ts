@@ -1,7 +1,6 @@
 export enum PageSelector {
-  AppOrders = 'app-orders',
-  AppMnProducts = 'app-mn-products',
-  AppMnOrders = 'app-mn-orders'
+  AppAdminProducts = 'app-admin-products',
+  AppAdminOrders = 'app-admin-orders'
 }
 
 export interface RouteCategory {

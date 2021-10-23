@@ -14,12 +14,13 @@
   </div>
 
   <section class="all-mini-photos" [style.maxWidth]="width + 'px'">
-    <div
+    <img
       class="mini-photo"
       *ngFor="let photo of photos;let i = index"
       (click)="changePhoto(i,photo._id)"
-      [ngStyle]="{'background-image':  'url(' + photo.path + ')'}"
       [id]="photo._id"
-    ></div>
+      [src]="photo.path"
+      alt="Taşer Züccaciye"
+    />
   </section>
 </main>

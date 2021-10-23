@@ -1,11 +1,9 @@
 <main class="container">
   <div class="comment" *ngFor="let comment of comments">
-    <div class="info">
-      <div class="name mat-body-2">{{comment.name}}</div>
-      <div class="rate-date">
-        <app-star [givenRate]="comment.rate" [width]="13" [height]="12"></app-star>
-        <span class="date"> {{comment.date | date}} </span>
-      </div>
+    <div class="name mat-body-2">{{comment.name}}</div>
+    <div class="rate-date">
+      <app-star [givenRate]="comment.rate" [width]="13" [height]="12"></app-star>
+      <span class="date"> {{comment.date | date}} </span>
     </div>
     <div class="desc">{{comment.description}}</div>
   </div>

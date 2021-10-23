@@ -5,17 +5,15 @@ import {
   OnDestroy,
   OnInit
 } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { BasePageDirective } from 'src/app/pages/base-page.component';
-import { PageSelector } from 'src/app/pages/model';
 import { Product } from 'src/app/shared/models/product';
 import { CategoryService } from 'src/app/shared/services/rest/category/service';
 import { ProductService } from 'src/app/shared/services/rest/product/service';
 import { StateService } from 'src/app/shared/services/site/state';
 import { isPresent } from 'src/app/shared/util/common';
-import { RouteCategory } from '../model';
+import { BaseAdminDirective } from '../base-admin.directive';
+import { PageSelector, RouteCategory } from '../model';
 import { AdminService } from '../service';
 import { ProductsState } from './state';
 
@@ -26,7 +24,7 @@ import { ProductsState } from './state';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductsComponent
-  extends BasePageDirective<ProductsState>
+  extends BaseAdminDirective<ProductsState>
   implements OnInit, OnDestroy
 {
   products: Product[];
@@ -43,7 +41,7 @@ export class ProductsComponent
     private activatedRoute: ActivatedRoute
   ) {
     super(stateService);
-    this.selector = PageSelector.AppMnProducts;
+    this.selector = PageSelector.AppAdminProducts;
   }
 
   ngOnInit(): void {

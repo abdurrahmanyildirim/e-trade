@@ -98,14 +98,6 @@
     padding-right: 0;
   }
 
-  .name {
-    font-size: 12px;
-  }
-
-  .brand {
-    font-size: 10px;
-  }
-
   .quantity-price {
     margin-left: 5px;
     display: flex;

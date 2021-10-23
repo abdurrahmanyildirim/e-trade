@@ -1,12 +1,5 @@
 <div class="container">
   <div class="decrement side" (click)="decrement()">-</div>
-  <input
-    type="text"
-    class="input"
-    [(ngModel)]="quantity"
-    [max]="max"
-    inputmode="numeric"
-    (keyup)="onKeyup($event)"
-  />
+  <div class="input">{{quantity}}</div>
   <div class="increment side" (click)="increment()">+</div>
 </div>
