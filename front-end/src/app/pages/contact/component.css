@@ -10,11 +10,8 @@
   flex-direction: column;
 }
 
-.contact-text {
-  font-size: 18px;
-  margin-top: 5px;
-  margin-bottom: 25px;
-  font-weight: 600;
+.title {
+  margin-top: 16px;
 }
 
 .form {
@@ -32,11 +29,6 @@
 }
 
 @media only screen and (max-width: 650px) {
-  .contact-text {
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-
   .form {
     width: 95%;
   }

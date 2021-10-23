@@ -5,3 +5,8 @@
   max-width: 900px;
   box-sizing: border-box;
 }
+
+.title {
+  text-align: center;
+  margin-top: 20px;
+}

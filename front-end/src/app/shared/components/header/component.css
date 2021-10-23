@@ -31,6 +31,7 @@
 
 .mobile {
   display: none;
+  margin: 10px 0;
 }
 
 .mobile-nav-menu {
@@ -224,9 +225,14 @@
     display: none;
   }
 
+  .logo {
+    width: 30px;
+    height: 30px;
+  }
+
   .logo-text {
-    font-size: 14px;
-    line-height: 15px;
+    font-size: 20px;
+    line-height: 20px;
     font-weight: 600;
     font-style: italic;
   }

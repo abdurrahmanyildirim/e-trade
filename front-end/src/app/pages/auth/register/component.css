@@ -5,7 +5,7 @@
   align-items: center;
   min-height: 400px;
   flex-direction: column;
-  margin: 5px 0;
+  margin: 40px 0;
 }
 
 .mat-form-field {
@@ -92,6 +92,7 @@ mat-card-content {
 @media only screen and (max-width: 650px) {
   .container {
     padding: 0 5px;
+    margin: 10px 0;
   }
 
   mat-card {

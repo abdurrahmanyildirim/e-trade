@@ -11,6 +11,7 @@
     </p>
   </div>
   <mat-card *ngIf="!isRegistered">
+    <mat-card-title>Üye Ol</mat-card-title>
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="register()">
         <mat-form-field appearance="outline">

@@ -6,8 +6,7 @@
 <div class="splash-spinner" *ngIf="!splashService.configInited">
   <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'" [value]="'30'">
   </mat-progress-spinner>
-  <br />
-  <p class="mat-body-2">Sayfa yükleniyor. Lütfen bekleyiniz...</p>
+  <p class="mat-body-2">Yükleniyor...</p>
 </div>
 <mat-progress-bar
   *ngIf="navigationProgress"
