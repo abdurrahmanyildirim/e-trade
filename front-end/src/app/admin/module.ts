@@ -22,11 +22,13 @@ import { NewProductComponent } from './new-product/component';
 import { PhotoUploadComponent } from './new-product/photo-upload/component';
 import { MessageBoxComponent } from './message-box/component';
 import { CategoryComponent } from './category/component';
+import { AdminGuard } from '../shared/guards/admin';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    canActivate: [AdminGuard],
     children: [
       {
         path: 'orders',

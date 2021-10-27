@@ -25,7 +25,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="field">
+  <!-- <mat-form-field appearance="outline" class="field">
     <mat-label>Email</mat-label>
     <input type="text" matInput placeholder="Email" formControlName="email" />
     <mat-error
@@ -36,7 +36,7 @@
     <mat-error *ngIf="form.get('email').hasError('email') && form.get('email').touched">
       *Geçerli bir email adresi giriniz.
     </mat-error>
-  </mat-form-field>
+  </mat-form-field> -->
 
   <button mat-flat-button [disabled]="form.invalid" type="submit" color="primary">Güncelle</button>
 </form>

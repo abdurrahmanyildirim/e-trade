@@ -14,6 +14,7 @@ const util = require('./app_server/services/util');
 const verify = require('./app_server/services/verify');
 const helmet = require('helmet');
 const routes = require('./app_server/routes/routeManager');
+const compression = require('compression');
 
 let ioCors = {};
 if (!isDevMode()) {
@@ -47,6 +48,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(util.bodyDecrypter);
 app.use(verify.roleResolver);
+app.use(compression());
 
 if (!isDevMode()) {
   app.use(express.static(__dirname + '/dist'));

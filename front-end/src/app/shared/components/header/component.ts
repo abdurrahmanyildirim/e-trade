@@ -28,13 +28,11 @@ import { CategoryService } from '../../services/rest/category/service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   roles = Roles;
-  subs = new Subscription();
   isSidebarOpen = false;
   searchKey = '';
   products: SearchProduct[];
   filteredProducts: SearchProduct[] = [];
   isMobile = document.body.clientWidth <= 650;
-  @ViewChild('mobileNavMenu') mobileNavMenu: ElementRef<HTMLElement>;
 
   constructor(
     public cartService: CartService,
@@ -110,9 +108,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (isPresent(this.subs)) {
-      this.subs.unsubscribe();
-    }
     ObjectHelper.removeReferances(this);
   }
 }

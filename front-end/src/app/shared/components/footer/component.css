@@ -59,6 +59,7 @@
   width: 256px;
   height: 30px;
   background-color: transparent;
+  margin: auto;
 }
 
 .license-text {

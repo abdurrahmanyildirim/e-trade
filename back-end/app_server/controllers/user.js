@@ -44,14 +44,14 @@ module.exports.updateGeneralInfo = (req, res) => {
     }
     user.firstName = body.firstName;
     user.lastName = body.lastName;
-    user.email = encrypt(body.email);
-    User.find({ email: user.email }, (err, users) => {
+    // user.email = encrypt(body.email);
+    User.findOne({ _id: req.id }, (err, users) => {
       if (err) {
         return res.status(500).send({ message: 'Güncelleme sırasında bir hata oldu.' });
       }
-      if (users.length > 0 && (users.length > 1 || users[0]._id !== req.id)) {
-        return res.status(401).send({ message: 'Bu email adresi kullanılmaktadır.' });
-      }
+      // if (users.length > 0 && (users.length > 1 || users[0]._id !== req.id)) {
+      //   return res.status(401).send({ message: 'Bu email adresi kullanılmaktadır.' });
+      // }
       user.save((err) => {
         if (err) {
           return res.status(500).send({ message: 'Güncelleme sırasında bir hata oldu.' });

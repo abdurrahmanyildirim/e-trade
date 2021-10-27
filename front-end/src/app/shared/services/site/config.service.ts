@@ -8,7 +8,6 @@ import { SiteConfig } from '../../models/site-config';
 })
 export class ConfigService {
   config: SiteConfig;
-  configInited = false;
   constructor(private httpClient: HttpClient) {}
 
   initSiteConfig(): Observable<void> {

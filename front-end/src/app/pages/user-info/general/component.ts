@@ -38,12 +38,12 @@ export class GeneralComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.maxLength(30),
         nullValidator()
-      ]),
-      email: new FormControl(this.user.email, [
-        Validators.required,
-        Validators.email,
-        nullValidator()
       ])
+      // email: new FormControl(this.user.email, [
+      //   Validators.required,
+      //   Validators.email,
+      //   nullValidator()
+      // ])
     });
   }
 
