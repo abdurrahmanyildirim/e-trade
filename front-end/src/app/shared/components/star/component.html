@@ -1,24 +1,13 @@
 <div class="container" [ngStyle]="{'height': height + 'px'}">
   <div *ngFor="let rate of [1,2,3,4,5]" class="star-container" [ngStyle]="{'width':width + 'px'}">
-    <div
-      class="star-icon"
-      [ngStyle]="{'height':height + 'px', 'width':width + 'px'}"
-      *ngIf="givenRate-rate >= 0"
-    ></div>
+    <div class="star-icon star" *ngIf="givenRate-rate >= 0"></div>
     <div *ngIf="givenRate-rate < 0 && givenRate-rate > -1">
       <div
-        class="star-icon percent-star"
-        [ngStyle]="{'width': ( 1 - (rate - givenRate)) * 100 + '%', 'height':height + 'px'}"
+        class="star-icon percent-star star"
+        [ngStyle]="{'width': ( 1 - (rate - givenRate)) * 100 + '%'}"
       ></div>
-      <div
-        class="empty-star-icon star"
-        [ngStyle]="{'height':height + 'px', 'width':width + 'px'}"
-      ></div>
+      <div class="empty-star-icon star" [ngStyle]="{'height':height + 'px'}"></div>
     </div>
-    <div
-      class="empty-star-icon"
-      [ngStyle]="{'height':height + 'px', 'width':width + 'px'}"
-      *ngIf="givenRate-rate <=-1"
-    ></div>
+    <div class="empty-star-icon star" *ngIf="givenRate-rate <=-1"></div>
   </div>
 </div>
