@@ -31,12 +31,12 @@ export class SplashService {
       this.productService.init(),
       this.stateService.init()
     ];
-    const subs = this.configService.initSiteConfig().subscribe({
+    const subs = this.configService.init().subscribe({
       next: () => {
         forkJoin(obs).subscribe({
           next: () => {
             this.socketService.init();
-            this.gtagService.init();
+            this.gtagService.init(this.configService.config.gtagKey);
             this.configInited = true;
             subs.unsubscribe();
           },

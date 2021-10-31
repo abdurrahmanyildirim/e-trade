@@ -4,7 +4,6 @@ import { LoginResponse } from '../../models/user';
 import { AuthService } from '../rest/auth/service';
 import { CartService } from '../rest/cart/service';
 import { LocalStorageService } from './storage/local';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -12,8 +11,7 @@ export class SettingService {
   constructor(
     private authService: AuthService,
     private cartService: CartService,
-    private localStorage: LocalStorageService,
-    private router: Router
+    private localStorage: LocalStorageService
   ) {}
 
   initUserSettingsAfterLogin(loginResponse: LoginResponse): Observable<void> {

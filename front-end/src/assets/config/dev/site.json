@@ -1,4 +1,5 @@
 {
   "baseUrl": "http://localhost:4205/",
-  "mockUrl": "assets/mock/"
+  "mockUrl": "assets/mock/",
+  "gtagKey": "G-W75Q5KEFKG"
 }

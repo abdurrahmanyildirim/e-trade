@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Roles } from './shared/models/user';
 import { SplashService } from './shared/services/site/splash.service';
 import {
   Router,
@@ -11,7 +10,6 @@ import {
 } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { isPresent } from './shared/util/common';
-import { ProgressBarMode } from '@angular/material/progress-bar/progress-bar';
 
 @Component({
   selector: 'app-root',
@@ -21,16 +19,11 @@ import { ProgressBarMode } from '@angular/material/progress-bar/progress-bar';
 export class AppComponent implements OnInit, OnDestroy {
   sub: Subscription;
   navigationProgress = false;
-  mode: ProgressBarMode = 'indeterminate';
 
   constructor(public splashService: SplashService, private router: Router) {}
 
   ngOnInit(): void {
     this.listenNavigations();
-  }
-
-  scrollToTop(): void {
-    document.body.scrollTop = 0;
   }
 
   listenNavigations(): void {

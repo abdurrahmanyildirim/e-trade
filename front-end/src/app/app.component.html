@@ -1,17 +1,14 @@
 <div class="screen-holder" id="screen-holder">
-  <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'" [value]="'30'">
-  </mat-progress-spinner>
+  <mat-progress-spinner mode="indeterminate" value="30"> </mat-progress-spinner>
   <p class="mat-body-2" style="color: white">Lütfen bekleyiniz...</p>
 </div>
 <div class="splash-spinner" *ngIf="!splashService.configInited">
-  <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'" [value]="'30'">
-  </mat-progress-spinner>
+  <mat-progress-spinner mode="indeterminate" value="30"> </mat-progress-spinner>
   <p class="mat-body-2">Yükleniyor...</p>
 </div>
 <mat-progress-bar
   *ngIf="navigationProgress"
   class="nav-progress"
   mode="indeterminate"
-  value="100"
 ></mat-progress-bar>
-<router-outlet *ngIf="splashService.configInited" (activate)="scrollToTop()"></router-outlet>
+<router-outlet *ngIf="splashService.configInited"></router-outlet>

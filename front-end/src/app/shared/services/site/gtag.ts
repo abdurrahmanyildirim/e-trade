@@ -2,11 +2,10 @@ import { Injectable, isDevMode } from '@angular/core';
 
 @Injectable()
 export class GTAGService {
-  init(): void {
+  init(key: string): void {
     if (isDevMode()) {
       return;
     }
-    const key = 'G-W75Q5KEFKG';
     const lib = document.createElement('script');
     lib.async = true;
     lib.src = 'https://www.googletagmanager.com/gtag/js?id=' + key;
