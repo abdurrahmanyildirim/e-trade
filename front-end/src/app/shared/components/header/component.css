@@ -160,12 +160,12 @@
 
 .nav:hover {
   color: #03a9f4;
-  border-bottom: 3px solid #03a9f4;
+  /* border-bottom: 3px solid #03a9f4; */
 }
 
 .active {
   color: #03a9f4;
-  border-bottom: 3px solid #03a9f4;
+  /* border-bottom: 3px solid #03a9f4; */
 }
 
 .cart {

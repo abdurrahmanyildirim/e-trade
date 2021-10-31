@@ -8,7 +8,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Roles } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/rest/auth/service';
 import { CartService } from 'src/app/shared/services/rest/cart/service';
@@ -94,9 +94,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSerchClick(): void {
-    this.router.navigateByUrl('filter?searchKey=' + this.searchKey);
-    this.searchKey = '';
-    this.onKeyup();
+    if (this.searchKey.trim().length > 0) {
+      this.router.navigateByUrl('filter?searchKey=' + this.searchKey);
+      this.searchKey = '';
+      this.onKeyup();
+    }
   }
 
   onSelectionChange(product: SearchProduct): void {

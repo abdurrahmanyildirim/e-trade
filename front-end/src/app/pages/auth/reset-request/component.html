@@ -3,7 +3,14 @@
     <mat-card-title style="text-align: center"> Şifre Yenileme </mat-card-title>
     <mat-card-content class="content">
       <mat-form-field appearance="outline">
-        <input type="text" matInput placeholder="E-Mail adresinizi giriniz." [(ngModel)]="email" />
+        <input
+          type="text"
+          matInput
+          placeholder="E-Mail adresinizi giriniz."
+          name="email"
+          autocomplete="email"
+          [(ngModel)]="email"
+        />
       </mat-form-field>
       <button class="button" color="primary" (click)="onButtonClick()" mat-flat-button>
         Şifremi Yenile

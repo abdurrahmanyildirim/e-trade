@@ -41,7 +41,7 @@ export class FilterFactory {
       return products;
     } else {
       const brands = filter.brands.split('-');
-      return products.filter((product) => brands.includes(product.brand));
+      return products.filter((product) => brands.includes(product.brand.toLocaleLowerCase()));
     }
   }
 
@@ -74,8 +74,8 @@ export class FilterFactory {
   private initBrands(products: Product[]): void {
     this.brands = [];
     products.forEach((product) => {
-      if (this.brands.indexOf(product.brand) < 0) {
-        this.brands.push(product.brand);
+      if (this.brands.indexOf(product.brand.toLocaleLowerCase()) < 0) {
+        this.brands.push(product.brand.toLocaleLowerCase());
       }
     });
   }

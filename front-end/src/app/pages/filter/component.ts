@@ -127,11 +127,11 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   filterByBrand(brand: string): void {
     this.showSplash = true;
-    const hasBrand = this.filter.brands.includes(brand);
+    const hasBrand = this.filter.brands.includes(brand.toLocaleLowerCase());
     this.filter.brands = hasBrand
       ? this.filter.brands
           .split('-')
-          .filter((filterBrand) => filterBrand !== brand)
+          .filter((filterBrand) => filterBrand.toLocaleLowerCase() !== brand.toLocaleLowerCase())
           .join('-')
       : this.filter.brands + '-' + brand;
     this.appendFiltersToRoute();

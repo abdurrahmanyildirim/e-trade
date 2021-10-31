@@ -15,7 +15,14 @@
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="register()">
         <mat-form-field appearance="outline">
-          <input type="text" matInput placeholder="İsim" formControlName="firstName" />
+          <input
+            type="text"
+            matInput
+            placeholder="İsim"
+            name="fname"
+            autocomplete="given-name"
+            formControlName="firstName"
+          />
           <mat-error
             *ngIf="(form.get('firstName').hasError('required') || form.get('firstName').hasError('isNull'))&& form.get('firstName').touched"
           >
@@ -28,7 +35,14 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <input type="text" matInput placeholder="soyisim" formControlName="lastName" />
+          <input
+            type="text"
+            matInput
+            placeholder="soyisim"
+            name="lname"
+            autocomplete="family-name"
+            formControlName="lastName"
+          />
           <mat-error
             *ngIf="(form.get('lastName').hasError('required') || form.get('firstName').hasError('isNull'))&& form.get('lastName').touched"
           >
@@ -47,6 +61,8 @@
             matInput
             placeholder="E-Mail"
             formControlName="email"
+            name="email"
+            autocomplete="email"
             inputmode="email"
           />
           <mat-error
@@ -57,7 +73,14 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <input type="password" matInput placeholder="Şifre" formControlName="password" />
+          <input
+            type="password"
+            matInput
+            placeholder="Şifre"
+            name="password"
+            autocomplete="new-password"
+            formControlName="password"
+          />
           <mat-error
             *ngIf="(form.get('password').hasError('required') || form.get('firstName').hasError('isNull')) && form.get('password').touched"
           >

@@ -2,7 +2,15 @@
   <h1 class="title">İletişim Formu</h1>
   <form [formGroup]="form" (ngSubmit)="sendContactRequest()" class="form">
     <mat-form-field appearance="outline">
-      <input type="text" matInput placeholder="Adınız" apperance="outline" formControlName="name" />
+      <input
+        type="text"
+        matInput
+        placeholder="Adınız"
+        name="name"
+        autocomplete="name"
+        apperance="outline"
+        formControlName="name"
+      />
       <mat-error
         *ngIf="(form.get('name').hasError('required') || form.get('name').hasError('isNull')) && form.get('name').touched"
       >
@@ -15,6 +23,8 @@
         type="text"
         inputmode="email"
         matInput
+        name="email"
+        autocomplete="email"
         placeholder="Mail adresiniz"
         apperance="outline"
         formControlName="email"
@@ -33,6 +43,8 @@
         matInput
         maxlength="14"
         minlength="14"
+        name="phone"
+        autocomplete="tel"
         placeholder="Telefon(0555 555 55 55)"
         apperance="outline"
         formControlName="phone"

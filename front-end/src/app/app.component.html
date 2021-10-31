@@ -12,5 +12,6 @@
   *ngIf="navigationProgress"
   class="nav-progress"
   mode="indeterminate"
+  value="100"
 ></mat-progress-bar>
 <router-outlet *ngIf="splashService.configInited" (activate)="scrollToTop()"></router-outlet>

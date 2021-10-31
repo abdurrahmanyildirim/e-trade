@@ -8,6 +8,8 @@
             type="text"
             matInput
             placeholder="E-Mail"
+            name="email"
+            autocomplete="email"
             formControlName="email"
             inputmode="email"
           />
@@ -17,7 +19,14 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <input type="password" matInput placeholder="Şifre" formControlName="password" />
+          <input
+            type="password"
+            matInput
+            placeholder="Şifre"
+            name="password"
+            autocomplete="current-password"
+            formControlName="password"
+          />
           <mat-error *ngIf="form.get('password').hasError('required')&& form.get('email').touched">
             *Şifre alanı zorunlu.
           </mat-error>

@@ -13,7 +13,6 @@
 
 .header {
   z-index: 10;
-  padding-bottom: 10px;
   position: sticky;
   top: 0;
 }
@@ -21,7 +20,6 @@
 .footer {
   padding-top: 40px;
 }
-
 
 @media only screen and (max-width: 650px) {
   .main {
@@ -33,6 +31,6 @@
   }
 
   .header {
-    padding-bottom: 5px;
+    /* padding-bottom: 5px; */
   }
 }

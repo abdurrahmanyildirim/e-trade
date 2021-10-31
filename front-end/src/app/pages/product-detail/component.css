@@ -129,8 +129,7 @@
 
 @media only screen and (max-width: 650px) {
   .container {
-    padding-top: 0;
-    padding: 0 5px;
+    padding: 5px 5px 0 5px;
     width: 100%;
   }
 

@@ -11,6 +11,7 @@ import {
 } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { isPresent } from './shared/util/common';
+import { ProgressBarMode } from '@angular/material/progress-bar/progress-bar';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ import { isPresent } from './shared/util/common';
 export class AppComponent implements OnInit, OnDestroy {
   sub: Subscription;
   navigationProgress = false;
+  mode: ProgressBarMode = 'indeterminate';
 
   constructor(public splashService: SplashService, private router: Router) {}
 
@@ -38,16 +40,21 @@ export class AppComponent implements OnInit, OnDestroy {
           (e) =>
             e instanceof NavigationEnd ||
             e instanceof NavigationStart ||
-            e instanceof NavigationCancel
+            e instanceof NavigationCancel ||
+            e instanceof NavigationError
         )
       )
       .subscribe({
-        next: (event) => {
+        next: (e) => {
           setTimeout(() => {
-            if (event instanceof NavigationStart) {
+            if (e instanceof NavigationStart) {
               this.navigationProgress = true;
             }
-            if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
+            if (
+              e instanceof NavigationEnd ||
+              e instanceof NavigationCancel ||
+              e instanceof NavigationError
+            ) {
               this.navigationProgress = false;
             }
           });
