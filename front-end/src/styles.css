@@ -31,32 +31,7 @@ body {
   background: rgba(0, 0, 0, 0.5);
 }
 
-.bg-success {
-  background-color: #3fcb30 !important;
-}
-
-.purchase-button {
-  color: white !important;
-  outline: none;
-}
-
-.primary-button {
-  background-color: #03a9f4;
-  color: white;
-}
-
-.primary-bg {
-  background-color: #03a9f4;
-}
-
-.primary-color {
-  color: #03a9f4;
-}
-
 .error-snackbar {
-  /* background-color: #f8d7da;
-  color: #721c24; */
-
   color: #fff;
   background: rgba(217, 92, 92, 0.95);
   border: solid 1px #ddd;
@@ -64,9 +39,6 @@ body {
 }
 
 .info-snackbar {
-  /* background-color: #cce5ff;
-  color: #004085; */
-
   color: #31708f;
   background-color: #d9edf7;
   border: solid 1px #31708f;
@@ -74,9 +46,6 @@ body {
 }
 
 .success-snackbar {
-  /* background-color: #33e25c;
-  color: white; */
-
   color: #fff;
   background: rgba(91, 189, 114, 0.95);
   border: solid 1px #ddd;
