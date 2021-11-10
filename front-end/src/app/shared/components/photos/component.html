@@ -1,6 +1,6 @@
 <main class="container">
   <div class="photos" [ngStyle]="{'height' : height + 'px','width' : width  + 'px'}">
-    <div class="cover" [ngStyle]="{'height' : height + 'px'}" #cover>
+    <div class="cover" #cover>
       <div
         class="current-photo"
         *ngFor="let photo of photos"
@@ -17,10 +17,10 @@
     <img
       class="mini-photo"
       *ngFor="let photo of photos;let i = index"
-      (click)="changePhoto(i,photo._id)"
+      (click)="changePhoto(i)"
       [id]="photo._id"
       [src]="photo.path"
-      alt="Taşer Züccaciye"
+      alt = "Taşer Züccaciye"
     />
   </section>
 </main>

@@ -11,8 +11,12 @@
 
 .cover {
   display: flex;
+  height: 100%;
   transform: translateX(0);
-  transition: transform 0.35s ease-in-out;
+}
+
+.transiton {
+  transition: transform 500ms;
 }
 
 .current-photo {

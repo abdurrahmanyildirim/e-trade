@@ -32,6 +32,7 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
   touchStart: number;
   touchEnd: number;
   isMobile = false;
+  timeOut: any;
 
   ngOnInit(): void {
     this.currentPhoto = this.photos[0];
@@ -51,7 +52,7 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
     this.currentIndex = 0;
     this.currentPhoto = this.photos[0];
     if (isPresent(this.cover)) {
-      this.cover.nativeElement.style.transform = 'translateX(0px)';
+      this.cover.nativeElement.style.transform = 'translate3d(0px,0,0)';
       setTimeout(() => {
         this.activeCurrentPhoto();
       }, 10);
@@ -60,36 +61,42 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
 
   listenTouchEvents(): void {
     let subs = fromEvent(this.cover.nativeElement, 'touchstart').subscribe((event: TouchEvent) => {
+      this.cover.nativeElement.classList.remove('transiton');
+      clearTimeout(this.timeOut);
       this.touchStart = event.changedTouches[0].screenX;
+    });
+    this.subs.add(subs);
+    subs = fromEvent(this.cover.nativeElement, 'touchmove').subscribe((event: TouchEvent) => {
+      const xloc =
+        -this.currentIndex * this.width - (this.touchStart - event.changedTouches[0].screenX);
+      this.cover.nativeElement.style.transform = 'translate3d(' + xloc + 'px, 0,0)';
     });
     this.subs.add(subs);
     subs = fromEvent(this.cover.nativeElement, 'touchend').subscribe((event: TouchEvent) => {
       this.touchEnd = event.changedTouches[0].screenX;
-      if (this.touchEnd - this.touchStart > 10) {
+      if (this.touchEnd - this.touchStart > 30) {
         if (this.currentIndex > 0) {
           this.currentIndex--;
-          this.currentPhoto = this.photos[this.currentIndex];
-          this.changePhoto(this.currentIndex, this.currentPhoto._id);
         }
-      } else if (this.touchStart - this.touchEnd > 10) {
+      } else if (this.touchStart - this.touchEnd > 30) {
         if (this.currentIndex < this.photos.length - 1) {
           this.currentIndex++;
-          this.currentPhoto = this.photos[this.currentIndex];
-          this.changePhoto(this.currentIndex, this.currentPhoto._id);
         }
       }
+      this.changePhoto(this.currentIndex);
     });
     this.subs.add(subs);
   }
 
-  changePhoto(index: number, id: string): void {
+  changePhoto(index: number): void {
     this.currentIndex = index;
-    this.cover.nativeElement.style.transform = 'translateX(' + -index * this.width + 'px)';
-    this.onMiniPhotoClick(id);
-  }
-
-  onMiniPhotoClick(id: string): void {
-    this.currentPhoto = this.photos.find((photo) => photo._id === id);
+    this.currentPhoto = this.photos[index];
+    this.cover.nativeElement.classList.add('transiton');
+    this.cover.nativeElement.style.transform = 'translate3d(' + index * -this.width + 'px,0,0)';
+    clearTimeout(this.timeOut);
+    this.timeOut = setTimeout(() => {
+      this.cover.nativeElement.classList.remove('transiton');
+    }, 550);
     this.activeCurrentPhoto();
   }
 
@@ -130,6 +137,7 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
     if (isPresent(this.subs)) {
       this.subs.unsubscribe();
     }
+    clearTimeout(this.timeOut);
     ObjectHelper.removeReferances(this);
   }
 }
