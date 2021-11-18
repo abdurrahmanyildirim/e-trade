@@ -43,6 +43,20 @@
   width: fit-content;
 }
 
+.wp {
+  position: fixed;
+  right: 15px;
+  bottom: 10px;
+  width: 159px;
+  height: 50px;
+  z-index: 100;
+}
+
+.icon {
+  width: 159px;
+  height: 50px;
+}
+
 @media only screen and (max-width: 650px) {
   .section-title {
     text-align: center;
@@ -56,5 +70,10 @@
 
   .container {
     padding: 0;
+  }
+
+  .wp {
+    right: 10px;
+    bottom: 10px;
   }
 }
