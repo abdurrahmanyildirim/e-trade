@@ -14,13 +14,12 @@ module.exports.updateCart = async (req, res) => {
   if (!orders) {
     return res.status(400).send({ message: 'Siparişler boş bırakılamaz.' });
   }
-  const newCart = orders.map((order) => {
+  user.cart = orders.map((order) => {
     return { productId: order.productId, quantity: order.quantity };
   });
-  user.cart = newCart;
   user.save((err) => {
     if (err) {
-      return res.status(404).send({ message: 'Kayıt bir hata meydana geldi.' });
+      return res.status(404).send({ message: 'Kayıt sırasında bir hata meydana geldi.' });
     }
     return res.status(200).send({ message: 'Sepet güncellendi.' });
   });
@@ -28,30 +27,23 @@ module.exports.updateCart = async (req, res) => {
 
 module.exports.getCart = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.id });
+    const user = await User.findOne({ _id: req.id }).populate('cart.productId').exec();
     if (!user) {
       return res.status(400).send({ message: 'Kullanıcı bulunamadı' });
     }
-    const productIds = await user.cart.map((order) => order.productId);
-    const products = await Product.find({ _id: { $in: productIds } });
-    if (!products) {
-      return res.status(500).send({ message: 'Bir hata meydana geldi.' });
-    }
     const orders = [];
     await user.cart.forEach((order) => {
-      const product = products.find((prod) => order.productId == prod.id);
-      if (product) {
-        orders.push({
-          productId: product._id,
-          brand: product.brand,
-          name: product.name,
-          category: product.category,
-          price: product.price,
-          discountRate: product.discountRate,
-          photo: product.photos[0].path,
-          quantity: order.quantity
-        });
-      }
+      const prod = order.productId;
+      orders.push({
+        productId: prod._id,
+        brand: prod.brand,
+        name: prod.name,
+        category: prod.category,
+        price: prod.price,
+        discountRate: prod.discountRate,
+        photo: prod.photos[0].path,
+        quantity: order.quantity
+      });
     });
     return res.status(200).send(orders);
   } catch (error) {
@@ -62,21 +54,16 @@ module.exports.getCart = async (req, res) => {
 
 module.exports.purchaseOrder = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.id });
+    const user = await User.findOne({ _id: req.id }).populate('cart.productId').exec();
     if (!user) {
       return res.status(500).send({ message: 'Kullanıcı bulunamadı' });
     }
     if (!isPresent(user.isActivated) || user.isActivated === false) {
       return res.status(400).send({ message: 'Mail adresi aktif değil', issue: 'mail' });
     }
-    const productIds = await user.cart.map((order) => order.productId);
-    const products = await Product.find({ _id: { $in: productIds } });
-    if (!products) {
-      return res.status(500).send({ message: 'Bir hata meydana geldi.' });
-    }
     const orderedProducts = [];
     await user.cart.forEach(async (order) => {
-      const product = products.find((prod) => order.productId == prod.id);
+      const product = order.productId;
       if (product) {
         orderedProducts.push({
           productId: product._id,
@@ -90,19 +77,15 @@ module.exports.purchaseOrder = async (req, res) => {
         });
       }
     });
-    const city = encrypt(req.body.city);
-    const district = encrypt(req.body.district);
-    const address = encrypt(req.body.address);
-    const phone = encrypt(req.body.phone);
     user.phones[0] = {
       title: 'phone' + Date.now(),
-      phone
+      phone: encrypt(req.body.phone)
     };
     user.addresses[0] = {
       title: 'address' + Date.now(),
-      city,
-      district,
-      address
+      city: encrypt(req.body.city),
+      district: encrypt(req.body.district),
+      address: encrypt(req.body.address)
     };
     await user.save();
     const reqData = initIyzipayReqData(orderedProducts, user, req);
@@ -115,22 +98,9 @@ module.exports.purchaseOrder = async (req, res) => {
 };
 
 const initIyzipayReqData = (orderedProducts, user, req) => {
-  const totalPrice = orderedProducts.reduce(
-    (sum, cur) => sum + (cur.price - cur.price * cur.discountRate) * cur.quantity,
-    0
-  );
-  const basketItems = orderedProducts.map((prod) => {
-    return {
-      id: prod.productId + '',
-      name: prod.name,
-      category1: prod.category,
-      itemType: Iyzipay.BASKET_ITEM_TYPE.PHYSICAL,
-      price: (prod.price - prod.price * prod.discountRate) * prod.quantity + ''
-    };
-  });
-  const callbackUrl = isDevMode()
-    ? 'http://localhost:4205/iyzipay/callback?id=' + req.id
-    : process.env.ORIGIN + '/iyzipay/callback?id=' + req.id;
+  const totalPrice = getTotalPrice(orderedProducts);
+  const basketItems = getBasketItems(orderedProducts);
+  const callbackUrl = getCallbackUrl(req);
   return {
     price: totalPrice + '',
     paidPrice: totalPrice + '',
@@ -163,4 +133,29 @@ const initIyzipayReqData = (orderedProducts, user, req) => {
     },
     basketItems
   };
+};
+
+const getTotalPrice = (prods) => {
+  return prods.reduce(
+    (sum, cur) => sum + (cur.price - cur.price * cur.discountRate) * cur.quantity,
+    0
+  );
+};
+
+const getBasketItems = (prods) => {
+  return prods.map((prod) => {
+    return {
+      id: prod.productId + '',
+      name: prod.name,
+      category1: prod.category,
+      itemType: Iyzipay.BASKET_ITEM_TYPE.PHYSICAL,
+      price: (prod.price - prod.price * prod.discountRate) * prod.quantity + ''
+    };
+  });
+};
+
+const getCallbackUrl = (req) => {
+  return isDevMode()
+    ? 'http://localhost:4205/iyzipay/callback?id=' + req.id
+    : process.env.ORIGIN + '/iyzipay/callback?id=' + req.id;
 };
