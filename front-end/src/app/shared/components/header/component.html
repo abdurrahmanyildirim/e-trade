@@ -82,7 +82,7 @@
         </mat-menu>
       </div>
       <div class="mobile">
-        <button mat-icon-button (click)="isSidebarOpen=!isSidebarOpen">
+        <button mat-icon-button (click)="toggleMenu()">
           <mat-icon>menu</mat-icon>
         </button>
         <div class="mobile-brand" routerLink="main">
@@ -131,7 +131,14 @@
           </mat-menu>
         </div>
       </div>
-      <div class="mobile-nav-menu" [@sidebar]="isSidebarOpen ? 'open' : 'closed'">
+      <div class="mobile-nav-menu" *ngIf="isMobile" #mobileMenuEl>
+        <div class="mobile-menu-logo">
+          <div class="mobile-brand">
+            <img src="assets/img/logo.png" alt="Taşer Züccaciye" class="logo" />
+            <span class="logo-text">TAŞER</span>
+          </div>
+          <mat-icon (click)="toggleMenu()">close</mat-icon>
+        </div>
         <ng-container *ngTemplateOutlet="navs"></ng-container>
       </div>
     </div>
@@ -143,12 +150,14 @@
   </section>
 </main>
 
+<div *ngIf="isMobile" class="overlay" (click)="toggleMenu()" #overlay></div>
+
 <ng-template #navs>
   <div
     routerLink="main"
     [routerLinkActive]="isMobile ? '' : 'active'"
     class="nav"
-    (click)="isMobile ? isSidebarOpen = !isSidebarOpen :''"
+    (click)="isMobile ? toggleMenu() :''"
   >
     ANA SAYFA
   </div>
@@ -164,7 +173,7 @@
     routerLink="contact"
     [routerLinkActive]="isMobile ? '' : 'active'"
     class="nav"
-    (click)="isMobile ? isSidebarOpen=!isSidebarOpen :''"
+    (click)="isMobile ? toggleMenu() :''"
   >
     İLETİŞİM
   </div>

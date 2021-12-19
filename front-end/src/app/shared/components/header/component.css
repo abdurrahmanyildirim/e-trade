@@ -35,7 +35,7 @@
 }
 
 .mobile-nav-menu {
-  width: 100%;
+  width: 60%;
   top: 0;
   left: 0;
   position: fixed;
@@ -46,6 +46,15 @@
   background-color: white;
   height: 100%;
   overflow-x: hidden;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.mobile-menu-logo {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 10px;
+  align-items: center;
 }
 
 .items {
@@ -186,6 +195,16 @@
   font-size: 12px;
   z-index: 100;
   background-color: #f44336;
+}
+
+.overlay {
+  position: fixed;
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  z-index: 15;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 @media only screen and (max-width: 650px) {

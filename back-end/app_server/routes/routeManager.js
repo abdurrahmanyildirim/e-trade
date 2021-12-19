@@ -8,8 +8,6 @@ const contact = require('./contact');
 const user = require('./user');
 const db = require('./db');
 const iyzipay = require('./iyzipay');
-const path = require('path');
-const { isDevMode } = require('../../common');
 const { Router } = require('express');
 const router = Router();
 

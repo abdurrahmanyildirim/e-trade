@@ -15,9 +15,17 @@
     <span class="mat-title">Sipariş Özeti</span>
     <span class="summary-info">Toplam {{orders.length}} ürün</span>
     <span class="summary-info">Toplam Fiyat : {{totalCost | number:'.2-2'}} TL</span>
+    <hr style="width: 100%" />
+    <div class="caption">
+      *Ürünlerimiz Yurtiçi kargo ile %50 indirimli karşı taraf ödemeli gönderilmektedir. Toplam
+      fiyata kargo ücreti dahil değildir.
+    </div>
   </section>
   <div class="navigate-place">
-    <span class="mat-body-2">Toplam : {{totalCost | number:'.2-2'}} TL </span>
+    <span class="mat-body-2"
+      >Toplam : {{totalCost | number:'.2-2'}} TL <br />
+      <div class="caption" style="font-size: 12px">*Kargo ücreti dahil değildir.</div>
+    </span>
     <button mat-flat-button color="primary" (click)="this.toggleStepper()">
       <span *ngIf="cartStepActive">Siparişi Tamamla</span>
       <span *ngIf="!cartStepActive">Sepeti Göster</span>

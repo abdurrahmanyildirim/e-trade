@@ -7,13 +7,12 @@ module.exports.getOrders = async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.id });
     orders.map((order) => {
-      const contactInfo = {
+      order.contactInfo = {
         city: encForResp(order.contactInfo.city),
         district: encForResp(order.contactInfo.district),
         address: encForResp(order.contactInfo.address),
         phone: encForResp(order.contactInfo.phone)
       };
-      order.contactInfo = contactInfo;
       return order;
     });
     return res.status(200).send(orders);

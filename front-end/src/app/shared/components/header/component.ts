@@ -28,11 +28,13 @@ import { CategoryService } from '../../services/rest/category/service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   roles = Roles;
-  isSidebarOpen = false;
   searchKey = '';
   products: SearchProduct[];
   filteredProducts: SearchProduct[] = [];
   isMobile = document.body.clientWidth <= 650;
+  isSideBarActive = false;
+  @ViewChild('overlay') overlay: ElementRef<HTMLElement>;
+  @ViewChild('mobileMenuEl') mobileMenuEl: ElementRef<HTMLElement>;
 
   constructor(
     public cartService: CartService,
@@ -57,7 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateToFilteredPage(category: string): void {
     if (document.body.clientWidth <= 650) {
-      this.isSidebarOpen = !this.isSidebarOpen;
+      this.toggleMenu();
     }
     this.router.navigateByUrl('filter?category=' + category);
   }
@@ -107,6 +109,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.searchKey = '';
       this.onKeyup();
     });
+  }
+
+  toggleMenu(): void {
+    if (this.isSideBarActive) {
+      this.mobileMenuEl.nativeElement.style.transform = 'translateX(-100%)';
+      this.overlay.nativeElement.style.display = 'none';
+    } else {
+      this.overlay.nativeElement.style.display = 'block';
+      this.mobileMenuEl.nativeElement.style.transform = 'translateX(0)';
+    }
+    this.isSideBarActive = !this.isSideBarActive;
   }
 
   ngOnDestroy(): void {

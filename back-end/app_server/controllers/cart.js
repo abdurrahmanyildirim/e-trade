@@ -1,9 +1,9 @@
 const User = require('../models/user');
-const Product = require('../models/product');
 const { encrypt, decrypt } = require('../services/crypto');
 const { isDevMode, isPresent } = require('../../common');
 const { sendFormRequest } = require('../services/iyzipay');
-var Iyzipay = require('iyzipay');
+const Iyzipay = require('iyzipay');
+const Order = require('../models/order');
 
 module.exports.updateCart = async (req, res) => {
   const user = await User.findOne({ _id: req.id });
@@ -88,13 +88,67 @@ module.exports.purchaseOrder = async (req, res) => {
       address: encrypt(req.body.address)
     };
     await user.save();
-    const reqData = initIyzipayReqData(orderedProducts, user, req);
-    const result = await sendFormRequest(reqData);
-    return res.status(200).send(result);
+    if (isDevMode()) {
+      await giveOrder(req.id);
+      return res.redirect(`http://localhost:4200/cart?status=true`);
+    } else {
+      const reqData = initIyzipayReqData(orderedProducts, user, req);
+      const result = await sendFormRequest(reqData);
+      return res.status(200).send(result);
+    }
   } catch (error) {
     console.error(error);
     return res.status(500).send(error);
   }
+};
+
+const giveOrder = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await User.findOne({ _id: id }).populate('cart.productId').exec();
+      if (!user) {
+        reject('Kullanıcı bulunamadı');
+      }
+      const orderedProducts = [];
+      await user.cart.forEach(async (order) => {
+        const product = order.productId;
+        if (product) {
+          orderedProducts.push({
+            productId: product._id,
+            quantity: order.quantity,
+            name: product.name,
+            brand: product.brand,
+            discountRate: product.discountRate,
+            price: product.price,
+            photoPath: product.photos[0].path,
+            category: product.category
+          });
+        }
+      });
+      const newOrder = new Order({
+        userId: id,
+        userName: user.firstName + ' ' + user.lastName,
+        email: user.email,
+        isActive: true,
+        date: Date.now(),
+        status: [{ key: 0, desc: 'Siparişiniz alındı.', date: Date.now() }],
+        products: orderedProducts,
+        contractsChecked: true,
+        contactInfo: {
+          city: user.addresses[0].city,
+          district: user.addresses[0].district,
+          address: user.addresses[0].address,
+          phone: user.phones[0].phone
+        }
+      });
+      await newOrder.save();
+      user.cart = [];
+      await user.save();
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
 const initIyzipayReqData = (orderedProducts, user, req) => {
@@ -156,6 +210,6 @@ const getBasketItems = (prods) => {
 
 const getCallbackUrl = (req) => {
   return isDevMode()
-    ? 'http://localhost:4205/iyzipay/callback?id=' + req.id
-    : process.env.ORIGIN + '/iyzipay/callback?id=' + req.id;
+    ? 'http://localhost:4205/api/iyzipay/callback?id=' + req.id
+    : process.env.ORIGIN + '/api/iyzipay/callback?id=' + req.id;
 };

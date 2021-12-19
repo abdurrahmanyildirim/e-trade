@@ -1,6 +1,5 @@
 const { checkResult } = require('../services/iyzipay');
 const User = require('../models/user');
-const Product = require('../models/product');
 const Order = require('../models/order');
 const { decrypt } = require('../services/crypto');
 const { sendEmail } = require('../services/email/index');
@@ -25,18 +24,13 @@ module.exports.iyzipayCallBack = async (req, res) => {
 const giveOrder = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const user = await User.findOne({ _id: id });
+      const user = await User.findOne({ _id: id }).populate('cart.productId').exec();
       if (!user) {
         reject('Kullanıcı bulunamadı');
       }
-      const productIds = await user.cart.map((order) => order.productId);
-      const products = await Product.find({ _id: { $in: productIds } });
-      if (!products) {
-        reject('Ürünler Bulunamadı');
-      }
       const orderedProducts = [];
       await user.cart.forEach(async (order) => {
-        const product = products.find((prod) => order.productId == prod.id);
+        const product = order.productId;
         if (product) {
           orderedProducts.push({
             productId: product._id,
@@ -48,8 +42,6 @@ const giveOrder = (id) => {
             photoPath: product.photos[0].path,
             category: product.category
           });
-          product.stockQuantity = product.stockQuantity - order.quantity;
-          await product.save();
         }
       });
       const newOrder = new Order({

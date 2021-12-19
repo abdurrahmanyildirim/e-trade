@@ -72,7 +72,7 @@ module.exports.activateEmail = async (req, res) => {
 module.exports.googleAuth = async (req, res) => {
   try {
     const { firstName, lastName, email } = req.body;
-    const user = await User.findOne({ email: encrypt(email) });
+    let user = await User.findOne({ email: encrypt(email) });
     if (!user) {
       const newUser = new User({
         firstName: firstName,

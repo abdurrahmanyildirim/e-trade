@@ -1,5 +1,9 @@
 <form *ngIf="form" [formGroup]="form" (ngSubmit)="update()" class="form">
   <mat-form-field appearance="outline" class="field">
+    <input type="text" [disabled]="true" matInput [value]="user.email" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="field">
     <mat-label>İsim</mat-label>
     <input type="text" matInput placeholder="İsim" formControlName="firstName" />
     <mat-error
@@ -24,19 +28,6 @@
       *30 karakterden fazla olamaz.
     </mat-error>
   </mat-form-field>
-
-  <!-- <mat-form-field appearance="outline" class="field">
-    <mat-label>Email</mat-label>
-    <input type="text" matInput placeholder="Email" formControlName="email" />
-    <mat-error
-      *ngIf="(form.get('email').hasError('required') || form.get('email').hasError('isNull')) && form.get('email').touched"
-    >
-      *Email alanı zorunlu.
-    </mat-error>
-    <mat-error *ngIf="form.get('email').hasError('email') && form.get('email').touched">
-      *Geçerli bir email adresi giriniz.
-    </mat-error>
-  </mat-form-field> -->
 
   <button mat-flat-button [disabled]="form.invalid" type="submit" color="primary">Güncelle</button>
 </form>

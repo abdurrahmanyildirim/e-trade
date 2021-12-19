@@ -138,7 +138,7 @@
   }
 
   .results {
-    justify-content: center;
+    justify-content: space-evenly;
   }
 
   .mobile-filter-button {
