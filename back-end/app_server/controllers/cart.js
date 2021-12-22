@@ -123,6 +123,8 @@ const giveOrder = (id) => {
             photoPath: product.photos[0].path,
             category: product.category
           });
+          product.stockQuantity = product.stockQuantity - order.quantity;
+          await product.save();
         }
       });
       const newOrder = new Order({
