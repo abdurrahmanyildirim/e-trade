@@ -17,6 +17,45 @@
     <div class="section-title mat-body-2">En Yeni ürünler</div>
     <ng-container *ngTemplateOutlet="slider; context: {prods:newProducts}"></ng-container>
   </section>
+  <section class="section trust-section">
+    <div class="trust-item">
+      <div class="icon-container">
+        <mat-icon class="trust-item-icon">credit_card</mat-icon>
+      </div>
+      <h2 class="trust-item-title">Güvenli Ödeme</h2>
+      <div class="trust-item-desc mat-body-2">
+        İyzico güvenli ödeme altyapısı ile ödeme bilgileriniz güvende
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="icon-container">
+        <mat-icon class="trust-item-icon">local_shipping</mat-icon>
+      </div>
+      <h2 class="trust-item-title">İndirimli Kargo</h2>
+      <div class="trust-item-desc mat-body-2">
+        Kargolarımız Yurtiçi kargo ile %50 indirimli gönderilmektedir.
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="icon-container">
+        <mat-icon class="trust-item-icon">contact_support</mat-icon>
+      </div>
+      <h2 class="trust-item-title">İletişim</h2>
+      <div class="trust-item-desc mat-body-2">
+        Çalışma saatleri içerisinde bize ulaşabilir ve siparişlerinizle ilgili tüm konularda destek
+        alabilirsiniz.
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="icon-container">
+        <mat-icon class="trust-item-icon">security</mat-icon>
+      </div>
+      <h2 class="trust-item-title">Güvenli Alışveriş</h2>
+      <div class="trust-item-desc mat-body-2">
+        SSL sertifikası ile bilgileriniz şifreli olarak iletilmektedir.
+      </div>
+    </div>
+  </section>
 </main>
 
 <ng-template #slider let-prods="prods">

@@ -57,6 +57,44 @@
   height: 50px;
 }
 
+.trust-section {
+  display: flex;
+  width: 100%;
+  margin-top: 80px;
+  max-width: 1200px;
+}
+
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px;
+  flex: 1;
+}
+
+.icon-container {
+  padding: 5px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+  border: 2px solid #e0e0e0;
+  line-height: 0;
+}
+
+.trust-item-icon {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+}
+
+.trust-item-title {
+  margin-bottom: 10px;
+}
+
+.trust-item-desc {
+  text-align: center;
+}
+
 @media only screen and (max-width: 650px) {
   .section-title {
     text-align: center;
@@ -75,5 +113,14 @@
   .wp {
     right: 10px;
     bottom: 10px;
+  }
+
+  .trust-section {
+    flex-direction: column;
+    margin-top: 40px;
+  }
+
+  .trust-item {
+    margin-bottom: 10px;
   }
 }
