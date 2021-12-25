@@ -9,12 +9,14 @@ import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { BasePageDirective } from 'src/app/shared/directives/base-component/base-page.component';
+import { PageSelector } from 'src/app/shared/directives/base-component/model';
 import { OrderList, OrderListProduct } from 'src/app/shared/models/order';
 import { OrderService } from 'src/app/shared/services/rest/order/service';
+import { MobileDetectionService } from 'src/app/shared/services/site/mobile-detection';
 import { StateService } from 'src/app/shared/services/site/state';
 import { isPresent } from 'src/app/shared/util/common';
-import { BasePageDirective } from '../base-page.component';
-import { PageSelector } from '../model';
+// import { BasePageDirective } from '../base-page.component';
 import { OrdersFactory } from './factory';
 import { OrderFilter } from './model';
 import { OrdersState } from './state';
@@ -30,14 +32,14 @@ export class OrdersComponent extends BasePageDirective<OrdersState> implements O
   filters: OrderFilter[];
   orderList: OrderList[];
   sub: Subscription;
-  isMobile = false;
 
   constructor(
     private orderService: OrderService,
     private router: Router,
     private ordersFactory: OrdersFactory,
     private cd: ChangeDetectorRef,
-    protected stateService: StateService
+    protected stateService: StateService,
+    public mobileDet: MobileDetectionService
   ) {
     super(stateService);
     this.selector = PageSelector.AppOrders;
@@ -45,9 +47,6 @@ export class OrdersComponent extends BasePageDirective<OrdersState> implements O
 
   ngOnInit(): void {
     super.ngOnInit();
-    if (document.body.clientWidth <= 650) {
-      this.isMobile = true;
-    }
     this.filters = this.ordersFactory.createOrderFilters();
     this.initOrders();
   }

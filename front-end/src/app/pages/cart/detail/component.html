@@ -1,6 +1,6 @@
 <main class="container">
   <div class="order-list-container">
-    <span class="mobile" *ngIf="isMobile">
+    <span class="mobile" *ngIf="mobileDet.isMobile |async">
       <div class="order" *ngFor="let order of orders">
         <img
           [src]="order.photo"
@@ -47,7 +47,7 @@
         </section>
       </div>
     </span>
-    <span class="desktop" *ngIf="!isMobile">
+    <span class="desktop" *ngIf="!(mobileDet.isMobile |async)">
       <div class="order" *ngFor="let order of orders">
         <section class="photo-info flex">
           <img

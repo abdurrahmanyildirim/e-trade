@@ -9,6 +9,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product/service';
+import { MobileDetectionService } from 'src/app/shared/services/site/mobile-detection';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
 @Component({
@@ -26,6 +27,7 @@ export class MainComponent implements OnInit, OnDestroy {
   owlOptions: OwlOptions = {
     loop: true,
     autoplay: true,
+    nav: !this.mobilDet.isMobile.value,
     navText: ['<', '>'],
     lazyLoad: true,
     dots: false,
@@ -48,11 +50,14 @@ export class MainComponent implements OnInit, OnDestroy {
       1100: {
         items: 5
       }
-    },
-    nav: true
+    }
   };
 
-  constructor(private productService: ProductService, private cd: ChangeDetectorRef) {}
+  constructor(
+    private productService: ProductService,
+    private cd: ChangeDetectorRef,
+    private mobilDet: MobileDetectionService
+  ) {}
 
   ngOnInit(): void {
     this.initProducts();

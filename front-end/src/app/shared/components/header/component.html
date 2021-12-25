@@ -131,7 +131,7 @@
           </mat-menu>
         </div>
       </div>
-      <div class="mobile-nav-menu" *ngIf="isMobile" #mobileMenuEl>
+      <div class="mobile-nav-menu" *ngIf="mobileDet.isMobile | async" #mobileMenuEl>
         <div class="mobile-menu-logo">
           <div class="mobile-brand">
             <img src="assets/img/logo.png" alt="Taşer Züccaciye" class="logo" />
@@ -150,14 +150,14 @@
   </section>
 </main>
 
-<div *ngIf="isMobile" class="overlay" (click)="toggleMenu()" #overlay></div>
+<div *ngIf="mobileDet.isMobile | async" class="overlay" (click)="toggleMenu()" #overlay></div>
 
 <ng-template #navs>
   <div
     routerLink="main"
-    [routerLinkActive]="isMobile ? '' : 'active'"
+    [routerLinkActive]="(mobileDet.isMobile | async) ? '' : 'active'"
     class="nav"
-    (click)="isMobile ? toggleMenu() :''"
+    (click)="toggleMenu()"
   >
     ANA SAYFA
   </div>
@@ -165,15 +165,15 @@
     *ngFor="let category of (categoryService.categories | async)"
     class="nav"
     (click)="navigateToFilteredPage(category.name)"
-    [class.active]="!isMobile ? isLinkActive(category.name) : ''"
+    [class.active]="!(mobileDet.isMobile | async) ? isLinkActive(category.name) : ''"
   >
     {{category.name | uppercase}}
   </div>
   <div
     routerLink="contact"
-    [routerLinkActive]="isMobile ? '' : 'active'"
+    [routerLinkActive]="(mobileDet.isMobile | async) ? '' : 'active'"
     class="nav"
-    (click)="isMobile ? toggleMenu() :''"
+    (click)=" toggleMenu() "
   >
     İLETİŞİM
   </div>

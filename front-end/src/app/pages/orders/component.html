@@ -1,5 +1,5 @@
 <div class="container">
-  <span *ngIf="!isMobile">
+  <span *ngIf="!(mobileDet.isMobile | async)">
     <div class="header-content">
       <span class="header-text mat-body-2">Siparişlerim</span>
       <mat-form-field appearance="outline" class="order-type">
@@ -11,7 +11,7 @@
       </mat-form-field>
     </div>
   </span>
-  <span *ngIf="!isMobile">
+  <span *ngIf="!(mobileDet.isMobile | async)">
     <div
       class="mat-body-2"
       style="text-align: center; margin-top: 10px"
@@ -55,7 +55,7 @@
       </div>
     </div>
   </span>
-  <span *ngIf="isMobile">
+  <span *ngIf="mobileDet.isMobile | async">
     <div *ngIf="orderList && orderList.length>0">
       <div class="mobile-card" *ngFor="let order of orderList">
         <div class="mobile-card-header">

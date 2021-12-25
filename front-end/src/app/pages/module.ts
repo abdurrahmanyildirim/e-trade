@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FooterModule } from '../shared/components/footer/module';
 import { HeaderModule } from '../shared/components/header/module';
 import { PageComponent } from './componet';
-import { PageRoutingModule } from './page-routing.module';
+import { PageRoutingModule } from './routing.module';
 
 @NgModule({
   declarations: [PageComponent],

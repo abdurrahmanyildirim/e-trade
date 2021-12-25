@@ -7,12 +7,13 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { BasePageDirective } from 'src/app/shared/directives/base-component/base-page.component';
+import { PageSelector } from 'src/app/shared/directives/base-component/model';
 import { OrderList } from 'src/app/shared/models/order';
 import { OrderService } from 'src/app/shared/services/rest/order/service';
 import { StateService } from 'src/app/shared/services/site/state';
 import { isPresent } from 'src/app/shared/util/common';
-import { BaseAdminDirective } from '../base-admin.directive';
-import { PageSelector, RouteCategory } from '../model';
+import { RouteCategory } from '../model';
 import { AdminService } from '../service';
 import { OrdersFactory } from './factory';
 import { OrdersState } from './state';
@@ -24,7 +25,7 @@ import { OrdersState } from './state';
   viewProviders: [OrdersFactory],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OrdersComponent extends BaseAdminDirective<OrdersState> implements OnInit, OnDestroy {
+export class OrdersComponent extends BasePageDirective<OrdersState> implements OnInit, OnDestroy {
   orders: OrderList[];
   currentList: OrderList[];
   subs = new Subscription();

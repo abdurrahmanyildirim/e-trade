@@ -13,6 +13,7 @@ import {
 import { Subscription, fromEvent } from 'rxjs';
 import { CloudinaryPhoto } from 'src/app/shared/models/product';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
+import { MobileDetectionService } from '../../services/site/mobile-detection';
 import { isPresent } from '../../util/common';
 
 @Component({
@@ -31,19 +32,17 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
   currentIndex = 0;
   touchStart: number;
   touchEnd: number;
-  isMobile = false;
   timeOut: any;
+
+  constructor(public mobileDet: MobileDetectionService) {}
 
   ngOnInit(): void {
     this.currentPhoto = this.photos[0];
-    if (document.body.clientWidth <= 650) {
-      this.isMobile = true;
-    }
   }
 
   ngAfterViewInit(): void {
     this.activeCurrentPhoto();
-    if (this.isMobile) {
+    if (this.mobileDet.isMobile.value) {
       this.listenTouchEvents();
     }
   }
@@ -112,25 +111,31 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
   }
 
   onMouseLeave(event: MouseEvent): void {
-    const image = document.getElementById('curr-' + this.currentPhoto._id);
-    image.style.backgroundPosition = 'center';
-    image.style.backgroundSize = '100%';
+    if (!this.mobileDet.isMobile.value) {
+      const image = document.getElementById('curr-' + this.currentPhoto._id);
+      image.style.backgroundPosition = 'center';
+      image.style.backgroundSize = '100%';
+    }
   }
 
   onMouseEnter(event: MouseEvent): void {
-    const image = document.getElementById('curr-' + this.currentPhoto._id);
-    image.style.backgroundSize = 2 * 100 + '%';
+    if (!this.mobileDet.isMobile.value) {
+      const image = document.getElementById('curr-' + this.currentPhoto._id);
+      image.style.backgroundSize = 2 * 100 + '%';
+    }
   }
 
   onMouseMove(event: MouseEvent): void {
-    const image = document.getElementById('curr-' + this.currentPhoto._id);
-    const width = image.offsetWidth;
-    const height = image.offsetHeight;
-    const mouseX = event.offsetX;
-    const mouseY = event.offsetY;
-    const bgPosX = (mouseX / width) * 100;
-    const bgPosY = (mouseY / height) * 100;
-    image.style.backgroundPosition = `${bgPosX}% ${bgPosY}%`;
+    if (!this.mobileDet.isMobile.value) {
+      const image = document.getElementById('curr-' + this.currentPhoto._id);
+      const width = image.offsetWidth;
+      const height = image.offsetHeight;
+      const mouseX = event.offsetX;
+      const mouseY = event.offsetY;
+      const bgPosX = (mouseX / width) * 100;
+      const bgPosY = (mouseY / height) * 100;
+      image.style.backgroundPosition = `${bgPosX}% ${bgPosY}%`;
+    }
   }
 
   ngOnDestroy(): void {

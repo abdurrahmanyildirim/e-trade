@@ -12,6 +12,7 @@ import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Order } from 'src/app/shared/models/order';
 import { CartService } from 'src/app/shared/services/rest/cart/service';
+import { MobileDetectionService } from 'src/app/shared/services/site/mobile-detection';
 import { UtilityService } from 'src/app/shared/services/site/utility.service';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
@@ -25,20 +26,17 @@ import { ObjectHelper } from 'src/app/shared/util/helper/object';
 export class CartDetailComponent implements OnDestroy, OnInit {
   orders: Order[];
   ordersSubs: Subscription;
-  isMobile = false;
 
   constructor(
     private utilService: UtilityService,
     private dialogService: DialogService,
     private cartService: CartService,
     private snackbar: SnackbarService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public mobileDet: MobileDetectionService
   ) {}
 
   ngOnInit(): void {
-    if (document.body.clientWidth <= 650) {
-      this.isMobile = true;
-    }
     this.initOrders();
   }
 

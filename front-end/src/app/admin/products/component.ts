@@ -7,13 +7,14 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { BasePageDirective } from 'src/app/shared/directives/base-component/base-page.component';
+import { PageSelector } from 'src/app/shared/directives/base-component/model';
 import { Product } from 'src/app/shared/models/product';
 import { CategoryService } from 'src/app/shared/services/rest/category/service';
 import { ProductService } from 'src/app/shared/services/rest/product/service';
 import { StateService } from 'src/app/shared/services/site/state';
 import { isPresent } from 'src/app/shared/util/common';
-import { BaseAdminDirective } from '../base-admin.directive';
-import { PageSelector, RouteCategory } from '../model';
+import { RouteCategory } from '../model';
 import { AdminService } from '../service';
 import { ProductsState } from './state';
 
@@ -24,7 +25,7 @@ import { ProductsState } from './state';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductsComponent
-  extends BaseAdminDirective<ProductsState>
+  extends BasePageDirective<ProductsState>
   implements OnInit, OnDestroy
 {
   products: Product[];

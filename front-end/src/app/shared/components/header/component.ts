@@ -18,6 +18,7 @@ import { ObjectHelper } from 'src/app/shared/util/helper/object';
 import { SearchProduct } from './model';
 import { phoneSidebarOpenClose } from './animation';
 import { CategoryService } from '../../services/rest/category/service';
+import { MobileDetectionService } from '../../services/site/mobile-detection';
 
 @Component({
   selector: 'app-header',
@@ -31,7 +32,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searchKey = '';
   products: SearchProduct[];
   filteredProducts: SearchProduct[] = [];
-  isMobile = document.body.clientWidth <= 650;
   isSideBarActive = false;
   @ViewChild('overlay') overlay: ElementRef<HTMLElement>;
   @ViewChild('mobileMenuEl') mobileMenuEl: ElementRef<HTMLElement>;
@@ -43,7 +43,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
     public categoryService: CategoryService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public mobileDet: MobileDetectionService
   ) {}
 
   ngOnInit(): void {
@@ -112,14 +113,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   toggleMenu(): void {
-    if (this.isSideBarActive) {
-      this.mobileMenuEl.nativeElement.style.transform = 'translateX(-100%)';
-      this.overlay.nativeElement.style.display = 'none';
-    } else {
-      this.overlay.nativeElement.style.display = 'block';
-      this.mobileMenuEl.nativeElement.style.transform = 'translateX(0)';
+    if (this.mobileDet.isMobile.value) {
+      if (this.isSideBarActive) {
+        this.mobileMenuEl.nativeElement.style.transform = 'translateX(-100%)';
+        this.overlay.nativeElement.style.display = 'none';
+      } else {
+        this.overlay.nativeElement.style.display = 'block';
+        this.mobileMenuEl.nativeElement.style.transform = 'translateX(0)';
+      }
+      this.isSideBarActive = !this.isSideBarActive;
     }
-    this.isSideBarActive = !this.isSideBarActive;
   }
 
   ngOnDestroy(): void {

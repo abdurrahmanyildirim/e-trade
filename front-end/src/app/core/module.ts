@@ -8,6 +8,7 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
 import { DialogModule } from '../shared/components/dialog/module';
 import { GTAGService } from '../shared/services/site/gtag';
+import { MobileDetectionService } from '../shared/services/site/mobile-detection';
 
 const googleLoginOptions = {
   scope: 'profile email'

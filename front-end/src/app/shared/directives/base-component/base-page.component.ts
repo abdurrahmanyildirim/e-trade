@@ -1,6 +1,6 @@
 import { Directive, OnDestroy, OnInit } from '@angular/core';
-import { StateService } from '../shared/services/site/state';
-import { ObjectHelper } from '../shared/util/helper/object';
+import { StateService } from '../../services/site/state';
+import { ObjectHelper } from '../../util/helper/object';
 import { PageSelector } from './model';
 import { PageState } from './state';
 

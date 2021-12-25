@@ -9,10 +9,12 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
+import { throttleTime } from 'rxjs/operators';
 import { Category, Product } from 'src/app/shared/models/product';
 import { CategoryService } from 'src/app/shared/services/rest/category/service';
 import { ProductService } from 'src/app/shared/services/rest/product/service';
+import { MobileDetectionService } from 'src/app/shared/services/site/mobile-detection';
 import { isPresent } from 'src/app/shared/util/common';
 import { FilterFactory } from './factory';
 import { Filter, SortType } from './model';
@@ -42,9 +44,9 @@ export class FilterComponent implements OnInit, OnDestroy {
   SortType = SortType;
   previousScrollTop = 0;
   isMobileFilterActive = false;
-  isMobile = false;
   @ViewChild('mobileFilters') mobileFilters: ElementRef<HTMLElement>;
   @ViewChild('overlay') overlay: ElementRef<HTMLElement>;
+  @ViewChild('filterButton') filterButtonRef: ElementRef<HTMLElement>;
   @ViewChild('pagination') paginationRef: MatPaginator;
 
   constructor(
@@ -53,11 +55,11 @@ export class FilterComponent implements OnInit, OnDestroy {
     private filterFactory: FilterFactory,
     public categoryService: CategoryService,
     private router: Router,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public mobileDet: MobileDetectionService
   ) {
-    if (document.body.clientWidth <= 650) {
-      this.isMobile = true;
-      document.body.addEventListener('scroll', this.listenBodyScroll);
+    if (mobileDet.isMobile.value) {
+      this.listenBodyScroll();
     }
   }
 
@@ -70,14 +72,19 @@ export class FilterComponent implements OnInit, OnDestroy {
     return product._id;
   }
 
-  listenBodyScroll(e: any): void {
-    const filterPlace = document.getElementById('mobile-filter-button');
-    if (document.body.scrollTop > this.previousScrollTop) {
-      filterPlace.style.transform = 'translateY(51px)';
-    } else {
-      filterPlace.style.transform = 'translateY(0)';
-    }
-    this.previousScrollTop = document.body.scrollTop;
+  listenBodyScroll(): void {
+    const bodyEl = document.body;
+    const subs = fromEvent(bodyEl, 'scroll')
+      .pipe(throttleTime(100))
+      .subscribe((e) => {
+        if (document.body.scrollTop > this.previousScrollTop) {
+          this.filterButtonRef.nativeElement.style.transform = 'translateY(51px)';
+        } else {
+          this.filterButtonRef.nativeElement.style.transform = 'translateY(0)';
+        }
+        this.previousScrollTop = document.body.scrollTop;
+      });
+    this.subs.add(subs);
   }
 
   listenRoute(): void {
@@ -191,6 +198,5 @@ export class FilterComponent implements OnInit, OnDestroy {
     if (isPresent(this.subs)) {
       this.subs.unsubscribe();
     }
-    document.body.removeEventListener('scroll', this.listenBodyScroll);
   }
 }
