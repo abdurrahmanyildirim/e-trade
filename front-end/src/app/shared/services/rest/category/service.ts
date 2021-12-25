@@ -37,7 +37,7 @@ export class CategoryService extends BaseRestService {
       method: RequestMethod.get,
       serviceMethod: ServiceMethod.empty
     } as RequestOptions;
-    return this.send<any>(options);
+    return this.send<Category[]>(options);
   }
 
   insert(category: string): Observable<any> {

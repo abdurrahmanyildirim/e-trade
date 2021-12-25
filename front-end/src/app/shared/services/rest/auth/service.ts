@@ -104,7 +104,7 @@ export class AuthService extends BaseRestService {
     return this.send<any>(options);
   }
 
-  activateEmail(token:string):Observable<any>{
+  activateEmail(token: string): Observable<any> {
     const options = {
       method: RequestMethod.get,
       serviceMethod: ServiceMethod.activateEmail,
@@ -113,7 +113,7 @@ export class AuthService extends BaseRestService {
     return this.send<any>(options);
   }
 
-  sendActivationMail():Observable<any>{
+  sendActivationMail(): Observable<any> {
     const options = {
       method: RequestMethod.get,
       serviceMethod: ServiceMethod.sendActivationMail

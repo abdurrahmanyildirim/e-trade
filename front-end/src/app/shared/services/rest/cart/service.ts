@@ -64,7 +64,6 @@ export class CartService extends BaseRestService {
             observer.complete();
           },
           error: (err) => {
-            console.log(err);
             observer.error(err);
           }
         });
