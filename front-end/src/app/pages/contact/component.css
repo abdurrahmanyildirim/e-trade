@@ -13,6 +13,43 @@
   margin-top: 16px;
 }
 
+.desc {
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+.contact-ways {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.contact-way-item {
+  margin-right: 10px;
+  padding: 8px;
+  color: unset;
+  border: 2px solid #e0e0e0;
+  line-height: 0;
+  border-radius: 50%;
+}
+
+.contact-way-item:hover {
+  background-color: #e0e0e0;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+}
+
+.divider {
+  margin: 10px 0;
+  width: 50%;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -29,6 +66,10 @@
 
 @media only screen and (max-width: 650px) {
   .form {
+    width: 95%;
+  }
+
+  .divider {
     width: 95%;
   }
 }

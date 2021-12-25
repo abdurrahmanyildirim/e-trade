@@ -1,5 +1,45 @@
 <div class="container">
-  <h1 class="title">İletişim Formu</h1>
+  <h2 class="title">İletişim Kanallarımız</h2>
+  <p class="desc">Aşağıdaki iletişim kanallarımızdan bize ulaşabilir veya formu doldurabilirsiniz.</p>
+  <div class="contact-ways">
+    <a class="contact-way-item" rel="noopener noreferrer nofollow" href="tel:05302387999">
+      <mat-icon class="icon">phone</mat-icon>
+    </a>
+    <a
+      class="contact-way-item"
+      href="mailto:taser5261@gmail.com"
+      rel="noopener noreferrer nofollow"
+      target="_blank"
+    >
+      <mat-icon class="icon">mail</mat-icon>
+    </a>
+    <a
+      class="contact-way-item"
+      href="https://www.instagram.com/taserzuccaciye/?hl=tr"
+      rel="noopener noreferrer nofollow"
+      target="_blank"
+    >
+      <div class="insta-icon icon"></div>
+    </a>
+    <a
+      class="contact-way-item"
+      href="https://www.facebook.com/profile.php?id=100071668999839"
+      rel="noopener noreferrer nofollow"
+      target="_blank"
+    >
+      <div class="fb-icon icon"></div>
+    </a>
+    <a
+      class="contact-way-item"
+      href="https://wa.me/+905302387999"
+      rel="noopener noreferrer nofollow"
+      target="_blank"
+    >
+      <div class="wp-icon icon"></div>
+    </a>
+  </div>
+  <hr class="divider" />
+  <h3 class="title">İletişim Formu</h3>
   <form [formGroup]="form" (ngSubmit)="sendContactRequest()" class="form">
     <mat-form-field appearance="outline">
       <input
@@ -17,7 +57,6 @@
         *İsim alanı zorunlu.
       </mat-error>
     </mat-form-field>
-
     <mat-form-field appearance="outline">
       <input
         type="text"

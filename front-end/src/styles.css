@@ -11,24 +11,26 @@ body {
   scroll-behavior: smooth;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  background-color: transparent;
-}
+@media (hover: hover) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: transparent;
+  }
 
-::-webkit-scrollbar-track {
-  width: 8px;
-  background-color: transparent;
-}
+  ::-webkit-scrollbar-track {
+    width: 8px;
+    background-color: transparent;
+  }
 
-::-webkit-scrollbar-thumb {
-  width: 8px;
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.3);
-}
+  ::-webkit-scrollbar-thumb {
+    width: 8px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.5);
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
 }
 
 .error-snackbar {
@@ -54,16 +56,4 @@ body {
 
 .text-center {
   text-align: center;
-}
-
-@media only screen and (max-width: 650px) {
-  ::-webkit-scrollbar-track,
-  ::-webkit-scrollbar-track {
-    width: 0;
-  }
-
-  ::-webkit-scrollbar,
-  ::-webkit-scrollbar {
-    width: 0;
-  }
 }

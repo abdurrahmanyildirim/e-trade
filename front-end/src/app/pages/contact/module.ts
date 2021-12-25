@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [{ path: '', component: ContactComponent }];
 @NgModule({
@@ -13,6 +14,7 @@ const routes: Routes = [{ path: '', component: ContactComponent }];
     RouterModule.forChild(routes),
     CommonModule,
     MatInputModule,
+    MatIconModule,
     ReactiveFormsModule,
     MatButtonModule
   ],

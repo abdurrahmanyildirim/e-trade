@@ -80,8 +80,8 @@ export class OrdersComponent extends BasePageDirective<OrdersState> implements O
 
   calculateTotalPrice(order: OrderList): number {
     return order.products.reduce(
-      (sum: number, current: OrderListProduct) =>
-        sum + current.quantity * (current.price - current.discountRate * current.price),
+      (sum: number, cur: OrderListProduct) =>
+        sum + cur.quantity * (cur.price - cur.discountRate * cur.price),
       0
     );
   }
