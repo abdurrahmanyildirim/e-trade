@@ -64,7 +64,7 @@
   min-height: 120px;
 }
 
-@media only screen and (max-width: 650px) {
+@media (max-width: 750px) {
   .form {
     width: 95%;
   }

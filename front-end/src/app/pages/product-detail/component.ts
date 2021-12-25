@@ -16,6 +16,7 @@ import { Order } from 'src/app/shared/models/order';
 import { Product } from 'src/app/shared/models/product';
 import { CartService } from 'src/app/shared/services/rest/cart/service';
 import { ProductService } from 'src/app/shared/services/rest/product/service';
+import { MobileDetectionService } from 'src/app/shared/services/site/mobile-detection';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
@@ -72,7 +73,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
     private productService: ProductService,
     private snackbar: SnackbarService,
     private cd: ChangeDetectorRef,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private mobileDet: MobileDetectionService
   ) {}
 
   ngOnInit(): void {
@@ -100,7 +102,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   editPhotoSizes(): void {
-    if (document.body.clientWidth <= 650) {
+    if (this.mobileDet.isMobile.value) {
       this.photos.width = this.photos.height = document.body.clientWidth - 12;
     } else {
       this.photos.width = this.photos.height = 450;

@@ -124,7 +124,7 @@
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-@media only screen and (max-width: 650px) {
+@media (max-width: 750px) {
   .container {
     min-height: 200px;
   }

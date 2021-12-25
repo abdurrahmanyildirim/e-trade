@@ -95,7 +95,7 @@
   text-align: center;
 }
 
-@media only screen and (max-width: 650px) {
+@media (max-width: 750px) {
   .section-title {
     text-align: center;
   }

@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   navigateToFilteredPage(category: string): void {
-    if (document.body.clientWidth <= 650) {
+    if (this.mobileDet.isMobile.value) {
       this.toggleMenu();
     }
     this.router.navigateByUrl('filter?category=' + category);

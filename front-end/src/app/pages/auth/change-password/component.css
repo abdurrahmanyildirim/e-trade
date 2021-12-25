@@ -17,12 +17,7 @@
   width: 100%;
 }
 
-/* .content {
-  display: flex;
-  flex-direction: column;
-} */
-
-@media only screen and (max-width: 650px) {
+@media (max-width: 750px) {
   .container {
     padding: 0 5px;
     min-height: 250px;
