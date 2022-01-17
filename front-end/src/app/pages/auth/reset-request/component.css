@@ -17,7 +17,7 @@
   width: 100%;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 650px) {
   .container {
     padding: 0 5px;
     min-height: 250px;

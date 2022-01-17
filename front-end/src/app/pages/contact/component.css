@@ -64,7 +64,7 @@
   min-height: 120px;
 }
 
-@media (max-width: 750px) {
+@media (hover:none) {
   .form {
     width: 95%;
   }

@@ -21,7 +21,7 @@
   padding-top: 40px;
 }
 
-@media (max-width: 750px) {
+@media (hover:none) {
   .main {
     min-height: 200px;
   }

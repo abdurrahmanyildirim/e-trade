@@ -95,7 +95,8 @@
   text-align: center;
 }
 
-@media (max-width: 750px) {
+/* @media (hover:none) { */
+@media (max-width: 650px) {
   .section-title {
     text-align: center;
   }

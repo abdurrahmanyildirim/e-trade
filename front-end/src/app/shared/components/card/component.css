@@ -113,7 +113,8 @@
   height: 18px;
 }
 
-@media (max-width: 750px) {
+/* @media (hover:none) { */
+@media (max-width: 650px) {
   .container {
     width: 150px;
     height: auto;

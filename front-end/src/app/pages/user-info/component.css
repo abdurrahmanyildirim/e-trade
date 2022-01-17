@@ -5,7 +5,7 @@
   max-width: 900px;
 }
 
-@media (max-width: 750px) {
+@media (hover:none) {
   .container {
     width: 95%;
     min-width: 200px;

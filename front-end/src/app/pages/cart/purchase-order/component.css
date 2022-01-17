@@ -47,7 +47,7 @@ mat-checkbox {
 }
 
 
-@media (max-width: 750px) {
+@media (hover:none) {
   .container {
     margin-top: 0;
     width: 100%;

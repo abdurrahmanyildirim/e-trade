@@ -22,6 +22,7 @@
   flex: 1;
   height: 80%;
   max-width: 250px;
+  padding-left: 10px;
 }
 
 .section:last-child {
@@ -71,7 +72,7 @@
   color: white;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 650px) {
   .container {
     height: auto;
   }

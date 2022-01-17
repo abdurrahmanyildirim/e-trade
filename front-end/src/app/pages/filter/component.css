@@ -124,7 +124,7 @@
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-@media (max-width: 750px) {
+@media (hover:none) {
   .container {
     min-height: 200px;
   }

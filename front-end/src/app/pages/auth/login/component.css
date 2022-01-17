@@ -73,7 +73,7 @@ mat-card-content {
   text-align: center;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 650px) {
   .container {
     padding: 0 5px;
     margin: 10px 0;

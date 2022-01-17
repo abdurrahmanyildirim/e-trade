@@ -5,12 +5,13 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class MobileDetectionService {
-  isMobile = new BehaviorSubject(document.body.clientWidth <= 750);
-  mediaQuery = window.matchMedia('(max-width: 750px)');
+  isMobile = new BehaviorSubject(false);
+  mediaQuery = window.matchMedia('(hover:none)');
 
   init(): void {
-    this.mediaQuery.addEventListener('change', (event: MediaQueryListEvent) => {
-      this.isMobile.next(event.matches);
-    });
+    // this.mediaQuery.addEventListener('change', (event: MediaQueryListEvent) => {
+    //   this.isMobile.next(event.matches);
+    // });
+    this.isMobile.next(this.mediaQuery.matches);
   }
 }

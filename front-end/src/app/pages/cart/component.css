@@ -55,7 +55,7 @@
   overflow-x: hidden;
 }
 
-@media (max-width: 750px) {
+@media (hover:none) {
   .container {
     margin-top: 10px;
   }

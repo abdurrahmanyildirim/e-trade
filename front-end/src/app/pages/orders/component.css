@@ -62,7 +62,7 @@
   border: 1px solid #ccc;
 }
 
-@media (max-width: 750px) {
+@media (hover:none) {
   .container {
     width: 100%;
     padding: 10px 5px 5px 5px;
