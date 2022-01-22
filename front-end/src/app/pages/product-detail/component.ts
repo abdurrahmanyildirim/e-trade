@@ -35,8 +35,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   product: Product;
   similarProds: Product[];
   owlOptions: OwlOptions = {
-    loop: true,
+    loop: false,
     autoplay: true,
+    nav: !this.mobileDet.isMobile.value,
     navText: ['<', '>'],
     lazyLoad: true,
     dots: false,
@@ -59,8 +60,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
       950: {
         items: 4
       }
-    },
-    nav: true
+    }
   };
   photos = {
     width: 450,

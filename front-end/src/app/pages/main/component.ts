@@ -25,7 +25,7 @@ export class MainComponent implements OnInit, OnDestroy {
   mostLiked: Product[];
   newProducts: Product[];
   owlOptions: OwlOptions = {
-    loop: true,
+    loop: false,
     autoplay: true,
     nav: !this.mobilDet.isMobile.value,
     navText: ['<', '>'],
