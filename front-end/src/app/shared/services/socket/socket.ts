@@ -12,7 +12,7 @@ export class SocketService implements OnDestroy {
   constructor(private socket: Socket, private productService: ProductService) {}
 
   init(): void {
-    // this.socket.connect();
+    this.socket.connect();
     this.listenProductChange();
   }
 

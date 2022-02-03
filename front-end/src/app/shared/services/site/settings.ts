@@ -19,18 +19,22 @@ export class SettingService {
       this.localStorage.setObject(StorageKey.User, loginResponse.info);
       this.authService.saveToken(loginResponse.token);
       this.authService.isAuth.next(true);
+      this.authService.role.next(this.authService.getRole());
       const subs = this.cartService.init().subscribe({
         next: () => {
           this.localStorage.removeItem(StorageKey.Cart);
-          this.authService.role.next(this.authService.getRole());
           observer.next();
-          subs.unsubscribe();
           observer.complete();
         },
         error: (error) => {
           observer.error(error);
         }
       });
+      return {
+        unsubscribe: () => {
+          subs.unsubscribe();
+        }
+      };
     });
   }
 }

@@ -33,7 +33,7 @@ export class ActivateEmailComponent implements OnInit, OnDestroy {
         switchMap((res) => this.settingService.initUserSettingsAfterLogin(res))
       )
       .subscribe({
-        next: (res) => {
+        next: () => {
           this.isActivated = true;
         },
         error: (error) => {

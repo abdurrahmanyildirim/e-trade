@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .signInWithGoogle()
       .pipe(switchMap((res) => this.settingService.initUserSettingsAfterLogin(res)))
       .subscribe({
-        next: (res) => {
+        next: () => {
           this.router.navigateByUrl('main');
         },
         error: (err) => {
@@ -95,11 +95,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       const subs = this.authService
         .register(this.user)
         .pipe(switchMap((res) => this.settingService.initUserSettingsAfterLogin(res)))
-        .subscribe(
-          (data) => {
+        .subscribe({
+          next: () => {
             this.isRegistered = true;
           },
-          (err) => {
+          error: (err) => {
             console.log(err);
             this.snackBar.showError('Bir hata meydana geldi. Lütfen bilgilerinizi kontrol ediniz!');
             this.form.reset();
@@ -107,7 +107,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
               password: ''
             });
           }
-        );
+        });
       this.subs.add(subs);
     }
   }

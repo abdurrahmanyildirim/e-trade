@@ -33,8 +33,12 @@ export class CartService extends BaseRestService {
           this.cart.next(cart);
           observer.next();
           observer.complete();
-          sub.unsubscribe();
         });
+        return {
+          unsubscribe: () => {
+            sub.unsubscribe();
+          }
+        };
       } else {
         this.localStorage.removeItem(StorageKey.Cart);
         // const orders = this.localStorage.getObject<Order[]>(StorageKey.Cart) || [];
