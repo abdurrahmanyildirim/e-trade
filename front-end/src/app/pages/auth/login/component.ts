@@ -8,11 +8,13 @@ import { SettingService } from 'src/app/shared/services/site/settings';
 import { Subscription } from 'rxjs';
 import { isPresent } from 'src/app/shared/util/common';
 import { switchMap } from 'rxjs/operators';
+import { SocialService } from 'src/app/shared/services/site/social-auth';
 
 @Component({
   selector: 'app-login',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  providers: [SocialService]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup;
@@ -24,7 +26,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private snackBar: SnackbarService,
     private settingService: SettingService,
-    private router: Router
+    private router: Router,
+    private socialService: SocialService
   ) {}
 
   ngOnInit(): void {
@@ -32,7 +35,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   authWithGoogle(): void {
-    const subs = this.authService
+    const subs = this.socialService
       .signInWithGoogle()
       .pipe(switchMap((resp) => this.settingService.initUserSettingsAfterLogin(resp)))
       .subscribe({

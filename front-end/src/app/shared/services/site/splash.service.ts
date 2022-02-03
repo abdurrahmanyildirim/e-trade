@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { forkJoin } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { CartService } from '../rest/cart/service';
 import { CategoryService } from '../rest/category/service';
 import { ProductService } from '../rest/product/service';
@@ -33,19 +34,18 @@ export class SplashService {
       this.productService.init(),
       this.stateService.init()
     ];
-    const subs = this.configService.init().subscribe({
-      next: () => {
-        forkJoin(obs).subscribe({
-          next: () => {
-            this.mobileDetectionService.init();
-            this.socketService.init();
-            this.gtagService.init(this.configService.config.gtagKey);
-            this.configInited = true;
-            subs.unsubscribe();
-          },
-          error: (err) => console.log(err)
-        });
-      }
-    });
+    const subs = this.configService
+      .init()
+      .pipe(switchMap(() => forkJoin(obs)))
+      .subscribe({
+        next: () => {
+          this.mobileDetectionService.init();
+          this.socketService.init();
+          this.gtagService.init(this.configService.config.gtagKey);
+          this.configInited = true;
+          subs.unsubscribe();
+        },
+        error: (err) => console.log(err)
+      });
   }
 }

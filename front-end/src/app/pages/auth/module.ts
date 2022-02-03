@@ -12,6 +12,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { ChangePasswordComponent } from './change-password/component';
 import { UnAuthGuard } from './guard';
 import { ActivateEmailComponent } from './activate-email/component';
+import {
+  GoogleLoginProvider,
+  SocialAuthServiceConfig,
+  SocialLoginModule
+} from 'angularx-social-login';
+import { environment } from 'src/environments/environment';
+
+const googleLoginOptions = {
+  scope: 'profile email'
+};
+
+let key = '';
+if (environment.production) {
+  key = '539238066533-cmar8fngup5h8uj3rjd7481vkrcj5c4g.apps.googleusercontent.com';
+} else {
+  key = '399045451146-r6e03sbio9clb86ontnvrsk605fm623p.apps.googleusercontent.com';
+}
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [UnAuthGuard] },
@@ -37,9 +54,24 @@ const routes: Routes = [
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatIconModule
+    MatIconModule,
+    SocialLoginModule
   ],
-  providers: [UnAuthGuard],
+  providers: [
+    UnAuthGuard,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(key, googleLoginOptions)
+          }
+        ]
+      } as SocialAuthServiceConfig
+    }
+  ],
   exports: [LoginComponent, RegisterComponent]
 })
 export class AuthModule {}

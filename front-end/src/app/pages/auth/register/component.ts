@@ -15,13 +15,15 @@ import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth/service';
 import { SettingService } from 'src/app/shared/services/site/settings';
+import { SocialService } from 'src/app/shared/services/site/social-auth';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { RegisterUser } from './model';
 
 @Component({
   selector: 'app-register',
   templateUrl: './component.html',
-  styleUrls: ['./component.css']
+  styleUrls: ['./component.css'],
+  providers: [SocialService]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   form: FormGroup;
@@ -35,7 +37,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private router: Router,
     private snackBar: SnackbarService,
     private settingService: SettingService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private socialService: SocialService
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +46,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   authWithGoogle(): void {
-    const subs = this.authService
+    const subs = this.socialService
       .signInWithGoogle()
       .pipe(switchMap((res) => this.settingService.initUserSettingsAfterLogin(res)))
       .subscribe({

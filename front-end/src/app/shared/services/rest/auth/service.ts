@@ -1,7 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginUser } from 'src/app/pages/auth/login/model';
 import { RegisterUser } from 'src/app/pages/auth/register/model';
@@ -18,15 +17,11 @@ import { StorageKey } from 'src/app/shared/models/storage';
 export class AuthService extends BaseRestService {
   headers = new HttpHeaders().append('Content-Type', 'application/json');
   isAuth = new BehaviorSubject<boolean>(this.loggedIn());
-  role = new BehaviorSubject<Roles>(this.getRole());
   jwt: JwtHelperService = new JwtHelperService();
+  role = new BehaviorSubject<Roles>(this.getRole());
   route = RequestRoute.auth;
 
-  constructor(
-    private localStorage: LocalStorageService,
-    private socialAuthService: SocialAuthService,
-    protected injector: Injector
-  ) {
+  constructor(private localStorage: LocalStorageService, protected injector: Injector) {
     super(injector);
   }
 
@@ -39,33 +34,7 @@ export class AuthService extends BaseRestService {
     return this.send<LoginResponse>(options);
   }
 
-  signInWithGoogle(): Observable<LoginResponse> {
-    return new Observable((observer) => {
-      this.socialAuthService
-        .signIn(GoogleLoginProvider.PROVIDER_ID)
-        .then((user: SocialUser) => {
-          const newUser = {
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName
-          } as RegisterUser;
-          this.authWithGoogle(newUser).subscribe({
-            next: (res) => {
-              observer.next(res);
-              observer.complete();
-            },
-            error: (err) => {
-              observer.error(err);
-            }
-          });
-        })
-        .catch((err) => {
-          observer.error(err);
-        });
-    });
-  }
-
-  private authWithGoogle(user: RegisterUser): Observable<LoginResponse> {
+  signInWithGoogle(user: RegisterUser): Observable<LoginResponse> {
     const options = {
       method: RequestMethod.post,
       body: user,
@@ -148,14 +117,7 @@ export class AuthService extends BaseRestService {
 
   getRole(): Roles {
     if (this.loggedIn()) {
-      if (this.jwt) {
-        return this.jwt.decodeToken(this.token).role;
-      } else {
-        let jwt = new JwtHelperService();
-        const role = jwt.decodeToken(this.token).role;
-        jwt = null;
-        return role;
-      }
+      return this.decodeToken().role;
     } else {
       return Roles.client;
     }
