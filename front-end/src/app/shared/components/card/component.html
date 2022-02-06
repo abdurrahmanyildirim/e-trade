@@ -1,10 +1,6 @@
 <main class="container mat-elevation-z2" routerLink="/product-detail/{{product._id}}">
   <div class="img-cover">
-    <img
-      class="img"
-      [src]="product.photos[0].path"
-      [alt]="'Taşer Züccaciye ' + product.name + ' ' + product.brand"
-    />
+    <img class="img" [src]="product.photos[0].path" [alt]="product.name" />
     <div class="discount-badge mat-body-2" *ngIf="product.discountRate>0">
       <div class="dotted-line top-dotted"></div>
       %{{product.discountRate * 100 | number :'.0-0'}} indirim
