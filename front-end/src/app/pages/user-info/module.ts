@@ -6,14 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { GeneralComponent } from './general/component';
 import { PasswordUpdateComponent } from './password/component';
-import { ContactComponent } from './contact/component';
-import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
 
 const routes: Routes = [{ path: '', component: UserInfoComponent }];
 @NgModule({
-  declarations: [UserInfoComponent, GeneralComponent, PasswordUpdateComponent, ContactComponent],
+  declarations: [UserInfoComponent, GeneralComponent, PasswordUpdateComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -22,7 +21,7 @@ const routes: Routes = [{ path: '', component: UserInfoComponent }];
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatTabsModule
+    MatSelectModule
   ],
   exports: [UserInfoComponent]
 })

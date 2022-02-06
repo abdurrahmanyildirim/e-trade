@@ -1,13 +1,44 @@
 .container {
-  width: fit-content;
+  width: 100%;
   margin: 0 auto;
   padding: 10px 0;
   max-width: 900px;
 }
 
-@media (hover:none) {
+.card {
+  width: 100%;
+  display: flex;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  margin-top: 15px;
+}
+
+.left,
+.right {
+  flex: 1;
+  padding: 10px;
+}
+
+.left {
+  border-right: 1px solid #e0e0e0;
+}
+
+@media (hover: none) {
   .container {
     width: 95%;
     min-width: 200px;
+  }
+}
+
+@media (max-width: 910px) {
+  .card {
+    margin: 15px auto 0 auto;
+    flex-direction: column;
+    width: 95%;
+  }
+
+  .left {
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
   }
 }

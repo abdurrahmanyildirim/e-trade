@@ -37,18 +37,15 @@ export class FilterFactory {
   }
 
   private filterByBrand(products: Product[], filter: Filter): Product[] {
-    if (filter.brands.length <= 0) {
-      return products;
-    } else {
+    if (filter.brands.length > 0) {
       const brands = filter.brands.split('-');
       return products.filter((product) => brands.includes(product.brand.toLocaleLowerCase()));
     }
+    return products;
   }
 
   private filterByCategory(products: Product[], filter: Filter): Product[] {
-    if (filter.category.length <= 0) {
-      return products;
-    } else {
+    if (filter.category.length > 0) {
       return products.filter((product) => {
         const reg = new RegExp(filter.category, 'gi');
         if (product.category.search(reg) >= 0) {
@@ -56,12 +53,11 @@ export class FilterFactory {
         }
       });
     }
+    return products;
   }
 
   private filterBySearchKey(products: Product[], filter: Filter): Product[] {
-    if (filter.searchKey.length <= 0) {
-      return products;
-    } else {
+    if (filter.searchKey.length > 0) {
       return products.filter((product) => {
         const reg = new RegExp(filter.searchKey, 'gi');
         if (product.name.search(reg) >= 0) {
@@ -69,6 +65,7 @@ export class FilterFactory {
         }
       });
     }
+    return products;
   }
 
   private initBrands(products: Product[]): void {

@@ -17,29 +17,24 @@ export class UserService extends BaseRestService {
     super(injector);
   }
 
-  updateContactInfo(info: any): Observable<any> {
-    const options = {
-      method: RequestMethod.post,
-      body: info,
-      serviceMethod: ServiceMethod.updateContact
-    } as RequestOptions;
-    return this.send<any>(options);
-  }
-
-  getUser(): Observable<User> {
+  getUser(): Observable<any> {
     const options = {
       method: RequestMethod.get,
       serviceMethod: ServiceMethod.empty
     } as RequestOptions;
-    return this.send<User>(options).pipe(
+    return this.send<any>(options).pipe(
       map((user) => {
         user.email = this.cryptoService.basicDecrypt(user.email);
+        user.city = this.cryptoService.basicDecrypt(user.city);
+        user.district = this.cryptoService.basicDecrypt(user.district);
+        user.address = this.cryptoService.basicDecrypt(user.address);
+        user.phone = this.cryptoService.basicDecrypt(user.phone);
         return user;
       })
     );
   }
 
-  updateGeneralInfo(info: User): Observable<User> {
+  update(info: User): Observable<User> {
     const options = {
       method: RequestMethod.post,
       body: info,
@@ -55,21 +50,5 @@ export class UserService extends BaseRestService {
       serviceMethod: ServiceMethod.updatePassword
     } as RequestOptions;
     return this.send<any>(options);
-  }
-
-  getContactInfo(): Observable<any> {
-    const options = {
-      method: RequestMethod.get,
-      serviceMethod: ServiceMethod.contactInfo
-    } as RequestOptions;
-    return this.send<any>(options).pipe(
-      map((info) => {
-        info.city = this.cryptoService.basicDecrypt(info.city);
-        info.district = this.cryptoService.basicDecrypt(info.district);
-        info.address = this.cryptoService.basicDecrypt(info.address);
-        info.phone = this.cryptoService.basicDecrypt(info.phone);
-        return info;
-      })
-    );
   }
 }

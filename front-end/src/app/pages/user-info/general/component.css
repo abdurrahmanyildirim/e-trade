@@ -4,9 +4,18 @@
   flex-direction: column;
 }
 
+.same-line {
+  display: flex;
+  justify-content: space-between;
+}
+
 .field {
   width: 100%;
   /* margin-top: 6px; */
+}
+
+.half-field {
+  width: 48%;
 }
 
 .field:first-child {

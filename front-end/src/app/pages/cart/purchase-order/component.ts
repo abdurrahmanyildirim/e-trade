@@ -78,7 +78,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
   }
 
   initContactInfo(): void {
-    this.userService.getContactInfo().subscribe({
+    this.userService.getUser().subscribe({
       next: (info) => {
         this.contactInfo = info;
         this.initCities();

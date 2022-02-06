@@ -1,7 +1,16 @@
 <main class="container">
-  <mat-tab-group mat-stretch-tabs>
-    <mat-tab label="Genel"> <app-general></app-general> </mat-tab>
-    <mat-tab label="Şifre"> <app-password-update></app-password-update> </mat-tab>
-    <mat-tab label="İletişim"><app-contact></app-contact> </mat-tab>
-  </mat-tab-group>
+  <div class="card">
+    <div class="left">
+      <div class="mat-body-2">Bilgilerim</div>
+      <div>
+        <app-general></app-general>
+      </div>
+    </div>
+    <div class="right">
+      <div class="mat-body-2">Şifre Güncelleme</div>
+      <div>
+        <app-password-update></app-password-update>
+      </div>
+    </div>
+  </div>
 </main>
