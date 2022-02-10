@@ -4,45 +4,45 @@ const User = require('../models/user');
 const { remove } = require('../services/cloudinary');
 const { updateProducts } = require('../services/socket');
 
-module.exports.getProducts = async (req, res) => {
+module.exports.getProducts = async (req, res, next) => {
   try {
     const products = await Product.find({ isActive: true });
     return res.status(200).send(products);
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.getAllProducts = async (req, res) => {
+module.exports.getAllProducts = async (req, res, next) => {
   try {
     const products = await Product.find();
     return res.status(200).send(products);
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.getByCategory = async (req, res) => {
+module.exports.getByCategory = async (req, res, next) => {
   try {
     const category = req.query.category;
     const products = await Product.find({ category, isActive: true });
     return res.status(200).send(products);
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.getProductById = async (req, res) => {
+module.exports.getProductById = async (req, res, next) => {
   try {
     const id = req.query.id;
     const product = await Product.findOne({ _id: id });
     return res.status(200).send(product);
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.checkStock = async (req, res) => {
+module.exports.checkStock = async (req, res, next) => {
   try {
     const products = req.body;
     const dbProducts = await Product.find();
@@ -65,11 +65,11 @@ module.exports.checkStock = async (req, res) => {
     });
     return res.status(200).send(checkResults);
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.addNewProduct = async (req, res) => {
+module.exports.addNewProduct = async (req, res, next) => {
   try {
     const newProduct = {
       name: req.body.name,
@@ -90,7 +90,7 @@ module.exports.addNewProduct = async (req, res) => {
     // updateProducts();
     return res.status(200).send(savedProduct);
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
@@ -115,18 +115,18 @@ module.exports.remove = async (req, res) => {
   });
 };
 
-module.exports.update = async (req, res) => {
+module.exports.update = async (req, res, next) => {
   try {
     const product = req.body;
     await Product.findByIdAndUpdate({ _id: product._id }, product);
     updateProducts();
     return res.status(200).send({ message: 'Güncelleme başarılı' });
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.addComment = async (req, res) => {
+module.exports.addComment = async (req, res, next) => {
   try {
     const orderId = req.query.orderId.toString();
     const rate = req.query.rate;
@@ -196,6 +196,6 @@ module.exports.addComment = async (req, res) => {
       });
     });
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };

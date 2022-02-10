@@ -1,6 +1,6 @@
 const cloudinaryService = require('../services/cloudinary');
 
-module.exports.photoUpload = async (req, res) => {
+module.exports.photoUpload = async (req, res,next) => {
   try {
     const imagesInfo = [];
     const photos = Array.isArray(req.files.photos) ? req.files.photos : [req.files.photos];
@@ -18,6 +18,6 @@ module.exports.photoUpload = async (req, res) => {
     }
     return res.status(200).send(imagesInfo);
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };

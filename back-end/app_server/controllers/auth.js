@@ -4,7 +4,7 @@ const { encrypt, comparePassword, hashPassword, decrypt } = require('../services
 const { sendCustomEmail } = require('../services/email/index');
 const { sign, verify } = require('../services/jwt');
 
-module.exports.login = async (req, res) => {
+module.exports.login = async (req, res, next) => {
   try {
     if (!req.body.email || !req.body.password) {
       return res.status(404).send({
@@ -22,11 +22,11 @@ module.exports.login = async (req, res) => {
     }
     return res.status(200).send(createLogin(user));
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.register = async (req, res) => {
+module.exports.register = async (req, res, next) => {
   try {
     if (!req.body) {
       return res.sendStatus(404).send({ message: 'Boş nesne gönderilemez.' });
@@ -48,11 +48,11 @@ module.exports.register = async (req, res) => {
     activationMail(userData, authData.token);
     return res.status(201).send(authData);
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.activateEmail = async (req, res) => {
+module.exports.activateEmail = async (req, res, next) => {
   try {
     const token = req.query.token;
     const decoded = verify(token, '');
@@ -65,11 +65,11 @@ module.exports.activateEmail = async (req, res) => {
     await user.save();
     return res.status(200).send(createLogin(user));
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.googleAuth = async (req, res) => {
+module.exports.googleAuth = async (req, res, next) => {
   try {
     const { firstName, lastName, email } = req.body;
     let user = await User.findOne({ email: encrypt(email) });
@@ -87,7 +87,7 @@ module.exports.googleAuth = async (req, res) => {
     }
     return res.status(200).send(createLogin(user));
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
@@ -112,7 +112,7 @@ module.exports.changePasswordRequest = async (req, res) => {
   return res.status(200).send();
 };
 
-module.exports.changePassword = async (req, res) => {
+module.exports.changePassword = async (req, res, next) => {
   try {
     let { id, password, token } = req.body;
     const user = await User.findOne({ _id: id });
@@ -124,11 +124,11 @@ module.exports.changePassword = async (req, res) => {
     await User.updateOne({ _id: id }, { password });
     return res.status(200).send({ message: 'Şifre değiştirildi.' });
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.sendActivationMail = async (req, res) => {
+module.exports.sendActivationMail = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.id });
     if (!user) {
@@ -142,8 +142,7 @@ module.exports.sendActivationMail = async (req, res) => {
     activationMail(userData, req.auth_token);
     return res.status(200).send({ message: 'Aktivasyon maili gönderildi.' });
   } catch (error) {
-    console.log(error);
-    return res.status(500).send(error);
+    next(error);
   }
 };
 

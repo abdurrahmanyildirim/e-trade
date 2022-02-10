@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const { encrypt, comparePassword, hashPassword, encForResp } = require('../services/crypto');
 
-module.exports.update = async (req, res) => {
+module.exports.update = async (req, res, next) => {
   try {
     const { firstName, lastName, city, district, address, phone } = req.body;
     const user = await User.findOne({ _id: req.id });
@@ -21,7 +21,7 @@ module.exports.update = async (req, res) => {
     await user.save();
     return res.status(200).send({ message: 'Kullanıcı bilgileri güncellendi.' });
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
@@ -49,7 +49,7 @@ module.exports.updatePassword = (req, res) => {
   });
 };
 
-module.exports.getUser = async (req, res) => {
+module.exports.getUser = async (req, res, next) => {
   try {
     const id = req.id;
     const user = await User.findOne({ _id: id });
@@ -72,11 +72,11 @@ module.exports.getUser = async (req, res) => {
     }
     return res.status(200).send(newUser);
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.getUserById = async (req, res) => {
+module.exports.getUserById = async (req, res, next) => {
   try {
     const id = req.query.id;
     const user = await User.findOne({ _id: id });
@@ -90,6 +90,6 @@ module.exports.getUserById = async (req, res) => {
     };
     return res.status(200).send(newUser);
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };

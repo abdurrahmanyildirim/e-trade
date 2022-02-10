@@ -25,7 +25,6 @@ export class CategoryService extends BaseRestService {
           observer.complete();
         },
         error: (error) => {
-          console.log(error);
           observer.error(error);
         }
       });

@@ -3,7 +3,7 @@ const Order = require('../models/order');
 const { encForResp, decrypt } = require('../services/crypto');
 const email = require('../services/email/index');
 
-module.exports.getOrders = async (req, res) => {
+module.exports.getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({ userId: req.id });
     orders.map((order) => {
@@ -17,11 +17,11 @@ module.exports.getOrders = async (req, res) => {
     });
     return res.status(200).send(orders);
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.orderDetail = async (req, res) => {
+module.exports.orderDetail = async (req, res, next) => {
   try {
     const id = req.query.id;
     const order = await Order.findOne({ _id: id });
@@ -63,11 +63,11 @@ module.exports.orderDetail = async (req, res) => {
       cargo: order.cargo
     });
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.allOrders = async (req, res) => {
+module.exports.allOrders = async (req, res, next) => {
   try {
     const orders = await Order.find();
     orders.map((order) => {
@@ -82,7 +82,7 @@ module.exports.allOrders = async (req, res) => {
     });
     return res.status(200).send(orders);
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
@@ -113,7 +113,7 @@ module.exports.getStatuses = (req, res) => {
   return res.status(200).send(statusesDb);
 };
 
-module.exports.updateStatus = async (req, res) => {
+module.exports.updateStatus = async (req, res, next) => {
   try {
     const { status, id, cargo, inform } = req.body;
     if (!id || !status) {
@@ -138,7 +138,7 @@ module.exports.updateStatus = async (req, res) => {
     }
     return res.status(200).send();
   } catch (error) {
-    return res.status(500).send({ message: err });
+    next(error);
   }
 };
 

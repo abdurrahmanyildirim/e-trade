@@ -1,16 +1,16 @@
 const Category = require('../models/category');
 const Product = require('../models/product');
 
-module.exports.getCategories = async (req, res) => {
+module.exports.getCategories = async (req, res, next) => {
   try {
     const categories = await Category.find({ isActive: true });
     return res.status(200).send(categories);
   } catch (error) {
-    return res.status(404).send(error);
+    next(error);
   }
 };
 
-module.exports.remove = async (req, res) => {
+module.exports.remove = async (req, res, next) => {
   try {
     const category = req.query.category;
     const doc = await Category.findOneAndUpdate({ name: category }, { isActive: false });
@@ -23,11 +23,11 @@ module.exports.remove = async (req, res) => {
     const categories = await Category.find({ isActive: true });
     return res.status(200).send({ message: 'Kategori silindi.', categories });
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
-module.exports.insert = async (req, res) => {
+module.exports.insert = async (req, res, next) => {
   try {
     const category = req.query.category;
     const categories = await Category.find({ name: category });
@@ -47,6 +47,6 @@ module.exports.insert = async (req, res) => {
     const categoryList = await Category.find({ isActive: true });
     return res.status(200).send({ message: 'Yeni kategori eklendi.', categories: categoryList });
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };

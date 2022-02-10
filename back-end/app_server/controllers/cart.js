@@ -25,7 +25,7 @@ module.exports.updateCart = async (req, res) => {
   });
 };
 
-module.exports.getCart = async (req, res) => {
+module.exports.getCart = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.id }).populate('cart.productId').exec();
     if (!user) {
@@ -47,12 +47,11 @@ module.exports.getCart = async (req, res) => {
     });
     return res.status(200).send(orders);
   } catch (error) {
-    console.log(error);
-    return res.status(500).send({ message: 'Bir hata oluştu.' });
+    next(error);
   }
 };
 
-module.exports.purchaseOrder = async (req, res) => {
+module.exports.purchaseOrder = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.id }).populate('cart.productId').exec();
     if (!user) {
@@ -97,8 +96,7 @@ module.exports.purchaseOrder = async (req, res) => {
       return res.status(200).send(result);
     }
   } catch (error) {
-    console.error(error);
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
