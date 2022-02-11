@@ -23,6 +23,8 @@ import { PhotoUploadComponent } from './new-product/photo-upload/component';
 import { MessageBoxComponent } from './message-box/component';
 import { CategoryComponent } from './category/component';
 import { AdminGuard } from '../shared/guards/admin';
+import { DbService } from '../shared/services/rest/db/service';
+import { LogService } from '../shared/services/rest/log/service';
 
 const routes: Routes = [
   {
@@ -96,6 +98,7 @@ const routes: Routes = [
     StarModule,
     DialogModule,
     EditorModule
-  ]
+  ],
+  providers: [{ provide: DbService }, { provide: LogService }]
 })
 export class AdminModule {}

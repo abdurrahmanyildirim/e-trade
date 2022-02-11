@@ -8,6 +8,7 @@ const contact = require('./contact');
 const user = require('./user');
 const db = require('./db');
 const iyzipay = require('./iyzipay');
+const log = require('./log');
 const { Router } = require('express');
 const router = Router();
 const loggerService = require('../services/log');
@@ -22,6 +23,7 @@ router.use('/order', order);
 router.use('/photo', account);
 router.use('/db', db);
 router.use('/iyzipay', iyzipay);
+router.use('/log', log);
 
 router.use((err, req, res, next) => {
   if (err) {

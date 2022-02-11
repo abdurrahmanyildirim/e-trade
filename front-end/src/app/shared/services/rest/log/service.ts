@@ -5,16 +5,18 @@ import { RequestMethod, RequestOptions, RequestRoute } from '../model';
 import { ServiceMethod } from './model';
 
 @Injectable()
-export class DbService extends BaseRestService {
-  route = RequestRoute.db;
+export class LogService extends BaseRestService {
+  route = RequestRoute.log;
 
   constructor(protected injector: Injector) {
     super(injector);
   }
 
-  createBackUp(): Observable<any> {
-    const address =
-      this.configService.config.baseUrl + this.route + '/' + ServiceMethod.createBackup;
-    return this.http.get(address, { responseType: 'blob' });
+  logs(): Observable<any> {
+    const options = {
+      method: RequestMethod.get,
+      serviceMethod: ServiceMethod.getLogs
+    } as RequestOptions;
+    return this.send<any>(options);
   }
 }

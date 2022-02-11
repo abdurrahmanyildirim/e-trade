@@ -16,11 +16,9 @@ module.exports.sendContactRequest = async (req, res, next) => {
   }
 };
 
-module.exports.getMessages = (req, res) => {
-  Contact.find((err, messages) => {
-    if (err) {
-      return res.status(404).send({ message: 'Beklenmeyen bir hata oldu.' });
-    }
+module.exports.getMessages = async (req, res, next) => {
+  try {
+    const messages = await Contact.find();
     if (messages && messages.length > 0) {
       messages.map((message) => {
         message.email = encForResp(message.email);
@@ -29,25 +27,27 @@ module.exports.getMessages = (req, res) => {
       });
     }
     return res.status(200).send(messages);
-  });
+  } catch (error) {
+    next(error);
+  }
 };
 
-module.exports.toggleRead = (req, res) => {
-  const id = req.query.id;
-  Contact.findOneAndUpdate({ _id: id }, { $set: { isRead: true } }, (err, doc) => {
-    if (err) {
-      return res.status(404).send({ message: 'Beklenmeyen bir hata oldu.' });
-    }
+module.exports.toggleRead = async (req, res, next) => {
+  try {
+    const id = req.query.id;
+    const doc = await Contact.findOneAndUpdate({ _id: id }, { $set: { isRead: true } });
     return res.status(200).send(doc);
-  });
+  } catch (error) {
+    next(error);
+  }
 };
 
-module.exports.remove = (req, res) => {
-  const id = req.query.id;
-  Contact.findOneAndRemove({ _id: id }, (err) => {
-    if (err) {
-      return res.status(404).send({ message: 'Beklenmeyen bir hata oldu.' });
-    }
+module.exports.remove = async (req, res, next) => {
+  try {
+    const id = req.query.id;
+    await Contact.findOneAndRemove({ _id: id });
     return res.status(200).send({ message: 'Mesaj silindi.' });
-  });
+  } catch (error) {
+    next(error);
+  }
 };

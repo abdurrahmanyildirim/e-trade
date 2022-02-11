@@ -13,7 +13,8 @@ export enum RequestRoute {
   auth = 'auth',
   photo = 'photo',
   cart = 'cart',
-  db = 'db'
+  db = 'db',
+  log = 'log'
 }
 
 export interface RequestOptions {
