@@ -7,8 +7,8 @@ const schema = new Schema({
   email: String,
   phone: String,
   desc: String,
-  isRead: Boolean,
-  sendDate: Date
+  isRead: { type: Boolean, default: false },
+  sendDate: { type: Date, default: Date.now() }
 });
 
 const contact = mongoose.model('Contact', schema);

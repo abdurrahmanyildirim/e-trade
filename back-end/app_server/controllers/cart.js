@@ -5,24 +5,24 @@ const { sendFormRequest } = require('../services/iyzipay');
 const Iyzipay = require('iyzipay');
 const Order = require('../models/order');
 
-module.exports.updateCart = async (req, res) => {
-  const user = await User.findOne({ _id: req.id });
-  if (!user) {
-    return res.status(400).send({ message: 'Kullanıcı bulunamadı' });
-  }
-  const orders = req.body;
-  if (!orders) {
-    return res.status(400).send({ message: 'Siparişler boş bırakılamaz.' });
-  }
-  user.cart = orders.map((order) => {
-    return { productId: order.productId, quantity: order.quantity };
-  });
-  user.save((err) => {
-    if (err) {
-      return res.status(404).send({ message: 'Kayıt sırasında bir hata meydana geldi.' });
+module.exports.updateCart = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ _id: req.id });
+    if (!user) {
+      return res.status(400).send({ message: 'Kullanıcı bulunamadı' });
     }
+    const orders = req.body;
+    if (!orders) {
+      return res.status(400).send({ message: 'Siparişler boş bırakılamaz.' });
+    }
+    user.cart = orders.map((order) => {
+      return { productId: order.productId, quantity: order.quantity };
+    });
+    await user.save();
     return res.status(200).send({ message: 'Sepet güncellendi.' });
-  });
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports.getCart = async (req, res, next) => {

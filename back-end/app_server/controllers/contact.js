@@ -3,12 +3,10 @@ const { encrypt, encForResp } = require('../services/crypto');
 
 module.exports.sendContactRequest = async (req, res, next) => {
   try {
-    const contactReq = req.body;
-    contactReq.email = encrypt(contactReq.email);
-    contactReq.phone = encrypt(contactReq.phone);
-    contactReq.isRead = false;
-    contactReq.sendDate = Date.now();
-    const contact = new Contact(contactReq);
+    let { email, phone, name, desc } = req.body;
+    email = encrypt(email);
+    phone = encrypt(phone);
+    const contact = new Contact({ name, email, phone, desc });
     await contact.save();
     return res.status(200).send({ message: 'Mesaj iletildi' });
   } catch (error) {

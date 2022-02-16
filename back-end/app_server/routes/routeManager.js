@@ -12,6 +12,7 @@ const log = require('./log');
 const { Router } = require('express');
 const router = Router();
 const loggerService = require('../services/log');
+const { isDevMode } = require('../../common');
 
 router.use('/auth', auth);
 router.use('/product', product);
@@ -27,6 +28,9 @@ router.use('/log', log);
 
 router.use((err, req, res, next) => {
   if (err) {
+    if (isDevMode()) {
+      console.log(err);
+    }
     loggerService.error(req, err);
   }
   return res.status(500).send({ message: 'Bir hata oluştu.' });

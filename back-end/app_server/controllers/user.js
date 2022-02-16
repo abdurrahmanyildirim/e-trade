@@ -25,28 +25,23 @@ module.exports.update = async (req, res, next) => {
   }
 };
 
-module.exports.updatePassword = (req, res) => {
-  const body = req.body;
-  if (body.confirmPassword !== body.newPassword) {
-    return res.status(400).send({ message: 'Girilen şifreler eşleşmiyor' });
-  }
-  User.findOne({ _id: req.id }, (err, user) => {
-    if (err) {
-      return res.status(500).send({ message: 'Güncelleme sırasında bir hata oldu.' });
+module.exports.updatePassword = async (req, res, next) => {
+  try {
+    const { confirmPassword, newPassword, password } = req.body;
+    if (confirmPassword !== newPassword) {
+      return res.status(400).send({ message: 'Girilen şifreler eşleşmiyor' });
     }
-    const isCompared = comparePassword(body.password, user.password);
+    const user = await User.findOne({ _id: req.id });
+    const isCompared = comparePassword(password, user.password);
     if (!isCompared) {
       return res.status(401).send({ message: 'Girilen şifre hatalı' });
     }
-    const newPassword = hashPassword(body.newPassword);
-    user.password = newPassword;
-    user.save((err) => {
-      if (err) {
-        return res.status(500).send({ message: 'Güncelleme sırasında bir hata oldu.' });
-      }
-      return res.status(200).send({ message: 'Şifreniz güncellendi.' });
-    });
-  });
+    user.password = hashPassword(newPassword);
+    await user.save();
+    return res.status(200).send({ message: 'Şifreniz güncellendi.' });
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports.getUser = async (req, res, next) => {
