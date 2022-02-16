@@ -19,7 +19,7 @@ const compression = require('compression');
 let ioCors = {};
 if (!isDevMode()) {
   ioCors = {
-    origin: [process.env.ORIGIN, process.env.SOCKET_URL]
+    origin: process.env.ORIGIN
   };
 }
 

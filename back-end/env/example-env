@@ -1,0 +1,20 @@
+MONGO_CLOUD=cloudUrl
+MONGO_LOCAL=localUrl
+TOKEN_KEY=TokenKey
+CLOUDINARY_CLOUD_NAME=CloudinaryName
+CLOUDINARY_API_KEY=CloudinaryKey
+CLOUDINARY_API_SECRET=CloudinarySecret
+CRYPTO_KEY=27CharacterKey
+CRYPTO_IV=16CharacterKey
+CRYPTO_BASICENCKEY=simpleKey
+MAIL_ADDRESS=YourMailAdrrees tgrfdewsaq
+ 
+MAIL_PASSWORD=MailPassword
+MAIL_SERVİCE=MailServiceNamer
+MAIL_HOST=MailHost
+PORT=4205
+ORIGIN=http://localhost:4200
+COMPANY=CompanyName - Web site will using this name in mails.
+API_KEY=IyzipayApiKey
+SECRET_KEY=IyzipaySecretKey
+IYZIPAY_URI=https://api.iyzipay.com
