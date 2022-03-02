@@ -152,7 +152,7 @@ const giveOrder = (id) => {
 };
 
 const initIyzipayReqData = (orderedProducts, user, req) => {
-  const totalPrice = getTotalPrice(orderedProducts);
+  const totalPrice = fixFloatNumber(getTotalPrice(orderedProducts));
   const basketItems = getBasketItems(orderedProducts);
   const callbackUrl = getCallbackUrl(req);
   return {
@@ -187,6 +187,10 @@ const initIyzipayReqData = (orderedProducts, user, req) => {
     },
     basketItems
   };
+};
+
+const fixFloatNumber = (num) => {
+  return Number.parseFloat(num.toFixed(10));
 };
 
 const getTotalPrice = (prods) => {

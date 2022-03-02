@@ -157,7 +157,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: PaymentReqResponse) => {
           if (response.status !== 'failure') {
-            window.open(response.payWithIyzicoPageUrl, '_self', 'noopener,noreferrer');
+            window.open(response.paymentPageUrl, '_self', 'noopener,noreferrer');
           } else {
             this.orderStatus = 1;
             this.cd.detectChanges();
