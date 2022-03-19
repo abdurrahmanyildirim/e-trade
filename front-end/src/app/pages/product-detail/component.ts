@@ -103,7 +103,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
 
   editPhotoSizes(): void {
     if (this.mobileDet.isMobile.value) {
-      this.photos.width = this.photos.height = document.body.clientWidth - 12;
+      this.photos.width = this.photos.height = document.body.clientWidth;
     } else {
       this.photos.width = this.photos.height = 450;
     }

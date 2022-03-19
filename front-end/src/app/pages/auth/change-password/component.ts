@@ -13,7 +13,7 @@ import { isPresent } from 'src/app/shared/util/common';
   styleUrls: ['./component.css']
 })
 export class ChangePasswordComponent implements OnInit, OnDestroy {
-  token: string = '';
+  token = '';
   id: string;
   password = '';
   rePassword = '';

@@ -1,5 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
@@ -7,6 +14,7 @@ import { OrderList, OrderListProduct, Statuses } from 'src/app/shared/models/ord
 import { OrderService } from 'src/app/shared/services/rest/order/service';
 import { ProductService } from 'src/app/shared/services/rest/product/service';
 import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
+import { isPresent } from 'src/app/shared/util/common';
 
 @Component({
   selector: 'app-order-detail',
@@ -15,10 +23,11 @@ import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.
   providers: [OrderService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OrderDetailComponent implements OnInit {
+export class OrderDetailComponent implements OnInit, OnDestroy {
   order: OrderList;
   orderId: string;
   Statuses = Statuses;
+  subs = new Subscription();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,21 +40,23 @@ export class OrderDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
+    const subs = this.activatedRoute.params.subscribe((params) => {
       // tslint:disable-next-line: no-string-literal
       this.orderId = params['id'];
       this.initOrder();
     });
+    this.subs.add(subs);
   }
 
   initOrder(): void {
-    this.orderService.detail(this.orderId).subscribe({
+    const subs = this.orderService.detail(this.orderId).subscribe({
       next: (data) => {
         this.order = data;
         this.cd.detectChanges();
       },
       error: (err) => console.log(err)
     });
+    this.subs.add(subs);
   }
 
   showContracts(): void {
@@ -106,5 +117,11 @@ export class OrderDetailComponent implements OnInit {
           });
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (isPresent(this.subs)) {
+      this.subs.unsubscribe();
+    }
   }
 }

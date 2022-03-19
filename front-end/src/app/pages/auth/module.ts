@@ -23,11 +23,11 @@ const googleLoginOptions = {
   scope: 'profile email'
 };
 
-let key = '';
+let googleKey = '';
 if (environment.production) {
-  key = '539238066533-cmar8fngup5h8uj3rjd7481vkrcj5c4g.apps.googleusercontent.com';
+  googleKey = '539238066533-cmar8fngup5h8uj3rjd7481vkrcj5c4g.apps.googleusercontent.com';
 } else {
-  key = '399045451146-r6e03sbio9clb86ontnvrsk605fm623p.apps.googleusercontent.com';
+  googleKey = '399045451146-r6e03sbio9clb86ontnvrsk605fm623p.apps.googleusercontent.com';
 }
 
 const routes: Routes = [
@@ -66,7 +66,7 @@ const routes: Routes = [
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(key, googleLoginOptions)
+            provider: new GoogleLoginProvider(googleKey, googleLoginOptions)
           }
         ]
       } as SocialAuthServiceConfig

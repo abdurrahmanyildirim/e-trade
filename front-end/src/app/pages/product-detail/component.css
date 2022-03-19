@@ -7,7 +7,7 @@
 
 .container {
   display: flex;
-  padding: 10px 10px 0 10px;
+  /* padding: 10px 10px 0 10px; */
   flex-direction: column;
   margin: 0 auto;
   width: 100%;
@@ -127,9 +127,8 @@
   margin-top: 10px;
 }
 
-@media (hover:none) {
+@media (hover: none) {
   .container {
-    padding: 5px 5px 0 5px;
     width: 100%;
   }
 
@@ -137,8 +136,15 @@
     flex-direction: column;
   }
 
+  .tabs,
+  .similar-prods {
+    box-sizing: border-box;
+    padding: 0px 5px 0 5px;
+  }
+
   .general {
-    padding: 0;
+    box-sizing: border-box;
+    padding: 0px 5px 0 5px;
     width: 100%;
   }
 }
