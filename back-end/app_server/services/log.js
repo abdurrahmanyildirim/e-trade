@@ -3,7 +3,8 @@ const Log = require('../models/log');
 const type = {
   error: 'Error',
   info: 'Info',
-  warn: 'Warn'
+  warn: 'Warn',
+  custom: 'Custom'
 };
 
 const error = (req, error) => {
@@ -20,13 +21,20 @@ const error = (req, error) => {
 
 const info = (req, info) => {
   const log = {
-    level: type.info,
-    route: req?.originalUrl,
     name: info.name,
     message: info.message,
+    level: type.info,
+    route: req?.originalUrl,
     id: req?.id
   };
   logToDb(log);
+};
+
+const custom = (log) => {
+  logToDb({
+    level: type.custom,
+    ...log
+  });
 };
 
 const logToDb = async (logObject) => {
@@ -40,5 +48,6 @@ const logToDb = async (logObject) => {
 
 module.exports = {
   error,
-  info
+  info,
+  custom
 };

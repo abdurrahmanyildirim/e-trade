@@ -11,6 +11,11 @@
     #fileInput
   />
 </button>
+<div class="progress-bar" *ngIf="showProgress">
+  <div>Yükleniyor... {{uploadedFileCount}}/{{fileCount}}</div>
+  <mat-progress-bar class="nav-progress" mode="indeterminate"></mat-progress-bar>
+</div>
+
 <div
   class="photos-container"
   *ngIf="uploadedPhotos.length>0"
@@ -19,7 +24,7 @@
 >
   <div *ngFor="let photo of uploadedPhotos" class="photo-container" cdkDrag>
     <div class="photo-placeholder" *cdkDragPlaceholder></div>
-    <img [src]="photo.path" class="photo" alt="photo" />
+    <img [src]="photo" class="photo" alt="photo" />
     <button mat-icon-button (click)="extractPhoto(photo)"><mat-icon>close</mat-icon></button>
   </div>
 </div>

@@ -48,7 +48,9 @@ export class AppComponent implements OnInit, OnDestroy {
               e instanceof NavigationCancel ||
               e instanceof NavigationError
             ) {
-              this.navigationProgress = false;
+              setTimeout(() => {
+                this.navigationProgress = false;
+              }, 300);
             }
           });
         }

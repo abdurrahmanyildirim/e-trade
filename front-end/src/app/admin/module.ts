@@ -25,6 +25,7 @@ import { CategoryComponent } from './category/component';
 import { AdminGuard } from '../shared/guards/admin';
 import { DbService } from '../shared/services/rest/db/service';
 import { LogService } from '../shared/services/rest/log/service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const routes: Routes = [
   {
@@ -97,7 +98,8 @@ const routes: Routes = [
     MatRadioModule,
     StarModule,
     DialogModule,
-    EditorModule
+    EditorModule,
+    MatProgressBarModule
   ],
   providers: [{ provide: DbService }, { provide: LogService }]
 })

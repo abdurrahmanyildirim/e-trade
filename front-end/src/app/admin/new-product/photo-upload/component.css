@@ -5,6 +5,20 @@
   height: 50px;
 }
 
+.progress-bar {
+  margin: 0 auto;
+  margin-top: 10px;
+  width: 410px;
+  height: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .photos-container {
   width: 410px;
 }

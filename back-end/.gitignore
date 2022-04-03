@@ -1,5 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# Temporary ignored files
+/nginx
+/lets-encrypt
+
 # compiled output
 # /dist
 /tmp

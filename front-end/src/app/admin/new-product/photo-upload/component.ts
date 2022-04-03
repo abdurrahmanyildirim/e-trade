@@ -1,67 +1,67 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { CloudinaryPhoto } from 'src/app/shared/models/product';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { isPresent } from 'src/app/shared/util/common';
 
 @Component({
   selector: 'app-photo-upload',
   templateUrl: './component.html',
   styleUrls: ['./component.css']
 })
-export class PhotoUploadComponent {
+export class PhotoUploadComponent implements OnDestroy {
   @Output() filesChange = new EventEmitter<File[]>();
-  uploadedPhotos: CloudinaryPhoto[] = [];
+  subs = new Subscription();
+  uploadedPhotos = [];
   files: File[] = [];
-  counter = 11;
   suppotedPhotos = new Map<string, string>([
     ['jpg', 'jpg'],
     ['jpeg', 'jpeg'],
     ['png', 'png'],
     ['jfif', 'jfif']
   ]);
+  uploadedFileCount = 0;
+  fileCount = 0;
+  showProgress = false;
 
-  constructor(private snackBar: SnackbarService) {}
+  constructor(private snackBar: SnackbarService, private cd: ChangeDetectorRef) {}
 
   onPhotoUpload(event: any): void {
     const files = event.target.files;
-    if (this.files.length >= 4 || files.length > 4) {
+    if (this.files.length + files.length > 4 || files.length > 4) {
       this.snackBar.showError('En fazla 4 fotoğraf yüklenebilir');
       return;
     }
-    const length = files.length;
-    let i = 0;
+    this.fileCount = files.length;
+    this.showProgress = true;
     for (const file of files) {
-      if (this.isSupportedFile(file)) {
-        this.readFile(file).subscribe({
-          next: (fileString) => {
-            this.counter++;
-            this.files.push(file);
-            this.uploadedPhotos.push({
-              path: fileString as string,
-              publicId: 'photo' + this.counter,
-              _id: 'photoId' + this.counter
-            });
-            i++;
-            if (i === length) {
-              this.files.reverse();
-              this.uploadedPhotos.reverse();
-              this.emitFiles();
-            }
-          },
-          error: (err) => console.log(err)
-        });
+      if (!this.isSupportedFile(file)) {
+        return;
       }
+      const subs = this.readFile(file).subscribe({
+        next: (fileString) => {
+          this.files.push(file);
+          this.uploadedPhotos.push(fileString);
+          this.uploadedFileCount++;
+          if (this.uploadedFileCount === files.length) {
+            this.showProgress = false;
+            this.uploadedFileCount = this.fileCount = 0;
+            event.target.value = event.target.files = null;
+            this.emitFiles();
+          }
+          this.cd.detectChanges();
+        },
+        error: (err) => console.log(err)
+      });
+      this.subs.add(subs);
     }
-    event.target.files = null;
   }
 
   isSupportedFile(file: File): boolean {
-    const ext = file.name.split('.')[file.name.split('.').length - 1];
-    if (!this.suppotedPhotos.has(ext)) {
-      return false;
-    }
-    return true;
+    const splitedName = file.name.split('.');
+    const extension = splitedName[splitedName.length - 1];
+    return this.suppotedPhotos.has(extension);
   }
 
   readFile(file: File): Observable<string> {
@@ -100,5 +100,11 @@ export class PhotoUploadComponent {
 
   emitFiles(): void {
     this.filesChange.emit(this.files);
+  }
+
+  ngOnDestroy(): void {
+    if (isPresent(this.subs)) {
+      this.subs.unsubscribe();
+    }
   }
 }
