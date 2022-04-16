@@ -1,8 +1,4 @@
-const User = require('../models/user');
-const { company_name, origin } = require('../../config');
-const { encrypt, comparePassword, hashPassword, decrypt } = require('../services/crypto');
-const { sendCustomEmail } = require('../services/email/index');
-const { sign, verify } = require('../services/jwt');
+const { Auth, emailType, authType } = require('../business/auth');
 
 module.exports.login = async (req, res, next) => {
   try {
@@ -11,16 +7,17 @@ module.exports.login = async (req, res, next) => {
         message: 'Email ve Şifre boş bırakılamaz.'
       });
     }
-    let reqEmail = encrypt(req.body.email);
-    const user = await User.findOne({ email: reqEmail });
-    if (!user) {
+    const { email, password } = req.body;
+    const auth = await new Auth().initByEmail(email);
+    if (!auth.collection) {
       return res.status(404).send('Böyle bir kullanıcı kaydı yoktur.');
     }
-    const isMatched = comparePassword(req.body.password, user.password);
+    const isMatched = auth.comparePassword(password);
     if (!isMatched) {
       return res.status(404).send('Hatalı şifre veya email');
     }
-    return res.status(200).send(createLogin(user));
+    const payload = auth.createAuthPayload();
+    return res.status(200).send(payload);
   } catch (error) {
     next(error);
   }
@@ -31,22 +28,23 @@ module.exports.register = async (req, res, next) => {
     if (!req.body) {
       return res.sendStatus(404).send({ message: 'Boş nesne gönderilemez.' });
     }
-    let userData = req.body;
-    const user = await User.findOne({ email: encrypt(userData.email) });
-    if (user) {
+    const { firstName, lastName, email, password } = req.body;
+    let auth = await new Auth().initByEmail(email);
+    if (auth.collection) {
       return res.status(404).send({ message: 'Bu mail adresi daha önce kullanılmış.' });
     }
-    const newUser = new User({
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      email: encrypt(userData.email),
-      password: hashPassword(userData.password),
-      authType: 'normal'
-    });
-    const createdUser = await newUser.save();
-    const authData = createLogin(createdUser);
-    activationMail(userData, authData.token);
-    return res.status(201).send(authData);
+    auth = await auth
+      .createNewUser({
+        firstName,
+        lastName,
+        email,
+        password,
+        authType: authType.normal
+      })
+      .save();
+    const payload = auth.createAuthPayload();
+    await auth.sendEmail({ type: emailType.activation, token: payload.token });
+    return res.status(201).send(payload);
   } catch (error) {
     next(error);
   }
@@ -55,15 +53,14 @@ module.exports.register = async (req, res, next) => {
 module.exports.activateEmail = async (req, res, next) => {
   try {
     const token = req.query.token;
-    const decoded = verify(token, '');
-    const email = decoded.email;
-    const user = await User.findOne({ email: encrypt(email) });
-    if (!user) {
+    let auth = new Auth().verify({ token, ekstraKey: '' });
+    auth = await auth.initByEmail(auth.decodedToken.email);
+    if (!auth.collection) {
       return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
     }
-    user.isActivated = true;
-    await user.save();
-    return res.status(200).send(createLogin(user));
+    await auth.activate().save();
+    const payload = auth.createAuthPayload();
+    return res.status(200).send(payload);
   } catch (error) {
     next(error);
   }
@@ -72,20 +69,22 @@ module.exports.activateEmail = async (req, res, next) => {
 module.exports.googleAuth = async (req, res, next) => {
   try {
     const { firstName, lastName, email } = req.body;
-    let user = await User.findOne({ email: encrypt(email) });
-    if (!user) {
-      const newUser = new User({
-        firstName: firstName,
-        lastName: lastName,
-        email: encrypt(email),
-        isActivated: true,
-        password: hashPassword('a'),
-        authType: 'google',
-        role: 'Client'
-      });
-      user = await newUser.save();
+    let auth = await new Auth().initByEmail(email);
+    if (!auth.collection) {
+      auth = await auth
+        .createNewUser({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          isActivated: true,
+          password: 'a',
+          authType: authType.google,
+          role: 'Client'
+        })
+        .save();
     }
-    return res.status(200).send(createLogin(user));
+    const payload = auth.createAuthPayload();
+    return res.status(200).send(payload);
   } catch (error) {
     next(error);
   }
@@ -93,35 +92,26 @@ module.exports.googleAuth = async (req, res, next) => {
 
 module.exports.changePasswordRequest = async (req, res) => {
   const email = req.query.email;
-  const user = await User.findOne({ email: encrypt(email) });
-  if (!user) {
+  const auth = await new Auth().initByEmail(email);
+  if (!auth.collection) {
     return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
   }
-  const token = sign({ _id: user._id }, '1h', user.password);
-  sendCustomEmail(
-    email,
-    'Şifre Sıfırlama',
-    `
-    <p> Merhaba ${user.firstName} ${user.lastName}</p>
-    <p>İsteğiniz üzerine, şifre değiştirme linki gönderilmiştir.</p>
-    <p>Şifrenizi değiştirmek için <a href="${origin}/auth/change-password?v1=${token}&id=${user._id}" target="_blank" >tıklayınız.</a></p>
-    <br>
-    <p>${company_name}</p>
-    `
-  );
+  const token = auth.createChangePasswordToken();
+  await auth.sendEmail({ type: emailType.changePassword, token });
   return res.status(200).send();
 };
 
 module.exports.changePassword = async (req, res, next) => {
   try {
     let { id, password, token } = req.body;
-    const user = await User.findOne({ _id: id });
-    if (!user) {
+    const auth = await new Auth().initById(id);
+    if (!auth.collection) {
       return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
     }
-    verify(token, user.password);
-    password = hashPassword(password);
-    await User.updateOne({ _id: id }, { password });
+    auth = auth.verify({ token, ekstraKey: '' });
+    // auth.verifyToken(token);
+    password = auth.hashPassword(password);
+    await auth.changePassword(password).save();
     return res.status(200).send({ message: 'Şifre değiştirildi.' });
   } catch (error) {
     next(error);
@@ -130,41 +120,13 @@ module.exports.changePassword = async (req, res, next) => {
 
 module.exports.sendActivationMail = async (req, res, next) => {
   try {
-    const user = await User.findOne({ _id: req.id });
-    if (!user) {
+    const auth = await new Auth().initById(req.id);
+    if (!auth.collection) {
       return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
     }
-    const userData = {
-      email: decrypt(user.email),
-      firstName: user.firstName,
-      lastName: user.lastName
-    };
-    activationMail(userData, req.auth_token);
+    auth = await auth.sendEmail({ type: emailType.activation, token: req.auth_token });
     return res.status(200).send({ message: 'Aktivasyon maili gönderildi.' });
   } catch (error) {
     next(error);
   }
-};
-
-const activationMail = (user, token) => {
-  sendCustomEmail(
-    user.email,
-    'Hesap Aktivasyonu',
-    `
-    <p> Merhaba ${user.firstName} ${user.lastName}</p>
-    <p>Taşer züccaciye hesabınızı aktif hale getirmek için <a href="${origin}/auth/activate-email?v1=${token}" target="_blank" >tıklayınız.</a></p>
-    <br>
-    <p>${company_name}</p>
-    `
-  );
-};
-
-const createLogin = (user) => {
-  const token = sign({ _id: user._id, email: decrypt(user.email), role: user.role }, '360d', '');
-  const info = {
-    email: user.email,
-    firstName: user.firstName,
-    lastName: user.lastName
-  };
-  return { info, token };
 };

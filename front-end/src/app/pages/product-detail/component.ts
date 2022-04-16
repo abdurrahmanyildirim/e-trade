@@ -148,7 +148,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
             newOrder = {
               productId: product._id,
               discountRate: product.discountRate,
-              photo: product.photos[0].path,
+              photoPath: product.photos[0].path,
               name: product.name,
               price: product.price,
               quantity: this.quantity,

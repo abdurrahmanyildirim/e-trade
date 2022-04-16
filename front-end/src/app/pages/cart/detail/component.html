@@ -3,10 +3,10 @@
     <span class="mobile" *ngIf="mobileDet.isMobile |async">
       <div class="order" *ngFor="let order of orders">
         <img
-          [src]="order.photo"
+          [src]="order.photoPath"
           [alt]=" order.name"
           class="photo"
-          (click)="showPhotoBigger(order.photo)"
+          (click)="showPhotoBigger(order.photoPath)"
         />
         <section class="info-operations">
           <section class="name-brand">
@@ -51,10 +51,10 @@
       <div class="order" *ngFor="let order of orders">
         <section class="photo-info flex">
           <img
-            [src]="order.photo"
+            [src]="order.photoPath"
             [alt]="order.name"
             class="photo"
-            (click)="showPhotoBigger(order.photo)"
+            (click)="showPhotoBigger(order.photoPath)"
           />
           <div class="name-brand">
             <span class="name" routerLink="/product-detail/{{order.productId}}">

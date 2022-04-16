@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const { mail, company_name } = require('../../../config');
+const { mail, company_name, isMaillingActive } = require('../../../config');
 const { headerContent, footerContent } = require('./template');
 
 const transporter = nodemailer.createTransport(mail.transporter);
@@ -24,37 +24,34 @@ const attachments = [
 
 module.exports.sendEmail = async (to, subject, desc) => {
   try {
-    const options = {
-      from: {
-        name: company_name,
-        address: mail.transporter.from
-      },
-      sender: mail.transporter.from,
-      to,
-      subject,
-      attachments,
-      html: headerContent + desc + footerContent
-    };
-    await transporter.sendMail(options);
+    await sendMail({ to, subject, html: headerContent + desc + footerContent });
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports.sendCustomEmail = async (to, subject, desc) => {
+module.exports.sendCustomEmail = async ({ to, subject, desc }) => {
   try {
-    const options = {
-      from: {
-        name: company_name,
-        address: mail.transporter.from
-      },
-      sender: mail.transporter.from,
-      to,
-      subject,
-      html: desc
-    };
-    await transporter.sendMail(options);
+    await sendMail({ to, subject, html: desc });
   } catch (error) {
     console.log(error);
   }
+};
+
+const sendMail = ({ to, subject, html }) => {
+  if (isMaillingActive === 'false' || isMaillingActive === false) {
+    return;
+  }
+  const options = {
+    from: {
+      name: company_name,
+      address: mail.transporter.from
+    },
+    sender: mail.transporter.from,
+    attachments,
+    to,
+    subject,
+    html
+  };
+  return transporter.sendMail(options);
 };
