@@ -47,14 +47,18 @@ module.exports.purchaseOrder = async (req, res, next) => {
     const orderedProducts = user.getCart();
     const { phone, city, district, address } = req.body;
     await user.changePhone({ phone }).changeAdress({ city, address, district }).save();
-    if (isDevMode()) {
-      // TODO : Düzenlenecek
-      await giveOrder(req.id);
-      return res.redirect(`http://localhost:4200/cart?status=true`);
-    } else {
-      const result = await sendFormRequest({ products: orderedProducts, user, req });
-      return res.status(200).send(result);
-    }
+    // if (isDevMode()) {
+    //   // TODO : Düzenlenecek
+    //   await giveOrder(req.id);
+    //   return res.redirect(`http://localhost:4200/cart?status=true`);
+    // } else {
+    const result = await sendFormRequest({
+      products: orderedProducts,
+      user: user.collection,
+      req
+    });
+    return res.status(200).send(result);
+    // }
   } catch (error) {
     next(error);
   }

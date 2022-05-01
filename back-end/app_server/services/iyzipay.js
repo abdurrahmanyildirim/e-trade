@@ -1,5 +1,7 @@
 const Iyzipay = require('iyzipay');
 const { iyzipayConfig } = require('../../config');
+const { isDevMode } = require('../../common');
+const { decrypt } = require('./crypto');
 
 const iyzipay = new Iyzipay(iyzipayConfig);
 
@@ -27,7 +29,7 @@ const sendFormRequest = ({ products, user, req }) => {
 };
 
 const getFormReqOpt = (products, user, req) => {
-  const totalPrice = fixFloatNumber(getTotalPrice(products));
+  const totalPrice = getTotalPrice(products);
   const basketItems = getBasketItems(products);
   const callbackUrl = getCallbackUrl(req);
   const { _id, firstName, lastName, email } = user;
@@ -71,10 +73,7 @@ const fixFloatNumber = (num) => {
 };
 
 const getTotalPrice = (prods) => {
-  return prods.reduce(
-    (sum, cur) => sum + (cur.price - cur.price * cur.discountRate) * cur.quantity,
-    0
-  );
+  return prods.reduce((sum, curr) => sum + calcPrice(curr), 0);
 };
 
 const getBasketItems = (prods) => {
@@ -84,9 +83,14 @@ const getBasketItems = (prods) => {
       name: prod.name,
       category1: prod.category,
       itemType: Iyzipay.BASKET_ITEM_TYPE.PHYSICAL,
-      price: (prod.price - prod.price * prod.discountRate) * prod.quantity + ''
+      price: calcPrice(prod) + ''
     };
   });
+};
+
+const calcPrice = (order) => {
+  const price = (order.price - order.price * order.discountRate) * order.quantity;
+  return fixFloatNumber(price);
 };
 
 const getCallbackUrl = (req) => {
