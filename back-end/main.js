@@ -3,11 +3,13 @@ const app = express();
 const server = require('http').Server(app);
 const { isDevMode } = require('./common');
 const path = require('path');
-// Projelere göre değiştirilecek
+
+// Env files under env folder. We will change env name by the project.
 process.env.NODE_ENV = 'dev';
 require('dotenv').config({
   path: path.join(__dirname + '/env/' + process.env.NODE_ENV + '.env')
 });
+
 require('./app_server/models/db');
 const cors = require('cors');
 const util = require('./app_server/services/util');

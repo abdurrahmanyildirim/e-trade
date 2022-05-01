@@ -37,15 +37,6 @@ class Cart extends User {
         quantity: order.quantity
       });
     });
-
-    // productId: prod._id,
-    // quantity: order.quantity,
-    // name: prod.name,
-    // brand: prod.brand,
-    // discountRate: prod.discountRate,
-    // price: prod.price,
-    // photoPath: prod.photos[0].path,
-    // category: prod.category
     return orders;
   }
 }

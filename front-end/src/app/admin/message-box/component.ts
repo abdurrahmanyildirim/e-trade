@@ -69,6 +69,7 @@ export class MessageBoxComponent implements OnInit, OnDestroy {
               }
               return readedMessage;
             });
+            this.cd.detectChanges();
           });
         }
       }

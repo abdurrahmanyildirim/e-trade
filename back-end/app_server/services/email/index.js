@@ -48,9 +48,9 @@ module.exports.sendCustomEmail = async ({ to, subject, desc }) => {
 };
 
 const sendMail = ({ to, subject, html }, isCustom) => {
-  // if (isMaillingActive === 'false' || isMaillingActive === false) {
-  //   return;
-  // }
+  if (!isMaillingActive) {
+    return;
+  }
   const options = {
     from: {
       name: company_name,

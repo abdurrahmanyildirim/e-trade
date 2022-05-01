@@ -52,7 +52,6 @@ module.exports.purchaseOrder = async (req, res, next) => {
       await giveOrder(req.id);
       return res.redirect(`http://localhost:4200/cart?status=true`);
     } else {
-      // const reqData = initIyzipayReqData(orderedProducts, user, req);
       const result = await sendFormRequest({ products: orderedProducts, user, req });
       return res.status(200).send(result);
     }
