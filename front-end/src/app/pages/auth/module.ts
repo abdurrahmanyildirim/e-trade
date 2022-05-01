@@ -35,7 +35,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [UnAuthGuard] },
   { path: 'reset-request', component: ResetRequestComponent, canActivate: [UnAuthGuard] },
   { path: 'change-password', component: ChangePasswordComponent, canActivate: [UnAuthGuard] },
-  { path: 'activate-email', component: ActivateEmailComponent, canActivate: [UnAuthGuard] },
+  { path: 'activate-email', component: ActivateEmailComponent },
   { path: '**', redirectTo: 'login', pathMatch: 'prefix' }
 ];
 @NgModule({

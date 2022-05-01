@@ -7,10 +7,10 @@ class User extends Business {
     super(UserModel);
   }
 
-  async initById(id) {
-    this.collection = await UserModel.findOne({ _id: id });
-    return this;
-  }
+  // async initById(id) {
+  //   this.collection = await UserModel.findOne({ _id: id });
+  //   return this;
+  // }
 
   async initByEmail(email) {
     this.collection = await UserModel.findOne({ email: encrypt(email) });
@@ -85,10 +85,10 @@ class User extends Business {
     return this;
   }
 
-  async save() {
-    await this.collection.save();
-    return this;
-  }
+  // async save() {
+  //   await this.collection.save();
+  //   return this;
+  // }
 }
 
 module.exports = {

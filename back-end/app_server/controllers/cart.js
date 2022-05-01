@@ -1,8 +1,6 @@
 const User = require('../models/user');
-const { encrypt, decrypt } = require('../services/crypto');
 const { isDevMode, isPresent } = require('../../common');
 const { sendFormRequest } = require('../services/iyzipay');
-const Iyzipay = require('iyzipay');
 const Order = require('../models/order');
 
 const { Cart } = require('../business/cart');
@@ -43,7 +41,7 @@ module.exports.purchaseOrder = async (req, res, next) => {
     if (!user.collection) {
       return res.status(500).send({ message: 'Kullanıcı bulunamadı' });
     }
-    if (!isPresent(user.isActivated) || user.isActivated === false) {
+    if (!isPresent(user.collection.isActivated) || user.collection.isActivated === false) {
       return res.status(400).send({ message: 'Mail adresi aktif değil', issue: 'mail' });
     }
     const orderedProducts = user.getCart();

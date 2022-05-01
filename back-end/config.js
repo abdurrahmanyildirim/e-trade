@@ -1,7 +1,7 @@
 module.exports = {
   company_name: process.env.COMPANY,
   TOKEN_KEY: process.env.TOKEN_KEY,
-  isMaillingActive: process.env.IS_MAILING_ACTIVE,
+  isMaillingActive: true,
   crypto: {
     key: process.env.CRYPTO_KEY,
     iv: process.env.CRYPTO_IV,
@@ -9,7 +9,6 @@ module.exports = {
   },
   mail: {
     transporter: {
-      service: process.env.MAIL_SERVİCE,
       host: process.env.MAIL_HOST,
       auth: {
         user: process.env.MAIL_ADDRESS,

@@ -14,7 +14,7 @@ export class DbService extends BaseRestService {
 
   createBackUp(): Observable<any> {
     const address =
-      this.configService.config.baseUrl + this.route + '/' + ServiceMethod.createBackup;
+      this.configService.config.baseUrl + 'api/' + this.route + '/' + ServiceMethod.createBackup;
     return this.http.get(address, { responseType: 'blob' });
   }
 }

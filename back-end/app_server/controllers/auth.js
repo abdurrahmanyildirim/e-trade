@@ -58,7 +58,7 @@ module.exports.activateEmail = async (req, res, next) => {
     if (!auth.collection) {
       return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
     }
-    await auth.activate().save();
+    auth = await auth.activate().save();
     const payload = auth.createAuthPayload();
     return res.status(200).send(payload);
   } catch (error) {
@@ -104,14 +104,13 @@ module.exports.changePasswordRequest = async (req, res) => {
 module.exports.changePassword = async (req, res, next) => {
   try {
     let { id, password, token } = req.body;
-    const auth = await new Auth().initById(id);
+    let auth = await new Auth().initById(id);
     if (!auth.collection) {
       return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
     }
-    auth = auth.verify({ token, ekstraKey: '' });
-    // auth.verifyToken(token);
-    password = auth.hashPassword(password);
-    await auth.changePassword(password).save();
+    auth = auth.verify({ token, ekstraKey: auth.collection.password });
+    password = auth.hashPassword({ password });
+    await auth.changePassword({ password }).save();
     return res.status(200).send({ message: 'Şifre değiştirildi.' });
   } catch (error) {
     next(error);
@@ -120,7 +119,7 @@ module.exports.changePassword = async (req, res, next) => {
 
 module.exports.sendActivationMail = async (req, res, next) => {
   try {
-    const auth = await new Auth().initById(req.id);
+    let auth = await new Auth().initById(req.id);
     if (!auth.collection) {
       return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
     }

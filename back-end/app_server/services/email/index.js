@@ -4,6 +4,15 @@ const { headerContent, footerContent } = require('./template');
 
 const transporter = nodemailer.createTransport(mail.transporter);
 
+// transporter.verify(function (error, success) {
+//   if (error) {
+//     isMaillingActive = false;
+//     console.log(error);
+//   } else {
+//     isMaillingActive = true;
+//   }
+// });
+
 const attachments = [
   {
     filename: 'logo.png',
@@ -24,7 +33,7 @@ const attachments = [
 
 module.exports.sendEmail = async (to, subject, desc) => {
   try {
-    await sendMail({ to, subject, html: headerContent + desc + footerContent });
+    await sendMail({ to, subject, html: headerContent + desc + footerContent }, false);
   } catch (error) {
     console.log(error);
   }
@@ -32,26 +41,27 @@ module.exports.sendEmail = async (to, subject, desc) => {
 
 module.exports.sendCustomEmail = async ({ to, subject, desc }) => {
   try {
-    await sendMail({ to, subject, html: desc });
+    await sendMail({ to, subject, html: desc }, true);
   } catch (error) {
     console.log(error);
   }
 };
 
-const sendMail = ({ to, subject, html }) => {
-  if (isMaillingActive === 'false' || isMaillingActive === false) {
-    return;
-  }
+const sendMail = ({ to, subject, html }, isCustom) => {
+  // if (isMaillingActive === 'false' || isMaillingActive === false) {
+  //   return;
+  // }
   const options = {
     from: {
       name: company_name,
       address: mail.transporter.from
     },
     sender: mail.transporter.from,
-    attachments,
+    attachments: isCustom ? [] : attachments,
     to,
     subject,
-    html
+    html,
+    text: html
   };
   return transporter.sendMail(options);
 };
