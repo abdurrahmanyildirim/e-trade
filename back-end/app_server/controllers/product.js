@@ -1,13 +1,11 @@
-const Product = require('../models/product');
-const Order = require('../models/order');
-const User = require('../models/user');
-const { remove } = require('../services/cloudinary');
-const { updateProducts } = require('../services/socket');
+const Product = require('../business/product');
+const Order = require('../business/order');
+const { User } = require('../business/user');
 
 module.exports.getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find({ isActive: true });
-    return res.status(200).send(products);
+    const product = await new Product().initActives();
+    return res.status(200).send(product.collection);
   } catch (error) {
     next(error);
   }
@@ -15,8 +13,8 @@ module.exports.getProducts = async (req, res, next) => {
 
 module.exports.getAllProducts = async (req, res, next) => {
   try {
-    const products = await Product.find();
-    return res.status(200).send(products);
+    const product = await new Product().initAll();
+    return res.status(200).send(product.collection);
   } catch (error) {
     next(error);
   }
@@ -25,8 +23,8 @@ module.exports.getAllProducts = async (req, res, next) => {
 module.exports.getByCategory = async (req, res, next) => {
   try {
     const category = req.query.category;
-    const products = await Product.find({ category, isActive: true });
-    return res.status(200).send(products);
+    const product = await new Product().initActivesByCategory(category);
+    return res.status(200).send(product.collection);
   } catch (error) {
     next(error);
   }
@@ -35,8 +33,8 @@ module.exports.getByCategory = async (req, res, next) => {
 module.exports.getProductById = async (req, res, next) => {
   try {
     const id = req.query.id;
-    const product = await Product.findOne({ _id: id });
-    return res.status(200).send(product);
+    const product = await new Product().initById(id);
+    return res.status(200).send(product.collection);
   } catch (error) {
     next(error);
   }
@@ -45,25 +43,9 @@ module.exports.getProductById = async (req, res, next) => {
 module.exports.checkStock = async (req, res, next) => {
   try {
     const products = req.body;
-    const dbProducts = await Product.find();
-    const checkResults = await products.map((product) => {
-      const dbProduct = dbProducts.find((prod) => prod.id === product.id);
-      if (dbProduct) {
-        const hasEnoughStock =
-          product.quantity > 0 &&
-          dbProduct.stockQuantity > 0 &&
-          dbProduct.stockQuantity >= product.quantity;
-        return {
-          isActive: dbProduct.isActive,
-          hasEnoughStock,
-          availableQuantity: dbProduct.stockQuantity,
-          id: dbProduct._id,
-          quantity: product.quantity,
-          name: dbProduct.name
-        };
-      }
-    });
-    return res.status(200).send(checkResults);
+    const product = await new Product().initAll();
+    const checkedProducts = product.getProductsWithStockInfo(products);
+    return res.status(200).send(checkedProducts);
   } catch (error) {
     next(error);
   }
@@ -71,24 +53,8 @@ module.exports.checkStock = async (req, res, next) => {
 
 module.exports.addNewProduct = async (req, res, next) => {
   try {
-    const newProduct = {
-      name: req.body.name,
-      category: req.body.category,
-      price: req.body.price,
-      description: req.body.description,
-      discountRate: req.body.discountRate / 100,
-      stockQuantity: req.body.stockQuantity,
-      brand: req.body.brand,
-      rate: 0,
-      isActive: true,
-      photos: req.body.photos,
-      comments: []
-    };
-
-    const product = new Product(newProduct);
-    const savedProduct = await product.save();
-    // updateProducts();
-    return res.status(200).send(savedProduct);
+    const product = await new Product().createNewProduct(req.body).save();
+    return res.status(200).send(product.collection);
   } catch (error) {
     next(error);
   }
@@ -96,30 +62,14 @@ module.exports.addNewProduct = async (req, res, next) => {
 
 module.exports.remove = async (req, res) => {
   const id = req.query.id;
-  const product = await Product.findOne({ _id: id });
-  Product.findByIdAndRemove(id, async (err) => {
-    if (err) {
-      return res.status(404).send({ message: 'Ürün silinirken hata oldu.' });
-    }
-    const photos = await product.photos.filter((photo, i) => i !== 0);
-    for (const photo of photos) {
-      try {
-        await remove(photo.publicId);
-      } catch (error) {
-        console.log(error);
-        console.log('Foto Silinemedi');
-      }
-    }
-    updateProducts();
-    return res.status(200).send({ message: 'Ürün silindi' });
-  });
+  await new Product().removeById(id);
+  return res.status(200).send({ message: 'Ürün silindi' });
 };
 
 module.exports.update = async (req, res, next) => {
   try {
     const product = req.body;
-    await Product.findByIdAndUpdate({ _id: product._id }, product);
-    updateProducts();
+    await new Product().updateById(product);
     return res.status(200).send({ message: 'Güncelleme başarılı' });
   } catch (error) {
     next(error);
@@ -128,73 +78,39 @@ module.exports.update = async (req, res, next) => {
 
 module.exports.addComment = async (req, res, next) => {
   try {
-    const orderId = req.query.orderId.toString();
-    const rate = req.query.rate;
-    const desc = req.query.desc;
-    const productId = req.query.productId.toString();
-    const order = await Order.findOne({ _id: orderId });
-    if (!order) {
+    const { desc, rate, productId, orderId } = req.query;
+    const order = await new Order().initById(orderId);
+    if (!order.collection) {
       return res.status(500).send({ message: 'Beklenmeyen bir hata oldu.' });
     }
-    const isOrdered = !!order.products.find(
+    const orderedProduct = order.collection.products.find(
       (product) => product.productId.toString() === productId
     );
-    if (!isOrdered) {
+    if (!orderedProduct) {
       return res.status(400).send({ message: 'Satın alınmayan ürün oylanamaz.' });
     }
-    const product = await Product.findOne({ _id: productId });
-    if (!product) {
+    const product = await new Product().initById(productId);
+    if (!product.collection) {
       return res.status(500).send({ message: 'Beklenmeyen bir hata oldu.' });
     }
-    const user = await User.findOne({ _id: req.id });
-    if (!user) {
+    const user = await new User().initById(req.id);
+    if (!user.collection) {
       return res.status(500).send({ message: 'Beklenmeyen bir hata oldu.' });
     }
-    const comment = await product.comments.find(
-      (comment) =>
-        comment.userId.toString() === user._id.toString() && comment.orderId.toString() === orderId
-    );
+    const comment = product.getComment({ userId: req.id, orderId });
     if (comment) {
-      product.comments.map((comment) => {
-        if (
-          comment.userId.toString() === user._id.toString() &&
-          comment.orderId.toString() === orderId
-        ) {
-          comment.rate = rate;
-          comment.description = desc;
-        }
-      });
+      comment.rate = rate;
+      comment.description = desc;
     } else {
-      product.comments.push({
-        orderId,
-        userId: user.id,
-        name: user.firstName + ' ' + user.lastName,
-        description: desc,
-        rate
-      });
+      product.insertComment({ userId: req.id, orderId, description: desc, rate });
     }
-    const totalRate = product.comments.reduce((acc, { rate }) => acc + rate, 0);
-    product.rate = Number.parseFloat((totalRate / product.comments.length).toFixed(2));
-    product.save((err) => {
-      if (err) {
-        return res.status(500).send({ message: 'Beklenmeyen bir hata oldu.' });
-      }
-      order.products.find(
-        (orderedProduct) => orderedProduct.productId.toString() === productId
-      ).rate = rate;
-      order.products.map((orderedProduct) => {
-        if (orderedProduct.productId.toString() === productId) {
-          orderedProduct.comment.rate = rate;
-          orderedProduct.comment.desc = desc;
-        }
-      });
-      order.save((err) => {
-        if (err) {
-          return res.status(500).send({ message: 'Beklenmeyen bir hata oldu.' });
-        }
-        return res.status(200).send({ message: 'Puanlama yapıldı.' });
-      });
-    });
+    await product.updateProductRate().save();
+    orderedProduct.comment = {
+      rate,
+      desc
+    };
+    await order.save();
+    return res.status(200).send({ message: 'Puanlama yapıldı.' });
   } catch (error) {
     next(error);
   }

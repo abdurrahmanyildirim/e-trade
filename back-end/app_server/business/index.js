@@ -4,10 +4,6 @@ class Business {
   constructor(model) {
     this.mainModel = model;
   }
-  // collentionModel;
-  // constructor(collentionModel) {
-  //   this.collentionModel = collentionModel;
-  // }
 
   async initById(id) {
     this.collection = await this.mainModel.findOne({ _id: id });

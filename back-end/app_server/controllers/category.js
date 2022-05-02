@@ -1,5 +1,5 @@
 const { Category } = require('../business/category');
-const { Product } = require('../business/product');
+const Product = require('../business/product');
 
 module.exports.getCategories = async (req, res, next) => {
   try {
