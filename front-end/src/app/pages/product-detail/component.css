@@ -17,6 +17,7 @@
 
 .top {
   display: flex;
+  margin-top: 20px;
   padding-bottom: 5px;
 }
 
@@ -134,6 +135,7 @@
 
   .top {
     flex-direction: column;
+    margin-top: 0px;
   }
 
   .tabs,
