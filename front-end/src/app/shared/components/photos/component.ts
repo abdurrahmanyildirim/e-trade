@@ -114,7 +114,7 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
     if (!this.mobileDet.isMobile.value) {
       const image = document.getElementById('curr-' + this.currentPhoto._id);
       image.style.backgroundPosition = 'center';
-      image.style.backgroundSize = '100%';
+      image.style.backgroundSize = 'contain';
     }
   }
 
