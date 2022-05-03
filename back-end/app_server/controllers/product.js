@@ -1,6 +1,7 @@
 const Product = require('../business/product');
 const Order = require('../business/order');
 const { User } = require('../business/user');
+const { fixHighResolutionPhotos } = require('../services/photo/index');
 
 module.exports.getProducts = async (req, res, next) => {
   try {
@@ -68,7 +69,8 @@ module.exports.remove = async (req, res) => {
 
 module.exports.update = async (req, res, next) => {
   try {
-    const product = req.body;
+    let product = req.body;
+    product.photos = await fixHighResolutionPhotos(product.photos);
     await new Product().updateById(product);
     return res.status(200).send({ message: 'Güncelleme başarılı' });
   } catch (error) {
