@@ -10,13 +10,15 @@ require('dotenv').config({
   path: path.join(__dirname + '/env/' + process.env.NODE_ENV + '.env')
 });
 
-require('./app_server/models/db');
+const db = require('./app_server/database/connection');
 const cors = require('cors');
 const util = require('./app_server/services/util');
 const verify = require('./app_server/services/verify');
 const helmet = require('helmet');
 const routes = require('./app_server/routes/routeManager');
 const compression = require('compression');
+
+db.init();
 
 let ioCors = {};
 if (!isDevMode()) {

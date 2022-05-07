@@ -5,16 +5,17 @@ const { upload } = require('../cloudinary');
 
 const editPhoto = async (photo) => {
   const pngFile = fs.readFileSync(photo.tempFilePath);
-  const { width, height } = await sharp(pngFile).toFile(`${__dirname}/${photo.name}`);
+  const filePath = `${__dirname}/${photo.name}`;
+  const { width, height } = await sharp(pngFile).toFile(filePath);
 
-  let sh = sharp(`${__dirname}/${photo.name}`);
+  let sh = sharp(filePath);
   sh = resizeImage({ sh, width, height });
 
   const uploadedFilePath = `${__dirname}/edited-photos/${photo.name}`;
   await sh.jpeg({ progressive: true, force: true, quality: 85 }).toFile(uploadedFilePath);
 
-  fs.rmSync(`${__dirname}/${photo.name}`);
-  fs.rmSync(photo.tempFilePath);
+  removeFile(filePath);
+  removeFile(photo.tempFilePath);
 
   return uploadedFilePath;
 };
@@ -51,6 +52,7 @@ const fixHighResolutionPhotos = async (photos) => {
     } else {
       removeFile(dowloadLocation);
     }
+
     images.push({
       publicId: photo.public_id,
       path: photo.secure_url

@@ -16,9 +16,9 @@ class Business {
   }
 
   async saveArray() {
-    this.collection.forEach(async (doc) => {
+    for (const doc of this.collection) {
       await doc.save();
-    });
+    }
     return this;
   }
 }

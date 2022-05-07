@@ -7,7 +7,7 @@ class Category extends Business {
   }
 
   async initByName({ name }) {
-    this.collection = await this.mainModel.findOne({ name });
+    this.collection = await CategoryModel.findOne({ name });
     return this;
   }
 
@@ -24,7 +24,7 @@ class Category extends Business {
   }
 
   async initActives() {
-    this.collection = await this.mainModel.find({ isActive: true });
+    this.collection = await CategoryModel.find({ isActive: true });
     return this;
   }
 

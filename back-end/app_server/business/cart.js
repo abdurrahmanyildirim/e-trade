@@ -1,9 +1,4 @@
 const { User } = require('./user');
-const { encrypt, decrypt } = require('../services/crypto');
-const { isDevMode, isPresent } = require('../../common');
-const { sendFormRequest } = require('../services/iyzipay');
-const Iyzipay = require('iyzipay');
-const Order = require('../models/order');
 
 class Cart extends User {
   constructor() {
@@ -25,16 +20,7 @@ class Cart extends User {
   getCart() {
     return this.collection.cart.map((order) => {
       const prod = order.productId;
-      return {
-        productId: prod._id,
-        brand: prod.brand,
-        name: prod.name,
-        category: prod.category,
-        price: prod.price,
-        discountRate: prod.discountRate,
-        photoPath: prod.photos[0].path,
-        quantity: order.quantity
-      };
+      return this.getOrderedProduct(order, prod);
     });
   }
 

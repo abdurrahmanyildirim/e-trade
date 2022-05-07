@@ -1,6 +1,5 @@
 const Business = require('./index');
 const ProductModel = require('../models/product');
-
 const { remove } = require('../services/cloudinary');
 const { updateProducts } = require('../services/socket');
 
@@ -85,9 +84,9 @@ class Product extends Business {
   }
 
   deActivateProducts() {
-    this.collection.forEach(async (product) => {
-      product.isActive = false;
-    });
+    for (const prod of this.collection) {
+      prod.isActive = false;
+    }
     return this;
   }
 
