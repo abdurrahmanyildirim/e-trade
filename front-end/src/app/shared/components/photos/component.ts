@@ -59,31 +59,37 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
   }
 
   listenTouchEvents(): void {
-    let subs = fromEvent(this.cover.nativeElement, 'touchstart').subscribe((event: TouchEvent) => {
-      this.cover.nativeElement.classList.remove('transiton');
-      clearTimeout(this.timeOut);
-      this.touchStart = event.changedTouches[0].screenX;
-    });
-    this.subs.add(subs);
-    subs = fromEvent(this.cover.nativeElement, 'touchmove').subscribe((event: TouchEvent) => {
-      const xloc =
-        -this.currentIndex * this.width - (this.touchStart - event.changedTouches[0].screenX);
-      this.cover.nativeElement.style.transform = 'translate3d(' + xloc + 'px, 0,0)';
-    });
-    this.subs.add(subs);
-    subs = fromEvent(this.cover.nativeElement, 'touchend').subscribe((event: TouchEvent) => {
-      this.touchEnd = event.changedTouches[0].screenX;
-      if (this.touchEnd - this.touchStart > 30) {
-        if (this.currentIndex > 0) {
-          this.currentIndex--;
-        }
-      } else if (this.touchStart - this.touchEnd > 30) {
-        if (this.currentIndex < this.photos.length - 1) {
-          this.currentIndex++;
-        }
+    let subs = fromEvent(this.cover.nativeElement, 'touchstart', { passive: true }).subscribe(
+      (event: TouchEvent) => {
+        this.cover.nativeElement.classList.remove('transiton');
+        clearTimeout(this.timeOut);
+        this.touchStart = event.changedTouches[0].screenX;
       }
-      this.changePhoto(this.currentIndex);
-    });
+    );
+    this.subs.add(subs);
+    subs = fromEvent(this.cover.nativeElement, 'touchmove', { passive: true }).subscribe(
+      (event: TouchEvent) => {
+        const xloc =
+          -this.currentIndex * this.width - (this.touchStart - event.changedTouches[0].screenX);
+        this.cover.nativeElement.style.transform = 'translate3d(' + xloc + 'px, 0,0)';
+      }
+    );
+    this.subs.add(subs);
+    subs = fromEvent(this.cover.nativeElement, 'touchend', { passive: true }).subscribe(
+      (event: TouchEvent) => {
+        this.touchEnd = event.changedTouches[0].screenX;
+        if (this.touchEnd - this.touchStart > 30) {
+          if (this.currentIndex > 0) {
+            this.currentIndex--;
+          }
+        } else if (this.touchStart - this.touchEnd > 30) {
+          if (this.currentIndex < this.photos.length - 1) {
+            this.currentIndex++;
+          }
+        }
+        this.changePhoto(this.currentIndex);
+      }
+    );
     this.subs.add(subs);
   }
 

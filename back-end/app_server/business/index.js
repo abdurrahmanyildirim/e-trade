@@ -11,7 +11,7 @@ class Business {
   }
 
   async save() {
-    await this.collection.save();
+    this.collection = await this.collection.save();
     return this;
   }
 

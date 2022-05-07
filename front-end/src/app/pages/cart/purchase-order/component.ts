@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, isDevMode, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
@@ -156,6 +156,10 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
       .pipe(delay(2500))
       .subscribe({
         next: (response: PaymentReqResponse) => {
+          if (isDevMode()) {
+            window.location.reload();
+            return;
+          }
           if (response.status !== 'failure') {
             window.open(response.paymentPageUrl, '_self', 'noopener,noreferrer');
           } else {

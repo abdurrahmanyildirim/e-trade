@@ -74,7 +74,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   listenBodyScroll(): void {
     const bodyEl = document.body;
-    const subs = fromEvent(bodyEl, 'scroll')
+    const subs = fromEvent(bodyEl, 'scroll', { passive: true })
       .pipe(throttleTime(100))
       .subscribe((e) => {
         if (document.body.scrollTop > this.previousScrollTop) {

@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { UserService } from 'src/app/shared/services/rest/user/service';
-import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
+import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder';
 import { nullValidator } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 

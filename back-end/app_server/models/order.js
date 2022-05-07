@@ -7,7 +7,7 @@ const orderSchema = new Schema({
   userName: String,
   email: String,
   date: { type: Date, default: Date.now() },
-  contractsChecked: Boolean,
+  contractsChecked: { type: Boolean, default: true },
   cargo: {
     no: { type: String, default: '' },
     company: { type: String, default: '' }
@@ -27,7 +27,7 @@ const orderSchema = new Schema({
       }
     }
   ],
-  isActive: Boolean,
+  isActive: { type: Boolean, default: true },
   status: [
     {
       key: Number,

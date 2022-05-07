@@ -31,7 +31,7 @@ class Product extends Business {
 
   async removeById(id) {
     const doc = await ProductModel.findByIdAndRemove(id);
-    doc.photos.map(async (photo, i) => {
+    for (const [i, photo] of doc.photos) {
       if (i === 0) {
         return;
       }
@@ -41,7 +41,7 @@ class Product extends Business {
         console.log(error);
         console.log('Foto Silinemedi');
       }
-    });
+    }
     updateProducts();
     return this;
   }

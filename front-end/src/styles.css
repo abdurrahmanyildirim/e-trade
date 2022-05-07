@@ -9,6 +9,7 @@ body {
   overflow-x: hidden;
   color: #494949;
   scroll-behavior: smooth;
+  font-display: optional;
 }
 
 @media (hover: hover) {

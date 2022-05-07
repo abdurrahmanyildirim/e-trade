@@ -23,10 +23,9 @@ class Cart extends User {
   }
 
   getCart() {
-    const orders = [];
-    this.collection.cart.forEach((order) => {
+    return this.collection.cart.map((order) => {
       const prod = order.productId;
-      orders.push({
+      return {
         productId: prod._id,
         brand: prod.brand,
         name: prod.name,
@@ -35,9 +34,38 @@ class Cart extends User {
         discountRate: prod.discountRate,
         photoPath: prod.photos[0].path,
         quantity: order.quantity
-      });
+      };
     });
-    return orders;
+  }
+
+  getOrderedProduct(order, product) {
+    return {
+      productId: product._id,
+      quantity: order.quantity,
+      name: product.name,
+      brand: product.brand,
+      discountRate: product.discountRate,
+      price: product.price,
+      photoPath: product.photos[0].path,
+      category: product.category
+    };
+  }
+
+  async updateProductAfterPurchaseAndGetOrders() {
+    const orderedProducts = [];
+    for (const order of this.collection.cart) {
+      const product = order.productId;
+      const orderedProduct = this.getOrderedProduct(order, product);
+      orderedProducts.push(orderedProduct);
+      product.stockQuantity = product.stockQuantity - order.quantity;
+      await product.save();
+    }
+    return orderedProducts;
+  }
+
+  reset() {
+    this.collection.cart = [];
+    return this;
   }
 }
 

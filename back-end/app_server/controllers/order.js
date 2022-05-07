@@ -1,20 +1,10 @@
 const { isPresent } = require('../../common');
-const Order = require('../models/order');
-const { encForResp, decrypt } = require('../services/crypto');
-const email = require('../services/email/index');
+const Order = require('../business/order');
 
 module.exports.getOrders = async (req, res, next) => {
   try {
-    const orders = await Order.find({ userId: req.id });
-    orders.map((order) => {
-      order.contactInfo = {
-        city: encForResp(order.contactInfo.city),
-        district: encForResp(order.contactInfo.district),
-        address: encForResp(order.contactInfo.address),
-        phone: encForResp(order.contactInfo.phone)
-      };
-      return order;
-    });
+    const order = await new Order().initByUserId(req.id);
+    const orders = order.getOrders();
     return res.status(200).send(orders);
   } catch (error) {
     next(error);
@@ -24,44 +14,12 @@ module.exports.getOrders = async (req, res, next) => {
 module.exports.orderDetail = async (req, res, next) => {
   try {
     const id = req.query.id;
-    const order = await Order.findOne({ _id: id });
-    if (!order) {
+    const order = await new Order().initById(id);
+    if (!order.collection) {
       return res.status(404).send({ message: 'Siparişler bulunamadı' });
     }
-    const orderedProducts = [];
-    order.products.map((product) => {
-      orderedProducts.push({
-        _id: product._id,
-        productId: product.productId,
-        quantity: product.quantity,
-        discountRate: product.discountRate,
-        price: product.price,
-        photoPath: product.photoPath,
-        brand: product.brand,
-        name: product.name,
-        comment: {
-          rate: product.comment.rate ? product.comment.rate : 0,
-          desc: product.comment.desc ? product.comment.desc : ''
-        }
-      });
-    });
-    const contactInfo = {
-      city: encForResp(order.contactInfo.city),
-      district: encForResp(order.contactInfo.district),
-      address: encForResp(order.contactInfo.address),
-      phone: encForResp(order.contactInfo.phone)
-    };
-    return res.status(200).send({
-      userId: order.userId,
-      userName: order.userName,
-      email: encForResp(order.email),
-      date: order.date,
-      products: orderedProducts,
-      isActive: order.isActive,
-      status: order.status,
-      contactInfo,
-      cargo: order.cargo
-    });
+    const orderDetail = order.getOrderDetail();
+    return res.status(200).send(orderDetail);
   } catch (error) {
     next(error);
   }
@@ -69,17 +27,8 @@ module.exports.orderDetail = async (req, res, next) => {
 
 module.exports.allOrders = async (req, res, next) => {
   try {
-    const orders = await Order.find();
-    orders.map((order) => {
-      const contactInfo = {
-        city: encForResp(order.contactInfo.city),
-        district: encForResp(order.contactInfo.district),
-        address: encForResp(order.contactInfo.address),
-        phone: encForResp(order.contactInfo.phone)
-      };
-      order.contactInfo = contactInfo;
-      return order;
-    });
+    const order = await new Order().initAll();
+    const orders = order.getOrders();
     return res.status(200).send(orders);
   } catch (error) {
     next(error);
@@ -119,50 +68,20 @@ module.exports.updateStatus = async (req, res, next) => {
     if (!id || !status) {
       return res.status(404).send({ message: 'Hatalı api isteği' });
     }
-    const order = await Order.findOne({ _id: id });
-    if (!order) {
+    const order = await new Order().initById(id);
+    if (!order.collection) {
       return res.status(500).send({ message: 'Sipariş bulunamadı.' });
     }
-    order.status.push({
-      key: status.key,
-      desc: status.desc,
-      date: Date.now()
-    });
+    order.addStatus(status);
     if (isPresent(cargo)) {
-      order.cargo = cargo;
+      order.collection.cargo = cargo;
     }
-    const newOrder = new Order(order);
-    await newOrder.save();
+    await order.save();
     if (inform) {
-      await sendEmail(newOrder, status, order.cargo);
+      await order.informUser(status);
     }
     return res.status(200).send();
   } catch (error) {
     next(error);
   }
-};
-
-const sendEmail = async (order, status, cargo) => {
-  let desc = '';
-  if (status.key === 2) {
-    desc =
-      order._id +
-      statuses[status.key] +
-      '<p> Kargo Şirketi : ' +
-      cargo.company +
-      '</p>Kargo Numarası : ' +
-      cargo.no +
-      '</p>';
-  } else {
-    desc = order._id + statuses[status.key] + '';
-  }
-  await email.sendEmail(decrypt(order.email), 'Sipariş Bilgilendirme', desc);
-};
-
-const statuses = {
-  '-1': ' numaralı siparişiniz iptal Edildi',
-  0: ' numaralı iparişiniz Alındı. En kısa sürede işleme alınacaktır.',
-  1: ' numaralı siparişiniz Hazırlanıyor',
-  2: ' numaralı siparişiniz Kargoya Verildi',
-  3: ' numaralı siparişiniz Teslim Edildi'
 };

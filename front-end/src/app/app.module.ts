@@ -7,7 +7,7 @@ import { RestInterceptor } from './shared/services/rest/rest-interceptor';
 import localeTr from '@angular/common/locales/tr';
 import { registerLocaleData } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { SplashService } from './shared/services/site/splash.service';
+import { SplashService } from './shared/services/site/splash';
 import { SnackbarComponent } from './shared/components/snackbar/component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CoreModule } from './core/module';

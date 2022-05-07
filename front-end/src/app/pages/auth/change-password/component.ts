@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { AuthService } from 'src/app/shared/services/rest/auth/service';
-import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
+import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder';
 import { isPresent } from 'src/app/shared/util/common';
 
 @Component({

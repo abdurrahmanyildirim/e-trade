@@ -13,7 +13,7 @@ import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Order } from 'src/app/shared/models/order';
 import { CartService } from 'src/app/shared/services/rest/cart/service';
 import { MobileDetectionService } from 'src/app/shared/services/site/mobile-detection';
-import { UtilityService } from 'src/app/shared/services/site/utility.service';
+import { UtilityService } from 'src/app/shared/services/site/utility';
 import { isPresent } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 

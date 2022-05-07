@@ -8,7 +8,7 @@ import { Product } from 'src/app/shared/models/product';
 import { CategoryService } from 'src/app/shared/services/rest/category/service';
 import { PhotoService } from 'src/app/shared/services/rest/photo/service';
 import { ProductService } from 'src/app/shared/services/rest/product/service';
-import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
+import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 import { AdminService } from '../service';

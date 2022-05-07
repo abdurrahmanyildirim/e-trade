@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "bundle": "webpack --config webpack.config.js --mode=production",
-    "start": "set NODE_ENV=dev && nodemon main.js"
+    "start": "set NODE_ENV=dev && node main.js",
+    "start-nodemon": "set NODE_ENV=dev && nodemon main.js"
   },
   "author": "",
   "license": "ISC",

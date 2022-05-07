@@ -13,10 +13,10 @@ import { DialogService } from 'src/app/shared/components/dialog/service';
 import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product/service';
-import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
+import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { UtilityService } from 'src/app/shared/services/site/utility.service';
+import { UtilityService } from 'src/app/shared/services/site/utility';
 import { DialogType } from 'src/app/shared/components/dialog/component';
 import { AdminService } from '../service';
 

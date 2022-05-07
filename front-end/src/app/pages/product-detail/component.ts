@@ -94,7 +94,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   listenResize(): void {
-    const sub = fromEvent(window, 'resize').subscribe((event: any) => {
+    const sub = fromEvent(window, 'resize', { passive: true }).subscribe((event: any) => {
       this.editPhotoSizes();
       this.cd.detectChanges();
     });

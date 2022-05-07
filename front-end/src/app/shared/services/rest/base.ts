@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { isPresent } from '../../util/common';
-import { ConfigService } from '../site/config.service';
+import { ConfigService } from '../site/config';
 import { RequestRoute, RequestOptions } from './model';
 
 export abstract class BaseRestService {

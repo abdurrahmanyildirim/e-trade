@@ -5,7 +5,7 @@ import { CartService } from '../rest/cart/service';
 import { CategoryService } from '../rest/category/service';
 import { ProductService } from '../rest/product/service';
 import { SocketService } from '../socket/socket';
-import { ConfigService } from './config.service';
+import { ConfigService } from './config';
 import { GTAGService } from './gtag';
 import { MobileDetectionService } from './mobile-detection';
 import { StateService } from './state';

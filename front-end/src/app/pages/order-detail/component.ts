@@ -13,7 +13,7 @@ import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { OrderList, OrderListProduct, Statuses } from 'src/app/shared/models/order';
 import { OrderService } from 'src/app/shared/services/rest/order/service';
 import { ProductService } from 'src/app/shared/services/rest/product/service';
-import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
+import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder';
 import { isPresent } from 'src/app/shared/util/common';
 
 @Component({
@@ -91,11 +91,13 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   }
 
   reviewDialog(product: OrderListProduct): void {
+    const rate = product.comment?.rate ? product.comment.rate : 0;
+    const desc = product.comment?.desc ? product.comment.desc : '';
     this.dialogService.review({
       acceptButton: 'Tamamla',
       refuseButton: 'Vazgeç',
-      desc: product.comment.desc + '',
-      rate: product.comment.rate,
+      desc,
+      rate,
       type: DialogType.Rating,
       onClose: (comment) => {
         if (!comment) {

@@ -6,7 +6,7 @@ import { SnackbarService } from 'src/app/shared/components/snackbar/service';
 import { Category } from 'src/app/shared/models/product';
 import { CategoryService } from 'src/app/shared/services/rest/category/service';
 import { ProductService } from 'src/app/shared/services/rest/product/service';
-import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder.service';
+import { ScreenHolderService } from 'src/app/shared/services/site/screen-holder';
 import { AdminService } from '../service';
 
 @Component({

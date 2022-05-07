@@ -1,7 +1,5 @@
-// const User = require('../models/user');
-const { company_name, origin } = require('../../config');
-const { encrypt, comparePassword, hashPassword, decrypt } = require('../services/crypto');
-const { sendCustomEmail } = require('../services/email/index');
+const { hashPassword, decrypt } = require('../services/crypto');
+const { sendCustomEmail, emailType } = require('../services/email/index');
 const { sign, verify } = require('../services/jwt');
 const { User } = require('./user');
 
@@ -37,14 +35,21 @@ class Auth extends User {
     };
   }
 
-  async sendEmail({ type, token }) {
+  async sendActivationMail({ token }) {
     const { email } = this.collection;
     await sendCustomEmail({
-      to: decrypt(email),
-      subject: emailSubject[type],
-      desc: emailDesc[type](this.collection, token)
+      emailType: emailType.activation,
+      payload: { user: this.collection, token },
+      to: email
     });
-    return this;
+  }
+
+  async sendChangePasswordMail({ token }) {
+    await sendCustomEmail({
+      emailType: emailType.changePassword,
+      payload: { user: this.collection, token },
+      to: email
+    });
   }
 
   hashPassword({ password }) {
@@ -61,39 +66,12 @@ class Auth extends User {
   }
 }
 
-const emailType = {
-  activation: 'activation',
-  changePassword: 'changePassword'
-};
-
-const authType = {
+const authType = Object.freeze({
   normal: 'normal',
   google: 'google'
-};
-
-const emailSubject = {
-  activation: 'Hesap Aktivasyonu',
-  changePassword: 'Şifre Sıfırlama'
-};
-
-const emailDesc = {
-  activation: (user, token) => `
-      <p> Merhaba ${user.firstName} ${user.lastName}</p>
-      <p>Taşer züccaciye hesabınızı aktif hale getirmek için <a href="${origin}/auth/activate-email?v1=${token}" target="_blank" >tıklayınız.</a></p>
-      <br>
-      <p>${company_name}</p>
-      `,
-  changePassword: (user, token) => `
-      <p> Merhaba ${user.firstName} ${user.lastName}</p>
-      <p>İsteğiniz üzerine, şifre değiştirme linki gönderilmiştir.</p>
-      <p>Şifrenizi değiştirmek için <a href="${origin}/auth/change-password?v1=${token}&id=${user._id}" target="_blank" >tıklayınız.</a></p>
-      <br>
-      <p>${company_name}</p>
-      `
-};
+});
 
 module.exports = {
-  emailType,
   authType,
   Auth
 };

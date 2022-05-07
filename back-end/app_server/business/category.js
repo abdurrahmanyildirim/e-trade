@@ -39,11 +39,6 @@ class Category extends Business {
   getActiveCategories() {
     return CategoryModel.find({ isActive: true });
   }
-
-  // async hideCategory(category) {
-  //   await this.mainModel.findOneAndUpdate({ name: category }, { isActive: false });
-  //   return this;
-  // }
 }
 
 module.exports = { Category };

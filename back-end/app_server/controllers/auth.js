@@ -1,4 +1,4 @@
-const { Auth, emailType, authType } = require('../business/auth');
+const { Auth, authType } = require('../business/auth');
 
 module.exports.login = async (req, res, next) => {
   try {
@@ -43,7 +43,7 @@ module.exports.register = async (req, res, next) => {
       })
       .save();
     const payload = auth.createAuthPayload();
-    await auth.sendEmail({ type: emailType.activation, token: payload.token });
+    await auth.sendActivationMail({ token: payload.token });
     return res.status(201).send(payload);
   } catch (error) {
     next(error);
@@ -97,7 +97,7 @@ module.exports.changePasswordRequest = async (req, res) => {
     return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
   }
   const token = auth.createChangePasswordToken();
-  await auth.sendEmail({ type: emailType.changePassword, token });
+  await auth.sendChangePasswordMail({ token });
   return res.status(200).send();
 };
 
@@ -123,7 +123,7 @@ module.exports.sendActivationMail = async (req, res, next) => {
     if (!auth.collection) {
       return res.status(400).send({ message: 'Böyle bir kullanıcı yok' });
     }
-    auth = await auth.sendEmail({ type: emailType.activation, token: req.auth_token });
+    await auth.sendActivationMail({ token: req.auth_token });
     return res.status(200).send({ message: 'Aktivasyon maili gönderildi.' });
   } catch (error) {
     next(error);
