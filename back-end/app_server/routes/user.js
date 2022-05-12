@@ -1,13 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/user');
-const verify = require('../services/verify');
+const { getUser, update, updatePassword, getUserById } = require('../controllers/user');
+const { isAuth, isAdmin } = require('../services/verify');
 
-router.use(verify.isAuth);
-router.get('/', controller.getUser);
-router.post('/update', controller.update);
-router.post('/update-password', controller.updatePassword);
-router.use(verify.isAdmin);
-router.get('/getbyid', controller.getUserById);
+/**
+ * /api/user/
+ */
+router.get('/', isAuth, getUser);
+
+/**
+ * /api/user/update
+ */
+router.post('/update', isAuth, update);
+
+/**
+ * /api/user/update-password
+ */
+router.post('/update-password', isAuth, updatePassword);
+
+/**
+ * /api/user/getbyid
+ */
+router.get('/getbyid', isAdmin, getUserById);
 
 module.exports = router;

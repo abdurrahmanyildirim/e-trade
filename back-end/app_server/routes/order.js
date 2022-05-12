@@ -1,14 +1,37 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/order');
-const verify = require('../services/verify');
+const {
+  allOrders,
+  getOrders,
+  getStatuses,
+  orderDetail,
+  updateStatus
+} = require('../controllers/order');
+const { isAdmin, isAuth } = require('../services/verify');
 
-router.use(verify.isAuth);
-router.get('/', controller.getOrders);
-router.get('/detail', controller.orderDetail);
-router.use(verify.isAdmin);
-router.get('/all', controller.allOrders);
-router.get('/statuses', controller.getStatuses);
-router.post('/update-status', controller.updateStatus);
+/**
+ *  /api/order/
+ */
+router.get('/', isAuth, getOrders);
+
+/**
+ *  /api/order/detail
+ */
+router.get('/detail', isAuth, orderDetail);
+
+/**
+ *  /api/order/all
+ */
+router.get('/all', isAdmin, allOrders);
+
+/**
+ *  /api/order/statuses
+ */
+router.get('/statuses', isAdmin, getStatuses);
+
+/**
+ *  /api/order/update-status
+ */
+router.post('/update-status', isAdmin, updateStatus);
 
 module.exports = router;

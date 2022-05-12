@@ -1,9 +1,8 @@
 const cloudinaryService = require('../services/cloudinary');
 const { editPhoto } = require('../services/photo/index');
-
 const fs = require('fs');
 
-module.exports.photoUpload = async (req, res, next) => {
+module.exports.upload = async (req, res, next) => {
   try {
     const imagesInfo = [];
     const photos = Array.isArray(req.files.photos) ? req.files.photos : [req.files.photos];

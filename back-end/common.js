@@ -1,5 +1,8 @@
 const isDevMode = () => {
-  return isPresent(process.env.NODE_ENV) && process.env.NODE_ENV.trim() === 'dev';
+  return (
+    isPresent(process.env.NODE_ENV) &&
+    (process.env.NODE_ENV.trim() === 'dev' || process.env.NODE_ENV.trim() === 'github')
+  );
 };
 
 const isPresent = (obj) => {

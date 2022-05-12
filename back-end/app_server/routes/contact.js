@@ -1,12 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/contact');
-const verify = require('../services/verify');
+const { getMessages, remove, sendContactRequest, toggleRead } = require('../controllers/contact');
+const { isAdmin } = require('../services/verify');
 
-router.post('/request', controller.sendContactRequest);
-router.use(verify.isAdmin);
-router.get('/messages', controller.getMessages);
-router.get('/toggle-read', controller.toggleRead);
-router.get('/remove', controller.remove);
+/**
+ *  /api/contact/request
+ */
+router.post('/request', sendContactRequest);
+
+/**
+ *  /api/contact/messages
+ */
+router.get('/messages', isAdmin, getMessages);
+
+/**
+ *  /api/contact/toggle-read
+ */
+router.get('/toggle-read', isAdmin, toggleRead);
+
+/**
+ *  /api/contact/remove
+ */
+router.get('/remove', isAdmin, remove);
 
 module.exports = router;

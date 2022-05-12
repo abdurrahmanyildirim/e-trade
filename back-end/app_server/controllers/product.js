@@ -104,7 +104,13 @@ module.exports.addComment = async (req, res, next) => {
       comment.rate = rate;
       comment.description = desc;
     } else {
-      product.insertComment({ userId: req.id, orderId, description: desc, rate });
+      product.insertComment({
+        userId: req.id,
+        orderId,
+        description: desc,
+        rate,
+        name: user.collection.firstName + ' ' + user.collection.lastName
+      });
     }
     await product.updateProductRate().save();
     orderedProduct.comment = {

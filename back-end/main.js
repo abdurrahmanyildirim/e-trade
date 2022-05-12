@@ -5,18 +5,18 @@ const { isDevMode } = require('./common');
 const path = require('path');
 
 // Env files under env folder. We will change env name by the project.
-process.env.NODE_ENV = 'dev';
+process.env.NODE_ENV = 'github';
 require('dotenv').config({
   path: path.join(__dirname + '/env/' + process.env.NODE_ENV + '.env')
 });
 
-const db = require('./app_server/database/connection');
 const cors = require('cors');
 const util = require('./app_server/services/util');
 const verify = require('./app_server/services/verify');
 const helmet = require('helmet');
 const routes = require('./app_server/routes/routeManager');
 const compression = require('compression');
+const db = require('./app_server/database/connection');
 
 db.init();
 

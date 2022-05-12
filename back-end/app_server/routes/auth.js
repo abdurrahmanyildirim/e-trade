@@ -1,15 +1,48 @@
-const express = require('express');
-const router = express.Router();
-const controller = require('../controllers/auth');
-const {isAuth} = require('../services/verify');
+const router = require('express').Router();
+const {
+  activateEmail,
+  changePassword,
+  changePasswordRequest,
+  googleAuth,
+  login,
+  register,
+  sendActivationMail
+} = require('../controllers/auth');
+const { isAuth } = require('../services/verify');
 
-router.post('/login', controller.login);
-router.post('/register', controller.register);
-router.post('/google', controller.googleAuth);
-router.get('/change-password-request', controller.changePasswordRequest);
-router.post('/change-password', controller.changePassword);
-router.get('/activate-email', controller.activateEmail);
-router.use(isAuth);
-router.get('/send-activation-mail', controller.sendActivationMail);
+/**
+ *  /api/auth/login
+ */
+router.post('/login', login);
+
+/**
+ *  /api/auth/register
+ */
+router.post('/register', register);
+
+/**
+ *  /api/auth/google
+ */
+router.post('/google', googleAuth);
+
+/**
+ *  /api/auth/change-password-request
+ */
+router.get('/change-password-request', changePasswordRequest);
+
+/**
+ *  /api/auth/change-password
+ */
+router.post('/change-password', changePassword);
+
+/**
+ *  /api/auth/activate-email
+ */
+router.get('/activate-email', activateEmail);
+
+/**
+ *  /api/auth/send-activation-mail
+ */
+router.get('/send-activation-mail', isAuth, sendActivationMail);
 
 module.exports = router;

@@ -1,11 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/cart');
-const verify = require('../services/verify');
+const { getCart, purchaseOrder, updateCart } = require('../controllers/cart');
+const { isAuth } = require('../services/verify');
 
-router.use(verify.isAuth);
-router.get('/', controller.getCart);
-router.post('/update', controller.updateCart);
-router.post('/purchase-order', controller.purchaseOrder);
+/**
+ *  /api/cart/
+ */
+router.get('/', isAuth, getCart);
+
+/**
+ *  /api/cart/update
+ */
+router.post('/update', isAuth, updateCart);
+
+/**
+ *  /api/cart/purchase-order
+ */
+router.post('/purchase-order', isAuth, purchaseOrder);
 
 module.exports = router;

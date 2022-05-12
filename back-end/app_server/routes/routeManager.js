@@ -14,6 +14,9 @@ const router = Router();
 const loggerService = require('../services/log');
 const { isDevMode } = require('../../common');
 
+/**
+ * /api/auth
+ */
 router.use('/auth', auth);
 router.use('/product', product);
 router.use('/category', category);

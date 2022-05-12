@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/db');
-const verify = require('../services/verify');
+const { createBackUp } = require('../controllers/db');
+const { isAdmin } = require('../services/verify');
 
-router.get('/create-backup', controller.createBackUp);
-// router.use(verify.isAdmin);
+/**
+ *  /api/db/create-backup
+ */
+router.get('/create-backup', isAdmin, createBackUp);
 
 module.exports = router;

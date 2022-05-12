@@ -96,11 +96,11 @@ class Product extends Business {
     );
   }
 
-  insertComment({ userId, orderId, description, rate }) {
+  insertComment({ userId, orderId, description, rate, name }) {
     this.collection.comments.push({
       orderId,
       userId: userId,
-      name: this.collection.firstName + ' ' + this.collection.lastName,
+      name,
       description,
       rate
     });

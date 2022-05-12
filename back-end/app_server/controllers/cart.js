@@ -1,4 +1,5 @@
 const { isDevMode, isPresent } = require('../../common');
+const { isPaymentActive } = require('../../config');
 const { sendFormRequest } = require('../services/iyzipay');
 const { Cart } = require('../business/cart');
 const Order = require('../business/order');
@@ -45,7 +46,7 @@ module.exports.purchaseOrder = async (req, res, next) => {
     const orderedProducts = user.getCart();
     const { phone, city, district, address } = req.body;
     await user.changePhone({ phone }).changeAdress({ city, address, district }).save();
-    if (isDevMode()) {
+    if (isDevMode() || !isPaymentActive) {
       await new Order().giveOrder(req.id);
       return res.status(200).send();
     } else {

@@ -11,6 +11,7 @@
 # Only exists if Bazel was run
 /bazel-out
 *.env
+!*github.env
 
 # dependencies
 /node_modules

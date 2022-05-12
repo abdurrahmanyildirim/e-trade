@@ -1,18 +1,61 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/product');
-const verify = require('../services/verify');
+const {
+  addComment,
+  addNewProduct,
+  checkStock,
+  getAllProducts,
+  getByCategory,
+  getProductById,
+  getProducts,
+  remove,
+  update
+} = require('../controllers/product');
+const { isAdmin, isAuth } = require('../services/verify');
 
-router.get('/', controller.getProducts);
-router.get('/get-by-category', controller.getByCategory);
-router.get('/get-by-id', controller.getProductById);
-router.use(verify.isAuth);
-router.get('/rating', controller.addComment);
-router.post('/stock-control', controller.checkStock);
-router.use(verify.isAdmin);
-router.post('/insert', controller.addNewProduct);
-router.delete('/remove', controller.remove);
-router.post('/update', controller.update);
-router.get('/all', controller.getAllProducts);
+/**
+ * /api/product/
+ */
+router.get('/', getProducts);
+
+/**
+ * /api/product/get-by-category
+ */
+router.get('/get-by-category', getByCategory);
+
+/**
+ * /api/product/get-by-id
+ */
+router.get('/get-by-id', getProductById);
+
+/**
+ * /api/product/rating
+ */
+router.get('/rating', isAuth, addComment);
+
+/**
+ * /api/product/stock-control
+ */
+router.post('/stock-control', isAuth, checkStock);
+
+/**
+ * /api/product/insert
+ */
+router.post('/insert', isAdmin, addNewProduct);
+
+/**
+ * /api/product/remove
+ */
+router.delete('/remove', isAdmin, remove);
+
+/**
+ * /api/product/update
+ */
+router.post('/update', isAdmin, update);
+
+/**
+ * /api/product/all
+ */
+router.get('/all', isAdmin, getAllProducts);
 
 module.exports = router;

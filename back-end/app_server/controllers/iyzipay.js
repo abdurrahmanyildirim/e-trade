@@ -1,7 +1,7 @@
 const { checkResult } = require('../services/iyzipay');
 const Order = require('../business/order');
 
-module.exports.iyzipayCallBack = async (req, res, next) => {
+module.exports.callBack = async (req, res, next) => {
   try {
     const result = await checkResult(req.body.token);
     let params = '';

@@ -12,7 +12,7 @@ const editPhoto = async (photo) => {
   sh = resizeImage({ sh, width, height });
 
   const uploadedFilePath = `${__dirname}/edited-photos/${photo.name}`;
-  await sh.jpeg({ progressive: true, force: true, quality: 85 }).toFile(uploadedFilePath);
+  await createImage({ sh, uploadedFilePath });
 
   removeFile(filePath);
   removeFile(photo.tempFilePath);

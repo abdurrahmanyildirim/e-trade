@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/log');
-const verify = require('../services/verify');
+const { getLogs } = require('../controllers/log');
+const { isAdmin } = require('../services/verify');
 
-router.use(verify.isAdmin);
-router.get('/', controller.getLogs);
+/**
+ * /api/log/
+ */
+router.get('/', isAdmin, getLogs);
 
 module.exports = router;

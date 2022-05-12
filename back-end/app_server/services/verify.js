@@ -9,25 +9,22 @@ const roles = {
 const isAdmin = (req, res, next) => {
   if (req.role !== roles.admin) {
     return res.status(401).send({ message: 'Yetkisiz işlem' });
-  } else {
-    next();
   }
+  next();
 };
 
 const isAuth = (req, res, next) => {
   if (req.role !== roles.admin && req.role !== roles.client) {
     return res.status(401).send({ message: 'Yetkisiz işlem' });
-  } else {
-    next();
   }
+  next();
 };
 
 const isClient = (req, res, next) => {
   if (req.role !== roles.client) {
     return res.status(401).send({ message: 'Yetkisiz işlem' });
-  } else {
-    next();
   }
+  next();
 };
 
 const roleResolver = (req, res, next) => {

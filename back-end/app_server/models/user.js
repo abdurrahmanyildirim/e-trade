@@ -8,7 +8,7 @@ const userSchema = new Schema({
   lastName: { type: String, required: true, trim: true },
   password: { type: String, required: true, trim: true },
   role: { type: String, required: true, default: 'Client' },
-  isActivated: { type: Boolean, default: false }, // Hesabın aktif edilmesi kontrolü
+  isActivated: { type: Boolean, default: false },
   authType: String,
   cart: [
     {

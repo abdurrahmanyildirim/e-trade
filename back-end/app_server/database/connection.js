@@ -17,7 +17,7 @@ const init = () => {
         console.log(err);
       } else {
         if (isDevMode()) {
-          console.log('Db connection activeted');
+          // console.log('Db connection activeted');
         }
       }
     }
