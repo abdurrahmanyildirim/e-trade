@@ -33,7 +33,7 @@ ng serve -o
 ```
 You can use this admin account => `dev@dev.com/123456` for see admin panel too.
 
-# How to use is for different projects
+# How to use it for different projects
 ### Back-end 
 You can add your env file under env folder at back-end directory and change to ENV value at main.js file under back-end directory. 
 ### Front-end
