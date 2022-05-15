@@ -43,8 +43,8 @@
             Giriş Yap
           </button>
         </div>
-        <div class="or">veya</div>
-        <div class="button">
+        <div class="or" *ngIf="isGoogleAuthActive">veya</div>
+        <div class="button" *ngIf="isGoogleAuthActive">
           <button class="login-button" color="warn" (click)="authWithGoogle()" mat-raised-button>
             Google ile Giriş Yap
           </button>

@@ -4,24 +4,28 @@
       <div class="section-title mat-title">İletişim</div>
       <div class="section-content">
         <div class="section-item">
-          <mat-icon style="margin-right: 5px">location_on</mat-icon> Turgutreis mahallesi Malazgirt
-          caddesi No:16
+          <mat-icon style="margin-right: 5px">location_on</mat-icon>
+          {{configService.config.contact.address}}
         </div>
         <div class="section-item">
           <mat-icon style="margin-right: 5px">phone</mat-icon>
-          <a class="none" rel="noopener noreferrer nofollow" href="tel:05302387999"
-            >+90 530 238 79 99</a
+          <a
+            class="none"
+            rel="noopener noreferrer nofollow"
+            [href]="configService.config.contact.phone.value"
           >
+            {{configService.config.contact.phone.text}}
+          </a>
         </div>
         <div class="section-item">
           <mat-icon style="margin-right: 5px">mail</mat-icon>
           <a
             class="none"
-            href="mailto:info@taserzuccaciye.com"
+            [href]="'mailto:' + configService.config.contact.mailAdress"
             rel="noopener noreferrer nofollow"
             target="_blank"
           >
-            info@taserzuccaciye.com
+            {{configService.config.contact.mailAdress}}
           </a>
         </div>
       </div>
@@ -63,7 +67,7 @@
         <div class="section-item">
           <a
             class="link"
-            href="https://www.instagram.com/taserzuccaciye/?hl=tr"
+            [href]="configService.config.social.instagram"
             rel="noopener noreferrer nofollow"
             target="_blank"
           >
@@ -71,7 +75,7 @@
           </a>
           <a
             class="link"
-            href="https://www.facebook.com/profile.php?id=100071668999839"
+            [href]="configService.config.social.facebook"
             rel="noopener noreferrer nofollow"
             target="_blank"
           >
@@ -79,7 +83,7 @@
           </a>
           <a
             class="link"
-            href="https://wa.me/+905302387999"
+            [href]="configService.config.social.whatsApp"
             rel="noopener noreferrer nofollow"
             target="_blank"
           >

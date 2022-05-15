@@ -1,5 +1,18 @@
 {
   "baseUrl": "",
   "mockUrl": "assets/mock/",
-  "gtagKey": "G-W75Q5KEFKG"
+  "gtagKey": "G-W75Q5KEFKG",
+  "contact": {
+    "mailAdress": "info@taserzuccaciye.com",
+    "phone": {
+      "value": "tel:05302387999",
+      "text": "+90 530 238 79 99"
+    },
+    "address": "Turgutreis mahallesi Malazgirt caddesi No:16"
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/taserzuccaciye/?hl=tr",
+    "facebook": "https://www.facebook.com/profile.php?id=100071668999839",
+    "whatsApp": "https://wa.me/+905302387999"
+  }
 }

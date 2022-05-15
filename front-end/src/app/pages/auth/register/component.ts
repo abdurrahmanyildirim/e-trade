@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -17,6 +17,7 @@ import { AuthService } from 'src/app/shared/services/rest/auth/service';
 import { SettingService } from 'src/app/shared/services/site/settings';
 import { SocialService } from 'src/app/shared/services/site/social-auth';
 import { isPresent, nullValidator } from 'src/app/shared/util/common';
+import { environment } from 'src/environments/environment';
 import { RegisterUser } from './model';
 
 @Component({
@@ -30,6 +31,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   user: RegisterUser;
   subs = new Subscription();
   isRegistered = false;
+  private socialService: SocialService;
+  isGoogleAuthActive = environment.isGoogleAuthActive;
 
   constructor(
     private fb: FormBuilder,
@@ -38,8 +41,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private snackBar: SnackbarService,
     private settingService: SettingService,
     private dialogService: DialogService,
-    private socialService: SocialService
-  ) {}
+    protected injector: Injector
+  ) {
+    if (this.isGoogleAuthActive) {
+      this.socialService = this.injector.get(SocialService);
+    }
+  }
 
   ngOnInit(): void {
     this.createForm();

@@ -1,5 +1,18 @@
 {
   "baseUrl": "http://localhost:4205/",
   "mockUrl": "assets/mock/",
-  "gtagKey": "G-W75Q5KEFKG"
+  "gtagKey": "G-W75Q5KEFKG",
+  "contact": {
+    "mailAdress": "info@example.com",
+    "phone": {
+      "value": "tel:05555555555",
+      "text": "+90 555 555 55 55"
+    },
+    "address": "Example mahallesi Example caddesi No:16"
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/taserzuccaciye/?hl=tr",
+    "facebook": "https://www.facebook.com/profile.php?id=100071668999839",
+    "whatsApp": "https://wa.me/+905555555555"
+  }
 }

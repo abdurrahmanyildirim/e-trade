@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule, TypeProvider } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/component';
 import { RegisterComponent } from './register/component';
@@ -23,12 +23,20 @@ const googleLoginOptions = {
   scope: 'profile email'
 };
 
-let googleKey = '';
-if (environment.production) {
-  googleKey = '539238066533-cmar8fngup5h8uj3rjd7481vkrcj5c4g.apps.googleusercontent.com';
-} else {
-  googleKey = '399045451146-r6e03sbio9clb86ontnvrsk605fm623p.apps.googleusercontent.com';
-}
+const googleAuth = environment.isGoogleAuthActive
+  ? {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(environment.googleKey, googleLoginOptions)
+          }
+        ]
+      } as SocialAuthServiceConfig
+    }
+  : { provide: null, useValue: null };
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [UnAuthGuard] },
@@ -57,21 +65,7 @@ const routes: Routes = [
     MatIconModule,
     SocialLoginModule
   ],
-  providers: [
-    UnAuthGuard,
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(googleKey, googleLoginOptions)
-          }
-        ]
-      } as SocialAuthServiceConfig
-    }
-  ],
+  providers: [UnAuthGuard, googleAuth],
   exports: [LoginComponent, RegisterComponent]
 })
 export class AuthModule {}

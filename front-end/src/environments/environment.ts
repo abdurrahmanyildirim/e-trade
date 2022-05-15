@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  domain: 'assets/mock/'
+  googleKey: '399045451146-r6e03sbio9clb86ontnvrsk605fm623p.apps.googleusercontent.com',
+  isGoogleAuthActive: false
 };
 
 /*

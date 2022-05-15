@@ -9,6 +9,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
 import { ProductService } from 'src/app/shared/services/rest/product/service';
+import { ConfigService } from 'src/app/shared/services/site/config';
 import { MobileDetectionService } from 'src/app/shared/services/site/mobile-detection';
 import { ObjectHelper } from 'src/app/shared/util/helper/object';
 
@@ -56,7 +57,8 @@ export class MainComponent implements OnInit, OnDestroy {
   constructor(
     private productService: ProductService,
     private cd: ChangeDetectorRef,
-    private mobilDet: MobileDetectionService
+    private mobilDet: MobileDetectionService,
+    public configService: ConfigService
   ) {}
 
   ngOnInit(): void {
