@@ -50,6 +50,10 @@
   transition: transform 0.3s ease-in-out;
 }
 
+.active-mobile-nav-menu {
+  transform: translateX(0);
+}
+
 .mobile-menu-logo {
   display: flex;
   justify-content: space-between;
@@ -207,7 +211,11 @@
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-@media (hover:none) {
+.active-overlay {
+  display: block;
+}
+
+@media (hover: none) {
   .top {
     padding: 5px 2px 10px 2px;
   }

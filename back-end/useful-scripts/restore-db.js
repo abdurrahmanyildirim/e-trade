@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const connectionString = 'mongodb://localhost/e-trade'; // env'den alınabilir ama gerek yok.
 const dbName = 'e-trade';
-const backupPath = `${__dirname}/back-up/`;
+const backupPath = `../${__dirname}/back-up/`;
 
 mongoose.connect(
   connectionString,

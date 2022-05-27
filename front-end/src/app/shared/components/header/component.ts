@@ -114,13 +114,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   toggleMenu(): void {
     if (this.mobileDet.isMobile.value) {
-      if (this.isSideBarActive) {
-        this.mobileMenuEl.nativeElement.style.transform = 'translateX(-100%)';
-        this.overlay.nativeElement.style.display = 'none';
-      } else {
-        this.overlay.nativeElement.style.display = 'block';
-        this.mobileMenuEl.nativeElement.style.transform = 'translateX(0)';
-      }
       this.isSideBarActive = !this.isSideBarActive;
     }
   }

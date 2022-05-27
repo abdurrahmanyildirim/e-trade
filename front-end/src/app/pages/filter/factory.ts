@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Product } from 'src/app/shared/models/product';
-import { isPresent } from 'src/app/shared/util/common';
 import { Filter, SortType } from './model';
 
 @Injectable()

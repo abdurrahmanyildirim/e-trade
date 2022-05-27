@@ -7,7 +7,6 @@
         (mouseenter)="onMouseEnter($event)"
         (mouseleave)="onMouseLeave($event)"
         (mousemove)="onMouseMove($event)"
-        id="curr-{{photo._id}}"
         [ngStyle]="{'background-image' : 'url(' + photo.path + ')', 'width' : width  + 'px', 'height' : height + 'px'}"
       ></div>
     </div>

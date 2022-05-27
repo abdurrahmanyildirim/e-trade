@@ -177,7 +177,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   initProductsByFilter(): void {
-    const products = this.filterFactory.create(this.filter);
+    const products = this.filterFactory.create(this.filter).slice();
     this.totalProductCount = products.length;
     this.brands = this.filterFactory.brands.slice();
     this.products = products.splice(0, this.pageSize);

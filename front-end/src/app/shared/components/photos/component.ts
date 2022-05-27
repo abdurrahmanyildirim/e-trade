@@ -78,14 +78,13 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
     subs = fromEvent(this.cover.nativeElement, 'touchend', { passive: true }).subscribe(
       (event: TouchEvent) => {
         this.touchEnd = event.changedTouches[0].screenX;
-        if (this.touchEnd - this.touchStart > 30) {
-          if (this.currentIndex > 0) {
-            this.currentIndex--;
-          }
-        } else if (this.touchStart - this.touchEnd > 30) {
-          if (this.currentIndex < this.photos.length - 1) {
-            this.currentIndex++;
-          }
+        if (this.touchEnd - this.touchStart > 30 && this.currentIndex > 0) {
+          this.currentIndex--;
+        } else if (
+          this.touchStart - this.touchEnd > 30 &&
+          this.currentIndex < this.photos.length - 1
+        ) {
+          this.currentIndex++;
         }
         this.changePhoto(this.currentIndex);
       }
@@ -117,31 +116,34 @@ export class PhotosComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
   }
 
   onMouseLeave(event: MouseEvent): void {
-    if (!this.mobileDet.isMobile.value) {
-      const image = document.getElementById('curr-' + this.currentPhoto._id);
-      image.style.backgroundPosition = 'center';
-      image.style.backgroundSize = 'contain';
+    if (this.mobileDet.isMobile.value) {
+      return;
     }
+    const image = event.target as HTMLElement;
+    image.style.backgroundPosition = 'center';
+    image.style.backgroundSize = 'contain';
   }
 
   onMouseEnter(event: MouseEvent): void {
-    if (!this.mobileDet.isMobile.value) {
-      const image = document.getElementById('curr-' + this.currentPhoto._id);
-      image.style.backgroundSize = 2 * 100 + '%';
+    if (this.mobileDet.isMobile.value) {
+      return;
     }
+    const image = event.target as HTMLElement;
+    image.style.backgroundSize = 2 * 100 + '%';
   }
 
   onMouseMove(event: MouseEvent): void {
-    if (!this.mobileDet.isMobile.value) {
-      const image = document.getElementById('curr-' + this.currentPhoto._id);
-      const width = image.offsetWidth;
-      const height = image.offsetHeight;
-      const mouseX = event.offsetX;
-      const mouseY = event.offsetY;
-      const bgPosX = (mouseX / width) * 100;
-      const bgPosY = (mouseY / height) * 100;
-      image.style.backgroundPosition = `${bgPosX}% ${bgPosY}%`;
+    if (this.mobileDet.isMobile.value) {
+      return;
     }
+    const image = event.target as HTMLElement;
+    const width = image.offsetWidth;
+    const height = image.offsetHeight;
+    const mouseX = event.offsetX;
+    const mouseY = event.offsetY;
+    const bgPosX = (mouseX / width) * 100;
+    const bgPosY = (mouseY / height) * 100;
+    image.style.backgroundPosition = `${bgPosX}% ${bgPosY}%`;
   }
 
   ngOnDestroy(): void {
