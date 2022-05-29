@@ -27,7 +27,7 @@
     "@auth0/angular-jwt": "^5.0.2",
     "@kolkov/angular-editor": "^1.2.0",
     "file-saver": "^2.0.5",
-    "ngx-owl-carousel-o": "^5.0.0",
+    "ngx-owl-carousel-o": "^5.1.1",
     "ngx-socket-io": "^4.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
