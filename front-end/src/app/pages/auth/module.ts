@@ -16,7 +16,7 @@ import {
   GoogleLoginProvider,
   SocialAuthServiceConfig,
   SocialLoginModule
-} from 'angularx-social-login';
+} from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
 
 const googleLoginOptions = {

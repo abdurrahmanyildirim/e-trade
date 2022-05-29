@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@abacritt/angularx-social-login": "^1.1.0",
     "@angular/animations": "~12.2.16",
     "@angular/cdk": "^12.2.13",
     "@angular/common": "~12.2.16",
@@ -25,7 +26,6 @@
     "@angular/router": "~12.2.16",
     "@auth0/angular-jwt": "^5.0.2",
     "@kolkov/angular-editor": "^1.2.0",
-    "angularx-social-login": "^3.5.4",
     "file-saver": "^2.0.5",
     "ngx-owl-carousel-o": "^5.0.0",
     "ngx-socket-io": "^4.0.0",
