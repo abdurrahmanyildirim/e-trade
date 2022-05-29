@@ -54,8 +54,8 @@ const fixHighResolutionPhotos = async (photos) => {
     }
 
     images.push({
-      publicId: photo.public_id,
-      path: photo.secure_url
+      publicId: photo.public_id ? photo.public_id : photo.publicId,
+      path: photo.secure_url ? photo.secure_url : photo.path
     });
   }
   return images;

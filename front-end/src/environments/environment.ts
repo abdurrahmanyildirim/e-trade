@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   googleKey: '399045451146-r6e03sbio9clb86ontnvrsk605fm623p.apps.googleusercontent.com',
-  isGoogleAuthActive: false
+  isGoogleAuthActive: true
 };
 
 /*

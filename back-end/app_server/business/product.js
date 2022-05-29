@@ -30,12 +30,12 @@ class Product extends Business {
 
   async removeById(id) {
     const doc = await ProductModel.findByIdAndRemove(id);
-    for (const [i, photo] of doc.photos) {
+    for (let i = 0; i < doc.photos.length; i++) {
       if (i === 0) {
-        return;
+        continue;
       }
       try {
-        await remove(photo.publicId);
+        await remove(doc.photos[i]._id);
       } catch (error) {
         console.log(error);
         console.log('Foto Silinemedi');
