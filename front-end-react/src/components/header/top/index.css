@@ -1,0 +1,11 @@
+.header-top-container {
+    background-color: whitesmoke;
+    padding: 20px 0;
+    transition: padding 0.35s ease-in-out;
+    /* max-width: 1200px; */
+}
+
+.content {
+    max-width: 1200px;
+    margin: auto;
+}

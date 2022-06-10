@@ -65,10 +65,12 @@
 
 <ng-template #slider let-prods="prods">
   <owl-carousel-o [options]="owlOptions">
-    <ng-template carouselSlide *ngFor="let prod of prods">
-      <div class="section-item">
-        <app-card [product]="prod"></app-card>
-      </div>
-    </ng-template>
+    <ng-container *ngFor="let prod of prods">
+      <ng-template carouselSlide [id]="prod._id">
+        <div class="section-item">
+          <app-card [product]="prod"></app-card>
+        </div>
+      </ng-template>
+    </ng-container>
   </owl-carousel-o>
 </ng-template>

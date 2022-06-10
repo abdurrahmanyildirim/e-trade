@@ -1,0 +1,18 @@
+.header-container {
+    width: 100%;
+}
+
+.utils {
+    background-color: whitesmoke;
+    padding: 20px 0;
+    transition: padding 0.35s ease-in-out;
+    max-width: 1200px;
+}
+
+.navbar {
+    /* background-color: #eceff1; */
+    background: linear-gradient(180deg, #ffffff 0%, #eceff1 100%);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
