@@ -4,6 +4,8 @@ const server = require('http').Server(app);
 const { isDevMode } = require('./common');
 const path = require('path');
 
+const { initJobs } = require('./jobs');
+
 // Env files under env folder. We will change env name by the project.
 process.env.NODE_ENV = 'github';
 require('dotenv').config({
@@ -66,6 +68,10 @@ if (!isDevMode()) {
 }
 
 require('./app_server/services/socket').init(io);
+
+if (!isDevMode()) {
+  initJobs();
+}
 
 const PORT = process.env.PORT;
 // '0.0.0.0'
