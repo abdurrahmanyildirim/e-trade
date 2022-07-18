@@ -1,8 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit'
-import counter from './counter'
+import { configureStore } from '@reduxjs/toolkit';
+import category from './category';
+import product from './product';
+import site from './site';
 
-export default configureStore({
+const store = configureStore({
     reducer: {
-        counter: counter,
+        product,
+        category,
+        site
     },
 })
+
+export default store;

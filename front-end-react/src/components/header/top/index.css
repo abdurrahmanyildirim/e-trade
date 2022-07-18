@@ -8,4 +8,18 @@
 .content {
     max-width: 1200px;
     margin: auto;
+    display: flex;
+
+}
+
+.full {
+    flex-grow: 1;
+}
+
+.center {
+    text-align: center;
+}
+
+.content-item {
+    padding: 5px;
 }

@@ -4,3 +4,17 @@
     top: 0;
     z-index: 10;
 }
+
+.navs {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: auto;
+    padding-left: 0;
+}
+
+.nav {
+    padding: 5px;
+    text-transform: capitalize;
+}

@@ -38,3 +38,32 @@ You can use this admin account => `dev@dev.com/123456` for see admin panel too.
 You can add your env file under env folder at back-end directory and change to ENV value at main.js file under back-end directory. 
 ### Front-end
 You need change variables under `src/evironments/` and `src/assets/config/prod/` directories.
+
+# Screenshots
+
+## Main
+&nbsp;<br>
+![Main Desktop](./main-desktop.png)
+
+<img src="./main-mobile.png" width="400"/>
+<!-- ![Main Mobile](./main-mobile.png) -->
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+
+## Orders
+&nbsp;<br>
+![Orders Desktop](./orders-desktop.png)
+
+<!-- ![Orders Mobile](./orders-mobile.png) -->
+<img src="./orders-mobile.png" width="400"/>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+
+## Order Detail
+&nbsp;<br>
+![Order Detail Desktop](./order-detail-desktop.png)
+
+<!-- ![Order Detail Mobile](./order-detail-mobile.png) -->
+<img src="./order-detail-mobile.png" width="400"/>
