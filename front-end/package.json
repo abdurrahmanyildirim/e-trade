@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "bundleAnalyze": "ng build --configuration production --stats-json && webpack-bundle-analyzer ./dist/stats.json"
+    "bundleAnalyze": "ng build --configuration production --stats-json && webpack-bundle-analyzer ./dist/stats.json",
+    "cypress-open": "npx cypress open"
   },
   "private": true,
   "dependencies": {
@@ -38,6 +39,7 @@
     "@angular/cli": "~13.3.7",
     "@angular/compiler-cli": "~13.3.10",
     "codelyzer": "^6.0.0",
+    "cypress": "^11.1.0",
     "source-map-explorer": "^2.5.2",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
